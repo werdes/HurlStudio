@@ -1,0 +1,33 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlUI.UI.Views.MainView"
+             Loaded="On_MainView_Loaded"
+             x:DataType="vm:MainViewViewModel">
+  <Design.DataContext>
+    <vm:MainViewViewModel />
+  </Design.DataContext>
+  <DockPanel>
+    <!--<Menu DockPanel.Dock="Top">
+      <MenuItem Margin="5,5,0,5" Padding="8,2,8,2" Header="_File">
+        <MenuItem Header="_Open..."/>
+        <Separator/>
+        <MenuItem Header="_Exit"/>
+      </MenuItem>
+      <MenuItem Margin="5,5,0,5" Padding="8,2,8,2" Header="_Edit">
+        <MenuItem Header="Copy"/>
+        <MenuItem Header="Paste"/>
+      </MenuItem>
+    </Menu>-->
+    <TextBlock/>
+    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+      <TextBlock Text="{Binding DummyText}" />
+      <TextBlock Text="{Binding DummyText}" />
+
+      <Button Content="Click4log" Click="Button_Click_1"></Button>
+    </StackPanel>
+  </DockPanel>
+</UserControl>

@@ -1,0 +1,21 @@
+﻿[Collection]
+name=Valid collection
+
+[Locations]
+../HurlFiles/
+
+[CollectionSettings]
+proxy=protocol:https,host:testproxy.local,port:8080
+
+[FileSettings]
+location=../HurlFiles/TestFile1.hurl
+variables=var1:test1
+
+[FileSettings]
+location=../HurlFiles/TestFile2.hurl
+proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:testpassword
+variables=var1:test2,var2=test2
+
+[FileSettings]
+location=../HurlFiles/NonExistantHurlFile.hurl
+variables=varNonExisting1:ValueNonExisting1,varNonExisting2=ValueNonExisting2
