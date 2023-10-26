@@ -3,17 +3,21 @@ using HurlUI.Collections.Model.Serializer;
 using HurlUI.Collections.Settings;
 using HurlUI.Common.Enums;
 using HurlUI.Common.Extensions;
+using NLog;
 using System.Text;
 
 namespace HurlUI.Collections.Utility
 {
     public class IniCollectionSerializer : ICollectionSerializer
     {
-        private ISettingParser _settingParser;
+        private static Lazy<IniCollectionSerializer> _instance = new Lazy<IniCollectionSerializer>(() => new IniCollectionSerializer());
+        private static readonly Lazy<Logger> _lazyLog = new Lazy<Logger>(() => LogManager.GetCurrentClassLogger());
+        private static NLog.Logger _log => _lazyLog.Value;
 
-        public IniCollectionSerializer(ISettingParser settingParser)
+        public static IniCollectionSerializer Instance => _instance.Value;
+
+        public IniCollectionSerializer()
         {
-            this._settingParser = settingParser;
         }
 
 
@@ -25,6 +29,8 @@ namespace HurlUI.Collections.Utility
         private const string SECTION_COLLECTION_SETTINGS_HEADER = "[CollectionSettings]";
         private const string SECTION_FILE_SETTINGS_HEADER = "[FileSettings]";
         private const string SECTION_FILE_SETTINGS_LOCATION_KEY = "location";
+        private const string SECTION_FOLDER_SETTINGS_HEADER = "[FolderSettings]";
+        private const string SECTION_FOLDER_SETTINGS_LOCATION_KEY = "location";
 
 
         /// <summary>
@@ -35,7 +41,7 @@ namespace HurlUI.Collections.Utility
         public HurlCollection Deserialize(string collectionContent)
         {
             string[] lines = collectionContent.Split(Environment.NewLine);
-            List<HurlCollectionSectionContainer> collectionSections = SplitIntoSections(lines);
+            List<HurlCollectionSectionContainer> collectionSections = this.SplitIntoSections(lines);
             HurlCollection collection = new HurlCollection();
 
             foreach (HurlCollectionSectionContainer sectionContainer in collectionSections)
@@ -43,16 +49,19 @@ namespace HurlUI.Collections.Utility
                 switch (sectionContainer.Type)
                 {
                     case CollectionSectionType.General:
-                        DeserializeGeneralSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeGeneralSection(sectionContainer.Lines, ref collection);
                         break;
                     case CollectionSectionType.Locations:
-                        DeserializeLocationsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeLocationsSection(sectionContainer.Lines, ref collection);
                         break;
                     case CollectionSectionType.CollectionSettings:
-                        DeserializeCollectionSettingsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeCollectionSettingsSection(sectionContainer.Lines, ref collection);
                         break;
                     case CollectionSectionType.FileSettings:
-                        DeserializeFileSettingsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeFileSettingsSection(sectionContainer.Lines, ref collection);
+                        break;
+                    case CollectionSectionType.FolderSettings:
+                        this.DeserializeFolderSettingsSection(sectionContainer.Lines, ref collection);
                         break;
                 }
             }
@@ -61,7 +70,37 @@ namespace HurlUI.Collections.Utility
         }
 
         /// <summary>
-        /// Deserializes the collection settings part of the collection
+        /// Deserializes the folder settings part of the collection
+        /// </summary>
+        /// <param name="lines">plain text lines of a CollectionSectionType.FolderSettings section container</param>
+        /// <param name="collection">Target collection</param>
+        private void DeserializeFolderSettingsSection(List<string> lines, ref HurlCollection collection)
+        {
+            HurlFolder hurlFolder = new HurlFolder();
+            foreach (string line in lines)
+            {
+                string locationKey = SECTION_FOLDER_SETTINGS_LOCATION_KEY + "=";
+                if (line.StartsWith(locationKey))
+                {
+                    // Folder path
+                    hurlFolder.Directory = line.Split('=').Get(1) ?? string.Empty;
+                }
+                else
+                {
+                    // Serializable setting
+                    IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
+                    if (hurlSetting != null)
+                    {
+                        hurlFolder.FolderSettings.Add(hurlSetting);
+                    }
+                }
+            }
+
+            collection.FolderSettings.Add(hurlFolder);
+        }
+
+        /// <summary>
+        /// Deserializes the file settings part of the collection
         /// </summary>
         /// <param name="lines">plain text lines of a CollectionSectionType.FileSettings section container</param>
         /// <param name="collection">Target collection</param>
@@ -79,7 +118,7 @@ namespace HurlUI.Collections.Utility
                 else
                 {
                     // Serializable setting
-                    IHurlSetting? hurlSetting = _settingParser.Parse(line);
+                    IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
                     if (hurlSetting != null)
                     {
                         hurlFile.FileSettings.Add(hurlSetting);
@@ -99,7 +138,7 @@ namespace HurlUI.Collections.Utility
         {
             foreach (string line in lines)
             {
-                IHurlSetting? hurlSetting = _settingParser.Parse(line);
+                IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
                 if (hurlSetting != null)
                 {
                     collection.CollectionSettings.Add(hurlSetting);
@@ -167,6 +206,10 @@ namespace HurlUI.Collections.Utility
                         sections.Add(currentSection);
                         currentSection = new HurlCollectionSectionContainer(CollectionSectionType.CollectionSettings);
                         break;
+                    case SECTION_FOLDER_SETTINGS_HEADER:
+                        sections.Add(currentSection);
+                        currentSection = new HurlCollectionSectionContainer(CollectionSectionType.FolderSettings);
+                        break;
                     default:
                         currentSection.Lines.Add(line);
                         break;
@@ -231,6 +274,18 @@ namespace HurlUI.Collections.Utility
                 foreach (IHurlSetting fileSetting in hurlFile.FileSettings)
                 {
                     builder.AppendLine(fileSetting.GetConfigurationString());
+                }
+                builder.AppendLine();
+            }
+
+            // Folder settings section
+            foreach (HurlFolder hurlFolder in collection.FolderSettings)
+            {
+                builder.AppendLine(SECTION_FOLDER_SETTINGS_HEADER);
+                builder.AppendLine($"{SECTION_FOLDER_SETTINGS_LOCATION_KEY}={hurlFolder.Directory}");
+                foreach (IHurlSetting folderSetting in hurlFolder.FolderSettings)
+                {
+                    builder.AppendLine(folderSetting.GetConfigurationString());
                 }
                 builder.AppendLine();
             }

@@ -1,24 +1,25 @@
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	      xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
         xmlns:views="clr-namespace:HurlUI.UI.Views"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-        x:Class="HurlUI.UI.Windows.MainWindow"
+        xmlns:controls="clr-namespace:HurlUI.UI.Controls"
+        xmlns:localization="clr-namespace:HurlUI.UI.Localization;assembly=HurlUI"
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
+	      WindowStartupLocation="CenterScreen"
+        
         Icon="/Assets/Icons/icon.ico"
         Title="HurlUI"
+        x:Class="HurlUI.UI.Windows.MainWindow"
+        x:Name="mainWindow"
         x:DataType="vm:MainWindowViewModel">
   <Design.DataContext>
-    <vm:MainViewViewModel />
+    <vm:MainWindowViewModel />
   </Design.DataContext>
-  <DockPanel>
-
-    <actipro:ChromedTitleBar Content="Test" DockPanel.Dock="Top">
-    </actipro:ChromedTitleBar>
-
-    <!--<views:MainView ></views:MainView>-->
-    <views:LoadingView></views:LoadingView>
-  </DockPanel>
+ 
+  <views:MainView Margin="{Binding #mainWindow.OffScreenMargin}"></views:MainView>
+  <!--<views:LoadingView></views:LoadingView>-->
 </Window>

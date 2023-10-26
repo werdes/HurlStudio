@@ -1,0 +1,12 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+  <!-- Theme colors -->
+  <Color x:Key="HighlightColor">#57794B</Color>
+  <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
+  <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
+  <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
+  <Color x:Key="NeutralControlForegroundColor">#444444</Color>
+  <Color x:Key="NeutralControlPressedColor">#555555</Color>
+  <Color x:Key="NeutralControlBorderColor">#555555</Color>
+</ResourceDictionary>

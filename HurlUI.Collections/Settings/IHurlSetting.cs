@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HurlUI.Common.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,5 +14,7 @@ namespace HurlUI.Collections.Settings
         string GetConfigurationName();
         string GetConfigurationValue();
         string GetConfigurationString();
+        HurlSettingInheritanceBehavior GetInheritanceBehavior();
+
     }
 }

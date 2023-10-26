@@ -1,10 +1,26 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	           xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
-             x:Class="HurlUI.App"
+	           x:Class="HurlUI.App"
              RequestedThemeVariant="Dark">
 
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="/UI/Resources/ColorDictionary.axaml" />
+        <ResourceInclude Source="/UI/Resources/ModernThemeDictionary.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarBackgroundBrush}" Color="{DynamicResource WindowChromeBackgroundColor}" />
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarButtonBackgroundBrushPointerOver}" Color="{DynamicResource NeutralControlForegroundColor}" />
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarButtonBackgroundBrushPressed}" Color="{DynamicResource NeutralControlPressedColor}" />
+    </ResourceDictionary>
+  </Application.Resources>
   <Application.Styles>
+    <!-- Common styles -->
+    <StyleInclude Source="/UI/Styles/MenuStyle.axaml" />
+
+
     <actipro:ModernTheme />
     <SimpleTheme />
   </Application.Styles>

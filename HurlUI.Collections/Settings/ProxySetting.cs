@@ -11,7 +11,7 @@ namespace HurlUI.Collections.Settings
 {
     public class ProxySetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_KEY = "proxy";
+        public const string CONFIGURATION_NAME = "proxy";
         private const string SUBCONFIGURATION_KEY_PROTOCOL = "protocol";
         private const string SUBCONFIGURATION_KEY_HOST = "host";
         private const string SUBCONFIGURATION_KEY_PORT = "port";
@@ -37,7 +37,6 @@ namespace HurlUI.Collections.Settings
             set => _protocol = value;
         }
 
-
         public string? Password
         {
             get => _password;
@@ -55,6 +54,7 @@ namespace HurlUI.Collections.Settings
             get => _host;
             set => _host = value;
         }
+
         public ushort? Port
         {
             get => _port;
@@ -119,7 +119,7 @@ namespace HurlUI.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationName()
         {
-            return CONFIGURATION_KEY;
+            return CONFIGURATION_NAME;
         }
 
         /// <summary>
@@ -140,6 +140,17 @@ namespace HurlUI.Collections.Settings
             }
 
             return configValue;
+        }
+
+        /// <summary>
+        /// Returns the inheritance behavior of this setting: 
+        ///  Multiple proxy settings are not allowed, so 
+        ///  these settings will overwrite each other
+        /// </summary>
+        /// <returns>Inheritance behavior of this setting</returns>
+        public HurlSettingInheritanceBehavior GetInheritanceBehavior()
+        {
+            return HurlSettingInheritanceBehavior.Overwrite;
         }
     }
 }

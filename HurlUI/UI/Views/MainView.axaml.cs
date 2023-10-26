@@ -1,6 +1,8 @@
 ﻿using Avalonia.Controls;
 using HurlUI.UI.ViewModels;
 using Microsoft.Extensions.Configuration;
+using NLog;
+using System;
 using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,7 +12,8 @@ namespace HurlUI.UI.Views
     public partial class MainView : UserControl
     {
         private MainViewViewModel _viewModel;
-        private static readonly NLog.Logger _log = NLog.LogManager.GetCurrentClassLogger();
+        private static readonly Lazy<Logger> _lazyLog = new Lazy<Logger>(() => LogManager.GetCurrentClassLogger());
+        private static NLog.Logger _log => _lazyLog.Value;
 
         public MainView()
         {
@@ -19,7 +22,6 @@ namespace HurlUI.UI.Views
             {
                 DummyText = App.Configuration.GetValue<string>("text")
             };
-
 
             this.DataContext = _viewModel;
         }

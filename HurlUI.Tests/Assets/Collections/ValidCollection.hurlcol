@@ -7,6 +7,10 @@ name=Valid collection
 [CollectionSettings]
 proxy=protocol:https,host:testproxy.local,port:8080
 
+[FolderSettings]
+location=../HurlFiles/
+variables=fvar1:ftest2,fvar2=ftest3
+
 [FileSettings]
 location=../HurlFiles/TestFile1.hurl
 variables=var1:test1

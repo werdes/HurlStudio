@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Configuration;
 using NLog.Config;
+using NLog.Layouts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,7 +12,6 @@ namespace HurlUI.Utility.Helpers
 {
     public class AppEnvironmentHelper
     {
-        private static readonly NLog.Logger _log = NLog.LogManager.GetCurrentClassLogger();
         private static Lazy<AppEnvironmentHelper> _lazyInstance = new Lazy<AppEnvironmentHelper>(() => new AppEnvironmentHelper());
 
         public static AppEnvironmentHelper Instance => _lazyInstance.Value;
@@ -42,21 +42,31 @@ namespace HurlUI.Utility.Helpers
         /// </summary>
         public void InitializeLogging()
         {
-            NLog.LogManager.Configuration = new NLog.Config.LoggingConfiguration();
+            LoggingConfiguration config = new LoggingConfiguration();
             NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
             {
                 Name = "LogTarget",
-                FileName = Path.Combine(_loggingPath, typeof(Program).FullName + ".log")
+                FileName = Path.Combine(_loggingPath, "hurlui.log"),
+                Encoding = Encoding.UTF8,
+                MaxArchiveFiles = 1,
+                ArchiveNumbering=NLog.Targets.ArchiveNumberingMode.Sequence,
+                ArchiveAboveSize = 10485760,
+                ArchiveFileName = Path.Combine(_loggingPath, "hurlui.{#######}.log"),
+                Layout = @"${longdate}|${level}|${message} |${all-event-properties} ${exception:format=tostring}"
             };
 
 #if DEBUG
-            LoggingRule loggingRule = new LoggingRule("*", NLog.LogLevel.Debug, loggingTarget);
+            LoggingRule loggingRule = new LoggingRule("*", loggingTarget);
+            loggingRule.EnableLoggingForLevels(NLog.LogLevel.Trace, NLog.LogLevel.Fatal);
 #else
             LoggingRule loggingRule = new LoggingRule("*", NLog.LogLevel.Info, loggingTarget);
+            loggingRule.EnableLoggingForLevels(NLog.LogLevel.Info, NLog.LogLevel.Fatal);
 #endif
 
-            NLog.LogManager.Configuration.AddTarget(loggingTarget);
-            NLog.LogManager.Configuration.AddRule(loggingRule);
+            config.AddRule(loggingRule);
+            config.AddTarget(loggingTarget);
+
+            NLog.LogManager.Configuration = config;
         }
 
 

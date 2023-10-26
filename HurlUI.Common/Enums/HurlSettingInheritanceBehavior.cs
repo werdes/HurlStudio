@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace HurlUI.Common.Enums
 {
-    public enum CollectionSectionType
+    public enum HurlSettingInheritanceBehavior
     {
-        None,
-        General,
-        Locations,
-        CollectionSettings,
-        FileSettings,
-        FolderSettings
+        Overwrite,
+        Append
     }
 }

@@ -9,11 +9,11 @@ namespace HurlUI.Tests
     public class CollectionsTests
     {
         [TestMethod]
-        public async void TestValidCollection()
+        public void TestValidCollection()
         {
-            //HurlCollection collection = await IniCollectionSerializer.Instance.DeserializeFileAsync(
-            //    Path.Combine("Assets", "Collections", "ValidCollection.hurlcol"), Encoding.UTF8);
-            //Assert.IsNotNull(collection);
+            HurlCollection collection = IniCollectionSerializer.Instance.DeserializeFileAsync(
+                Path.Combine("Assets", "Collections", "ValidCollection.hurlcol"), Encoding.UTF8).Result;
+            Assert.IsNotNull(collection);
         }
     }
 }

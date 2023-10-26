@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="NLog" Version="5.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\HurlUI.Common\HurlUI.Common.csproj" />
     <ProjectReference Include="..\HurlUI.HurlLib\HurlUI.HurlLib.csproj" />
   </ItemGroup>

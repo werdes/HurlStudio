@@ -2,7 +2,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:localization="clr-namespace:HurlUI.UI.Localization;assembly=HurlUI"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="HurlUI.UI.Views.MainView"
              Loaded="On_MainView_Loaded"
@@ -10,24 +12,56 @@
   <Design.DataContext>
     <vm:MainViewViewModel />
   </Design.DataContext>
-  <DockPanel>
-    <!--<Menu DockPanel.Dock="Top">
-      <MenuItem Margin="5,5,0,5" Padding="8,2,8,2" Header="_File">
-        <MenuItem Header="_Open..."/>
-        <Separator/>
-        <MenuItem Header="_Exit"/>
-      </MenuItem>
-      <MenuItem Margin="5,5,0,5" Padding="8,2,8,2" Header="_Edit">
-        <MenuItem Header="Copy"/>
-        <MenuItem Header="Paste"/>
-      </MenuItem>
-    </Menu>-->
-    <TextBlock/>
-    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-      <TextBlock Text="{Binding DummyText}" />
-      <TextBlock Text="{Binding DummyText}" />
 
-      <Button Content="Click4log" Click="Button_Click_1"></Button>
+  <DockPanel>
+    <actipro:ChromedTitleBar DockPanel.Dock="Top"
+                             
+                             >
+      <!--  Background="{DynamicResource NeutralControlBackgroundColor}"-->
+      <actipro:ChromedTitleBar.LeftContent>
+        <StackPanel Orientation="Horizontal">
+          <Image Margin="6,0,6,0"
+                 Source="/Assets/Images/icon.png"
+                 Width="24"
+                 Height="24"
+                 VerticalAlignment="Center"
+                 IsHitTestVisible="False" >
+            <Image.Effect>
+              <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
+            </Image.Effect>
+          </Image>
+
+          <Menu>
+            <MenuItem VerticalAlignment="Center"
+                      Header="_File">
+              <MenuItem Header="_Open..."/>
+              <Separator/>
+              <MenuItem Header="_Exit"/>
+            </MenuItem>
+            <MenuItem VerticalAlignment="Center"
+                      Header="_Edit">
+              <MenuItem Header="Copy"/>
+              <MenuItem Header="Paste"/>
+            </MenuItem>
+          </Menu>
+          <TextBlock Text="{x:Static localization:Localization.Window_Main_Title}"
+                     VerticalAlignment="Center"
+                     IsHitTestVisible="False"
+                     Margin="10,8,0,7"
+                     TextTrimming="CharacterEllipsis"
+                     Foreground="{DynamicResource WindowChromeTitleColor}"/>
+        </StackPanel>
+
+      </actipro:ChromedTitleBar.LeftContent>
+      <actipro:ChromedTitleBar.RightContent>
+      </actipro:ChromedTitleBar.RightContent>
+    </actipro:ChromedTitleBar>
+    <TextBlock/>
+    <StackPanel HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+      <TextBlock Text="{Binding DummyText}" />
+      <Button Content="Click4log"
+              Click="Button_Click_1" />
     </StackPanel>
   </DockPanel>
 </UserControl>

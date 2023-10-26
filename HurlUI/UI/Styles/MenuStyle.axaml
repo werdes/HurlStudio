@@ -1,0 +1,34 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="100,20,100,100">
+      <Menu>
+        <MenuItem VerticalAlignment="Center"
+                  Header="File">
+          <MenuItem Header="Open..."/>
+          <Separator/>
+          <MenuItem Header="Exit"/>
+        </MenuItem>
+        <MenuItem VerticalAlignment="Center"
+                  Header="Edit">
+          <MenuItem Header="Copy"/>
+          <MenuItem Header="Paste"/>
+        </MenuItem>
+      </Menu>
+    </Border>
+  </Design.PreviewWith>
+
+
+  <Style Selector="MenuItem">
+    <Style Selector="^:pointerover /template/ Border#root">
+      <Setter Property="Background" Value="{DynamicResource NeutralControlForegroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlBorderColor}" />
+    </Style>
+    
+    <Style Selector="^:selected  /template/ Border#root">
+      <Setter Property="Background" Value="{DynamicResource NeutralControlForegroundColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlBorderColor}" />
+    </Style>
+
+  </Style>
+</Styles>

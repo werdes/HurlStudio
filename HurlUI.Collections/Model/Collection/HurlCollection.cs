@@ -13,6 +13,7 @@ namespace HurlUI.Collections.Model.Collection
         private List<string> _locations;
         private List<IHurlSetting> _collectionSettings;
         private List<HurlFile> _fileSettings;
+        private List<HurlFolder> _folderSettings;
 
         public HurlCollection()
         {
@@ -20,12 +21,19 @@ namespace HurlUI.Collections.Model.Collection
             _locations = new List<string>();
             _collectionSettings = new List<IHurlSetting>();
             _fileSettings = new List<HurlFile>();
+            _folderSettings = new List<HurlFolder>();
         }
 
         public List<HurlFile> FileSettings
         {
             get => _fileSettings;
             set => _fileSettings = value;
+        }
+
+        public List<HurlFolder> FolderSettings
+        {
+            get => _folderSettings;
+            set => _folderSettings = value;
         }
 
         public List<IHurlSetting> CollectionSettings
