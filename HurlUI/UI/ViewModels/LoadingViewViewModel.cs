@@ -1,4 +1,6 @@
-﻿using System;
+﻿using HurlUI.UI.Views;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace HurlUI.UI.ViewModels
 {
-    public class LoadingViewViewModel : INotifyPropertyChanged
+    public class LoadingViewViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         private string? _dummyText;
 
         public string? DummyText
@@ -25,5 +24,9 @@ namespace HurlUI.UI.ViewModels
             }
         }
 
+        public LoadingViewViewModel(ILogger<LoadingViewViewModel> logger) : base(typeof(LoadingView))
+        {
+            logger.LogDebug("LoadingViewViewModel init");
+        }
     }
 }

@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Assets\Collections\ValidCollection.hurlcol">
+    <None Update="Assets\Collections\ValidCollection.hurlc">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Assets\HurlFiles\TestFile1.hurl">

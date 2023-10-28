@@ -3,9 +3,9 @@ using HurlUI.UI.ViewModels;
 
 namespace HurlUI.UI.Views
 {
-    public partial class LoadingView : ViewBase
+    public partial class EditorView : ViewBase
     {
-        public LoadingView() : base(typeof(LoadingViewViewModel))
+        public EditorView() : base(typeof(EditorViewViewModel))
         {
             InitializeComponent();
         }

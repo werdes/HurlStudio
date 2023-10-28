@@ -1,0 +1,11 @@
+<v:ViewBase xmlns="https://github.com/avaloniaui"
+            xmlns:v="clr-namespace:HurlUI.UI.Views"
+            xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
+            xmlns:localization="clr-namespace:HurlUI.UI.Localization"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="HurlUI.UI.Views.EditorView">
+  Welcome to Avalonia!
+</v:ViewBase>

@@ -21,7 +21,7 @@ namespace HurlUI.Collections.Utility
         }
 
 
-        public const string FILE_EXTENSION = ".hurlcol";
+        public const string FILE_EXTENSION = ".hurlc";
 
         private const string SECTION_GENERAL_HEADER = "[Collection]";
         private const string SECTION_GENERAL_NAME_KEY = "name";
@@ -34,9 +34,9 @@ namespace HurlUI.Collections.Utility
 
 
         /// <summary>
-        /// Deserializes a .hurlcol formatted string
+        /// Deserializes a .hurlc formatted string
         /// </summary>
-        /// <param name="collectionContent">.hurlcol file content</param>
+        /// <param name="collectionContent">.hurlc file content</param>
         /// <returns></returns>
         public HurlCollection Deserialize(string collectionContent)
         {
@@ -226,9 +226,9 @@ namespace HurlUI.Collections.Utility
         }
 
         /// <summary>
-        /// Deserializes a .hurlcol file
+        /// Deserializes a .hurlc file
         /// </summary>
-        /// <param name="filePath">Path to the .hurlcol file</param>
+        /// <param name="filePath">Path to the .hurlc file</param>
         /// <returns>The deserialized colleciton</returns>
         public async Task<HurlCollection> DeserializeFileAsync(string filePath, Encoding encoding)
         {
@@ -237,7 +237,7 @@ namespace HurlUI.Collections.Utility
         }
 
         /// <summary>
-        /// Serializes a collection as a .hurlcol formatted string
+        /// Serializes a collection as a .hurlc formatted string
         /// </summary>
         /// <param name="collection">The collection object</param>
         /// <returns>The deserialized collection</returns>
@@ -294,7 +294,7 @@ namespace HurlUI.Collections.Utility
         }
 
         /// <summary>
-        /// Serializes a collection as a .hurlcol file
+        /// Serializes a collection as a .hurl file
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>

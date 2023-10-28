@@ -1,37 +1,38 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
-	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:localization="clr-namespace:HurlUI.UI.Localization;assembly=HurlUI"
-             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="HurlUI.UI.Views.MainView"
-             Loaded="On_MainView_Loaded"
-             x:DataType="vm:MainViewViewModel">
+<v:ViewBase xmlns="https://github.com/avaloniaui"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:v="clr-namespace:HurlUI.UI.Views"
+            xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
+	          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:c="clr-namespace:HurlUI.UI.Controls"
+            xmlns:localization="clr-namespace:HurlUI.UI.Localization;assembly=HurlUI"
+            xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            x:Class="HurlUI.UI.Views.MainView"
+            Loaded="On_MainView_Loaded"
+            x:DataType="vm:MainViewViewModel">
   <Design.DataContext>
     <vm:MainViewViewModel />
   </Design.DataContext>
 
   <DockPanel>
-    <actipro:ChromedTitleBar DockPanel.Dock="Top"
-                             
-                             >
+    <actipro:ChromedTitleBar DockPanel.Dock="Top">
       <!--  Background="{DynamicResource NeutralControlBackgroundColor}"-->
       <actipro:ChromedTitleBar.LeftContent>
         <StackPanel Orientation="Horizontal">
-          <Image Margin="6,0,6,0"
+          <Image Margin="6,0,0,0"
                  Source="/Assets/Images/icon.png"
                  Width="24"
                  Height="24"
                  VerticalAlignment="Center"
-                 IsHitTestVisible="False" >
+                 IsHitTestVisible="False"
+                 IsVisible="{Binding MainWindow.IsWindows}">
             <Image.Effect>
               <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
             </Image.Effect>
           </Image>
 
-          <Menu>
+          <Menu IsEnabled="{Binding InitializationCompleted}" Margin="6,0,0,0">
             <MenuItem VerticalAlignment="Center"
                       Header="_File">
               <MenuItem Header="_Open..."/>
@@ -49,19 +50,24 @@
                      IsHitTestVisible="False"
                      Margin="10,8,0,7"
                      TextTrimming="CharacterEllipsis"
-                     Foreground="{DynamicResource WindowChromeTitleColor}"/>
+                     Foreground="{DynamicResource WindowChromeTitleColor}"
+                     IsVisible="{Binding MainWindow.IsWindows}"/>
         </StackPanel>
 
       </actipro:ChromedTitleBar.LeftContent>
       <actipro:ChromedTitleBar.RightContent>
       </actipro:ChromedTitleBar.RightContent>
     </actipro:ChromedTitleBar>
-    <TextBlock/>
-    <StackPanel HorizontalAlignment="Center"
-                VerticalAlignment="Center">
-      <TextBlock Text="{Binding DummyText}" />
-      <Button Content="Click4log"
-              Click="Button_Click_1" />
-    </StackPanel>
+    <ContentControl BorderThickness="1,0,1,1"
+                    BorderBrush="{DynamicResource WindowChromeBorderBrush}"
+                    x:Name="WindowContent">
+      <!--<StackPanel HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+        <TextBlock Text="Tescht" />
+        <Button Content="Click4log"
+                Click="Button_Click_1" />
+      </StackPanel>-->
+      <!--<c:ViewFrame SelectedView="{x:Type vm:LoadingViewViewModel}" ></c:ViewFrame>-->
+    </ContentControl>
   </DockPanel>
-</UserControl>
+</v:ViewBase>

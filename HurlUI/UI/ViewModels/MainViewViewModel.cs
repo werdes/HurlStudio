@@ -1,5 +1,7 @@
-﻿using System;
+﻿using HurlUI.UI.Views;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -8,22 +10,81 @@ using System.Threading.Tasks;
 
 namespace HurlUI.UI.ViewModels
 {
-    public class MainViewViewModel : INotifyPropertyChanged
+    public class MainViewViewModel : ViewModelBase, INavigatableViewModel
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        private MainWindowViewModel _mainWindowViewModel;
+        private LoadingViewViewModel? _loadingViewViewModel;
+        private EditorViewViewModel? _editorViewViewModel;
 
-        private string? _dummyText;
+        private bool _initializationCompleted;
 
-        public string? DummyText
+
+        public bool InitializationCompleted
         {
-            get => _dummyText; 
+            get => _initializationCompleted;
             set
             {
-                _dummyText = value;
+                _initializationCompleted = value;
                 Notify();
             }
         }
 
+
+        public MainViewViewModel() : base(typeof(MainView))
+        {
+            this._initializationCompleted = false;
+        }
+
+        public MainViewViewModel(MainWindowViewModel mainWindowViewModel) : this()
+        {
+            _mainWindowViewModel = mainWindowViewModel;
+            _mainWindowViewModel.MainViewViewModel = this;
+            
+            //this._editorViewViewModel.RootViewModel = this;
+            //this._loadingViewViewModel.RootViewModel = this;
+        }
+
+        public MainWindowViewModel MainWindow
+        {
+            get => _mainWindowViewModel;
+            set
+            {
+                _mainWindowViewModel = value;
+                Notify();
+            }
+        }
+
+        public LoadingViewViewModel? LoadingView
+        {
+            get => _loadingViewViewModel;
+            set
+            {
+                _loadingViewViewModel = value;
+                Notify();
+            }
+        }
+
+        public EditorViewViewModel? EditorView
+        {
+            get => _editorViewViewModel;
+            set
+            {
+                _editorViewViewModel = value;
+                Notify();
+            }
+        }
+
+        /// <summary>
+        /// Returns a list of available view models for navigation within a view frame
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerable<ViewModelBase> GetNavigationTargets()
+        {
+            return new List<ViewModelBase>()
+            {
+                LoadingView,
+                EditorView
+            };
+        }
     }
 }

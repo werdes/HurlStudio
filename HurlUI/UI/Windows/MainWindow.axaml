@@ -15,11 +15,14 @@
         Title="HurlUI"
         x:Class="HurlUI.UI.Windows.MainWindow"
         x:Name="mainWindow"
-        x:DataType="vm:MainWindowViewModel">
+        x:DataType="vm:MainWindowViewModel"
+        
+        Initialized="On_MainWindow_Initialized"
+        >
   <Design.DataContext>
     <vm:MainWindowViewModel />
   </Design.DataContext>
- 
-  <views:MainView Margin="{Binding #mainWindow.OffScreenMargin}"></views:MainView>
+
+  <!--<views:MainView Margin="{Binding #mainWindow.OffScreenMargin}"></views:MainView>-->
   <!--<views:LoadingView></views:LoadingView>-->
 </Window>
