@@ -1,0 +1,58 @@
+<v:ViewBase xmlns="https://github.com/avaloniaui"
+            xmlns:v="clr-namespace:HurlStudio.UI.Views"
+            xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
+            xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
+            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+            Loaded="On_EditorView_Loaded"
+            x:Class="HurlStudio.UI.Views.EditorView"
+            x:DataType="vm:EditorViewViewModel">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="30" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="20" />
+    </Grid.RowDefinitions>
+
+    <Panel Grid.Row="0" Background="{DynamicResource WindowChromeBackgroundColor}" >
+      <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
+        <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Load_Tooltip }">
+          <Image Source="/Assets/Icons/open.png"
+                 Height="16"
+                 Width="16" />
+        </Button>
+        <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Save_Tooltip }">
+          <Image Source="/Assets/Icons/save.png"
+                 Height="16"
+                 Width="16" />
+        </Button>
+        <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_SaveAll_Tooltip }">
+          <Image Source="/Assets/Icons/save_all.png"
+                 Height="16"
+                 Width="16" />
+        </Button>
+        <controls:ToolbarSeparator />
+
+      </DockPanel>
+    </Panel>
+
+    <!--Dock-->
+    <DockControl Grid.Row="1"
+                 x:Name="DockControl"
+                 
+                 Margin="4"
+                 Background="Red"/>
+
+    <Panel Grid.Row="2" Background="{DynamicResource WindowChromeBackgroundColor}" >
+      <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
+        <TextBlock>Status Bar</TextBlock>
+      </DockPanel>
+    </Panel>
+  </Grid>
+</v:ViewBase>

@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NLog" Version="5.2.5" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HurlStudio.Common\HurlStudio.Common.csproj" />
+    <ProjectReference Include="..\HurlStudio.HurlLib\HurlStudio.HurlLib.csproj" />
+  </ItemGroup>
+
+</Project>

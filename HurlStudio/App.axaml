@@ -1,0 +1,49 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	           xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+	           x:Class="HurlStudio.App"
+             xmlns:idc="using:Dock.Avalonia.Controls"
+             xmlns:idcr="using:Dock.Avalonia.Controls.Recycling"
+             xmlns:ids="using:Dock.Settings"
+             xmlns:local="using:HurlStudio">
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="/UI/Resources/ColorDictionary.axaml" />
+        <ResourceInclude Source="/UI/Resources/ModernThemeDictionary.axaml" />
+      </ResourceDictionary.MergedDictionaries>
+      <idcr:ControlRecycling x:Key="ControlRecyclingKey" />
+
+      <!--Resource overrides-->
+      <!--  Window chrome-->
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarBackgroundBrush}" Color="{DynamicResource WindowChromeBackgroundColor}" />
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarButtonBackgroundBrushPointerOver}" Color="{DynamicResource NeutralControlHoverColor}" />
+      <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarButtonBackgroundBrushPressed}" Color="{DynamicResource NeutralControlPressedColor}" />
+      
+      <!--  Dock control-->
+      <SolidColorBrush x:Key="DockThemeBorderLowBrush" Color="{DynamicResource NeutralControlBorderColor}" />
+      <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="{DynamicResource NeutralControlBackgroundColor}" />
+      <SolidColorBrush x:Key="DockThemeAccentBrush" Color="{DynamicResource HighlightColor}" />
+      <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="{DynamicResource NeutralControlForegroundColor}" />
+      <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="{DynamicResource NeutralControlForegroundColor}" />
+      <SolidColorBrush x:Key="DockApplicationAccentBrushHigh" Color="{DynamicResource NeutralControlBorderHoverColor}" />
+      <SolidColorBrush x:Key="DockApplicationAccentBrushLow" Color="{DynamicResource NeutralControlBorderColor}" />
+      <SolidColorBrush x:Key="DockApplicationAccentBrushMed" Color="{DynamicResource NeutralControlBorderHoverColor}" />
+    </ResourceDictionary>
+  </Application.Resources>
+  <Application.Styles>
+    <!-- Common styles -->
+    <StyleInclude Source="/UI/Styles/MenuStyle.axaml" />
+    <StyleInclude Source="/UI/Styles/ButtonStyle.axaml" />
+
+    <actipro:ModernTheme />
+    <SimpleTheme />
+
+    <StyleInclude Source="avares://Dock.Avalonia/Themes/DockSimpleTheme.axaml" />
+
+    <Style Selector="idc|DockControl">
+      <Setter Property="(ids:DockProperties.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
+    </Style>
+  </Application.Styles>
+</Application>

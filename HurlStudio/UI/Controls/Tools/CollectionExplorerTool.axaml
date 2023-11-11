@@ -1,0 +1,29 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.Tools.CollectionExplorerTool">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="25" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Panel Grid.Row="0" Background="{DynamicResource NeutralControlBorderColor}" >
+      <DockPanel HorizontalAlignment="Left">
+        <TextBlock 
+          Margin="3,0,0,0"
+          VerticalAlignment="Center"
+          Text="{x:Static localization:Localization.View_Editor_Dock_CollectionExplorer_Title}" />
+      </DockPanel>
+
+      <DockPanel HorizontalAlignment="Right">
+        <TextBlock Text="Buttons" />
+      </DockPanel>
+    </Panel>
+  </Grid>
+</UserControl>
