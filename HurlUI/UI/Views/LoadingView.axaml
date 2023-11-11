@@ -4,23 +4,45 @@
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:v="clr-namespace:HurlUI.UI.Views"
             xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
+            xmlns:converters="clr-namespace:HurlUI.UI.Converters"
             xmlns:localization="clr-namespace:HurlUI.UI.Localization"
-            mc:Ignorable="d" 
-            d:DesignWidth="800" 
+            mc:Ignorable="d"
+            d:DesignWidth="800"
             d:DesignHeight="450"
             x:Class="HurlUI.UI.Views.LoadingView"
-            x:DataType="vm:MainViewViewModel">
+            x:DataType="vm:LoadingViewViewModel">
   <Design.DataContext>
     <vm:LoadingViewViewModel />
   </Design.DataContext>
+  <v:ViewBase.Resources>
+    <converters:LoadingViewStepConverter x:Key="LoadingViewStepConverter" />
+  </v:ViewBase.Resources>
   <DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-      <Image Height="64" Width="64" Source="/Assets/Images/icon.png" />
-      <TextBlock 
-        Foreground="DarkGray" 
-        HorizontalAlignment="Center" 
-        Text="{x:Static localization:Localization.View_Loading_Title}" />
-      <Button Content="Eh" />
+      <Image Height="64" Width="64" Source="/Assets/Images/icon.png" >
+        <Image.Effect>
+          <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity=".8" />
+        </Image.Effect>
+      </Image>
+      <TextBlock
+        Foreground="DarkGray"
+        HorizontalAlignment="Center"
+        FontSize="16"
+        Text="{x:Static localization:Localization.View_Loading_Title}" >
+        <TextBlock.Effect>
+          <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity=".3" />
+        </TextBlock.Effect>
+      </TextBlock>
+
+      <TextBlock
+        Foreground="DarkGray"
+        Opacity=".7"
+        HorizontalAlignment="Center"
+        Text="{Binding CurrentActivity, Converter={StaticResource LoadingViewStepConverter}}">
+        <TextBlock.Effect>
+          <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity=".3" />
+        </TextBlock.Effect>
+      </TextBlock>
     </StackPanel>
   </DockPanel>
 </v:ViewBase>

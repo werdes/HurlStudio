@@ -17,10 +17,9 @@
 
   <DockPanel>
     <actipro:ChromedTitleBar DockPanel.Dock="Top">
-      <!--  Background="{DynamicResource NeutralControlBackgroundColor}"-->
       <actipro:ChromedTitleBar.LeftContent>
         <StackPanel Orientation="Horizontal">
-          <Image Margin="6,0,0,0"
+          <Image Margin="10,2,0,0"
                  Source="/Assets/Images/icon.png"
                  Width="24"
                  Height="24"
@@ -34,15 +33,19 @@
 
           <Menu IsEnabled="{Binding InitializationCompleted}" Margin="6,0,0,0">
             <MenuItem VerticalAlignment="Center"
-                      Header="_File">
-              <MenuItem Header="_Open..."/>
+                      Header="{x:Static localization:Localization.View_Main_Menu_File}">
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Save}">
+                <MenuItem.Icon>
+                  <Image Width="16" Height="16" Source="/Assets/Icons/save.png"  />
+                </MenuItem.Icon>
+              </MenuItem>
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_SaveAll}">
+                <MenuItem.Icon>
+                  <Image Width="16" Height="16" Source="/Assets/Icons/save_all.png" />
+                </MenuItem.Icon>
+              </MenuItem>
               <Separator/>
-              <MenuItem Header="_Exit"/>
-            </MenuItem>
-            <MenuItem VerticalAlignment="Center"
-                      Header="_Edit">
-              <MenuItem Header="Copy"/>
-              <MenuItem Header="Paste"/>
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Exit}"/>
             </MenuItem>
           </Menu>
           <TextBlock Text="{x:Static localization:Localization.Window_Main_Title}"

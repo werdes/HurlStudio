@@ -1,17 +1,43 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-  <!-- Theme colors -->
-  <Color x:Key="HighlightColor">#57794B</Color>
-  <Color x:Key="WindowChromeBorderColor">#333333</Color>
-  <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
-  <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
-  <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
-  <Color x:Key="NeutralControlForegroundColor">#444444</Color>
-  <Color x:Key="NeutralControlPressedColor">#555555</Color>
-  <Color x:Key="NeutralControlBorderColor">#555555</Color>
 
-  <!-- Brushes -->
-  <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
+
+  <!-- Theme agnostic colors -->
+  <Color x:Key="HighlightColor">#57794B</Color>
+  <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightColor}" />
   
+  
+  <!-- Brushes -->
+  <ResourceDictionary.ThemeDictionaries>
+    <ResourceDictionary x:Key="Light">
+      <Color x:Key="WindowChromeBorderColor">#dddddd</Color>
+      <Color x:Key="WindowChromeBackgroundColor">#dddddd</Color>
+      <Color x:Key="WindowChromeTitleColor">#222222</Color>
+      <Color x:Key="NeutralControlBackgroundColor">#dddddd</Color>
+      <Color x:Key="NeutralControlHoverColor">#d4d4d4</Color>
+      <Color x:Key="NeutralControlPressedColor">#b4b4b4</Color>
+      <Color x:Key="NeutralControlBorderColor">#d4d4d4</Color>
+      <Color x:Key="NeutralControlBorderHoverColor">#e4e4e4</Color>
+      <Color x:Key="NeutralControlForegroundColor">#222222</Color>
+      
+      <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
+
+    </ResourceDictionary>
+
+    <ResourceDictionary x:Key="Dark">
+      <Color x:Key="WindowChromeBorderColor">#333333</Color>
+      <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
+      <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
+      <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
+      <Color x:Key="NeutralControlHoverColor">#444444</Color>
+      <Color x:Key="NeutralControlPressedColor">#555555</Color>
+      <Color x:Key="NeutralControlBorderColor">#555555</Color>
+      <Color x:Key="NeutralControlBorderHoverColor">#666666</Color>
+      <Color x:Key="NeutralControlForegroundColor">#dddddd</Color>
+
+      <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="#333333" />
+
+    </ResourceDictionary>
+  </ResourceDictionary.ThemeDictionaries>
+
 </ResourceDictionary>

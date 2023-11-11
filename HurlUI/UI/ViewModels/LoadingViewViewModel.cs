@@ -1,4 +1,5 @@
-﻿using HurlUI.UI.Views;
+﻿using HurlUI.Model.Enums;
+using HurlUI.UI.Views;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -12,21 +13,20 @@ namespace HurlUI.UI.ViewModels
 {
     public class LoadingViewViewModel : ViewModelBase
     {
-        private string? _dummyText;
+        private LoadingViewStep? _currentActivity;
 
-        public string? DummyText
+        public LoadingViewStep? CurrentActivity
         {
-            get => _dummyText; 
+            get => _currentActivity; 
             set
             {
-                _dummyText = value;
+                _currentActivity = value;
                 Notify();
             }
         }
 
-        public LoadingViewViewModel(ILogger<LoadingViewViewModel> logger) : base(typeof(LoadingView))
+        public LoadingViewViewModel() : base(typeof(LoadingView))
         {
-            logger.LogDebug("LoadingViewViewModel init");
         }
     }
 }

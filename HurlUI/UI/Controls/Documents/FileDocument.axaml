@@ -1,0 +1,15 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:HurlUI.UI.Controls"
+             xmlns:localization="clr-namespace:HurlUI.UI.Localization"
+             xmlns:v="clr-namespace:HurlUI.UI.Views"
+             xmlns:vm="clr-namespace:HurlUI.UI.ViewModels"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlUI.UI.Controls.Documents.FileDocument"
+             x:DataType="vm:FileDocumentViewModel">
+  <TextBlock Text="{Binding Id}">
+    
+  </TextBlock>
+</UserControl>

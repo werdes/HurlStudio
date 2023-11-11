@@ -61,11 +61,119 @@ namespace HurlUI.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.ErrorTitle} ähnelt.
+        /// </summary>
+        public static string MessageBox_ErrorTitle {
+            get {
+                return ResourceManager.GetString("MessageBox.ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.CollectionExplorer.Title} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_CollectionExplorer_Title {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.CollectionExplorer.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.FileSettings.Title} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_FileSettings_Title {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.FileSettings.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Load.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Load_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Load.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Save.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Save_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Save.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.SaveAll.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_SaveAll_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.SaveAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Loading.ActivityText.LoadingCollections} ähnelt.
+        /// </summary>
+        public static string View_Loading_ActivityText_LoadingCollections {
+            get {
+                return ResourceManager.GetString("View.Loading.ActivityText.LoadingCollections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Loading.ActivityText.LoadingEnvironments} ähnelt.
+        /// </summary>
+        public static string View_Loading_ActivityText_LoadingEnvironments {
+            get {
+                return ResourceManager.GetString("View.Loading.ActivityText.LoadingEnvironments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Loading.Title} ähnelt.
         /// </summary>
         public static string View_Loading_Title {
             get {
                 return ResourceManager.GetString("View.Loading.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.Exit} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_Exit {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.Save} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_Save {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.SaveAll} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_SaveAll {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.SaveAll", resourceCulture);
             }
         }
         

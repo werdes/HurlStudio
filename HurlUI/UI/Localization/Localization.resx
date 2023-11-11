@@ -117,8 +117,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MessageBox.ErrorTitle" xml:space="preserve">
+    <value>{MessageBox.ErrorTitle}</value>
+  </data>
+  <data name="View.Editor.Dock.CollectionExplorer.Title" xml:space="preserve">
+    <value>{View.Editor.Dock.CollectionExplorer.Title}</value>
+  </data>
+  <data name="View.Editor.Dock.FileSettings.Title" xml:space="preserve">
+    <value>{View.Editor.Dock.FileSettings.Title}</value>
+  </data>
+  <data name="View.Editor.Toolbar.Load.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Load.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.Save.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Save.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.SaveAll.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.SaveAll.Tooltip}</value>
+  </data>
+  <data name="View.Loading.ActivityText.LoadingCollections" xml:space="preserve">
+    <value>{View.Loading.ActivityText.LoadingCollections}</value>
+  </data>
+  <data name="View.Loading.ActivityText.LoadingEnvironments" xml:space="preserve">
+    <value>{View.Loading.ActivityText.LoadingEnvironments}</value>
+  </data>
   <data name="View.Loading.Title" xml:space="preserve">
     <value>{View.Loading.Title}</value>
+  </data>
+  <data name="View.Main.Menu.File" xml:space="preserve">
+    <value>{View.Main.Menu.File}</value>
+  </data>
+  <data name="View.Main.Menu.File.Exit" xml:space="preserve">
+    <value>{View.Main.Menu.File.Exit}</value>
+  </data>
+  <data name="View.Main.Menu.File.Save" xml:space="preserve">
+    <value>{View.Main.Menu.File.Save}</value>
+  </data>
+  <data name="View.Main.Menu.File.SaveAll" xml:space="preserve">
+    <value>{View.Main.Menu.File.SaveAll}</value>
   </data>
   <data name="Window.Main.Title" xml:space="preserve">
     <value>{Window.Main.Title}</value>

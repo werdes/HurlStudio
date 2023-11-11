@@ -1,0 +1,28 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20" Background="{DynamicResource NeutralControlBackgroundColor}">
+      <Button Classes="toolbarButton">
+        <Image Source="/Assets/Icons/save.png" Width="16" Height="16" />
+      </Button>
+    </Border>
+  </Design.PreviewWith>
+
+
+  <Style Selector="Button.toolbarButton">
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="BorderBrush" Value="Transparent" />
+    <Setter Property="Margin" Value="0" />
+    <Setter Property="Padding" Value="2" />
+
+    <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlBorderColor}" />
+    </Style>
+    <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
+      <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlPressedColor}" />
+    </Style>
+  </Style>
+  
+</Styles>

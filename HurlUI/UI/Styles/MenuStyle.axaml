@@ -21,12 +21,12 @@
 
   <Style Selector="MenuItem">
     <Style Selector="^:pointerover /template/ Border#root">
-      <Setter Property="Background" Value="{DynamicResource NeutralControlForegroundColor}" />
+      <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
       <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlBorderColor}" />
     </Style>
     
     <Style Selector="^:selected  /template/ Border#root">
-      <Setter Property="Background" Value="{DynamicResource NeutralControlForegroundColor}" />
+      <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
       <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlBorderColor}" />
     </Style>
 

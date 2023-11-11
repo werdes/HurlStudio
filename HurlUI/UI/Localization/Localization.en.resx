@@ -117,7 +117,13 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="View.Editor.Dock.CollectionExplorer.Title" xml:space="preserve">
+    <value>Collections</value>
+  </data>
   <data name="View.Loading.Title" xml:space="preserve">
-    <value>Loading...</value>
+    <value>Loading</value>
+  </data>
+  <data name="Window.Main.Title" xml:space="preserve">
+    <value>HurlUI</value>
   </data>
 </root>

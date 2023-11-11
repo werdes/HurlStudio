@@ -4,8 +4,11 @@ using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Data.Core.Plugins;
 using Avalonia.Markup.Xaml;
 using HurlUI.Common;
+using HurlUI.Model.UserSettings;
+using HurlUI.Services.UserSettings;
 using HurlUI.UI;
 using HurlUI.UI.Controls;
+using HurlUI.UI.Localization;
 using HurlUI.UI.ViewModels;
 using HurlUI.UI.Views;
 using HurlUI.UI.Windows;
@@ -15,12 +18,26 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Config;
 using NLog.Extensions.Logging;
+using NLog.Fluent;
 using System;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.IO;
 using System.Security.AccessControl;
 using System.Text;
+using System.Threading.Tasks;
+using System.Threading;
+using MsBox.Avalonia;
+using HurlUI.Collections.Utility;
+using MsBox.Avalonia.Base;
+using MsBox.Avalonia.Enums;
+using HurlUI.Services.Editor;
+using Dock.Model.Mvvm.Controls;
+using HurlUI.UI.Dock;
+using Avalonia.Styling;
+using HurlUI.Model.Enums;
+using HurlUI.UI.Controls.Tools;
+using HurlUI.UI.Controls.Documents;
 
 namespace HurlUI;
 
@@ -34,7 +51,6 @@ public partial class App : Application
     /// </summary>
     public override void Initialize()
     {
-        UI.Localization.Localization.Culture = CultureInfo.InvariantCulture;
         AvaloniaXamlLoader.Load(this);
     }
 
@@ -50,26 +66,69 @@ public partial class App : Application
 
         //if (!Design.IsDesignMode)
         //{
-        BuildServiceProvider();
-
-
-        if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+        try
         {
-            MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
-            MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
-            if (mainWindow != null)
-            {
-                mainWindow.DataContext = viewModel;
-                desktop.MainWindow = mainWindow;
-            }
-        }
-        //}
+            BuildServiceProvider();
+            SetUiCulture();
+            SetTheme();
 
-        base.OnFrameworkInitializationCompleted();
+            RegisterControls();
+            RegisterLayoutControlViewmodels();
+            RegisterViews();
+            RegisterViewModelHierarchy();
+
+            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            {
+                MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
+                MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
+                if (mainWindow != null)
+                {
+                    mainWindow.DataContext = viewModel;
+                    desktop.MainWindow = mainWindow;
+                }
+            }
+            //}
+
+            base.OnFrameworkInitializationCompleted();
 
 #if DEBUG
-        this.AttachDevTools();
+            this.AttachDevTools();
 #endif
+        }
+        catch (Exception ex)
+        {
+            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, Icon.Error);
+            box.ShowWindowAsync();
+        }
+    }
+
+
+    /// <summary>
+    /// Sets the UI Culture for Localization
+    /// </summary>
+    private void SetUiCulture()
+    {
+        IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
+        UserSettings? userSettings = userSettingsService.GetUserSettings(false);
+
+        if (userSettings != null)
+        {
+            Localization.Culture = userSettings?.UiLanguage ?? CultureInfo.InvariantCulture;
+        }
+    }
+
+    /// <summary>
+    /// Sets the confirgured Theme
+    /// </summary>
+    private void SetTheme()
+    {
+        IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
+        UserSettings? userSettings = userSettingsService.GetUserSettings(false);
+
+        if (Application.Current != null && userSettings != null)
+        {
+            Application.Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
+        }
     }
 
     /// <summary>
@@ -79,9 +138,32 @@ public partial class App : Application
     {
         IServiceCollection services = ConfigureServices();
         Services = services.BuildServiceProvider();
+    }
 
-        RegisterViews();
-        RegisterViewModelHierarchy();
+    /// <summary>
+    /// Registers the viewModels in the tool/document service manager 
+    /// </summary>
+    private static void RegisterLayoutControlViewmodels()
+    {
+        ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
+        ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
+
+        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
+        toolControlBuilder.RegisterProvider<FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsToolViewModel>());
+
+        documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
+    }
+
+    /// <summary>
+    /// Registers user controls in the ControlBase service manager
+    /// </summary>
+    private static void RegisterControls()
+    {
+        ServiceManager<ControlBase> controlBuilder = Services.GetRequiredService<ServiceManager<ControlBase>>();
+        controlBuilder.RegisterProvider<CollectionExplorerTool>(() => Services.GetRequiredService<CollectionExplorerTool>());
+        controlBuilder.RegisterProvider<FileSettingsTool>(() => Services.GetRequiredService<FileSettingsTool>());
+        controlBuilder.RegisterProvider<FileDocument>(() => Services.GetRequiredService<FileDocument>());
+        
     }
 
     /// <summary>
@@ -116,7 +198,7 @@ public partial class App : Application
         Config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
                                            .AddJsonFile("appsettings.json", true)
                                            .Build();
-        string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GlobalConstants.APPLICATION_FOLDER_NAME);
+        string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GlobalConstants.APPLICATION_DIRECTORY_NAME);
         CreateRequiredDirectories(baseDir);
 
         services.AddLogging(loggingBuilder =>
@@ -125,7 +207,20 @@ public partial class App : Application
             loggingBuilder.SetMinimumLevel(LogLevel.Trace);
             loggingBuilder.AddNLog(InitializeLogging(baseDir));
         });
+        services.AddSingleton<LayoutFactory>();
+
         services.AddSingleton<IConfiguration>(Config);
+        services.AddSingleton<IUserSettingsService, JsonUserSettingsService>();
+        services.AddSingleton<IniSettingParser>();
+        services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
+        services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
+        services.AddSingleton<DockControlLocator>();
+
+        services.AddSingleton<ICollectionService, CollectionService>();
+        services.AddSingleton<IEnvironmentService, EnvironmentService>();
+
+        ConfigureLayoutControlViewmodels(services);
+        ConfigureControls(services);
         ConfigureViews(services);
         ConfigureViewModels(services);
 
@@ -143,11 +238,7 @@ public partial class App : Application
 
         services.AddSingleton<LoadingViewViewModel>();
         services.AddSingleton<EditorViewViewModel>();
-        services.AddSingleton<MainViewViewModel>(); // provider => new MainViewViewModel(provider.GetRequiredService<MainWindowViewModel>())
-        //{
-        //    LoadingView = provider.GetRequiredService<LoadingViewViewModel>(),
-        //    EditorView = provider.GetRequiredService<EditorViewViewModel>()
-        //});
+        services.AddSingleton<MainViewViewModel>();
 
         services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
                                                                              .Register(provider.GetRequiredService<MainViewViewModel>()));
@@ -163,7 +254,7 @@ public partial class App : Application
         services.AddSingleton<ServiceManager<ViewBase>>(provider => new ServiceManager<ViewBase>());
 
         // View Frame
-        services.AddSingleton<ViewFrame>(provider => new ViewFrame(provider.GetRequiredService<MainViewViewModel>(), 
+        services.AddSingleton<ViewFrame>(provider => new ViewFrame(provider.GetRequiredService<MainViewViewModel>(),
                                                                    provider.GetRequiredService<ServiceManager<ViewBase>>()));
 
         // Views
@@ -176,6 +267,37 @@ public partial class App : Application
     }
 
     /// <summary>
+    /// Configures the tool/document viewmodels
+    /// </summary>
+    /// <param name="services"></param>
+    private static void ConfigureLayoutControlViewmodels(IServiceCollection services)
+    {
+        // Viewmodel Builders
+        services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
+        services.AddSingleton<ServiceManager<Document>>(provider => new ServiceManager<Document>());
+
+        // View models
+        services.AddSingleton<CollectionExplorerToolViewModel>();
+        services.AddTransient<FileSettingsToolViewModel>();
+        services.AddTransient<FileDocumentViewModel>();    
+    }
+
+    /// <summary>
+    /// Configures the controls
+    /// </summary>
+    /// <param name="services"></param>
+    private static void ConfigureControls(IServiceCollection services)
+    {
+        // Control Builder
+        services.AddSingleton<ServiceManager<ControlBase>>(provider => new ServiceManager<ControlBase>());
+
+        // Controls
+        services.AddTransient<CollectionExplorerTool>();
+        services.AddTransient<FileSettingsTool>();
+        services.AddTransient<FileDocument>();
+    }
+
+    /// <summary>
     /// Creates the required directories (under <paramref name="baseDir"/> folder)
     /// </summary>
     /// <param name="baseDir">The base directory (most likely the ApplicationData special folder)</param>
@@ -184,7 +306,8 @@ public partial class App : Application
         string[] requiredDirectories = new string[]
         {
             baseDir,
-            Path.Combine(baseDir, "log"),
+            Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME),
+            Path.Combine(baseDir, GlobalConstants.ENVIRONMENTS_DIRECTORY_NAME)
         };
 
         foreach (string directory in requiredDirectories)
@@ -194,6 +317,7 @@ public partial class App : Application
                 Directory.CreateDirectory(directory);
             }
         }
+
     }
 
     /// <summary>
@@ -206,12 +330,12 @@ public partial class App : Application
         NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
         {
             Name = "LogTarget",
-            FileName = Path.Combine(baseDir, "log", "hurlui.log"),
+            FileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlui.log"),
             Encoding = Encoding.UTF8,
             MaxArchiveFiles = 3,
             ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Sequence,
             ArchiveAboveSize = 10485760,
-            ArchiveFileName = Path.Combine(baseDir, "log", "hurlui.{#######}.a"),
+            ArchiveFileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlui.{#######}.a"),
             Layout = @"${longdate}| ${level:upperCase=true:padding=5}| ${callsite:includSourcePath=true:padding=100}| ${message} ${exception:format=ToString}"
             //Layout = @"${longdate}|${level}|${message} |${all-event-properties} ${exception:format=tostring}"
         };

@@ -10,13 +10,15 @@ namespace HurlUI.Collections.Utility
 {
     public class IniSettingParser : ISettingParser
     {
-        private static Lazy<IniSettingParser> _instance = new Lazy<IniSettingParser>(() => new IniSettingParser());
         private static readonly Dictionary<string, Type> _possibleSettingTypes = new Dictionary<string, Type>()
         {
             { ProxySetting.CONFIGURATION_NAME, typeof(ProxySetting) }
         };
 
-        public static IniSettingParser Instance => _instance.Value;
+        public IniSettingParser()
+        {
+            
+        }
 
         /// <summary>
         /// Returns a IHurlSetting object from a configuration string

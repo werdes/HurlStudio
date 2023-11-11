@@ -1,4 +1,5 @@
-﻿using HurlUI.Collections.Model.Collection;
+﻿using HurlUI.Collections.Model;
+using HurlUI.Collections.Model.Collection;
 using HurlUI.Collections.Model.Serializer;
 using HurlUI.Collections.Settings;
 using HurlUI.Common.Enums;
@@ -10,18 +11,17 @@ namespace HurlUI.Collections.Utility
 {
     public class IniCollectionSerializer : ICollectionSerializer
     {
-        private static Lazy<IniCollectionSerializer> _instance = new Lazy<IniCollectionSerializer>(() => new IniCollectionSerializer());
-        private static readonly Lazy<Logger> _lazyLog = new Lazy<Logger>(() => LogManager.GetCurrentClassLogger());
-        private static NLog.Logger _log => _lazyLog.Value;
+        //private static Lazy<IniCollectionSerializer> _instance = new Lazy<IniCollectionSerializer>(() => new IniCollectionSerializer());
+        //private static readonly Lazy<Logger> _lazyLog = new Lazy<Logger>(() => LogManager.GetCurrentClassLogger());
+        //private static NLog.Logger _log => _lazyLog.Value;
+        //public static IniCollectionSerializer Instance => _instance.Value;
+        private IniSettingParser _settingParser;
 
-        public static IniCollectionSerializer Instance => _instance.Value;
-
-        public IniCollectionSerializer()
+        public IniCollectionSerializer(IniSettingParser settingParser)
         {
+            this._settingParser = settingParser;
         }
 
-
-        public const string FILE_EXTENSION = ".hurlc";
 
         private const string SECTION_GENERAL_HEADER = "[Collection]";
         private const string SECTION_GENERAL_NAME_KEY = "name";
@@ -29,6 +29,7 @@ namespace HurlUI.Collections.Utility
         private const string SECTION_COLLECTION_SETTINGS_HEADER = "[CollectionSettings]";
         private const string SECTION_FILE_SETTINGS_HEADER = "[FileSettings]";
         private const string SECTION_FILE_SETTINGS_LOCATION_KEY = "location";
+        private const string SECTION_FILE_SETTINGS_TITLE_KEY = "title";
         private const string SECTION_FOLDER_SETTINGS_HEADER = "[FolderSettings]";
         private const string SECTION_FOLDER_SETTINGS_LOCATION_KEY = "location";
 
@@ -88,7 +89,7 @@ namespace HurlUI.Collections.Utility
                 else
                 {
                     // Serializable setting
-                    IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
+                    IHurlSetting? hurlSetting = _settingParser.Parse(line);
                     if (hurlSetting != null)
                     {
                         hurlFolder.FolderSettings.Add(hurlSetting);
@@ -110,15 +111,20 @@ namespace HurlUI.Collections.Utility
             foreach (string line in lines)
             {
                 string locationKey = SECTION_FILE_SETTINGS_LOCATION_KEY + "=";
+                string titleKey = SECTION_FILE_SETTINGS_TITLE_KEY + "=";
                 if (line.StartsWith(locationKey))
                 {
                     // .hurl file location
                     hurlFile.FileLocation = line.Split('=').Get(1) ?? string.Empty;
                 }
+                else if(line.StartsWith(titleKey))
+                {
+                    hurlFile.FileTitle = line.Split('=').Get(1) ?? string.Empty;
+                }
                 else
                 {
                     // Serializable setting
-                    IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
+                    IHurlSetting? hurlSetting = _settingParser.Parse(line);
                     if (hurlSetting != null)
                     {
                         hurlFile.FileSettings.Add(hurlSetting);
@@ -138,7 +144,7 @@ namespace HurlUI.Collections.Utility
         {
             foreach (string line in lines)
             {
-                IHurlSetting? hurlSetting = IniSettingParser.Instance.Parse(line);
+                IHurlSetting? hurlSetting = _settingParser.Parse(line);
                 if (hurlSetting != null)
                 {
                     collection.CollectionSettings.Add(hurlSetting);

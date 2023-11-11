@@ -5,8 +5,9 @@ namespace HurlUI.UI.Views
 {
     public partial class LoadingView : ViewBase
     {
-        public LoadingView() : base(typeof(LoadingViewViewModel))
+        public LoadingView(LoadingViewViewModel viewModel) : base(typeof(LoadingViewViewModel))
         {
+            this.DataContext = viewModel;
             InitializeComponent();
         }
     }

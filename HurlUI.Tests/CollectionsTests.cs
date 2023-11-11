@@ -12,7 +12,9 @@ namespace HurlUI.Tests
         [TestMethod]
         public void TestValidCollection()
         {
-            HurlCollection collection = IniCollectionSerializer.Instance.DeserializeFileAsync(
+            IniCollectionSerializer iniCollectionSerializer = new IniCollectionSerializer(new IniSettingParser());
+
+            HurlCollection collection = iniCollectionSerializer.DeserializeFileAsync(
                 Path.Combine("Assets", "Collections", "ValidCollection.hurlc"), Encoding.UTF8).Result;
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection.Name.Equals("Valid collection"));
