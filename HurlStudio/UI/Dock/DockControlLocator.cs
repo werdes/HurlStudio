@@ -20,9 +20,9 @@ namespace HurlStudio.UI.Dock
 
         public DockControlLocator(ILogger<DockControlLocator> logger, IConfiguration configuration, ServiceManager<ControlBase> controlBuilder)
         {
-            this._log = logger;
-            this._configuration = configuration;
-            this._controlBuilder = controlBuilder;
+            _log = logger;
+            _configuration = configuration;
+            _controlBuilder = controlBuilder;
         }
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace HurlStudio.UI.Dock
         {
             if (data is Tool || data is Document)
             {
-                ControlBase[] controls = this._controlBuilder.GetInstancesOfAllRegisteredServices();
+                ControlBase[] controls = _controlBuilder.GetInstancesOfAllRegisteredServices();
                 ControlBase? selectedControl = controls.Where(x => x.AttachedViewModelType == data.GetType()).FirstOrDefault();
 
                 if (selectedControl != null)

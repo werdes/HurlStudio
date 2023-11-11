@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--glob";
         private string _glob;
 
-        public GlobArgument(string glob) => this._glob = glob;
+        public GlobArgument(string glob) => _glob = glob;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._glob
+                _glob
             };
         }
     }

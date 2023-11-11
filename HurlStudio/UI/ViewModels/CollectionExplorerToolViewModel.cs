@@ -18,7 +18,7 @@ namespace HurlStudio.UI.ViewModels
             this.CanFloat = false;
             this.CanPin = false;
 
-            this._viewModel = editorViewViewModel;
+            _viewModel = editorViewViewModel;
         }
     }
 }

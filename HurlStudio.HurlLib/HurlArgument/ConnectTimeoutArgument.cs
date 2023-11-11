@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--connect-timeout";
         private int _seconds;
 
-        public ConnectTimeoutArgument(int seconds) => this._seconds = seconds;
+        public ConnectTimeoutArgument(int seconds) => _seconds = seconds;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._seconds.ToString()
+                _seconds.ToString()
             };
         }
     }

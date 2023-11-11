@@ -35,11 +35,11 @@ namespace HurlStudio.UI.Dock
 
         public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ControlBase> controlBuilder)
         {
-            this._configuration = configuration;
-            this._log = logger;
-            this._toolLayoutBuilder = toolLayoutBuilder;
-            this._documentLayoutBuilder = documentLayoutBuilder;
-            this._controlBuilder = controlBuilder;
+            _configuration = configuration;
+            _log = logger;
+            _toolLayoutBuilder = toolLayoutBuilder;
+            _documentLayoutBuilder = documentLayoutBuilder;
+            _controlBuilder = controlBuilder;
         }
 
         /// <summary>
@@ -48,13 +48,13 @@ namespace HurlStudio.UI.Dock
         /// <returns></returns>
         public override IRootDock CreateLayout()
         {
-            CollectionExplorerToolViewModel collectionExplorer = this._toolLayoutBuilder.Get<CollectionExplorerToolViewModel>();
+            CollectionExplorerToolViewModel collectionExplorer = _toolLayoutBuilder.Get<CollectionExplorerToolViewModel>();
             collectionExplorer.Id = COLLECTION_EXPLORER_TOOL_ID;
 
-            FileSettingsToolViewModel fileSettings = this._toolLayoutBuilder.Get<FileSettingsToolViewModel>();
+            FileSettingsToolViewModel fileSettings = _toolLayoutBuilder.Get<FileSettingsToolViewModel>();
             fileSettings.Id = FILE_SETTINGS_TOOL_ID;
 
-            FileDocumentViewModel fileDocument = this._documentLayoutBuilder.Get<FileDocumentViewModel>();
+            FileDocumentViewModel fileDocument = _documentLayoutBuilder.Get<FileDocumentViewModel>();
             fileDocument.Id = Guid.NewGuid().ToString();
             fileDocument.Title = "default";
 
@@ -62,7 +62,7 @@ namespace HurlStudio.UI.Dock
             list.Add(fileDocument);
             for(int i = 0; i < 15; i++)
             {
-                FileDocumentViewModel fileDocument2 = this._documentLayoutBuilder.Get<FileDocumentViewModel>();
+                FileDocumentViewModel fileDocument2 = _documentLayoutBuilder.Get<FileDocumentViewModel>();
                 fileDocument2.Id = Guid.NewGuid().ToString();
                 fileDocument2.Title = fileDocument2.Id.Split('-').First();
                 list.Add(fileDocument2);
@@ -145,8 +145,8 @@ namespace HurlStudio.UI.Dock
             rootDock.DefaultDockable = windowLayout;
 
 
-            this._rootDock = rootDock;
-            this._collectionExplorer = collectionExplorer;
+            _rootDock = rootDock;
+            _collectionExplorer = collectionExplorer;
             return rootDock;
 
             //RootDock dockContainer = new RootDock();
@@ -160,7 +160,7 @@ namespace HurlStudio.UI.Dock
             //rootDock.DefaultDockable = dockContainer;
             //rootDock.VisibleDockables = CreateList<IDockable>(dockContainer);
 
-            //this._rootDock = rootDock;
+            //_rootDock = rootDock;
 
             //return rootDock;
         }
@@ -177,8 +177,8 @@ namespace HurlStudio.UI.Dock
 
             DockableLocator = new Dictionary<string, Func<IDockable?>>()
             {
-                [MAIN_DOCK_ID] = () => this._rootDock,
-                [COLLECTION_EXPLORER_TOOL_ID] = () => this._collectionExplorer
+                [MAIN_DOCK_ID] = () => _rootDock,
+                [COLLECTION_EXPLORER_TOOL_ID] = () => _collectionExplorer
             };
 
             HostWindowLocator = new Dictionary<string, Func<IHostWindow?>>

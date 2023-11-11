@@ -23,11 +23,11 @@ namespace HurlStudio.Services.Editor
 
         public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService)
         {
-            this._log = logger;
-            this._configuration = configuration;
-            this._collectionSerializer = collectionSerializer;
-            this._environmentSerializer = environmentSerializer;
-            this._userSettingsService = userSettingsService;
+            _log = logger;
+            _configuration = configuration;
+            _collectionSerializer = collectionSerializer;
+            _environmentSerializer = environmentSerializer;
+            _userSettingsService = userSettingsService;
         }
 
         /// <summary>

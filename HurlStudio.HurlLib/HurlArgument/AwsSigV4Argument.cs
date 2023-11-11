@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--aws-sigv4";
         private string _service;
 
-        public AwsSigV4Argument(string service) => this._service = service;
+        public AwsSigV4Argument(string service) => _service = service;
         
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._service
+                _service
             };
         }
     }

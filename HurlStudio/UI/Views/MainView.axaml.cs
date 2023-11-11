@@ -41,14 +41,14 @@ namespace HurlStudio.UI.Views
 
         public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService) : base(typeof(MainViewViewModel))
         {
-            this._viewModel = viewModel;
-            this._viewFrame = viewFrame;
+            _viewModel = viewModel;
+            _viewFrame = viewFrame;
 
-            this._log = logger;
-            this._configuration = configuration;
-            this._userSettingsService = userSettingsService;
-            this._collectionService = collectionService;
-            this._environmentService = environmentService;
+            _log = logger;
+            _configuration = configuration;
+            _userSettingsService = userSettingsService;
+            _collectionService = collectionService;
+            _environmentService = environmentService;
 
             this.DataContext = _viewModel;
 

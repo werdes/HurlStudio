@@ -11,9 +11,9 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--resolve";
         private string _resolveString;
 
-        public ResolveArgument(string resolveString) => this._resolveString = resolveString;
+        public ResolveArgument(string resolveString) => _resolveString = resolveString;
         public ResolveArgument(string host, ushort port, string address) => 
-            this._resolveString = $"{host}:{port}:{address}";
+            _resolveString = $"{host}:{port}:{address}";
 
         /// <summary>
         /// Returns the arguments
@@ -24,7 +24,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._resolveString
+                _resolveString
             };
         }
     }

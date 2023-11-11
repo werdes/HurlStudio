@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--max-redirs";
         private int _maxRedirections;
 
-        public MaxRedirectionsArgument(int maxRedirections) => this._maxRedirections = maxRedirections;
+        public MaxRedirectionsArgument(int maxRedirections) => _maxRedirections = maxRedirections;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._maxRedirections.ToString()
+                _maxRedirections.ToString()
             };
         }
     }

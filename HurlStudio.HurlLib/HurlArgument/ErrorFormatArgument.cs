@@ -17,7 +17,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--error-format";
         private Format _format;
 
-        public ErrorFormatArgument(Format format) => this._format = format;
+        public ErrorFormatArgument(Format format) => _format = format;
 
         /// <summary>
         /// Returns the arguments
@@ -28,7 +28,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._format.ToString()
+                _format.ToString()
             };
         }
     }

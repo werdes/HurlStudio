@@ -15,13 +15,13 @@ namespace HurlStudio.HurlLib.HurlArgument
         /// constructor
         /// </summary>
         /// <param name="retryInterval">Duration between each retry in ms</param>
-        public RetryIntervalArgument(int retryInterval) => this._retryInterval = retryInterval;
+        public RetryIntervalArgument(int retryInterval) => _retryInterval = retryInterval;
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="retryInterval">Duration between each retry</param>
-        public RetryIntervalArgument(TimeSpan retryInterval) => this._retryInterval = (int)retryInterval.TotalMilliseconds;
+        public RetryIntervalArgument(TimeSpan retryInterval) => _retryInterval = (int)retryInterval.TotalMilliseconds;
 
         /// <summary>
         /// Returns the arguments
@@ -32,7 +32,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._retryInterval.ToString()
+                _retryInterval.ToString()
             };
         }
     }

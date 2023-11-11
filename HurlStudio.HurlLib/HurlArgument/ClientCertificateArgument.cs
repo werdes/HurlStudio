@@ -11,8 +11,8 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--cert";
         private string _certificate;
 
-        public ClientCertificateArgument(string certificate) => this._certificate = certificate;
-        public ClientCertificateArgument(string certificate, string password) => this._certificate = $"{certificate}:{password}";
+        public ClientCertificateArgument(string certificate) => _certificate = certificate;
+        public ClientCertificateArgument(string certificate, string password) => _certificate = $"{certificate}:{password}";
 
         /// <summary>
         /// Returns the arguments
@@ -23,7 +23,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._certificate
+                _certificate
             };
         }
     }

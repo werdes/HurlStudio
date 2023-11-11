@@ -11,8 +11,8 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--connect-to";
         private string _connectToString;
 
-        public ConnectToArgument(string connectToString) => this._connectToString = connectToString;
-        public ConnectToArgument(string host1, ushort port1, string host2, ushort port2) => this._connectToString = $"{host1}:{port1}:{host2}:{port2}";
+        public ConnectToArgument(string connectToString) => _connectToString = connectToString;
+        public ConnectToArgument(string host1, ushort port1, string host2, ushort port2) => _connectToString = $"{host1}:{port1}:{host2}:{port2}";
 
         /// <summary>
         /// Returns the arguments
@@ -23,7 +23,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._connectToString
+                _connectToString
             };
         }
     }

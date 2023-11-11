@@ -11,8 +11,8 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--noproxy";
         private string _hosts;
 
-        public NoProxyArgument(string file) => this._hosts = file;
-        public NoProxyArgument(IEnumerable<string> hosts) => this._hosts = string.Join(",", hosts);
+        public NoProxyArgument(string file) => _hosts = file;
+        public NoProxyArgument(IEnumerable<string> hosts) => _hosts = string.Join(",", hosts);
 
         /// <summary>
         /// Returns the arguments
@@ -23,7 +23,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._hosts
+                _hosts
             };
         }
     }

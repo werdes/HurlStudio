@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--key";
         private string _keyFileName;
 
-        public KeyArgument(string keyFileName) => this._keyFileName = keyFileName;
+        public KeyArgument(string keyFileName) => _keyFileName = keyFileName;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._keyFileName
+                _keyFileName
             };
         }
     }

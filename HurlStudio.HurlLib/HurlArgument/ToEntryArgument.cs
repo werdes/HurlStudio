@@ -15,7 +15,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         /// constructor
         /// </summary>
         /// <param name="entryNumber">execute file up to this request, ignore the remaining requests</param>
-        public ToEntryArgument(int entryNumber) => this._entryNumber = entryNumber;
+        public ToEntryArgument(int entryNumber) => _entryNumber = entryNumber;
 
         /// <summary>
         /// Returns the arguments
@@ -26,7 +26,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._entryNumber.ToString()
+                _entryNumber.ToString()
             };
         }
     }

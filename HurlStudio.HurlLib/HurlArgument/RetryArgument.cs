@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--retry";
         private int _maxRetries;
 
-        public RetryArgument(int maxRetries) => this._maxRetries = maxRetries;
+        public RetryArgument(int maxRetries) => _maxRetries = maxRetries;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._maxRetries.ToString()
+                _maxRetries.ToString()
             };
         }
     }

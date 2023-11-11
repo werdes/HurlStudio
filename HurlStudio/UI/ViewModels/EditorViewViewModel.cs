@@ -25,40 +25,40 @@ namespace HurlStudio.UI.ViewModels
 
         public EditorViewViewModel(LayoutFactory layoutFactory, ILogger<EditorViewViewModel> logger) : base(typeof(EditorView))
         {
-            this._collections = new ObservableCollection<HurlCollection>();
-            this._environments = new ObservableCollection<HurlEnvironment>();
+            _collections = new ObservableCollection<HurlCollection>();
+            _environments = new ObservableCollection<HurlEnvironment>();
 
-            this._log = logger;
+            _log = logger;
             
         }
 
 
         public ObservableCollection<HurlCollection> Collections
         {
-            get => this._collections;
+            get => _collections;
             set
             {
-                this._collections = value;
+                _collections = value;
                 Notify();
             }
         }
 
         public ObservableCollection<HurlEnvironment> Environments
         {
-            get => this._environments;
+            get => _environments;
             set
             {
-                this._environments = value;
+                _environments = value;
                 Notify();
             }
         }
 
         //public IRootDock? Layout
         //{
-        //    get => this._layout;
+        //    get => _layout;
         //    set
         //    {
-        //        this._layout = value;
+        //        _layout = value;
         //        Notify();
         //    }
         //}

@@ -16,7 +16,7 @@ namespace HurlStudio.HurlLib.HurlRunner
         /// Constructor with path for executable
         /// </summary>
         /// <param name="executablePath">path to hurl executable</param>
-        public ExecutableHurlRunner(string executablePath) => this._executablePath = executablePath;
+        public ExecutableHurlRunner(string executablePath) => _executablePath = executablePath;
 
         /// <summary>
         /// Runs hurl via executable

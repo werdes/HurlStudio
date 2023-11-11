@@ -17,16 +17,16 @@ namespace HurlStudio.UI.Views
 
         public EditorView(EditorViewViewModel viewModel, ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, DockControlLocator dockControlLocator) : base(typeof(EditorViewViewModel))
         {
-            this._viewModel = viewModel;
-            this._log = logger;
-            this._configuration = configuration;
-            this._layoutFactory = layoutFactory;
-            this._locator = dockControlLocator;
+            _viewModel = viewModel;
+            _log = logger;
+            _configuration = configuration;
+            _layoutFactory = layoutFactory;
+            _locator = dockControlLocator;
 
             this.DataContext = viewModel;
             this.DebugFactoryEvents(layoutFactory);
 
-            this.DataTemplates.Add(this._locator);
+            this.DataTemplates.Add(_locator);
 
             InitializeComponent();
         }
@@ -38,11 +38,11 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            this.DockControl.Layout = this._layoutFactory.CreateLayout();
+            this.DockControl.Layout = _layoutFactory.CreateLayout();
 
             if (this.DockControl.Layout != null)
             {
-                this._layoutFactory.InitLayout(this.DockControl.Layout);
+                _layoutFactory.InitLayout(this.DockControl.Layout);
             }
         }
 

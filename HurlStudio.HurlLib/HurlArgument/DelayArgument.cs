@@ -11,8 +11,8 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--delay";
         private int _delay;
 
-        public DelayArgument(int delay) => this._delay = delay;
-        public DelayArgument(TimeSpan delay) => this._delay = (int)delay.TotalMilliseconds;
+        public DelayArgument(int delay) => _delay = delay;
+        public DelayArgument(TimeSpan delay) => _delay = (int)delay.TotalMilliseconds;
 
         /// <summary>
         /// Returns the arguments
@@ -23,7 +23,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._delay.ToString()
+                _delay.ToString()
             };
         }
     }

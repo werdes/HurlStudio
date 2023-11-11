@@ -61,9 +61,9 @@ namespace HurlStudio.UI.ViewModels
 
         public MainWindowViewModel() : base(typeof(MainWindow))
         {
-            this._isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
-            this._isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
-            this._isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
+            _isWindows = RuntimeInformation.IsOSPlatform(OSPlatform.Windows);
+            _isLinux = RuntimeInformation.IsOSPlatform(OSPlatform.Linux);
+            _isMac = RuntimeInformation.IsOSPlatform(OSPlatform.OSX);
         }
     }
 }

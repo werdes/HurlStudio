@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--file-root";
         private string _directory;
 
-        public FileRootArgument(string directory) => this._directory = directory;
+        public FileRootArgument(string directory) => _directory = directory;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._directory
+                _directory
             };
         }
     }

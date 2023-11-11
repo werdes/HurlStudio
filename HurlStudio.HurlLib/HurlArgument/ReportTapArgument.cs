@@ -11,7 +11,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--report-tap";
         private string _file;
 
-        public ReportTapArgument(string file) => this._file = file;
+        public ReportTapArgument(string file) => _file = file;
 
         /// <summary>
         /// Returns the arguments
@@ -22,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._file
+                _file
             };
         }
     }

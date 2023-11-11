@@ -19,7 +19,7 @@ namespace HurlStudio.Collections.Utility
 
         public IniCollectionSerializer(IniSettingParser settingParser)
         {
-            this._settingParser = settingParser;
+            _settingParser = settingParser;
         }
 
 

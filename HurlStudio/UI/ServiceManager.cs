@@ -47,14 +47,14 @@ namespace HurlStudio.UI
         /// <exception cref="InvalidOperationException">if a service of the given type has already been registered</exception>
         public ServiceManager<T> RegisterProvider<TService>(Func<T> provider)
         {
-            lock (this._instances)
+            lock (_instances)
             {
-                if (this._instances.ContainsKey(typeof(TService)) || this._providers.ContainsKey(typeof(TService)))
+                if (_instances.ContainsKey(typeof(TService)) || _providers.ContainsKey(typeof(TService)))
                 {
                     throw new InvalidOperationException($"Service with type {typeof(TService).Name} is already registered");
                 }
 
-                this._providers[typeof(TService)] = provider;
+                _providers[typeof(TService)] = provider;
             }
 
             return this;
@@ -70,15 +70,15 @@ namespace HurlStudio.UI
             if (!serviceType.IsAssignableTo(typeof(T)))
                 throw new InvalidOperationException($"Service type {serviceType} is not assignable to {typeof(T)}");
 
-            if (this._instances.ContainsKey(serviceType))
+            if (_instances.ContainsKey(serviceType))
             {
-                T instance = this._instances[serviceType];
+                T instance = _instances[serviceType];
                 return instance;
             }
 
-            if (this._providers.ContainsKey(serviceType))
+            if (_providers.ContainsKey(serviceType))
             {
-                Func<T> provider = this._providers[serviceType];
+                Func<T> provider = _providers[serviceType];
                 return provider();
             }
 
@@ -99,8 +99,8 @@ namespace HurlStudio.UI
         public Type[] GetAllKeys()
         {
             List<Type> types = new List<Type>();
-            types.AddRange(this._providers.Keys);
-            types.AddRange(this._instances.Keys);
+            types.AddRange(_providers.Keys);
+            types.AddRange(_instances.Keys);
             return types.ToArray();
         }
 
@@ -113,8 +113,8 @@ namespace HurlStudio.UI
         public T[] GetInstancesOfAllRegisteredServices()
         {
             List<T> instances = new List<T>();
-            instances.AddRange(this._instances.Values);
-            instances.AddRange(this._providers.Select(x => x.Value()));
+            instances.AddRange(_instances.Values);
+            instances.AddRange(_providers.Select(x => x.Value()));
             return instances.ToArray();
         }
     }

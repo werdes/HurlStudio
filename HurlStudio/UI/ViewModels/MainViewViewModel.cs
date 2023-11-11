@@ -32,7 +32,7 @@ namespace HurlStudio.UI.ViewModels
 
         public MainViewViewModel() : base(typeof(MainView))
         {
-            this._initializationCompleted = false;
+            _initializationCompleted = false;
         }
 
         public MainViewViewModel(MainWindowViewModel mainWindowViewModel) : this()
@@ -40,8 +40,8 @@ namespace HurlStudio.UI.ViewModels
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindowViewModel.MainViewViewModel = this;
             
-            //this._editorViewViewModel.RootViewModel = this;
-            //this._loadingViewViewModel.RootViewModel = this;
+            //_editorViewViewModel.RootViewModel = this;
+            //_loadingViewViewModel.RootViewModel = this;
         }
 
         public MainWindowViewModel MainWindow

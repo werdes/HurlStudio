@@ -11,8 +11,8 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--max-time";
         private int _maxSeconds;
 
-        public MaxTimeArgument(int maxSeconds) => this._maxSeconds = maxSeconds;
-        public MaxTimeArgument(TimeSpan maxTime) => this._maxSeconds = (int)maxTime.TotalSeconds;
+        public MaxTimeArgument(int maxSeconds) => _maxSeconds = maxSeconds;
+        public MaxTimeArgument(TimeSpan maxTime) => _maxSeconds = (int)maxTime.TotalSeconds;
 
         /// <summary>
         /// Returns the arguments
@@ -23,7 +23,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._maxSeconds.ToString()
+                _maxSeconds.ToString()
             };
         }
     }

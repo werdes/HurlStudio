@@ -14,11 +14,11 @@ namespace HurlStudio.Model.EventArgs
 
         public ThemeVariant Culture
         {
-            get => this._theme;
-            set => this._theme = value;
+            get => _theme;
+            set => _theme = value;
         }
 
         public ThemeChangedEventArgs(ThemeVariant themeVariant)
-            => this._theme = themeVariant;
+            => _theme = themeVariant;
     }
 }

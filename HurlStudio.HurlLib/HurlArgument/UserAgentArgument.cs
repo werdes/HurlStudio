@@ -15,7 +15,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         /// constructor
         /// </summary>
         /// <param name="_userAgent">UserAgent string</param>
-        public UserAgentArgument(string _userAgent) => this._userAgent = _userAgent;
+        public UserAgentArgument(string _userAgent) => _userAgent = _userAgent;
 
         /// <summary>
         /// Returns the arguments
@@ -26,7 +26,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._userAgent
+                _userAgent
             };
         }
     }

@@ -24,10 +24,10 @@ namespace HurlStudio.Services.UserSettings
 
         public JsonUserSettingsService(IConfiguration configuration, ILogger<JsonUserSettingsService> logger)
         {
-            this._configuration = configuration;
-            this._logger = logger;
-            this._userSettings = null;
-            this._serializerOptions = new JsonSerializerOptions()
+            _configuration = configuration;
+            _logger = logger;
+            _userSettings = null;
+            _serializerOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true,
                 Converters = {
@@ -75,7 +75,7 @@ namespace HurlStudio.Services.UserSettings
 
             if (_userSettings == null) throw new ArgumentNullException($"no user setting were provided to {nameof(JsonUserSettingsService)}");
 
-            string json = JsonSerializer.Serialize(this._userSettings, this._serializerOptions);
+            string json = JsonSerializer.Serialize(_userSettings, _serializerOptions);
             await File.WriteAllTextAsync(path, json, Encoding.UTF8);
         }
 
@@ -88,7 +88,7 @@ namespace HurlStudio.Services.UserSettings
 
             if (_userSettings == null) throw new ArgumentNullException($"no user setting were provided to {nameof(JsonUserSettingsService)}");
 
-            string json = JsonSerializer.Serialize(this._userSettings, this._serializerOptions);
+            string json = JsonSerializer.Serialize(_userSettings, _serializerOptions);
             File.WriteAllText(path, json, Encoding.UTF8);
         }
 
@@ -102,7 +102,7 @@ namespace HurlStudio.Services.UserSettings
             if (File.Exists(path))
             {
                 string json = await File.ReadAllTextAsync(path, Encoding.UTF8);
-                this._userSettings = JsonSerializer.Deserialize<Model.UserSettings.UserSettings>(json, this._serializerOptions);
+                _userSettings = JsonSerializer.Deserialize<Model.UserSettings.UserSettings>(json, _serializerOptions);
             }
             else
             {
@@ -121,7 +121,7 @@ namespace HurlStudio.Services.UserSettings
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path, Encoding.UTF8);
-                this._userSettings = JsonSerializer.Deserialize<Model.UserSettings.UserSettings>(json, this._serializerOptions);
+                _userSettings = JsonSerializer.Deserialize<Model.UserSettings.UserSettings>(json, _serializerOptions);
             }
             else
             {

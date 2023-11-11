@@ -15,14 +15,14 @@ namespace HurlStudio.HurlLib.HurlArgument
         /// User string for Basic Authentication
         /// </summary>
         /// <param name="userString">String containing user and password in the format of {user}:{password}</param>
-        public UserArgument(string userString) => this._userString = userString;
+        public UserArgument(string userString) => _userString = userString;
 
         /// <summary>
         /// User and password for Basic Authentication
         /// </summary>
         /// <param name="user">Username</param>
         /// <param name="password">Password</param>
-        public UserArgument(string user, string password) => this._userString = $"{user}:{password}";
+        public UserArgument(string user, string password) => _userString = $"{user}:{password}";
 
 
         /// <summary>
@@ -34,7 +34,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._userString
+                _userString
             };
         }
     }

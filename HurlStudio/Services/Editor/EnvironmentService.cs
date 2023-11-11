@@ -21,10 +21,10 @@ namespace HurlStudio.Services.Editor
 
         public EnvironmentService(ILogger<CollectionService> logger, IConfiguration configuration, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService)
         {
-            this._log = logger;
-            this._configuration = configuration;
-            this._environmentSerializer = environmentSerializer;
-            this._userSettingsService = userSettingsService;
+            _log = logger;
+            _configuration = configuration;
+            _environmentSerializer = environmentSerializer;
+            _userSettingsService = userSettingsService;
         }
 
         /// <summary>

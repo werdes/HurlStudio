@@ -13,11 +13,11 @@ namespace HurlStudio.HurlLib.HurlArgument
         private const string NAME_ARGUMENT = "--proxy";
         private string _proxyString;
 
-        public ProxyArgument(string proxyString) => this._proxyString = proxyString;
+        public ProxyArgument(string proxyString) => _proxyString = proxyString;
         public ProxyArgument(ProxyProtocol? protocol, string? host, ushort? port) =>
-            this._proxyString = $"{protocol?.ToString().ToLower()}://{host}:{port}";
+            _proxyString = $"{protocol?.ToString().ToLower()}://{host}:{port}";
         public ProxyArgument(ProxyProtocol? protocol, string? host, ushort? port, string? user, string? password) =>
-                    this._proxyString = $"{protocol?.ToString().ToLower()}://{user?.UrlEncode()}:{password?.UrlEncode()}@{host}:{port}";
+                    _proxyString = $"{protocol?.ToString().ToLower()}://{user?.UrlEncode()}:{password?.UrlEncode()}@{host}:{port}";
 
 
         /// <summary>
@@ -29,7 +29,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._proxyString
+                _proxyString
             };
         }
     }

@@ -16,7 +16,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         /// </summary>
         /// <param name="name">Variable name</param>
         /// <param name="value">Variable value</param>
-        public VariableArgument(string name, string value) => this._variableString = $"{name}={value}";
+        public VariableArgument(string name, string value) => _variableString = $"{name}={value}";
 
         /// <summary>
         /// Returns the arguments
@@ -27,7 +27,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                this._variableString
+                _variableString
             };
         }
     }

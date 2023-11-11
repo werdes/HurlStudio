@@ -28,9 +28,9 @@ namespace HurlStudio.Model.UserSettings
 
         public UserSettings(CultureInfo defaultUiLanguage, ApplicationTheme defaultTheme)
         {
-            this._uiLanguage = defaultUiLanguage;
-            this._collectionFiles = new ObservableCollection<string>();
-            this._theme = defaultTheme;
+            _uiLanguage = defaultUiLanguage;
+            _collectionFiles = new ObservableCollection<string>();
+            _theme = defaultTheme;
         }
 
         /// <summary>
@@ -38,8 +38,8 @@ namespace HurlStudio.Model.UserSettings
         /// </summary>
         public UserSettings()
         {
-            this._uiLanguage = CultureInfo.InvariantCulture;
-            this._collectionFiles = new ObservableCollection<string>();
+            _uiLanguage = CultureInfo.InvariantCulture;
+            _collectionFiles = new ObservableCollection<string>();
         }
 
         /// <summary>
@@ -50,18 +50,18 @@ namespace HurlStudio.Model.UserSettings
         [JsonPropertyName("theme")]
         public ApplicationTheme Theme
         {
-            get => this._theme;
+            get => _theme;
             set
             {
-                this._theme = value;
+                _theme = value;
                 Notify();
             }
         }
 
         //public string ThemeString
         //{
-        //    get => this._theme.Key.ToString() ?? "Dark";
-        //    set => this._theme = new ThemeVariant(value, ThemeVariant.Dark);
+        //    get => _theme.Key.ToString() ?? "Dark";
+        //    set => _theme = new ThemeVariant(value, ThemeVariant.Dark);
         //}
 
         /// <summary>
@@ -70,29 +70,29 @@ namespace HurlStudio.Model.UserSettings
         [JsonIgnore]
         public CultureInfo UiLanguage
         {
-            get => this._uiLanguage;
+            get => _uiLanguage;
             set
             {
-                this._uiLanguage = value;
+                _uiLanguage = value;
                 Notify();
-                UiLanguageChanged?.Invoke(this, new UiLanguageChangedEventArgs(this._uiLanguage));
+                UiLanguageChanged?.Invoke(this, new UiLanguageChangedEventArgs(_uiLanguage));
             }
         }
 
         [JsonPropertyName("ui_language")]
         public string UiLanguageString
         {
-            get => this._uiLanguage.ThreeLetterISOLanguageName;
-            set => this._uiLanguage = CultureInfo.GetCultureInfo(value);
+            get => _uiLanguage.ThreeLetterISOLanguageName;
+            set => _uiLanguage = CultureInfo.GetCultureInfo(value);
         }
 
         [JsonPropertyName("collections")]
         public ObservableCollection<string>? CollectionFiles
         {
-            get => this._collectionFiles;
+            get => _collectionFiles;
             set
             {
-                this._collectionFiles = value;
+                _collectionFiles = value;
                 Notify();
             }
         }

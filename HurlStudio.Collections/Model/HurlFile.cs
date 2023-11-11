@@ -17,25 +17,25 @@ namespace HurlStudio.Collections.Model.Collection
 
         public HurlFile()
         {
-            this._fileSettings = new List<IHurlSetting>();
+            _fileSettings = new List<IHurlSetting>();
         }
 
         public string FileLocation
         {
-            get => this._fileLocation;
-            set => this._fileLocation = value;
+            get => _fileLocation;
+            set => _fileLocation = value;
         }
 
         public string FileTitle
         {
-            get => this._fileTitle;
-            set => this._fileTitle = value;
+            get => _fileTitle;
+            set => _fileTitle = value;
         }
 
         public List<IHurlSetting> FileSettings
         {
-            get => this._fileSettings; 
-            set => this._fileSettings = value; 
+            get => _fileSettings; 
+            set => _fileSettings = value; 
         }
     }
 }

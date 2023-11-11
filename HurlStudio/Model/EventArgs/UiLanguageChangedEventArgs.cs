@@ -13,11 +13,11 @@ namespace HurlStudio.Model.EventArgs
 
         public CultureInfo Culture
         {
-            get => this._culture;
-            set => this._culture = value;
+            get => _culture;
+            set => _culture = value;
         }
 
         public UiLanguageChangedEventArgs(CultureInfo cultureInfo)
-            => this._culture = cultureInfo;
+            => _culture = cultureInfo;
     }
 }
