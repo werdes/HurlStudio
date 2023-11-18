@@ -4,7 +4,7 @@ using HurlStudio.UI.ViewModels;
 
 namespace HurlStudio.UI.Controls.Tools
 {
-    public partial class FileSettingsTool : ControlBase
+    public partial class FileSettingsTool : ViewModelBasedControl
     {
         public FileSettingsTool() : base(typeof(FileSettingsToolViewModel))
         {

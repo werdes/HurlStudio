@@ -21,6 +21,7 @@ using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using Avalonia;
 using Avalonia.Styling;
+using HurlStudio.Model.CollectionContainer;
 
 namespace HurlStudio.UI.Views
 {
@@ -72,8 +73,8 @@ namespace HurlStudio.UI.Views
 
                 this.WindowContent.Content = _viewFrame;
 
-                if (_viewModel != null && 
-                    _viewModel.LoadingView != null && 
+                if (_viewModel != null &&
+                    _viewModel.LoadingView != null &&
                     _viewModel.EditorView != null)
                 {
                     _viewFrame.NavigateTo(_viewModel.LoadingView);
@@ -83,14 +84,14 @@ namespace HurlStudio.UI.Views
                     _log.LogDebug(userSettings?.UiLanguageString);
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
-                    _viewModel.EditorView.Collections = new ObservableCollection<HurlCollection>(await _collectionService.GetCollectionsAsync());
+                    _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
                     _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());
 
                     _viewModel.InitializationCompleted = true;
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
-                    
+
                     _viewFrame.NavigateTo(_viewModel.EditorView);
                 }
                 else throw new ArgumentNullException($"View models were not initialized correctly");

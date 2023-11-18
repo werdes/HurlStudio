@@ -49,6 +49,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\Controls\CollectionExplorer\File.axaml.cs">
+      <DependentUpon>File.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\CollectionExplorer\Folder.axaml.cs">
+      <DependentUpon>Folder.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>

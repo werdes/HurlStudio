@@ -14,14 +14,22 @@ namespace HurlStudio.Collections.Model.Collection
         private List<IHurlSetting> _collectionSettings;
         private List<HurlFile> _fileSettings;
         private List<HurlFolder> _folderSettings;
+        private string? _fileLocation;
 
-        public HurlCollection()
+        public HurlCollection(string? fileLocation)
         {
             _name = string.Empty;
             _locations = new List<string>();
             _collectionSettings = new List<IHurlSetting>();
             _fileSettings = new List<HurlFile>();
             _folderSettings = new List<HurlFolder>();
+            _fileLocation = fileLocation;
+        }
+
+        public string? FileLocation
+        {
+            get => _fileLocation;
+            set => _fileLocation = value;
         }
 
         public List<HurlFile> FileSettings

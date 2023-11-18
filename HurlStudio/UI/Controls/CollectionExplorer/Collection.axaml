@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:model="clr-namespace:HurlStudio.Model.CollectionContainer;assembly=HurlStudio"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ce="clr-namespace:HurlStudio.UI.Controls.CollectionExplorer;assembly=HurlStudio"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="25"
+             Initialized="On_Collection_Initialized"
+             x:DataType="model:CollectionContainer"
+             x:Class="HurlStudio.UI.Controls.CollectionExplorer.Collection">
+
+  <Grid VerticalAlignment="Top" Margin="3,0,3,1">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="20" />
+      <RowDefinition Height="*" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20" />
+      <ColumnDefinition Width="20" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Button Classes="collapseButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
+      <StackPanel>
+        <controls:Icon Type="Collapsed" Width="16" Height="16" IsVisible="{Binding Collapsed}" />
+        <controls:Icon Type="Expanded" Width="16" Height="16" IsVisible="{Binding !Collapsed}" />
+      </StackPanel>
+    </Button>
+    <controls:Icon Type="Collection" Grid.Column="1" Opacity=".7" Width="16" Height="16"/>
+    <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Grid.Column="2" Text="{Binding Collection.Name}" />
+
+    <!--Folders-->
+    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding Folders}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Vertical" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <ce:Folder CollectionFolder="{Binding}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    
+    <!--Files-->
+    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" ItemsSource="{Binding Files}">
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <StackPanel Orientation="Vertical" />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <ce:File CollectionFile="{Binding}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+  </Grid>
+</UserControl>

@@ -123,8 +123,32 @@
   <data name="View.Editor.Dock.CollectionExplorer.Title" xml:space="preserve">
     <value>{View.Editor.Dock.CollectionExplorer.Title}</value>
   </data>
+  <data name="View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Dock.Document.ContextMenu.Close" xml:space="preserve">
+    <value>{View.Editor.Dock.Document.ContextMenu.Close}</value>
+  </data>
+  <data name="View.Editor.Dock.Document.ContextMenu.CloseAll" xml:space="preserve">
+    <value>{View.Editor.Dock.Document.ContextMenu.CloseAll}</value>
+  </data>
+  <data name="View.Editor.Dock.Document.ContextMenu.CloseLeft" xml:space="preserve">
+    <value>{View.Editor.Dock.Document.ContextMenu.CloseLeft}</value>
+  </data>
+  <data name="View.Editor.Dock.Document.ContextMenu.CloseOthers" xml:space="preserve">
+    <value>{View.Editor.Dock.Document.ContextMenu.CloseOthers}</value>
+  </data>
+  <data name="View.Editor.Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
+    <value>{View.Editor.Dock.Document.ContextMenu.CloseRight}</value>
+  </data>
   <data name="View.Editor.Dock.FileSettings.Title" xml:space="preserve">
     <value>{View.Editor.Dock.FileSettings.Title}</value>
+  </data>
+  <data name="View.Editor.Toolbar.Back.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Back.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.Forward.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Forward.Tooltip}</value>
   </data>
   <data name="View.Editor.Toolbar.Load.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Load.Tooltip}</value>

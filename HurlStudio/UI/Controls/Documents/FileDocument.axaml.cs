@@ -4,7 +4,7 @@ using HurlStudio.UI.ViewModels;
 
 namespace HurlStudio.UI.Controls.Documents
 {
-    public partial class FileDocument : ControlBase
+    public partial class FileDocument : ViewModelBasedControl
     {
         public FileDocument() : base(typeof(FileDocumentViewModel))
         {

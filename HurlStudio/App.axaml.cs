@@ -97,7 +97,7 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, Icon.Error);
+            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
             box.ShowWindowAsync();
         }
     }
@@ -159,7 +159,7 @@ public partial class App : Application
     /// </summary>
     private static void RegisterControls()
     {
-        ServiceManager<ControlBase> controlBuilder = Services.GetRequiredService<ServiceManager<ControlBase>>();
+        ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
         controlBuilder.RegisterProvider<CollectionExplorerTool>(() => Services.GetRequiredService<CollectionExplorerTool>());
         controlBuilder.RegisterProvider<FileSettingsTool>(() => Services.GetRequiredService<FileSettingsTool>());
         controlBuilder.RegisterProvider<FileDocument>(() => Services.GetRequiredService<FileDocument>());
@@ -289,7 +289,7 @@ public partial class App : Application
     private static void ConfigureControls(IServiceCollection services)
     {
         // Control Builder
-        services.AddSingleton<ServiceManager<ControlBase>>(provider => new ServiceManager<ControlBase>());
+        services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
 
         // Controls
         services.AddTransient<CollectionExplorerTool>();

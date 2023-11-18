@@ -1,0 +1,14 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+  <Design.PreviewWith>
+    <Border Padding="20">
+      <DocumentTabStripItem></DocumentTabStripItem>
+    </Border>
+  </Design.PreviewWith>
+
+  <!-- Add Styles Here -->
+  <Style Selector="DocumentTabStripItem /template/ Border">
+    <Setter Property="Background" Value="Red"/>
+  </Style>
+
+</Styles>

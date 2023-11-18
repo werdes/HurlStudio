@@ -39,11 +39,11 @@ namespace HurlStudio.Collections.Utility
         /// </summary>
         /// <param name="collectionContent">.hurlc file content</param>
         /// <returns></returns>
-        public HurlCollection Deserialize(string collectionContent)
+        public HurlCollection Deserialize(string collectionContent, string? path)
         {
             string[] lines = collectionContent.Split(Environment.NewLine);
             List<HurlCollectionSectionContainer> collectionSections = this.SplitIntoSections(lines);
-            HurlCollection collection = new HurlCollection();
+            HurlCollection collection = new HurlCollection(path);
 
             foreach (HurlCollectionSectionContainer sectionContainer in collectionSections)
             {
@@ -84,7 +84,7 @@ namespace HurlStudio.Collections.Utility
                 if (line.StartsWith(locationKey))
                 {
                     // Folder path
-                    hurlFolder.Directory = line.Split('=').Get(1) ?? string.Empty;
+                    hurlFolder.Location = line.Split('=').Get(1) ?? string.Empty;
                 }
                 else
                 {
@@ -239,7 +239,7 @@ namespace HurlStudio.Collections.Utility
         public async Task<HurlCollection> DeserializeFileAsync(string filePath, Encoding encoding)
         {
             string fileContent = await File.ReadAllTextAsync(filePath, encoding);
-            return Deserialize(fileContent);
+            return Deserialize(fileContent, filePath);
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace HurlStudio.Collections.Utility
             foreach (HurlFolder hurlFolder in collection.FolderSettings)
             {
                 builder.AppendLine(SECTION_FOLDER_SETTINGS_HEADER);
-                builder.AppendLine($"{SECTION_FOLDER_SETTINGS_LOCATION_KEY}={hurlFolder.Directory}");
+                builder.AppendLine($"{SECTION_FOLDER_SETTINGS_LOCATION_KEY}={hurlFolder.Location}");
                 foreach (IHurlSetting folderSetting in hurlFolder.FolderSettings)
                 {
                     builder.AppendLine(folderSetting.GetConfigurationString());

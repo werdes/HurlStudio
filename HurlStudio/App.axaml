@@ -10,8 +10,8 @@
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
+        <ResourceInclude Source="/UI/Resources/DockDictionary.axaml" />
         <ResourceInclude Source="/UI/Resources/ColorDictionary.axaml" />
-        <ResourceInclude Source="/UI/Resources/ModernThemeDictionary.axaml" />
       </ResourceDictionary.MergedDictionaries>
       <idcr:ControlRecycling x:Key="ControlRecyclingKey" />
 

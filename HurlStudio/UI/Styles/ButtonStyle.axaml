@@ -2,9 +2,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
     <Border Padding="20" Background="{DynamicResource NeutralControlBackgroundColor}">
-      <Button Classes="toolbarButton">
-        <Image Source="/Assets/Icons/save.png" Width="16" Height="16" />
-      </Button>
+      <StackPanel>
+        <Button Classes="toolbarButton">
+          <Image Source="/Assets/Icons/save.png" Width="16" Height="16" />
+        </Button>
+        <Rectangle Height="10" />
+        <Button Classes="collapseButton">
+          <Image Source="/Assets/Icons/collapsed.png" Width="16" Height="16" />
+        </Button>
+      </StackPanel>
     </Border>
   </Design.PreviewWith>
 
@@ -24,5 +30,28 @@
       <Setter Property="BorderBrush" Value="{DynamicResource NeutralControlPressedColor}" />
     </Style>
   </Style>
-  
+
+  <Style Selector="Button.collapseButton">
+    <Setter Property="Opacity" Value="0.5" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="BorderThickness" Value="0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+    
+    <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="BorderThickness" Value="0" />
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    
+    <Style Selector="^:pointerover">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+    <Style Selector="^:pressed">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+  </Style>
 </Styles>

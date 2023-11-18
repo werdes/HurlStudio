@@ -79,11 +79,83 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_CollectionExplorer_Toolbar_OpenCollection_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.Close} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_Document_ContextMenu_Close {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseAll} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_Document_ContextMenu_CloseAll {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseLeft} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_Document_ContextMenu_CloseLeft {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseOthers} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_Document_ContextMenu_CloseOthers {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseRight} ähnelt.
+        /// </summary>
+        public static string View_Editor_Dock_Document_ContextMenu_CloseRight {
+            get {
+                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.FileSettings.Title} ähnelt.
         /// </summary>
         public static string View_Editor_Dock_FileSettings_Title {
             get {
                 return ResourceManager.GetString("View.Editor.Dock.FileSettings.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Back.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Back_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Back.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Forward.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Forward_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Forward.Tooltip", resourceCulture);
             }
         }
         

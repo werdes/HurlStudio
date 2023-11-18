@@ -1,6 +1,7 @@
 ﻿using Dock.Model.Controls;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
+using HurlStudio.Model.CollectionContainer;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Logging;
@@ -18,14 +19,14 @@ namespace HurlStudio.UI.ViewModels
     {
         private ILogger _log = null;
 
-        private ObservableCollection<HurlCollection> _collections;
+        private ObservableCollection<CollectionContainer> _collections;
         private ObservableCollection<HurlEnvironment> _environments;
         private IRootDock? _layout;
 
 
         public EditorViewViewModel(LayoutFactory layoutFactory, ILogger<EditorViewViewModel> logger) : base(typeof(EditorView))
         {
-            _collections = new ObservableCollection<HurlCollection>();
+            _collections = new ObservableCollection<CollectionContainer>();
             _environments = new ObservableCollection<HurlEnvironment>();
 
             _log = logger;
@@ -33,7 +34,7 @@ namespace HurlStudio.UI.ViewModels
         }
 
 
-        public ObservableCollection<HurlCollection> Collections
+        public ObservableCollection<CollectionContainer> Collections
         {
             get => _collections;
             set

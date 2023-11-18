@@ -69,7 +69,7 @@ namespace HurlStudio.UI.Controls
         }
 
         /// <summary>
-        /// Overridden PropertyChanged event for reacting to the SelectedView property change
+        /// Overridden PropertyChanged event for reacting to the Type property change
         /// </summary>
         /// <param name="change"></param>
         protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)

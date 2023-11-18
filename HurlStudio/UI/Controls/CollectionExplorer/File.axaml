@@ -1,0 +1,27 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:model="clr-namespace:HurlStudio.Model.CollectionContainer;assembly=HurlStudio"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ce="clr-namespace:HurlStudio.UI.Controls.CollectionExplorer;assembly=HurlStudio"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="25"
+             Initialized="On_File_Initialized"
+             x:DataType="model:CollectionFile"
+             x:Class="HurlStudio.UI.Controls.CollectionExplorer.File">
+  <UserControl.Resources>
+    <converters:CollectionFileToNameConverter x:Key="CollectionFileToNameConverter" />
+  </UserControl.Resources>
+
+  <Grid VerticalAlignment="Top" Margin="0,0,3,1">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <controls:Icon Type="File" Grid.Column="0" Opacity=".7" Width="16" Height="16"/>
+    <TextBlock Margin="4,0,0,0" Grid.Column="1" Text="{Binding ., Converter={StaticResource CollectionFileToNameConverter}}" />
+  </Grid>
+</UserControl>

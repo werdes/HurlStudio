@@ -28,12 +28,12 @@ namespace HurlStudio.UI.Dock
         private IConfiguration _configuration;
         private ServiceManager<Tool> _toolLayoutBuilder;
         private ServiceManager<Document> _documentLayoutBuilder;
-        private ServiceManager<ControlBase> _controlBuilder;
+        private ServiceManager<ViewModelBasedControl> _controlBuilder;
 
         private IRootDock _rootDock;
         private CollectionExplorerToolViewModel _collectionExplorer;
 
-        public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ControlBase> controlBuilder)
+        public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ViewModelBasedControl> controlBuilder)
         {
             _configuration = configuration;
             _log = logger;

@@ -11,7 +11,7 @@ namespace HurlStudio.Collections.Model.Collection
     public class HurlFolder
     {
         private List<IHurlSetting> _folderSettings;
-        private string _directory;
+        private string _location;
 
 
         public HurlFolder()
@@ -19,10 +19,10 @@ namespace HurlStudio.Collections.Model.Collection
             _folderSettings = new List<IHurlSetting>();
         }
 
-        public string Directory
+        public string Location
         {
-            get => _directory;
-            set => _directory = value;
+            get => _location;
+            set => _location = value;
         }
 
         public List<IHurlSetting> FolderSettings

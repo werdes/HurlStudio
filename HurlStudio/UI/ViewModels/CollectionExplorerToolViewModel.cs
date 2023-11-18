@@ -10,7 +10,8 @@ namespace HurlStudio.UI.ViewModels
 {
     public class CollectionExplorerToolViewModel : Tool
     {
-        private EditorViewViewModel _viewModel;
+        private EditorViewViewModel _editorViewModel;
+
 
         public CollectionExplorerToolViewModel(EditorViewViewModel editorViewViewModel)
         {
@@ -18,7 +19,8 @@ namespace HurlStudio.UI.ViewModels
             this.CanFloat = false;
             this.CanPin = false;
 
-            _viewModel = editorViewViewModel;
+            _editorViewModel = editorViewViewModel;
         }
+        public EditorViewViewModel EditorViewModel => _editorViewModel;
     }
 }

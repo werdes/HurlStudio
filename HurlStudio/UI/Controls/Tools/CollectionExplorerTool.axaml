@@ -1,11 +1,14 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:ce="clr-namespace:HurlStudio.UI.Controls.CollectionExplorer;assembly=HurlStudio"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels;assembly=HurlStudio"
              xmlns:v="clr-namespace:HurlStudio.UI.Views"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:CollectionExplorerToolViewModel"
              x:Class="HurlStudio.UI.Controls.Tools.CollectionExplorerTool">
   <Grid>
     <Grid.RowDefinitions>
@@ -13,17 +16,37 @@
       <RowDefinition Height="*" />
     </Grid.RowDefinitions>
 
-    <Panel Grid.Row="0" Background="{DynamicResource NeutralControlBorderColor}" >
+    <Panel Grid.Row="0">
       <DockPanel HorizontalAlignment="Left">
-        <TextBlock 
-          Margin="3,0,0,0"
+        <TextBlock
+          Margin="3,1,0,1"
           VerticalAlignment="Center"
           Text="{x:Static localization:Localization.View_Editor_Dock_CollectionExplorer_Title}" />
       </DockPanel>
 
-      <DockPanel HorizontalAlignment="Right">
-        <TextBlock Text="Buttons" />
+      <DockPanel HorizontalAlignment="Right" Margin="0,1,1,1">
+        <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Dock_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
+          <Image Source="/Assets/Icons/open.png"
+                 Height="16"
+                 Width="16" />
+        </Button>
       </DockPanel>
     </Panel>
+
+    <ScrollViewer Grid.Row="1">
+      <ItemsControl ItemsSource="{Binding EditorViewModel.Collections}" >
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Vertical" />
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <ce:Collection CollectionContainer="{Binding}" />
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>
+    </ScrollViewer>
   </Grid>
 </UserControl>

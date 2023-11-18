@@ -33,7 +33,7 @@ namespace HurlStudio.Tests
             // Folder Settings
             Assert.IsTrue(collection.FolderSettings.Count == 1);
             Assert.IsNotNull(collection.FolderSettings.FirstOrDefault());
-            Assert.IsTrue(collection.FolderSettings.FirstOrDefault()?.Directory == "../HurlFiles/");
+            Assert.IsTrue(collection.FolderSettings.FirstOrDefault()?.Location == "../HurlFiles/");
         }
     }
 }

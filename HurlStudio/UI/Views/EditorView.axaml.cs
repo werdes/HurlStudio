@@ -32,17 +32,30 @@ namespace HurlStudio.UI.Views
         }
 
         /// <summary>
+        /// Parameterless constructor for avalonia design
+        /// </summary>
+        public EditorView() : base(typeof(EditorViewViewModel)) { }
+
+        /// <summary>
         /// Create the Dock layout on view load
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            this.DockControl.Layout = _layoutFactory.CreateLayout();
-
-            if (this.DockControl.Layout != null)
+            try
             {
-                _layoutFactory.InitLayout(this.DockControl.Layout);
+                this.DockControl.Layout = _layoutFactory.CreateLayout();
+
+                if (this.DockControl.Layout != null)
+                {
+                    _layoutFactory.InitLayout(this.DockControl.Layout);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(On_EditorView_Loaded));
+                await this.ShowErrorMessage(ex);
             }
         }
 
