@@ -1,12 +1,13 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.EventArgs;
 using System;
 using System.ComponentModel;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Folder : UserControl
+    public partial class Folder : CollectionExplorerControlBase
     {
         private CollectionFolder CollectionFolder
         {
@@ -36,6 +37,11 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         {
             if (this.DataContext == null) return;
             this.CollectionFolder.Collapsed = !CollectionFolder.Collapsed;
+        }
+
+        protected override CollectionComponentBase GetBoundCollectionComponent()
+        {
+            return this.CollectionFolder;
         }
     }
 }

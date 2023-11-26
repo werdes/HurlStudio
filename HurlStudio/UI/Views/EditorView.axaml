@@ -33,6 +33,18 @@
         </Button>
         <controls:ToolbarSeparator />
         <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
+          <controls:Icon Type="Open"
+                  Height="16"
+                  Width="16" />
+        </Button>
+        <Button Classes="toolbarButton"
+                        ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
+          <controls:Icon Type="New"
+                  Height="16"
+                  Width="16" />
+        </Button>
+        <Button Classes="toolbarButton"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Save_Tooltip }">
            <controls:Icon Type="Save"
                           Height="16"

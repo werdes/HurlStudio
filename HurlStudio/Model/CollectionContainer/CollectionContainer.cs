@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Model.CollectionContainer
 {
-    public class CollectionContainer : CollectionHierarchyBase
+    public class CollectionContainer : CollectionComponentHierarchyBase
     {
         private HurlCollection _collection;
 
@@ -27,6 +27,22 @@ namespace HurlStudio.Model.CollectionContainer
                 _collection = value;
                 Notify();
             }
+        }
+
+        /// <summary>
+        /// Returns a unique Identifier for this collection 
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">if the collections location is null</exception>
+        public override string GetId()
+        {
+            if(_collection.FileLocation == null) throw new ArgumentNullException(nameof(_collection.FileLocation));
+            return _collection.FileLocation;
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(CollectionContainer)}: {GetId()} | {Collection}";
         }
     }
 }

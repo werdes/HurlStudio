@@ -5,6 +5,8 @@ using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.UiState;
+using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -25,16 +27,18 @@ namespace HurlStudio.Services.Editor
         private ICollectionSerializer _collectionSerializer = null;
         private IEnvironmentSerializer _environmentSerializer = null;
         private IUserSettingsService _userSettingsService = null;
+        private IUiStateService _uiStateService = null;
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
 
-        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService)
+        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService)
         {
             _log = logger;
             _configuration = configuration;
             _collectionSerializer = collectionSerializer;
             _environmentSerializer = environmentSerializer;
             _userSettingsService = userSettingsService;
+            _uiStateService = uiStateService;
 
             _collectionLoaderMaxDirectoryDepth = Math.Max(1, _configuration.GetValue<int>("collectionLoaderMaxDirectoryDepth"));
         }
@@ -46,14 +50,33 @@ namespace HurlStudio.Services.Editor
         public async Task<ObservableCollection<CollectionContainer>> GetCollectionContainersAsync()
         {
             ObservableCollection<CollectionContainer> collectionContainers = new ObservableCollection<CollectionContainer>();
+            Model.UiState.UiState? uiState = await _uiStateService.GetUiStateAsync(true);
             IEnumerable<HurlCollection> collections = await GetCollectionsAsync();
 
             foreach (HurlCollection collection in collections)
             {
+                bool collapsed = true;
                 CollectionContainer collectionContainer = new CollectionContainer(collection);
-                string collectionRootPath = Path.GetDirectoryName(collection.FileLocation) ?? string.Empty;
 
-                foreach (string location in collection.Locations)
+                if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionContainer.GetId(), out collapsed) ?? false)
+                {
+                    collectionContainer.Collapsed = collapsed;
+                }
+                string collectionRootPath = Path.GetDirectoryName(collection.FileLocation) ?? throw new ArgumentNullException(nameof(collection.FileLocation));
+
+                // Root location
+                if(!collection.ExcludeRootDirectory)
+                {
+                    CollectionFolder? collectionRootFolder = await GetFolderRecursive(0, collectionContainer, collectionRootPath, collectionRootPath, uiState);
+                    if (collectionRootFolder != null)
+                    {
+                        collectionContainer.Files.AddRange(collectionRootFolder.Files);
+                        collectionContainer.Folders.AddRange(collectionRootFolder.Folders);
+                    }
+                }
+
+                // Additional locations
+                foreach (string location in collection.AdditionalLocations)
                 {
                     // Provide absolute path
                     string absoluteLocationPath = location.ConvertDirectorySeparator();
@@ -62,7 +85,23 @@ namespace HurlStudio.Services.Editor
                         absoluteLocationPath = Path.Join(collectionRootPath, absoluteLocationPath);
                     }
 
-                    collectionContainer.Folders.AddIfNotNull(await GetFolderRecursive(0, collectionContainer, absoluteLocationPath, collectionRootPath));
+                    if (Directory.Exists(absoluteLocationPath))
+                    {
+                        // If either the collection root directory is excluded or the directory is not located under that root directory,
+                        // go ahead and traverse the location
+                        if (collection.ExcludeRootDirectory || !PathExtensions.IsChildOfDirectory(absoluteLocationPath, collectionRootPath))
+                        {
+                            collectionContainer.Folders.AddIfNotNull(await GetFolderRecursive(0, collectionContainer, absoluteLocationPath, collectionRootPath, uiState));
+                        }
+                    }
+                    else
+                    {
+                        collectionContainer.Folders.Add(new CollectionFolder(collectionContainer, absoluteLocationPath)
+                        {
+                            Found = false,
+                            Collapsed = true
+                        });
+                    }
                 }
 
                 collectionContainers.Add(collectionContainer);
@@ -78,10 +117,16 @@ namespace HurlStudio.Services.Editor
         /// <param name="location">The absolute location of the directory to be traversed</param>
         /// <param name="collectionRoot">The absolute path of the collection file</param>
         /// <returns>A Folder file</returns>
-        private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, string location, string collectionRoot)
+        private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, string location, string collectionRoot, Model.UiState.UiState? uiState)
         {
+
             if (depth > _collectionLoaderMaxDirectoryDepth) return null;
             CollectionFolder collectionFolder = new CollectionFolder(collectionContainer, location);
+            bool folderCollapsed = false;
+            if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(), out folderCollapsed) ?? false)
+            {
+                collectionFolder.Collapsed = folderCollapsed;
+            }
 
             // Direct subdirectories
             List<string> folderSubdirectories = Directory.GetDirectories(location, "*", SearchOption.TopDirectoryOnly).ToList();
@@ -93,7 +138,7 @@ namespace HurlStudio.Services.Editor
             // Recursively traverse through the directory tree
             foreach (string folderSubdirectory in folderSubdirectories)
             {
-                collectionFolder.Folders.AddIfNotNull(await GetFolderRecursive(depth + 1, collectionContainer, folderSubdirectory, collectionRoot));
+                collectionFolder.Folders.AddIfNotNull(await GetFolderRecursive(depth + 1, collectionContainer, folderSubdirectory, collectionRoot, uiState));
             }
 
             // Files

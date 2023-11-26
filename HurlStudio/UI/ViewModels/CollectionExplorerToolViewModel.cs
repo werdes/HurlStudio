@@ -11,7 +11,7 @@ namespace HurlStudio.UI.ViewModels
     public class CollectionExplorerToolViewModel : Tool
     {
         private EditorViewViewModel _editorViewModel;
-
+        private bool _isEnabled = false;
 
         public CollectionExplorerToolViewModel(EditorViewViewModel editorViewViewModel)
         {
@@ -21,6 +21,14 @@ namespace HurlStudio.UI.ViewModels
 
             _editorViewModel = editorViewViewModel;
         }
+
         public EditorViewViewModel EditorViewModel => _editorViewModel;
+        
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => SetProperty(ref _isEnabled, value);
+        }
+
     }
 }

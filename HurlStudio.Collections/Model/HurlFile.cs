@@ -37,5 +37,10 @@ namespace HurlStudio.Collections.Model.Collection
             get => _fileSettings; 
             set => _fileSettings = value; 
         }
+
+        public override string ToString()
+        {
+            return $"{FileLocation}, {FileTitle}";
+        }
     }
 }

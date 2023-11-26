@@ -46,7 +46,6 @@ namespace HurlStudio.Model.UserSettings
         /// User selected theme variant
         /// Ignore this due to System.Text.Json serializer serializing the ThemeVariant record
         /// </summary>
-        //[JsonIgnore]
         [JsonPropertyName("theme")]
         public ApplicationTheme Theme
         {
@@ -57,12 +56,6 @@ namespace HurlStudio.Model.UserSettings
                 Notify();
             }
         }
-
-        //public string ThemeString
-        //{
-        //    get => _theme.Key.ToString() ?? "Dark";
-        //    set => _theme = new ThemeVariant(value, ThemeVariant.Dark);
-        //}
 
         /// <summary>
         /// Ignore this due to System.Text.Json serializer serializing the full CultureInfo object

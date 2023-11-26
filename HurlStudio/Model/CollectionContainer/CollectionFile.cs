@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -9,11 +10,8 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Model.CollectionContainer
 {
-    public class CollectionFile : INotifyPropertyChanged
+    public class CollectionFile : CollectionComponentBase
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         private CollectionFolder _collectionFolder;
         private HurlFile? _file;
         private string _location;
@@ -52,6 +50,25 @@ namespace HurlStudio.Model.CollectionContainer
                 _location = value;
                 Notify();
             }
+        }
+
+        /// <summary>
+        /// Returns a unique identifier for this file
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">if the containing folder is null</exception>
+        public override string GetId()
+        {
+            if (_collectionFolder == null) throw new ArgumentNullException(nameof(Folder));
+
+            string id = _collectionFolder.GetId();
+            string fileName = Path.GetFileName(_location);
+            return $"{id}#{fileName}";
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(CollectionFile)}: {GetId()} | {File}";
         }
     }
 }

@@ -50,6 +50,7 @@ namespace HurlStudio.UI.Dock
         {
             CollectionExplorerToolViewModel collectionExplorer = _toolLayoutBuilder.Get<CollectionExplorerToolViewModel>();
             collectionExplorer.Id = COLLECTION_EXPLORER_TOOL_ID;
+            collectionExplorer.IsEnabled = true;
 
             FileSettingsToolViewModel fileSettings = _toolLayoutBuilder.Get<FileSettingsToolViewModel>();
             fileSettings.Id = FILE_SETTINGS_TOOL_ID;
@@ -60,7 +61,7 @@ namespace HurlStudio.UI.Dock
 
             ObservableCollection<IDockable> list = new ObservableCollection<IDockable>();
             list.Add(fileDocument);
-            for(int i = 0; i < 15; i++)
+            for(int i = 0; i < 8; i++)
             {
                 FileDocumentViewModel fileDocument2 = _documentLayoutBuilder.Get<FileDocumentViewModel>();
                 fileDocument2.Id = Guid.NewGuid().ToString();

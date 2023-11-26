@@ -61,83 +61,155 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.Close} ähnelt.
+        /// </summary>
+        public static string Dock_Document_ContextMenu_Close {
+            get {
+                return ResourceManager.GetString("Dock.Document.ContextMenu.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.CloseAll} ähnelt.
+        /// </summary>
+        public static string Dock_Document_ContextMenu_CloseAll {
+            get {
+                return ResourceManager.GetString("Dock.Document.ContextMenu.CloseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.CloseLeft} ähnelt.
+        /// </summary>
+        public static string Dock_Document_ContextMenu_CloseLeft {
+            get {
+                return ResourceManager.GetString("Dock.Document.ContextMenu.CloseLeft", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.CloseOthers} ähnelt.
+        /// </summary>
+        public static string Dock_Document_ContextMenu_CloseOthers {
+            get {
+                return ResourceManager.GetString("Dock.Document.ContextMenu.CloseOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.CloseRight} ähnelt.
+        /// </summary>
+        public static string Dock_Document_ContextMenu_CloseRight {
+            get {
+                return ResourceManager.GetString("Dock.Document.ContextMenu.CloseRight", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.Properties} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_Properties {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.Rename} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_Rename {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Properties} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_Properties {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Rename} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_Rename {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.Properties} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_Properties {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.Rename} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_Rename {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Title {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_CollapseAll_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_ExpandAll_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.FileSettings.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_FileSettings_Title {
+            get {
+                return ResourceManager.GetString("Dock.Tool.FileSettings.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.ErrorTitle} ähnelt.
         /// </summary>
         public static string MessageBox_ErrorTitle {
             get {
                 return ResourceManager.GetString("MessageBox.ErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.CollectionExplorer.Title} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_CollectionExplorer_Title {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.CollectionExplorer.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_CollectionExplorer_Toolbar_OpenCollection_Tooltip {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.Close} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_Document_ContextMenu_Close {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.Close", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseAll} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_Document_ContextMenu_CloseAll {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseAll", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseLeft} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_Document_ContextMenu_CloseLeft {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseLeft", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseOthers} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_Document_ContextMenu_CloseOthers {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseOthers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.Document.ContextMenu.CloseRight} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_Document_ContextMenu_CloseRight {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.Document.ContextMenu.CloseRight", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Dock.FileSettings.Title} ähnelt.
-        /// </summary>
-        public static string View_Editor_Dock_FileSettings_Title {
-            get {
-                return ResourceManager.GetString("View.Editor.Dock.FileSettings.Title", resourceCulture);
             }
         }
         
@@ -228,6 +300,42 @@ namespace HurlStudio.UI.Localization {
         public static string View_Main_Menu_File_Exit {
             get {
                 return ResourceManager.GetString("View.Main.Menu.File.Exit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.New} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_New {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.New.Collection} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_New_Collection {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.New.Collection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.New.File} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_New_File {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.New.File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.OpenCollection} ähnelt.
+        /// </summary>
+        public static string View_Main_Menu_File_OpenCollection {
+            get {
+                return ResourceManager.GetString("View.Main.Menu.File.OpenCollection", resourceCulture);
             }
         }
         

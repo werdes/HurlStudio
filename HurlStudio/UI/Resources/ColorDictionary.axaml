@@ -10,6 +10,7 @@
   <!-- Brushes -->
   <ResourceDictionary.ThemeDictionaries>
     <ResourceDictionary x:Key="Light">
+      <Color x:Key="WindowBackgroundColor">#ffffff</Color>
       <Color x:Key="WindowChromeBorderColor">#dddddd</Color>
       <Color x:Key="WindowChromeBackgroundColor">#dddddd</Color>
       <Color x:Key="WindowChromeTitleColor">#222222</Color>
@@ -19,12 +20,13 @@
       <Color x:Key="NeutralControlBorderColor">#d4d4d4</Color>
       <Color x:Key="NeutralControlBorderHoverColor">#e4e4e4</Color>
       <Color x:Key="NeutralControlForegroundColor">#222222</Color>
-      
+
       <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
 
     </ResourceDictionary>
 
     <ResourceDictionary x:Key="Dark">
+      <Color x:Key="WindowBackgroundColor">#282828</Color>
       <Color x:Key="WindowChromeBorderColor">#333333</Color>
       <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
       <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>

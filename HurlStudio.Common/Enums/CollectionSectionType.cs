@@ -10,7 +10,7 @@ namespace HurlStudio.Common.Enums
     {
         None,
         General,
-        Locations,
+        AdditionalLocations,
         CollectionSettings,
         FileSettings,
         FolderSettings

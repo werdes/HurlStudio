@@ -12,6 +12,7 @@ namespace HurlStudio.Common
         public const string ENVIRONMENTS_DIRECTORY_NAME = "environments";
         public const string LOG_DIRECTORY_NAME = "log";
         public const string USERSETTINGS_JSON_FILE_NAME = "settings.json";
+        public const string UISTATE_JSON_FILE_NAME = "uistate.json";
 
         public const string HURL_FILE_EXTENSION = ".hurl";
         public const string COLLECTION_FILE_EXTENSION = ".hurlc";

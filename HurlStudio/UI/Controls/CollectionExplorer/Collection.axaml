@@ -8,11 +8,32 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ce="clr-namespace:HurlStudio.UI.Controls.CollectionExplorer;assembly=HurlStudio"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="25"
-             Initialized="On_Collection_Initialized"
              x:DataType="model:CollectionContainer"
-             x:Class="HurlStudio.UI.Controls.CollectionExplorer.Collection">
+             x:Class="HurlStudio.UI.Controls.CollectionExplorer.Collection"
+             DragDrop.AllowDrop="True"
+             
+             Initialized="On_Collection_Initialized"
+             PointerPressed="On_CollectionExplorerControlBase_PointerPressed"
+             PointerReleased="On_CollectionExplorerControlBase_PointerReleased"
+             PointerMoved="On_CollectionExplorerControlBase_PointerMoved">
 
-  <Grid VerticalAlignment="Top" Margin="3,0,3,1">
+  <Grid VerticalAlignment="Top" Margin="3,0,0,0"
+        Background="{DynamicResource WindowBackgroundColor}">
+    <Grid.ContextMenu>
+      <ContextMenu>
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_Rename}">
+          <MenuItem.Icon>
+            <c:Icon Type="Rename" Height="16" Width="16" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_Properties}">
+          <MenuItem.Icon>
+            <c:Icon Type="Properties" Height="16" Width="16" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </ContextMenu>
+    </Grid.ContextMenu>
     <Grid.RowDefinitions>
       <RowDefinition Height="20" />
       <RowDefinition Height="*" />
@@ -23,6 +44,12 @@
       <ColumnDefinition Width="20" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
+    <Border Grid.ColumnSpan="2"
+            Grid.Column="1"
+            BorderThickness="1"
+            Background="{DynamicResource NeutralControlBackgroundColor}"
+            BorderBrush="{DynamicResource NeutralControlBorderColor}"
+            IsVisible="{Binding Selected}"/>
     <Button Classes="collapseButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
       <StackPanel>
         <controls:Icon Type="Collapsed" Width="16" Height="16" IsVisible="{Binding Collapsed}" />
@@ -41,7 +68,7 @@
       </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <ce:Folder CollectionFolder="{Binding}" />
+          <ce:Folder CollectionFolder="{Binding}" CollectionComponentMoved="On_CollectionExplorerControlBase_CollectionComponentMoved" />
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>
@@ -55,7 +82,7 @@
       </ItemsControl.ItemsPanel>
       <ItemsControl.ItemTemplate>
         <DataTemplate>
-          <ce:File CollectionFile="{Binding}" />
+          <ce:File CollectionFile="{Binding}" CollectionComponentMoved="On_CollectionExplorerControlBase_CollectionComponentMoved" />
         </DataTemplate>
       </ItemsControl.ItemTemplate>
     </ItemsControl>

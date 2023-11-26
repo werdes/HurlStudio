@@ -117,32 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Dock.Document.ContextMenu.Close" xml:space="preserve">
+    <value>{Dock.Document.ContextMenu.Close}</value>
+  </data>
+  <data name="Dock.Document.ContextMenu.CloseAll" xml:space="preserve">
+    <value>{Dock.Document.ContextMenu.CloseAll}</value>
+  </data>
+  <data name="Dock.Document.ContextMenu.CloseLeft" xml:space="preserve">
+    <value>{Dock.Document.ContextMenu.CloseLeft}</value>
+  </data>
+  <data name="Dock.Document.ContextMenu.CloseOthers" xml:space="preserve">
+    <value>{Dock.Document.ContextMenu.CloseOthers}</value>
+  </data>
+  <data name="Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
+    <value>{Dock.Document.ContextMenu.CloseRight}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.Properties" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.Properties}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.Rename" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.Properties" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.Properties}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.Rename" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.Properties" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.Properties}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.Rename" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Title" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Title}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.FileSettings.Title" xml:space="preserve">
+    <value>{Dock.FileSettings.Title}</value>
+  </data>
   <data name="MessageBox.ErrorTitle" xml:space="preserve">
     <value>{MessageBox.ErrorTitle}</value>
-  </data>
-  <data name="View.Editor.Dock.CollectionExplorer.Title" xml:space="preserve">
-    <value>{View.Editor.Dock.CollectionExplorer.Title}</value>
-  </data>
-  <data name="View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip" xml:space="preserve">
-    <value>{View.Editor.Dock.CollectionExplorer.Toolbar.OpenCollection.Tooltip}</value>
-  </data>
-  <data name="View.Editor.Dock.Document.ContextMenu.Close" xml:space="preserve">
-    <value>{View.Editor.Dock.Document.ContextMenu.Close}</value>
-  </data>
-  <data name="View.Editor.Dock.Document.ContextMenu.CloseAll" xml:space="preserve">
-    <value>{View.Editor.Dock.Document.ContextMenu.CloseAll}</value>
-  </data>
-  <data name="View.Editor.Dock.Document.ContextMenu.CloseLeft" xml:space="preserve">
-    <value>{View.Editor.Dock.Document.ContextMenu.CloseLeft}</value>
-  </data>
-  <data name="View.Editor.Dock.Document.ContextMenu.CloseOthers" xml:space="preserve">
-    <value>{View.Editor.Dock.Document.ContextMenu.CloseOthers}</value>
-  </data>
-  <data name="View.Editor.Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
-    <value>{View.Editor.Dock.Document.ContextMenu.CloseRight}</value>
-  </data>
-  <data name="View.Editor.Dock.FileSettings.Title" xml:space="preserve">
-    <value>{View.Editor.Dock.FileSettings.Title}</value>
   </data>
   <data name="View.Editor.Toolbar.Back.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Back.Tooltip}</value>
@@ -173,6 +197,18 @@
   </data>
   <data name="View.Main.Menu.File.Exit" xml:space="preserve">
     <value>{View.Main.Menu.File.Exit}</value>
+  </data>
+  <data name="View.Main.Menu.File.New" xml:space="preserve">
+    <value>{View.Main.Menu.File.New}</value>
+  </data>
+  <data name="View.Main.Menu.File.New.Collection" xml:space="preserve">
+    <value>{View.Main.Menu.File.New.Collection}</value>
+  </data>
+  <data name="View.Main.Menu.File.New.File" xml:space="preserve">
+    <value>{View.Main.Menu.File.New.File}</value>
+  </data>
+  <data name="View.Main.Menu.File.OpenCollection" xml:space="preserve">
+    <value>{View.Main.Menu.File.OpenCollection}</value>
   </data>
   <data name="View.Main.Menu.File.Save" xml:space="preserve">
     <value>{View.Main.Menu.File.Save}</value>

@@ -30,5 +30,10 @@ namespace HurlStudio.Collections.Model.Collection
             get => _folderSettings; 
             set => _folderSettings = value; 
         }
+
+        public override string ToString()
+        {
+            return $"{Location}";
+        }
     }
 }

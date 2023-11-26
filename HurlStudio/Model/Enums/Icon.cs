@@ -28,7 +28,19 @@ namespace HurlStudio.Model.Enums
         [Icon("save.png")]
         Save,
         [Icon("save_all.png")]
-        SaveAll
+        SaveAll,
+        [Icon("expand_all.png")]
+        ExpandAll,
+        [Icon("collapse_all.png")]
+        CollapseAll,
+        [Icon("environment.png")]
+        Environment,
+        [Icon("new.png")]
+        New,
+        [Icon("properties.png")]
+        Properties,
+        [Icon("rename.png")]
+        Rename
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

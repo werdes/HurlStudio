@@ -1,7 +1,8 @@
 ﻿[Collection]
 name=Valid collection
+exclude_root_dir=true
 
-[Locations]
+[AdditionalLocations]
 ../HurlFiles/
 
 [CollectionSettings]

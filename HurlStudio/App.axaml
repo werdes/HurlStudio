@@ -23,7 +23,7 @@
       
       <!--  Dock control-->
       <SolidColorBrush x:Key="DockThemeBorderLowBrush" Color="{DynamicResource NeutralControlBorderColor}" />
-      <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="{DynamicResource NeutralControlBackgroundColor}" />
+      <SolidColorBrush x:Key="DockThemeBackgroundBrush" Color="Transparent" />
       <SolidColorBrush x:Key="DockThemeAccentBrush" Color="{DynamicResource HighlightColor}" />
       <SolidColorBrush x:Key="DockThemeForegroundBrush" Color="{DynamicResource NeutralControlForegroundColor}" />
       <SolidColorBrush x:Key="DockApplicationAccentForegroundBrush" Color="{DynamicResource NeutralControlForegroundColor}" />

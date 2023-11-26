@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Collection : UserControl
+    public partial class Collection : CollectionExplorerControlBase
     {
         private CollectionContainer CollectionContainer
         {
@@ -32,10 +32,21 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             this.DataContext = CollectionContainer;
         }
 
+        /// <summary>
+        /// Toggle collapse state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if(this.DataContext == null) return;
             CollectionContainer.Collapsed = !CollectionContainer.Collapsed;
         }
+
+        protected override CollectionComponentBase GetBoundCollectionComponent()
+        {
+            return this.CollectionContainer;
+        }
+
     }
 }

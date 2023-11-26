@@ -30,6 +30,8 @@ namespace HurlStudio.UI.Controls
         public Icon()
         {
             this.Initialized += On_Icon_Initialized;
+            this.Height = 16;
+            this.Width = 16;
         }
 
         /// <summary>

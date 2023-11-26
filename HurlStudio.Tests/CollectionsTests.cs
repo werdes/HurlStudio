@@ -18,8 +18,8 @@ namespace HurlStudio.Tests
                 Path.Combine("Assets", "Collections", "ValidCollection.hurlc"), Encoding.UTF8).Result;
             Assert.IsNotNull(collection);
             Assert.IsTrue(collection.Name.Equals("Valid collection"));
-            Assert.IsTrue(collection.Locations.Count == 1);
-            Assert.IsTrue(collection.Locations.First() == "../HurlFiles/");
+            Assert.IsTrue(collection.AdditionalLocations.Count == 1);
+            Assert.IsTrue(collection.AdditionalLocations.First() == "../HurlFiles/");
             Assert.IsTrue(collection.CollectionSettings.Count == 1);
             Assert.IsNotNull(collection.CollectionSettings.FirstOrDefault());
 

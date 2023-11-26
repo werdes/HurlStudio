@@ -9,8 +9,9 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:DataType="vm:CollectionExplorerToolViewModel"
-             x:Class="HurlStudio.UI.Controls.Tools.CollectionExplorerTool">
-  <Grid>
+             x:Class="HurlStudio.UI.Controls.Tools.CollectionExplorerTool"
+             Initialized="On_CollectionExplorerTool_Initialized">
+  <Grid IsEnabled="{Binding IsEnabled}">
     <Grid.RowDefinitions>
       <RowDefinition Height="25" />
       <RowDefinition Height="*" />
@@ -19,23 +20,32 @@
     <Panel Grid.Row="0">
       <DockPanel HorizontalAlignment="Left">
         <TextBlock
-          Margin="3,1,0,1"
+          Margin="5,1,1,1"
           VerticalAlignment="Center"
-          Text="{x:Static localization:Localization.View_Editor_Dock_CollectionExplorer_Title}" />
+          Text="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Title}" />
       </DockPanel>
 
-      <DockPanel HorizontalAlignment="Right" Margin="0,1,1,1">
+      <DockPanel HorizontalAlignment="Right" Margin="0,1,1,1"
+                 Background="{DynamicResource WindowBackgroundColor}">
         <Button Classes="toolbarButton"
-                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Dock_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
-          <Image Source="/Assets/Icons/open.png"
-                 Height="16"
-                 Width="16" />
+                Click="On_ButtonExpandAll_Click"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_ExpandAll_Tooltip }">
+          <c:Icon Type="ExpandAll"
+                  Height="16"
+                  Width="16" />
+        </Button>
+        <Button Classes="toolbarButton"
+                Click="On_ButtonCollapseAll_Click"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_CollapseAll_Tooltip }">
+          <c:Icon Type="CollapseAll"
+                  Height="16"
+                  Width="16" />
         </Button>
       </DockPanel>
     </Panel>
 
     <ScrollViewer Grid.Row="1">
-      <ItemsControl ItemsSource="{Binding EditorViewModel.Collections}" >
+      <ItemsControl ItemsSource="{Binding EditorViewModel.Collections}" Margin="1" >
         <ItemsControl.ItemsPanel>
           <ItemsPanelTemplate>
             <StackPanel Orientation="Vertical" />
@@ -43,7 +53,7 @@
         </ItemsControl.ItemsPanel>
         <ItemsControl.ItemTemplate>
           <DataTemplate>
-            <ce:Collection CollectionContainer="{Binding}" />
+            <ce:Collection CollectionContainer="{Binding}" CollectionComponentMoved="On_Collection_CollectionComponentMoved" />
           </DataTemplate>
         </ItemsControl.ItemTemplate>
       </ItemsControl>

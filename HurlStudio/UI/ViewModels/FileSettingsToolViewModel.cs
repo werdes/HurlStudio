@@ -15,7 +15,7 @@ namespace HurlStudio.UI.ViewModels
             this.CanClose = false;
             this.CanFloat = false;
             this.CanPin = false;
-            this.Title = Localization.Localization.View_Editor_Dock_FileSettings_Title;
+            this.Title = Localization.Localization.Dock_Tool_FileSettings_Title;
         }
     }
 }

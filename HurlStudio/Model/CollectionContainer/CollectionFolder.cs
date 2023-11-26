@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -10,17 +11,18 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Model.CollectionContainer
 {
-    public class CollectionFolder : CollectionHierarchyBase
+    public class CollectionFolder : CollectionComponentHierarchyBase
     {
         private CollectionContainer _collectionContainer;
-        private HurlFolder _folder;
+        private HurlFolder? _folder;
         private string _location;
-
+        private bool _found;
 
         public CollectionFolder(CollectionContainer collectionContainer, string location) : base()
         {
             _collectionContainer = collectionContainer;
             _location = location;
+            _found = true;
         }
 
         public string Location
@@ -33,7 +35,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public HurlFolder Folder
+        public HurlFolder? Folder
         {
             get => _folder;
             set
@@ -53,5 +55,35 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
+        public bool Found
+        {
+            get => _found;
+            set
+            {
+                _found = value;
+                Notify();
+            }
+        }
+
+        /// <summary>
+        /// Returns a unique identifier for this folder
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException">if the collection or its location is null</exception>
+        public override string GetId()
+        {
+            if (_collectionContainer == null) throw new ArgumentNullException(nameof(CollectionContainer));
+            if (_collectionContainer.Collection == null) throw new ArgumentNullException(nameof(CollectionContainer.Collection));
+            if (_collectionContainer.Collection.FileLocation == null) throw new ArgumentNullException(nameof(CollectionContainer.Collection.FileLocation));
+
+            string id = _collectionContainer.GetId();
+            string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.FileLocation) ?? string.Empty, _location);
+            return $"{id}#{path}";
+        }
+
+        public override string ToString()
+        {
+            return $"{nameof(CollectionFolder)}: {GetId()} | {Folder}";
+        }
     }
 }

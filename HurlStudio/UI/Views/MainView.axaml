@@ -21,6 +21,7 @@
         <StackPanel Orientation="Horizontal">
           <Image Margin="10,2,0,0"
                  Source="/Assets/Images/icon.png"
+                 
                  Width="24"
                  Height="24"
                  VerticalAlignment="Center"
@@ -34,14 +35,31 @@
           <Menu IsEnabled="{Binding InitializationCompleted}" Margin="6,0,0,0">
             <MenuItem VerticalAlignment="Center"
                       Header="{x:Static localization:Localization.View_Main_Menu_File}">
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New}">
+                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_File}">
+                  <MenuItem.Icon>
+                    <c:Icon Type="File" />
+                  </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Collection}">
+                  <MenuItem.Icon>
+                    <c:Icon Type="Collection" />
+                  </MenuItem.Icon>
+                </MenuItem>
+              </MenuItem>
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_OpenCollection}">
+                <MenuItem.Icon>
+                  <c:Icon Width="16" Height="16" Type="Open" />
+                </MenuItem.Icon>
+              </MenuItem>
               <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Save}">
                 <MenuItem.Icon>
-                  <Image Width="16" Height="16" Source="/Assets/Icons/save.png"  />
+                  <c:Icon Width="16" Height="16" Type="Save" />
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_SaveAll}">
                 <MenuItem.Icon>
-                  <Image Width="16" Height="16" Source="/Assets/Icons/save_all.png" />
+                  <c:Icon Width="16" Height="16" Type="SaveAll" />
                 </MenuItem.Icon>
               </MenuItem>
               <Separator/>

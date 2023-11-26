@@ -38,6 +38,7 @@ using Avalonia.Styling;
 using HurlStudio.Model.Enums;
 using HurlStudio.UI.Controls.Tools;
 using HurlStudio.UI.Controls.Documents;
+using HurlStudio.Services.UiState;
 
 namespace HurlStudio;
 
@@ -163,7 +164,7 @@ public partial class App : Application
         controlBuilder.RegisterProvider<CollectionExplorerTool>(() => Services.GetRequiredService<CollectionExplorerTool>());
         controlBuilder.RegisterProvider<FileSettingsTool>(() => Services.GetRequiredService<FileSettingsTool>());
         controlBuilder.RegisterProvider<FileDocument>(() => Services.GetRequiredService<FileDocument>());
-        
+
     }
 
     /// <summary>
@@ -211,9 +212,11 @@ public partial class App : Application
 
         services.AddSingleton<IConfiguration>(Config);
         services.AddSingleton<IUserSettingsService, JsonUserSettingsService>();
+        services.AddSingleton<IUiStateService, JsonUiStateService>();
         services.AddSingleton<IniSettingParser>();
         services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
         services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
+        services.AddSingleton<IEditorService, EditorService>();
         services.AddSingleton<DockControlLocator>();
 
         services.AddSingleton<ICollectionService, CollectionService>();
@@ -279,7 +282,7 @@ public partial class App : Application
         // View models
         services.AddSingleton<CollectionExplorerToolViewModel>();
         services.AddTransient<FileSettingsToolViewModel>();
-        services.AddTransient<FileDocumentViewModel>();    
+        services.AddTransient<FileDocumentViewModel>();
     }
 
     /// <summary>

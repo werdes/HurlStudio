@@ -5,23 +5,23 @@
   
   <!-- Overwritten version of the TabStripItemContextMenu context menu to provide localization -->
   <ContextMenu x:Key="DocumentTabStripItemContextMenu" x:DataType="core:IDockable" x:CompileBindings="True">
-    <MenuItem Header="{x:Static localization:Localization.View_Editor_Dock_Document_ContextMenu_Close}"
+    <MenuItem Header="{x:Static localization:Localization.Dock_Document_ContextMenu_Close}"
               Command="{Binding Owner.Factory.CloseDockable}"
               CommandParameter="{Binding}"
               IsVisible="{Binding CanClose}"/>
-    <MenuItem Header="{x:Static localization:Localization.View_Editor_Dock_Document_ContextMenu_CloseOthers}"
+    <MenuItem Header="{x:Static localization:Localization.Dock_Document_ContextMenu_CloseOthers}"
               Command="{Binding Owner.Factory.CloseOtherDockables}"
               CommandParameter="{Binding}"
               IsVisible="{Binding CanClose}"/>
-    <MenuItem Header="{x:Static localization:Localization.View_Editor_Dock_Document_ContextMenu_CloseAll}"
+    <MenuItem Header="{x:Static localization:Localization.Dock_Document_ContextMenu_CloseAll}"
               Command="{Binding Owner.Factory.CloseAllDockables}"
               CommandParameter="{Binding}"
               IsVisible="{Binding CanClose}"/>
-    <MenuItem Header="{x:Static localization:Localization.View_Editor_Dock_Document_ContextMenu_CloseLeft}"
+    <MenuItem Header="{x:Static localization:Localization.Dock_Document_ContextMenu_CloseLeft}"
               Command="{Binding Owner.Factory.CloseLeftDockables}"
               CommandParameter="{Binding}"
               IsVisible="{Binding CanClose}"/>
-    <MenuItem Header="{x:Static localization:Localization.View_Editor_Dock_Document_ContextMenu_CloseRight}"
+    <MenuItem Header="{x:Static localization:Localization.Dock_Document_ContextMenu_CloseRight}"
               Command="{Binding Owner.Factory.CloseRightDockables}"
               CommandParameter="{Binding}"
               IsVisible="{Binding CanClose}"/>

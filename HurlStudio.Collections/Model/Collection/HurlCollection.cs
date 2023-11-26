@@ -10,16 +10,17 @@ namespace HurlStudio.Collections.Model.Collection
     public class HurlCollection
     {
         private string _name;
-        private List<string> _locations;
+        private List<string> _additionalLocations;
         private List<IHurlSetting> _collectionSettings;
         private List<HurlFile> _fileSettings;
         private List<HurlFolder> _folderSettings;
         private string? _fileLocation;
+        private bool _excludeRootDirectory;
 
         public HurlCollection(string? fileLocation)
         {
             _name = string.Empty;
-            _locations = new List<string>();
+            _additionalLocations = new List<string>();
             _collectionSettings = new List<IHurlSetting>();
             _fileSettings = new List<HurlFile>();
             _folderSettings = new List<HurlFolder>();
@@ -50,16 +51,26 @@ namespace HurlStudio.Collections.Model.Collection
             set => _collectionSettings = value;
         }
 
-        public List<string> Locations
+        public List<string> AdditionalLocations
         {
-            get => _locations;
-            set => _locations = value;
+            get => _additionalLocations;
+            set => _additionalLocations = value;
         }
 
         public string Name
         {
             get => _name;
             set => _name = value;
+        }
+
+        public bool ExcludeRootDirectory
+        {
+            get => _excludeRootDirectory;
+            set => _excludeRootDirectory = value;
+        }
+        public override string ToString()
+        {
+            return $"{FileLocation}, {Name}";
         }
     }
 }

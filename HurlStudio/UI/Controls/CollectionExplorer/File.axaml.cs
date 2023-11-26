@@ -6,7 +6,7 @@ using System.ComponentModel;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class File : UserControl
+    public partial class File : CollectionExplorerControlBase
     {
         private CollectionFile CollectionFile
         {
@@ -29,7 +29,12 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_File_Initialized(object? sender, System.EventArgs e)
         {
-            this.DataContext = CollectionFile;
+            this.DataContext = this.CollectionFile;
+        }
+
+        protected override CollectionComponentBase GetBoundCollectionComponent()
+        {
+            return this.CollectionFile;
         }
     }
 }

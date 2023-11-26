@@ -11,10 +11,6 @@ namespace HurlStudio.Collections.Utility
 {
     public class IniCollectionSerializer : ICollectionSerializer
     {
-        //private static Lazy<IniCollectionSerializer> _instance = new Lazy<IniCollectionSerializer>(() => new IniCollectionSerializer());
-        //private static readonly Lazy<Logger> _lazyLog = new Lazy<Logger>(() => LogManager.GetCurrentClassLogger());
-        //private static NLog.Logger _log => _lazyLog.Value;
-        //public static IniCollectionSerializer Instance => _instance.Value;
         private IniSettingParser _settingParser;
 
         public IniCollectionSerializer(IniSettingParser settingParser)
@@ -25,7 +21,8 @@ namespace HurlStudio.Collections.Utility
 
         private const string SECTION_GENERAL_HEADER = "[Collection]";
         private const string SECTION_GENERAL_NAME_KEY = "name";
-        private const string SECTION_LOCATIONS_HEADER = "[Locations]";
+        private const string SECTION_GENERAL_EXCLUDE_ROOT_KEY = "exclude_root_dir";
+        private const string SECTION_ADDITIONALLOCATIONS_HEADER = "[AdditionalLocations]";
         private const string SECTION_COLLECTION_SETTINGS_HEADER = "[CollectionSettings]";
         private const string SECTION_FILE_SETTINGS_HEADER = "[FileSettings]";
         private const string SECTION_FILE_SETTINGS_LOCATION_KEY = "location";
@@ -52,8 +49,8 @@ namespace HurlStudio.Collections.Utility
                     case CollectionSectionType.General:
                         this.DeserializeGeneralSection(sectionContainer.Lines, ref collection);
                         break;
-                    case CollectionSectionType.Locations:
-                        this.DeserializeLocationsSection(sectionContainer.Lines, ref collection);
+                    case CollectionSectionType.AdditionalLocations:
+                        this.DeserializeAdditionalLocationsSection(sectionContainer.Lines, ref collection);
                         break;
                     case CollectionSectionType.CollectionSettings:
                         this.DeserializeCollectionSettingsSection(sectionContainer.Lines, ref collection);
@@ -155,11 +152,11 @@ namespace HurlStudio.Collections.Utility
         /// <summary>
         /// Deserializes the locations part of the collection
         /// </summary>
-        /// <param name="lines">Plain text lines of a CollectionSectionType.Locations section container</param>
+        /// <param name="lines">Plain text lines of a CollectionSectionType.AdditionalLocations section container</param>
         /// <param name="collection">Target collection</param>
-        private void DeserializeLocationsSection(List<string> lines, ref HurlCollection collection)
+        private void DeserializeAdditionalLocationsSection(List<string> lines, ref HurlCollection collection)
         {
-            collection.Locations = lines.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            collection.AdditionalLocations = lines.Where(x => !string.IsNullOrEmpty(x)).ToList();
         }
 
         /// <summary>
@@ -172,9 +169,14 @@ namespace HurlStudio.Collections.Utility
             foreach (string line in lines)
             {
                 string nameKey = $"{SECTION_GENERAL_NAME_KEY}=";
+                string excludeRootKey = $"{SECTION_GENERAL_EXCLUDE_ROOT_KEY}=";
                 if (line.StartsWith(nameKey))
                 {
                     collection.Name = line.Split("=").Get(1) ?? string.Empty;
+                }
+                else if (line.StartsWith(excludeRootKey))
+                {
+                    collection.ExcludeRootDirectory = Convert.ToBoolean(line.Split("=").Get(1));
                 }
             }
         }
@@ -200,9 +202,9 @@ namespace HurlStudio.Collections.Utility
                         sections.Add(currentSection);
                         currentSection = new HurlCollectionSectionContainer(CollectionSectionType.FileSettings);
                         break;
-                    case SECTION_LOCATIONS_HEADER:
+                    case SECTION_ADDITIONALLOCATIONS_HEADER:
                         sections.Add(currentSection);
-                        currentSection = new HurlCollectionSectionContainer(CollectionSectionType.Locations);
+                        currentSection = new HurlCollectionSectionContainer(CollectionSectionType.AdditionalLocations);
                         break;
                     case SECTION_GENERAL_HEADER:
                         sections.Add(currentSection);
@@ -256,9 +258,9 @@ namespace HurlStudio.Collections.Utility
             builder.AppendLine($"{SECTION_GENERAL_NAME_KEY}={collection.Name.UrlEncode()}");
             builder.AppendLine();
 
-            // Locations section
-            builder.AppendLine(SECTION_LOCATIONS_HEADER);
-            foreach (string location in collection.Locations)
+            // AdditionalLocations section
+            builder.AppendLine(SECTION_ADDITIONALLOCATIONS_HEADER);
+            foreach (string location in collection.AdditionalLocations)
             {
                 builder.AppendLine($"{location}");
             }

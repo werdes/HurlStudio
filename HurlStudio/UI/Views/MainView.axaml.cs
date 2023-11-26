@@ -64,13 +64,12 @@ namespace HurlStudio.UI.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentNullException">if no frame was provided to the view</exception>
         private async void On_MainView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             try
             {
                 if (_viewFrame == null) throw new ArgumentNullException($"No view frame was provided to {nameof(MainView)}");
-
                 this.WindowContent.Content = _viewFrame;
 
                 if (_viewModel != null &&
