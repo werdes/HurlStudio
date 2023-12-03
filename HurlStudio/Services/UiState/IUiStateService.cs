@@ -1,4 +1,6 @@
 ﻿
+using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +15,8 @@ namespace HurlStudio.Services.UiState
         Model.UiState.UiState? GetUiState(bool refresh);
         Task StoreUiStateAsync();
         void StoreUiState();
+        void SetCollectionExplorerState(EditorViewViewModel editorView);
+        void SetMainWindowState(MainWindow mainWindow);
+        void SetFileHistory(EditorViewViewModel editorView);
     }
 }

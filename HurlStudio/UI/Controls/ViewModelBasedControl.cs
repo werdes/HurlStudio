@@ -10,14 +10,27 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls
 {
-    public class ViewModelBasedControl : UserControl
+    public abstract class ViewModelBasedControl<T> : ViewModelBasedControl
     {
-        private Type? _attachedViewModelType = null;
-        public Type? AttachedViewModelType { get => _attachedViewModelType; }
+        public Type? AttachedViewModelType { get => typeof(T); }
 
-        public ViewModelBasedControl(Type attachedViewModelType)
+        public ViewModelBasedControl()
         {
-            _attachedViewModelType = attachedViewModelType;
         }
+
+        public override Type? GetAttachedViewModelType() => AttachedViewModelType;
+        protected abstract void SetViewModelInstance(T viewModel);
+
+        public override void SetViewModel(object viewModel)
+        {
+            SetViewModelInstance((T)viewModel);
+        }
+    }
+
+    public abstract class ViewModelBasedControl : UserControl
+    {
+        internal ViewModelBasedControl() { }
+        public abstract Type? GetAttachedViewModelType();
+        public abstract void SetViewModel(object viewModel);
     }
 }

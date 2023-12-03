@@ -132,6 +132,45 @@
   <data name="Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
     <value>{Dock.Document.ContextMenu.CloseRight}</value>
   </data>
+  <data name="Dock.Document.Welcome.Actions.ImportCollection.Description" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.ImportCollection.Description}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Actions.ImportCollection.Title" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.ImportCollection.Title}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Actions.NewCollection.Description" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.NewCollection.Description}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Actions.NewCollection.Title" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.NewCollection.Title}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Actions.OpenCollection.Description" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.OpenCollection.Description}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Actions.OpenCollection.Title" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.OpenCollection.Title}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Headline" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Headline}</value>
+  </data>
+  <data name="Dock.Document.Welcome.RecentFiles" xml:space="preserve">
+    <value>{Dock.Document.Welcome.RecentFiles}</value>
+  </data>
+  <data name="Dock.Document.Welcome.Title" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Title}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.AddFile" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.AddFile}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.AddFile.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.AddFile.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.AddFolder" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.AddFolder}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.AddFolder.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.AddFolder.Tooltip}</value>
+  </data>
   <data name="Dock.Tool.CollectionExplorer.Collection.Properties" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Collection.Properties}</value>
   </data>
@@ -143,6 +182,18 @@
   </data>
   <data name="Dock.Tool.CollectionExplorer.File.Rename" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.File.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.AddFile" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.AddFile}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.AddFile.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.AddFile.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.AddFolder" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.AddFolder}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.AddFolder.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.AddFolder.Tooltip}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.Folder.Properties" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Folder.Properties}</value>
@@ -159,8 +210,14 @@
   <data name="Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Toolbar.ExpandAll.Tooltip}</value>
   </data>
-  <data name="Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip" xml:space="preserve">
-    <value>{Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip}</value>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.More.AddCollection" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.More.AddCollection}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.More.OpenCollection" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.More.OpenCollection}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.More.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.More.Tooltip}</value>
   </data>
   <data name="Dock.Tool.FileSettings.Title" xml:space="preserve">
     <value>{Dock.FileSettings.Title}</value>
@@ -174,8 +231,8 @@
   <data name="View.Editor.Toolbar.Forward.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Forward.Tooltip}</value>
   </data>
-  <data name="View.Editor.Toolbar.Load.Tooltip" xml:space="preserve">
-    <value>{View.Editor.Toolbar.Load.Tooltip}</value>
+  <data name="View.Editor.Toolbar.Open.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Open.Tooltip}</value>
   </data>
   <data name="View.Editor.Toolbar.Save.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Save.Tooltip}</value>

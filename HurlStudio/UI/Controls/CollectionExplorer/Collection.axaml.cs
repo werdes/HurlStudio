@@ -1,12 +1,16 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Services.Editor;
+using HurlStudio.UI.ViewModels;
+using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Collection : CollectionExplorerControlBase
+    public partial class Collection : CollectionExplorerControlBase<CollectionContainer>
     {
         private CollectionContainer CollectionContainer
         {
@@ -17,9 +21,24 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         public static readonly StyledProperty<CollectionContainer> CollectionContainerProperty =
             AvaloniaProperty.Register<Collection, CollectionContainer>(nameof(CollectionContainer));
 
-        public Collection()
+        private ILogger _log;
+        private IEditorService _editorService;
+
+        public Collection(ILogger<Collection> logger, IEditorService editorService)
         {
+            _editorService = editorService;
+            _log = logger;
+
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Sets the view model
+        /// </summary>
+        /// <param name="viewModel"></param>
+        protected override void SetViewModelInstance(CollectionContainer viewModel)
+        {
+            CollectionContainer = viewModel;
         }
 
         /// <summary>
@@ -43,10 +62,29 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             CollectionContainer.Collapsed = !CollectionContainer.Collapsed;
         }
 
+        /// <summary>
+        /// Returns the collection container as bound element
+        /// </summary>
+        /// <returns></returns>
         protected override CollectionComponentBase GetBoundCollectionComponent()
         {
             return this.CollectionContainer;
         }
 
+        /// <summary>
+        /// Opens a collection settings document
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OpenComponentDocument()
+        {
+            try
+            {
+                await _editorService.OpenCollectionSettings(CollectionContainer);
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(OpenComponentDocument));
+            }
+        }
     }
 }

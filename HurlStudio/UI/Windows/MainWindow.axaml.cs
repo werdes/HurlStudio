@@ -1,5 +1,6 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using HurlStudio.Model.UiState;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.ViewModels;
@@ -15,8 +16,9 @@ namespace HurlStudio.UI.Windows
         private ILogger? _log;
         private IConfiguration? _configuration;
         private IUserSettingsService? _userSettingsService;
-        private IUiStateService? _uiStateService;
+        private IUiStateService _uiStateService;
         private ServiceManager<ViewBase>? _viewFactory;
+        private MainWindowViewModel? _viewModel;
 
         public MainWindow()
         {
@@ -25,16 +27,18 @@ namespace HurlStudio.UI.Windows
             _viewFactory = null;
             _userSettingsService = null;
             _uiStateService = null;
+            _viewModel = null;
             InitializeComponent();
         }
 
-        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, ServiceManager<ViewBase> viewFactory, IUserSettingsService userSettingsService, IUiStateService uiStateService)
+        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, ServiceManager<ViewBase> viewFactory, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel)
         {
             _log = logger;
             _configuration = configuration;
             _viewFactory = viewFactory;
             _userSettingsService = userSettingsService;
             _uiStateService = uiStateService;
+            _viewModel = mainWindowViewModel;
 
             InitializeComponent();
         }
@@ -60,6 +64,20 @@ namespace HurlStudio.UI.Windows
                     view.Bind(MarginProperty, offscreenMarginBinding);
 
                     this.Content = view;
+
+                    // Load ui state
+                    UiState? uiState = await _uiStateService.GetUiStateAsync(false);
+                    if(uiState != null && uiState.MainWindowPosition.Width > 0 && uiState.MainWindowPosition.Height > 0)
+                    {
+                        this.Position = new PixelPoint((int)uiState.MainWindowPosition.X, (int)uiState.MainWindowPosition.Y);
+                        this.Width = (int)uiState.MainWindowPosition.Width;
+                        this.Height = (int)uiState.MainWindowPosition.Height;
+
+                        if(uiState.MainWindowIsMaximized)
+                        {
+                            this.WindowState = WindowState.Maximized;
+                        }
+                    }
                 }
                 else
                 {
@@ -87,8 +105,10 @@ namespace HurlStudio.UI.Windows
                     _userSettingsService.StoreUserSettings();
                 }
 
-                if (_uiStateService != null)
+                if (_uiStateService != null && _viewModel != null && _viewModel.MainViewViewModel.EditorView != null)
                 {
+                    _uiStateService.SetCollectionExplorerState(_viewModel.MainViewViewModel.EditorView);
+                    _uiStateService.SetFileHistory(_viewModel.MainViewViewModel.EditorView);
                     _uiStateService.StoreUiState();
                 }
             }
@@ -96,6 +116,27 @@ namespace HurlStudio.UI.Windows
             {
                 _log?.LogCritical(ex, nameof(On_MainWindow_Initialized));
                 base.ShowErrorMessage(ex).Wait();
+            }
+        }
+
+        /// <summary>
+        /// Set the ui states' the main window state before the window is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected async void On_MainWindow_Closing(object? sender, WindowClosingEventArgs e)
+        {
+            try
+            {
+                if (_uiStateService != null && _viewModel != null && _viewModel.MainViewViewModel.EditorView != null)
+                {
+                    _uiStateService.SetMainWindowState(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log?.LogCritical(ex, nameof(On_MainWindow_Initialized));
+                await base.ShowErrorMessage(ex);
             }
         }
     }

@@ -2,12 +2,15 @@ using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.EventArgs;
+using HurlStudio.Services.Editor;
+using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
+using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Folder : CollectionExplorerControlBase
+    public partial class Folder : CollectionExplorerControlBase<CollectionFolder>
     {
         private CollectionFolder CollectionFolder
         {
@@ -18,9 +21,25 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         public static readonly StyledProperty<CollectionFolder> CollectionFolderProperty =
             AvaloniaProperty.Register<Folder, CollectionFolder>(nameof(CollectionFolder));
 
-        public Folder()
+        private ILogger _logger;
+        private IEditorService _editorService;
+
+        public Folder(ILogger<Folder> logger, IEditorService editorService)
         {
+            _logger = logger;
+            _editorService = editorService;
+
             InitializeComponent();
+
+        }
+
+        /// <summary>
+        /// Sets the view model
+        /// </summary>
+        /// <param name="viewModel"></param>
+        protected override void SetViewModelInstance(CollectionFolder viewModel)
+        {
+            CollectionFolder = viewModel;
         }
 
         /// <summary>
@@ -33,15 +52,40 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             this.DataContext = CollectionFolder;
         }
 
+        /// <summary>
+        /// Toggle the folder's collapse state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (this.DataContext == null) return;
             this.CollectionFolder.Collapsed = !CollectionFolder.Collapsed;
         }
 
+        /// <summary>
+        /// Returns the folder as bound element
+        /// </summary>
+        /// <returns></returns>
         protected override CollectionComponentBase GetBoundCollectionComponent()
         {
             return this.CollectionFolder;
+        }
+
+        /// <summary>
+        /// Opens a folder settings page
+        /// </summary>
+        /// <returns></returns>
+        protected override async Task OpenComponentDocument()
+        {
+            try
+            {
+                await _editorService.OpenFolderSettings(CollectionFolder);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogCritical(ex, nameof(OpenComponentDocument));
+            }
         }
     }
 }

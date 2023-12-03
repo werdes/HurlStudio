@@ -40,7 +40,19 @@ namespace HurlStudio.Model.Enums
         [Icon("properties.png")]
         Properties,
         [Icon("rename.png")]
-        Rename
+        Rename,
+        [Icon("plus.png")]
+        Plus,
+        [Icon("more.png")]
+        More,
+        [Icon("open_neutral.png")]
+        OpenNeutral,
+        [Icon("add_folder.png")]
+        AddFolder,
+        [Icon("add_file.png")]
+        AddFile,
+        [Icon("import.png")]
+        Import,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

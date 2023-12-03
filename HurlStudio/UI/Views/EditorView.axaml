@@ -27,44 +27,29 @@
         </Button>
         <Button Classes="toolbarButton"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Forward_Tooltip}">
-          <controls:Icon Type="Forward"
-                         Height="16"
-                         Width="16" />
+          <controls:Icon Type="Forward" />
         </Button>
         <controls:ToolbarSeparator />
-        <Button Classes="toolbarButton"
-                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
-          <controls:Icon Type="Open"
-                  Height="16"
-                  Width="16" />
-        </Button>
-        <Button Classes="toolbarButton"
-                        ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip }">
-          <controls:Icon Type="New"
-                  Height="16"
-                  Width="16" />
-        </Button>
+        <!--<Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Open_Tooltip }">
+          <controls:Icon Type="Open" />
+        </Button>-->
         <Button Classes="toolbarButton"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Save_Tooltip }">
-           <controls:Icon Type="Save"
-                          Height="16"
-                          Width="16" />
+           <controls:Icon Type="Save" />
         </Button>
         <Button Classes="toolbarButton"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_SaveAll_Tooltip }">
-          <controls:Icon Type="SaveAll"
-                         Height="16"
-                         Width="16" />
+          <controls:Icon Type="SaveAll" />
         </Button>
         <controls:ToolbarSeparator />
-
       </DockPanel>
     </Panel>
 
     <!--Dock-->
-    <DockControl Grid.Row="1"
+    <DockControl Layout="{Binding Layout}"
+                 Grid.Row="1"
                  x:Name="DockControl"
-                 
                  Margin="4"
                  Background="Red"/>
 

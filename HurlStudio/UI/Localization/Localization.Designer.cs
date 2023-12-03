@@ -106,6 +106,123 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.ImportCollection.Description} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_ImportCollection_Description {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.ImportCollection.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.ImportCollection.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_ImportCollection_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.ImportCollection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.NewCollection.Description} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_NewCollection_Description {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.NewCollection.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.NewCollection.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_NewCollection_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.NewCollection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.OpenCollection.Description} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_OpenCollection_Description {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.OpenCollection.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.OpenCollection.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Actions_OpenCollection_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Actions.OpenCollection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Headline} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Headline {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Headline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.RecentFiles} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_RecentFiles {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.RecentFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Welcome_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.Welcome.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.AddFile} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_AddFile {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.AddFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.AddFile.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_AddFile_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.AddFile.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.AddFolder} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_AddFolder {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.AddFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.AddFolder.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_AddFolder_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.AddFolder.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.Properties} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Collection_Properties {
@@ -138,6 +255,42 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_File_Rename {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.AddFile} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_AddFile {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.AddFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.AddFile.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_AddFile_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.AddFile.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.AddFolder} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_AddFolder {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.AddFolder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.AddFolder.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_AddFolder_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.AddFolder.Tooltip", resourceCulture);
             }
         }
         
@@ -187,11 +340,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.More.AddCollection} ähnelt.
         /// </summary>
-        public static string Dock_Tool_CollectionExplorer_Toolbar_OpenCollection_Tooltip {
+        public static string Dock_Tool_CollectionExplorer_Toolbar_More_AddCollection {
             get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.OpenCollection.Tooltip", resourceCulture);
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.More.AddCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.More.OpenCollection} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_More_OpenCollection {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.More.OpenCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.More.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_More_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.More.Tooltip", resourceCulture);
             }
         }
         
@@ -232,11 +403,11 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Load.Tooltip} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Open.Tooltip} ähnelt.
         /// </summary>
-        public static string View_Editor_Toolbar_Load_Tooltip {
+        public static string View_Editor_Toolbar_Open_Tooltip {
             get {
-                return ResourceManager.GetString("View.Editor.Toolbar.Load.Tooltip", resourceCulture);
+                return ResourceManager.GetString("View.Editor.Toolbar.Open.Tooltip", resourceCulture);
             }
         }
         

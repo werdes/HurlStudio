@@ -34,13 +34,14 @@ namespace HurlStudio.UI.Views
         private IUserSettingsService _userSettingsService;
         private ICollectionService _collectionService;
         private IEnvironmentService _environmentService;
+        private IEditorService _editorService;
 
         public MainView() : base(typeof(MainViewViewModel))
         {
             InitializeComponent();
         }
 
-        public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService) : base(typeof(MainViewViewModel))
+        public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService) : base(typeof(MainViewViewModel))
         {
             _viewModel = viewModel;
             _viewFrame = viewFrame;
@@ -50,6 +51,7 @@ namespace HurlStudio.UI.Views
             _userSettingsService = userSettingsService;
             _collectionService = collectionService;
             _environmentService = environmentService;
+            _editorService = editorService;
 
             this.DataContext = _viewModel;
 
@@ -84,6 +86,7 @@ namespace HurlStudio.UI.Views
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
                     _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
+                    _viewModel.EditorView.Documents = await _editorService.GetOpenDocuments();
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
                     _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());

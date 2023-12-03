@@ -1,9 +1,11 @@
 using Avalonia.Controls;
+using Dock.Model.Core;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
 
 namespace HurlStudio.UI.Views
 {
@@ -26,9 +28,26 @@ namespace HurlStudio.UI.Views
             this.DataContext = viewModel;
             this.DebugFactoryEvents(layoutFactory);
 
+            _layoutFactory.DockableRemoved += On_LayoutFactory_DockableRemoved;
+
             this.DataTemplates.Add(_locator);
 
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Prevent dock collapse by adding a welcome document once the last document is closed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_LayoutFactory_DockableRemoved(object? sender, global::Dock.Model.Core.Events.DockableRemovedEventArgs e)
+        {
+            if (sender == null || sender is not LayoutFactory layoutFactory) return;
+
+            if(_viewModel.Documents.Count == 0)
+            {
+                _layoutFactory.AddWelcomeDocument();
+            }
         }
 
         /// <summary>
@@ -45,11 +64,12 @@ namespace HurlStudio.UI.Views
         {
             try
             {
-                this.DockControl.Layout = _layoutFactory.CreateLayout();
+                _viewModel.Layout = _layoutFactory.CreateLayout();
 
-                if (this.DockControl.Layout != null)
+                if (_viewModel.Layout != null)
                 {
-                    _layoutFactory.InitLayout(this.DockControl.Layout);
+                    _layoutFactory.InitLayout(_viewModel.Layout);
+                    
                 }
             }
             catch (Exception ex)

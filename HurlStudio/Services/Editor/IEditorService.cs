@@ -1,5 +1,9 @@
-﻿using System;
+﻿using Dock.Model.Core;
+using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Model.CollectionContainer;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,11 +12,15 @@ namespace HurlStudio.Services.Editor
 {
     public interface IEditorService
     {
-        Task<bool> MoveFileToFolder(Model.CollectionContainer.CollectionFile collectionFile, Model.CollectionContainer.CollectionFolder folder);
-        Task<bool> MoveFileToCollection(Model.CollectionContainer.CollectionFile collectionFile, Model.CollectionContainer.CollectionFolder parentFolder, Model.CollectionContainer.CollectionContainer collection);
-        Task<bool> MoveFileToCollectionRoot(Model.CollectionContainer.CollectionFile collectionFile, Model.CollectionContainer.CollectionContainer collection);
-        Task<bool> MoveFolderToCollection(Model.CollectionContainer.CollectionFolder folder, Model.CollectionContainer.CollectionFolder parentFolder, Model.CollectionContainer.CollectionContainer collection);
-        Task<bool> MoveFolderToFolder(Model.CollectionContainer.CollectionFolder folder, Model.CollectionContainer.CollectionFolder parentFolder);
-        Task<bool> MoveFolderToCollectionRoot(Model.CollectionContainer.CollectionFolder folder, Model.CollectionContainer.CollectionContainer collection);
+        Task<bool> MoveFileToFolder(CollectionFile collectionFile, CollectionFolder folder);
+        Task<bool> MoveFileToCollection(CollectionFile collectionFile, CollectionFolder parentFolder, CollectionContainer collection);
+        Task<bool> MoveFileToCollectionRoot(CollectionFile collectionFile, CollectionContainer collection);
+        Task<bool> MoveFolderToCollection(CollectionFolder folder, CollectionFolder parentFolder, CollectionContainer collection);
+        Task<bool> MoveFolderToFolder(CollectionFolder folder, CollectionFolder parentFolder);
+        Task<bool> MoveFolderToCollectionRoot(CollectionFolder folder, CollectionContainer collection);
+        Task<ObservableCollection<IDockable>> GetOpenDocuments();
+        Task OpenFile(CollectionFile file);
+        Task OpenFolderSettings(CollectionFolder folder);
+        Task OpenCollectionSettings(CollectionContainer collection);
     }
 }

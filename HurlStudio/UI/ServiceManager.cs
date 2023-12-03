@@ -10,9 +10,11 @@ namespace HurlStudio.UI
     {
         private readonly Dictionary<Type, T> _instances = new Dictionary<Type, T>();
         private readonly Dictionary<Type, Func<T>> _providers = new Dictionary<Type, Func<T>>();
+        private readonly Dictionary<Type, Type> _associations = new Dictionary<Type, Type>();
 
         public ServiceManager() { }
 
+        /// <summary>
         /// Registers a service
         /// </summary>
         /// <typeparam name="TService">Type of the service to be registered</typeparam>
@@ -38,6 +40,7 @@ namespace HurlStudio.UI
             return this;
         }
 
+        /// <summary>
         /// Registers a service provider
         /// </summary>
         /// <typeparam name="TService">Type of the service to be registered</typeparam>
@@ -56,6 +59,61 @@ namespace HurlStudio.UI
 
                 _providers[typeof(TService)] = provider;
             }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Registers a service together with an associated type which can be used to determine the original service 
+        /// </summary>
+        /// <typeparam name="TService">Type of the service to be registered</typeparam>
+        /// <typeparam name="TAssociated">Type of the object associated to the service</typeparam>
+        /// <param name="serviceInstance">the instance of the service</param>
+        /// <returns>the service manager</returns>
+        /// <exception cref="ArgumentNullException">if the service instance is null</exception>
+        /// <exception cref="InvalidOperationException">if a service of the given type has already been registered</exception>
+        public ServiceManager<T> RegisterAssociated<TService, TAssociated>(TService serviceInstance) where TService : T
+        {
+            if (serviceInstance == null)
+                throw new ArgumentNullException(nameof(serviceInstance));
+
+            lock (_instances)
+                lock (_associations)
+                {
+                    if (_instances.ContainsKey(serviceInstance.GetType()) || _providers.ContainsKey(serviceInstance.GetType()) || _associations.ContainsKey(typeof(TAssociated)))
+                    {
+                        throw new InvalidOperationException($"Service with type {typeof(TService).Name} is already registered");
+                    }
+
+                    _associations[typeof(TAssociated)] = serviceInstance.GetType();
+                    _instances[serviceInstance.GetType()] = serviceInstance;
+                }
+
+            return this;
+        }
+
+        /// <summary>
+        /// Registers a service provider together with an associated type which can be used to determine the original service 
+        /// </summary>
+        /// <typeparam name="TService">Type of the service to be registered</typeparam>
+        /// <typeparam name="TAssociated">Type of the object associated to the service</typeparam>
+        /// <param name="serviceInstance">Provider of said service</param>
+        /// <returns>the service manager</returns>
+        /// <exception cref="ArgumentNullException">if the service instance is null</exception>
+        /// <exception cref="InvalidOperationException">if a service of the given type has already been registered</exception>
+        public ServiceManager<T> RegisterProviderAssociated<TService, TAssociated>(Func<T> provider)
+        {
+            lock (_instances)
+                lock (_associations)
+                {
+                    if (_instances.ContainsKey(typeof(TService)) || _providers.ContainsKey(typeof(TService)) || _associations.ContainsKey(typeof(TAssociated)))
+                    {
+                        throw new InvalidOperationException($"Service with type {typeof(TService).Name} is already registered");
+                    }
+
+                    _associations[typeof(TAssociated)] = typeof(TService);
+                    _providers[typeof(TService)] = provider;
+                }
 
             return this;
         }
@@ -86,6 +144,22 @@ namespace HurlStudio.UI
         }
 
         /// <summary>
+        /// Returns base type instance associated to the given type
+        /// </summary>
+        /// <param name="associatedType">the registered, associated type</param>
+        /// <returns>Instance of the base type of this service manager instance</returns>
+        /// <exception cref="ArgumentException">if the associated type was not found</exception>
+        public T GetAssociated(Type associatedType)
+        {
+            if(_associations.ContainsKey(associatedType))
+            {
+                return this.Get(_associations[associatedType]);
+            }
+
+            throw new ArgumentException($"No service associated to type {associatedType} was registered");
+        }
+
+        /// <summary>
         /// Syntactic sugar for the Get method
         /// </summary>
         /// <typeparam name="TService">Service type</typeparam>
@@ -93,29 +167,20 @@ namespace HurlStudio.UI
         public TService Get<TService>() where TService : T => (TService)Get(typeof(TService));
 
         /// <summary>
-        /// Returns a list of all registered types
+        /// Syntactic sugar for the GetAssociated method
         /// </summary>
-        /// <returns>a list of all registered types</returns>
-        public Type[] GetAllKeys()
-        {
-            List<Type> types = new List<Type>();
-            types.AddRange(_providers.Keys);
-            types.AddRange(_instances.Keys);
-            return types.ToArray();
-        }
+        /// <typeparam name="TAssociated">Associated type</typeparam>
+        /// <returns>Instance of the base type of this service manager instance</returns>
+        public T GetAssociated<TAssociated>() => GetAssociated(typeof(TAssociated));
 
         /// <summary>
-        /// Returns a list of instances of all registered services
-        /// -> for registered instances the given instance
-        /// -> for registered providers a new instance produced by the provider
+        /// Checks, if an associated type is registered
         /// </summary>
+        /// <typeparam name="TAssociation">The type to be checked</typeparam>
         /// <returns></returns>
-        public T[] GetInstancesOfAllRegisteredServices()
+        public bool CheckAssociation(Type associatedType)
         {
-            List<T> instances = new List<T>();
-            instances.AddRange(_instances.Values);
-            instances.AddRange(_providers.Select(x => x.Value()));
-            return instances.ToArray();
+            return _associations.ContainsKey(associatedType);
         }
     }
 }

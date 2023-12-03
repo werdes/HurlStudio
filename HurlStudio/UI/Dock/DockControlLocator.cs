@@ -34,8 +34,7 @@ namespace HurlStudio.UI.Dock
         {
             if (data is Tool || data is Document)
             {
-                ViewModelBasedControl[] controls = _controlBuilder.GetInstancesOfAllRegisteredServices();
-                ViewModelBasedControl? selectedControl = controls.Where(x => x.AttachedViewModelType == data.GetType()).FirstOrDefault();
+                ViewModelBasedControl? selectedControl = _controlBuilder.GetAssociated(data.GetType()); 
 
                 if (selectedControl != null)
                 {

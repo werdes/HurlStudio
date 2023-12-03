@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.UI.ViewModels
+namespace HurlStudio.UI.ViewModels.Tools
 {
     public class CollectionExplorerToolViewModel : Tool
     {
@@ -23,7 +23,7 @@ namespace HurlStudio.UI.ViewModels
         }
 
         public EditorViewViewModel EditorViewModel => _editorViewModel;
-        
+
         public bool IsEnabled
         {
             get => _isEnabled;

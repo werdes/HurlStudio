@@ -4,14 +4,14 @@ using HurlStudio.UI.ViewModels.Documents;
 
 namespace HurlStudio.UI.Controls.Documents
 {
-    public partial class FileDocument : ViewModelBasedControl<FileDocumentViewModel>
+    public partial class WelcomeDocument : ViewModelBasedControl<WelcomeDocumentViewModel>
     {
-        public FileDocument()
+        public WelcomeDocument()
         {
             InitializeComponent();
         }
 
-        protected override void SetViewModelInstance(FileDocumentViewModel viewModel)
+        protected override void SetViewModelInstance(WelcomeDocumentViewModel viewModel)
         {
             throw new System.NotImplementedException();
         }

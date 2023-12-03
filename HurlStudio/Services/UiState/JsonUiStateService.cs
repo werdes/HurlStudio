@@ -24,9 +24,8 @@ namespace HurlStudio.Services.UiState
         private IConfiguration _configuration;
         private ILogger _logger;
         private Model.UiState.UiState? _uiState;
-        private EditorViewViewModel _editorViewViewModel;
 
-        public JsonUiStateService(IConfiguration configuration, ILogger<JsonUiStateService> logger, EditorViewViewModel editorViewViewModel)
+        public JsonUiStateService(IConfiguration configuration, ILogger<JsonUiStateService> logger)
         {
             _configuration = configuration;
             _logger = logger;
@@ -34,12 +33,11 @@ namespace HurlStudio.Services.UiState
             _serializerOptions = new JsonSerializerOptions()
             {
                 WriteIndented = true,
+                NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals | JsonNumberHandling.AllowReadingFromString | JsonNumberHandling.WriteAsString | JsonNumberHandling.Strict,
                 Converters = {
                     new JsonStringEnumConverter()
                 }
             };
-
-            _editorViewViewModel = editorViewViewModel;
         }
 
         /// <summary>
@@ -79,11 +77,7 @@ namespace HurlStudio.Services.UiState
         {
             string path = GetUiStateFilePath();
 
-            BuildUiStateCollections();
-
             if (_uiState == null) throw new ArgumentNullException($"no ui state was provided to {nameof(JsonUiStateService)}");
-
-
 
             string json = JsonSerializer.Serialize(_uiState, _serializerOptions);
             await File.WriteAllTextAsync(path, json, Encoding.UTF8);
@@ -95,8 +89,6 @@ namespace HurlStudio.Services.UiState
         public void StoreUiState()
         {
             string path = GetUiStateFilePath();
-
-            BuildUiStateCollections();
 
             if (_uiState == null) throw new ArgumentNullException($"no ui state was provided to {nameof(JsonUiStateService)}");
 
@@ -165,11 +157,11 @@ namespace HurlStudio.Services.UiState
         /// <summary>
         /// Builds the ui state from models
         /// </summary>
-        private void BuildUiStateCollections()
+        private void BuildUiStateCollections(EditorViewViewModel editorViewViewModel)
         {
             if (_uiState == null) _uiState = GetDefaultUiState();
 
-            foreach(CollectionContainer collectionContainer in _editorViewViewModel.Collections)
+            foreach(CollectionContainer collectionContainer in editorViewViewModel.Collections)
             {
                 string collectionId = collectionContainer.GetId();
 
@@ -193,7 +185,7 @@ namespace HurlStudio.Services.UiState
         /// <exception cref="ArgumentNullException">if the ui state is null</exception>
         private void BuildUiStateFolder(CollectionFolder folder)
         {
-            if (_uiState == null) throw new ArgumentNullException(nameof(folder));
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
 
             string folderId = folder.GetId();
             if (!_uiState.ExpandedCollectionExplorerComponents.ContainsKey(folderId))
@@ -206,6 +198,41 @@ namespace HurlStudio.Services.UiState
             {
                 this.BuildUiStateFolder(subFolder);
             }
+        }
+
+        /// <summary>
+        /// Sets the collections from viewModel to the ui state object
+        /// </summary>
+        /// <param name="editorView">view model of the editor view</param>
+        public void SetCollectionExplorerState(EditorViewViewModel editorView)
+        {
+            BuildUiStateCollections(editorView);
+        }
+
+        /// <summary>
+        /// Adds the main window state to the ui state object
+        /// </summary>
+        /// <param name="mainWindow">the main window control</param>
+        public void SetMainWindowState(MainWindow mainWindow)
+        {
+            if (mainWindow == null) throw new ArgumentNullException(nameof(mainWindow));
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+
+            _uiState.MainWindowPosition = new System.Drawing.Rectangle(mainWindow.Position.X, mainWindow.Position.Y, (int)mainWindow.Width, (int)mainWindow.Height);
+            _uiState.MainWindowIsMaximized = mainWindow.WindowState == Avalonia.Controls.WindowState.Maximized;
+        }
+
+        /// <summary>
+        /// Adds the opened file history to the ui state
+        /// </summary>
+        /// <param name="editorView">view model of the editor view</param>
+        public void SetFileHistory(EditorViewViewModel editorView)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (editorView == null) throw new ArgumentNullException(nameof(editorView));
+
+            _uiState.FileHistoryEntries.Clear();
+            _uiState.FileHistoryEntries.AddRange(editorView.FileHistoryEntries);
         }
     }
 }

@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public abstract class CollectionExplorerControlBase : UserControl
+    public abstract class CollectionExplorerControlBase<T> : ViewModelBasedControl<T>
     {
         public event EventHandler<CollectionComponentMovedEventArgs> CollectionComponentMoved;
 
@@ -29,14 +29,20 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         }
 
         protected abstract CollectionComponentBase GetBoundCollectionComponent();
+        protected abstract Task OpenComponentDocument();
 
-        protected void On_CollectionExplorerControlBase_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+        protected async void On_CollectionExplorerControlBase_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             PointerPointProperties pointerProperties = e.GetCurrentPoint(this).Properties;
             _pressed = pointerProperties.IsLeftButtonPressed;
             if (_pressed)
             {
                 _pressedPosition = e.GetCurrentPoint(this).Position;
+            }
+
+            if(e.ClickCount == 2)
+            {
+                await OpenComponentDocument();
             }
 
             CollectionComponentBase? component = this.GetBoundCollectionComponent();
@@ -48,7 +54,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             e.Handled = true;
         }
 
-        protected void On_CollectionExplorerControlBase_PointerReleased(object? sender, Avalonia.Input.PointerReleasedEventArgs e)
+        protected void On_CollectionExplorerControlBase_PointerReleased(object? sender, PointerReleasedEventArgs e)
         {
             _pressed = false;
             _pressedPosition = null;
@@ -59,7 +65,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected async void On_CollectionExplorerControlBase_PointerMoved(object? sender, Avalonia.Input.PointerEventArgs e)
+        protected async void On_CollectionExplorerControlBase_PointerMoved(object? sender, PointerEventArgs e)
         {
             if (!_pressed || _pressedPosition == null) return;
 
@@ -84,7 +90,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void On_CollectionExplorerControlBase_DragEnter(object? sender, Avalonia.Input.DragEventArgs e)
+        protected void On_CollectionExplorerControlBase_DragEnter(object? sender, DragEventArgs e)
         {
             bool allowDrop = DragDrop.GetAllowDrop(this);
 
@@ -97,13 +103,13 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             e.Handled = true;
         }
 
-        protected void On_CollectionExplorerControlBase_DragLeave(object? sender, Avalonia.Input.DragEventArgs e)
+        protected void On_CollectionExplorerControlBase_DragLeave(object? sender, DragEventArgs e)
         {
             e.Handled = true;
             _pressed = false;
         }
 
-        protected void On_CollectionExplorerControlBase_DragOver(object? sender, Avalonia.Input.DragEventArgs e)
+        protected void On_CollectionExplorerControlBase_DragOver(object? sender, DragEventArgs e)
         {
             e.Handled = true;
         }
@@ -113,17 +119,24 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void On_CollectionExplorerControlBase_Drop(object? sender, Avalonia.Input.DragEventArgs e)
+        protected void On_CollectionExplorerControlBase_Drop(object? sender, DragEventArgs e)
         {
-            CollectionComponentBase? source = (CollectionComponentBase?)(e.Data.Get(DataFormats.Files));
-
-            if (source != null)
+            try
             {
-                CollectionComponentMovedEventArgs collectionComponentMovedEventArgs = new CollectionComponentMovedEventArgs(source, this.GetBoundCollectionComponent());
+                CollectionComponentBase? source = (CollectionComponentBase?)(e.Data.Get(DataFormats.Files));
 
-                this.CollectionComponentMoved?.Invoke(this, collectionComponentMovedEventArgs);
+                if (source != null)
+                {
+                    CollectionComponentMovedEventArgs collectionComponentMovedEventArgs = new CollectionComponentMovedEventArgs(source, this.GetBoundCollectionComponent());
+
+                    this.CollectionComponentMoved?.Invoke(this, collectionComponentMovedEventArgs);
+                }
+                e.Handled = true;
             }
-            e.Handled = true;
+            catch(Exception ex)
+            {
+
+            }
         }
 
         /// <summary>

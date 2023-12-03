@@ -39,6 +39,10 @@ using HurlStudio.Model.Enums;
 using HurlStudio.UI.Controls.Tools;
 using HurlStudio.UI.Controls.Documents;
 using HurlStudio.Services.UiState;
+using HurlStudio.UI.ViewModels.Tools;
+using HurlStudio.UI.ViewModels.Documents;
+using HurlStudio.UI.Controls.CollectionExplorer;
+using HurlStudio.Model.CollectionContainer;
 
 namespace HurlStudio;
 
@@ -74,7 +78,6 @@ public partial class App : Application
             SetTheme();
 
             RegisterControls();
-            RegisterLayoutControlViewmodels();
             RegisterViews();
             RegisterViewModelHierarchy();
 
@@ -141,19 +144,6 @@ public partial class App : Application
         Services = services.BuildServiceProvider();
     }
 
-    /// <summary>
-    /// Registers the viewModels in the tool/document service manager 
-    /// </summary>
-    private static void RegisterLayoutControlViewmodels()
-    {
-        ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
-        ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
-
-        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
-        toolControlBuilder.RegisterProvider<FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsToolViewModel>());
-
-        documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
-    }
 
     /// <summary>
     /// Registers user controls in the ControlBase service manager
@@ -161,10 +151,23 @@ public partial class App : Application
     private static void RegisterControls()
     {
         ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
-        controlBuilder.RegisterProvider<CollectionExplorerTool>(() => Services.GetRequiredService<CollectionExplorerTool>());
-        controlBuilder.RegisterProvider<FileSettingsTool>(() => Services.GetRequiredService<FileSettingsTool>());
-        controlBuilder.RegisterProvider<FileDocument>(() => Services.GetRequiredService<FileDocument>());
+        ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
+        ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
 
+        controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
+        controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
+        controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
+        controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
+
+        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Collection, CollectionContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Collection>());
+        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
+        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Folder, CollectionFolder>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Folder>());
+
+        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
+        toolControlBuilder.RegisterProvider<FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsToolViewModel>());
+
+        documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
+        documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
     }
 
     /// <summary>
@@ -218,6 +221,7 @@ public partial class App : Application
         services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
         services.AddSingleton<IEditorService, EditorService>();
         services.AddSingleton<DockControlLocator>();
+        services.AddSingleton<ControlLocator>();
 
         services.AddSingleton<ICollectionService, CollectionService>();
         services.AddSingleton<IEnvironmentService, EnvironmentService>();
@@ -283,6 +287,7 @@ public partial class App : Application
         services.AddSingleton<CollectionExplorerToolViewModel>();
         services.AddTransient<FileSettingsToolViewModel>();
         services.AddTransient<FileDocumentViewModel>();
+        services.AddTransient<WelcomeDocumentViewModel>();
     }
 
     /// <summary>
@@ -298,6 +303,12 @@ public partial class App : Application
         services.AddTransient<CollectionExplorerTool>();
         services.AddTransient<FileSettingsTool>();
         services.AddTransient<FileDocument>();
+        services.AddTransient<WelcomeDocument>();
+
+        // Collection Explorer components
+        services.AddTransient<UI.Controls.CollectionExplorer.Collection>();
+        services.AddTransient<UI.Controls.CollectionExplorer.File>();
+        services.AddTransient<UI.Controls.CollectionExplorer.Folder>();
     }
 
     /// <summary>
