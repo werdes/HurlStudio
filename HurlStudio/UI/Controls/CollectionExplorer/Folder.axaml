@@ -69,7 +69,7 @@
             Background="{DynamicResource NeutralControlBackgroundColor}"
             BorderBrush="{DynamicResource NeutralControlBorderColor}"
             IsVisible="{Binding Selected}"/>
-    <Button Classes="collapseButton" Click="On_ButtonCollapse_Click">
+    <Button Classes="framelessButton" Click="On_ButtonCollapse_Click">
       <StackPanel>
         <controls:Icon Type="Collapsed" Width="16" Height="16" IsVisible="{Binding Collapsed}" />
         <controls:Icon Type="Expanded" Width="16" Height="16" IsVisible="{Binding !Collapsed}" />
@@ -94,31 +94,9 @@
     </Panel>
 
     <!--Subfolders-->
-    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding Folders}">
-      <!--<ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <StackPanel Orientation="Vertical" />
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <ce:Folder CollectionFolder="{Binding}" CollectionComponentMoved="On_CollectionExplorerControlBase_CollectionComponentMoved" />
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>-->
-    </ItemsControl>
+    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="1" ItemsSource="{Binding Folders}" />
 
     <!--Files-->
-    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Files}">
-      <!--<ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <StackPanel Orientation="Vertical" />
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <ce:File CollectionFile="{Binding}" CollectionComponentMoved="On_CollectionExplorerControlBase_CollectionComponentMoved" />
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>-->
-    </ItemsControl>
+    <ItemsControl IsVisible="{Binding !Collapsed}" Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Files}" />
   </Grid>
 </UserControl>

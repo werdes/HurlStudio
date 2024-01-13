@@ -6,6 +6,8 @@ namespace HurlStudio.UI.Controls.Documents
 {
     public partial class WelcomeDocument : ViewModelBasedControl<WelcomeDocumentViewModel>
     {
+        private WelcomeDocumentViewModel? _viewModel;
+
         public WelcomeDocument()
         {
             InitializeComponent();
@@ -13,7 +15,8 @@ namespace HurlStudio.UI.Controls.Documents
 
         protected override void SetViewModelInstance(WelcomeDocumentViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

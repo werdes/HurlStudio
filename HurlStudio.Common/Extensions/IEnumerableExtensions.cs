@@ -26,5 +26,6 @@ namespace HurlStudio.Common.Extensions
             if(collection.Count() > index) return collection.ElementAt(index);
             return default(T);
         }
+
     }
 }

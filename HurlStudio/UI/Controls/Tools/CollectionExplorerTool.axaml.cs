@@ -14,23 +14,21 @@ namespace HurlStudio.UI.Controls.Tools
     {
         private ILogger _log;
         private EditorViewViewModel _editorViewViewModel;
-        private CollectionExplorerToolViewModel _viewModel;
+        private CollectionExplorerToolViewModel? _viewModel;
         private IEditorService _editorService;
-        private ControlLocator _controlLocator;
 
-        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, CollectionExplorerToolViewModel viewModel, IEditorService editorService, ControlLocator controlLocator)
+        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator)
         {
             InitializeComponent();
             _log = logger;
             _editorViewViewModel = editorViewViewModel;
             _editorService = editorService;
-            _viewModel = viewModel;
-            _controlLocator = controlLocator;
         }
 
         protected override void SetViewModelInstance(CollectionExplorerToolViewModel viewModel)
         {
-            throw new NotImplementedException();
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
 
         /// <summary>
@@ -41,7 +39,6 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="e"></param>
         private void On_CollectionExplorerTool_Initialized(object? sender, System.EventArgs e)
         {
-            this.DataTemplates.Add(_controlLocator);
             foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
                 collectionContainer.ControlSelectionChanged += On_CollectionContainer_ControlSelectionChanged;
@@ -136,6 +133,8 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="e"></param>
         private async void On_Collection_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
         {
+            if(_viewModel == null) return; // should not happen, since moving an object requires an object to be present, which
+                                           // originates from the view model
             try
             {
                 _viewModel.IsEnabled = false;
@@ -143,11 +142,11 @@ namespace HurlStudio.UI.Controls.Tools
                 // File or folder to collection root
                 if (e.Target is CollectionContainer collectionContainer)
                 {
-                    if(e.Source is CollectionFolder collectionRootFolder)
+                    if (e.Source is CollectionFolder collectionRootFolder)
                     {
                         await _editorService.MoveFolderToCollectionRoot(collectionRootFolder, collectionContainer);
                     }
-                    else if(e.Source is CollectionFile collectionRootFile)
+                    else if (e.Source is CollectionFile collectionRootFile)
                     {
                         await _editorService.MoveFileToCollectionRoot(collectionRootFile, collectionContainer);
                     }

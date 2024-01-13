@@ -5,6 +5,7 @@ using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.UiState;
+using HurlStudio.Services.UiState;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Logging;
@@ -28,6 +29,7 @@ namespace HurlStudio.UI.ViewModels
         private ObservableCollection<FileHistoryEntry> _fileHistoryEntries;
         private IDockable? _activeDocument;
         private IRootDock? _layout;
+        private IUiStateService _uiStateService;
 
         public EditorViewViewModel(ILogger<EditorViewViewModel> logger) : base(typeof(EditorView))
         {
@@ -36,7 +38,6 @@ namespace HurlStudio.UI.ViewModels
             _fileHistoryEntries = new ObservableCollection<FileHistoryEntry>();
             _documents = new ObservableCollection<IDockable>();
             _activeDocument = null;
-
             _log = logger;
         }
 

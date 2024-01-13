@@ -41,7 +41,7 @@ namespace HurlStudio.Services.UserSettings
         /// </summary>
         /// <param name="refresh">reload the settings from disk</param>
         /// <returns>The deserialized UserSettings object</returns>
-        public async Task<Model.UserSettings.UserSettings?> GetUserSettingsAsync(bool refresh)
+        public async Task<Model.UserSettings.UserSettings> GetUserSettingsAsync(bool refresh)
         {
             if (refresh || _userSettings == null)
             {
@@ -56,7 +56,7 @@ namespace HurlStudio.Services.UserSettings
         /// </summary>
         /// <param name="refresh">reload the settings from disk</param>
         /// <returns>The deserialized UserSettings object</returns>
-        public Model.UserSettings.UserSettings? GetUserSettings(bool refresh)
+        public Model.UserSettings.UserSettings GetUserSettings(bool refresh)
         {
             if (refresh || _userSettings == null)
             {

@@ -14,7 +14,6 @@
     <Grid.RowDefinitions>
       <RowDefinition Height="30" />
       <RowDefinition Height="*" />
-      <RowDefinition Height="20" />
     </Grid.RowDefinitions>
 
     <Panel Grid.Row="0" Background="{DynamicResource WindowChromeBackgroundColor}" >
@@ -52,11 +51,5 @@
                  x:Name="DockControl"
                  Margin="4"
                  Background="Red"/>
-
-    <Panel Grid.Row="2" Background="{DynamicResource WindowChromeBackgroundColor}" >
-      <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
-        <TextBlock>Status Bar</TextBlock>
-      </DockPanel>
-    </Panel>
   </Grid>
 </v:ViewBase>

@@ -20,6 +20,7 @@ namespace HurlStudio.Services.Editor
         Task<bool> MoveFolderToCollectionRoot(CollectionFolder folder, CollectionContainer collection);
         Task<ObservableCollection<IDockable>> GetOpenDocuments();
         Task OpenFile(CollectionFile file);
+        Task OpenFile(string fileLocation);
         Task OpenFolderSettings(CollectionFolder folder);
         Task OpenCollectionSettings(CollectionContainer collection);
     }

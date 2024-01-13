@@ -6,6 +6,7 @@ using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 
@@ -13,21 +14,23 @@ namespace HurlStudio.UI.Windows
 {
     public partial class MainWindow : WindowBase
     {
-        private ILogger? _log;
-        private IConfiguration? _configuration;
-        private IUserSettingsService? _userSettingsService;
+        private ILogger _log;
+        private IConfiguration _configuration;
+        private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
         private ServiceManager<ViewBase>? _viewFactory;
         private MainWindowViewModel? _viewModel;
 
         public MainWindow()
         {
-            _log = null;
-            _configuration = null;
-            _viewFactory = null;
-            _userSettingsService = null;
-            _uiStateService = null;
-            _viewModel = null;
+            if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainWindow)} initialized from design time constructor");
+
+            _log = App.Services.GetRequiredService<ILogger<MainWindow>>();
+            _configuration = App.Services.GetRequiredService<IConfiguration>();
+            _viewFactory = App.Services.GetRequiredService<ServiceManager<ViewBase>>();
+            _userSettingsService = App.Services.GetRequiredService<IUserSettingsService>();
+            _uiStateService = App.Services.GetRequiredService<IUiStateService>();
+            _viewModel = App.Services.GetRequiredService<MainWindowViewModel>(); 
             InitializeComponent();
         }
 
@@ -120,7 +123,7 @@ namespace HurlStudio.UI.Windows
         }
 
         /// <summary>
-        /// Set the ui states' the main window state before the window is closed
+        /// Set the ui states' main window state before the window is closed
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>

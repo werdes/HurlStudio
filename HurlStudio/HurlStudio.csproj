@@ -16,30 +16,42 @@
 
   
   <ItemGroup>
+    <None Remove="Assets\SyntaxHighlighting\csharp.json" />
+    <None Remove="Assets\SyntaxHighlighting\hurl.json" />
+    <None Remove="Assets\SyntaxHighlighting\Themes\Dark.json" />
+    <None Remove="Assets\SyntaxHighlighting\Themes\Light.json" />
+    <None Remove="UI\Views\MainView.axaml.cs~RFf00a70.TMP" />
+  </ItemGroup>
+
+  
+  <ItemGroup>
     <Content Include="Assets\Icons\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ActiproSoftware.Controls.Avalonia" Version="23.1.1" />
-    <PackageReference Include="Avalonia" Version="11.0.5" />
-    <PackageReference Include="Avalonia.Desktop" Version="11.0.5" />
-    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.5" />
+    <PackageReference Include="ActiproSoftware.Controls.Avalonia" Version="23.1.2" />
+    <PackageReference Include="Avalonia" Version="11.0.6" />
+    <PackageReference Include="Avalonia.AvaloniaEdit" Version="11.0.6" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.0.6" />
+    <PackageReference Include="Avalonia.Fonts.Inter" Version="11.0.6" />
 
     <!--Condition below is needed to remove Avalonia.Diagnostics package from build output in Release configuration.-->
-    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.5" />
-    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.5" />
-    <PackageReference Include="Dock.Avalonia" Version="11.0.0.3" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.3" />
+    <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.6" />
+    <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.6" />
+    <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
+    <PackageReference Include="Dock.Avalonia" Version="11.0.0.5" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.5" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
-    <PackageReference Include="NLog" Version="5.2.6" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.5" />
-    <PackageReference Include="System.Text.Json" Version="8.0.0" />
+    <PackageReference Include="NLog" Version="5.2.8" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
+    <PackageReference Include="System.Text.Json" Version="8.0.1" />
+    <PackageReference Include="TextMateSharp.Grammars" Version="1.0.56" />
   </ItemGroup>
 
   <ItemGroup>
@@ -85,6 +97,12 @@
     <None Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <AvaloniaResource Update="Assets\SyntaxHighlighting\Grammars\hurl.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AvaloniaResource>
+    <AvaloniaResource Update="Assets\SyntaxHighlighting\Grammars\csharp.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </AvaloniaResource>
     <None Update="log.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

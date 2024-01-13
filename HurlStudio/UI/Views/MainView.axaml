@@ -5,12 +5,17 @@
             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
 	          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+            xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
             x:Class="HurlStudio.UI.Views.MainView"
+            
             Loaded="On_MainView_Loaded"
             x:DataType="vm:MainViewViewModel">
+  <v:ViewBase.Resources>
+    <converters:ICollectionCountToBadgeCountConverter x:Key="ICollectionCountToBadgeCountConverter" />
+  </v:ViewBase.Resources>
   <Design.DataContext>
     <vm:MainViewViewModel />
   </Design.DataContext>
@@ -79,16 +84,87 @@
       <actipro:ChromedTitleBar.RightContent>
       </actipro:ChromedTitleBar.RightContent>
     </actipro:ChromedTitleBar>
-    <ContentControl BorderThickness="1,0,1,1"
-                    BorderBrush="{DynamicResource WindowChromeBorderBrush}"
-                    x:Name="WindowContent">
-      <!--<StackPanel HorizontalAlignment="Center"
-                  VerticalAlignment="Center">
-        <TextBlock Text="Tescht" />
-        <Button Content="Click4log"
-                Click="Button_Click_1" />
-      </StackPanel>-->
-      <!--<c:ViewFrame SelectedView="{x:Type vm:LoadingViewViewModel}" ></c:ViewFrame>-->
-    </ContentControl>
+    <Grid>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+        <RowDefinition Height="20" />
+      </Grid.RowDefinitions>
+      <ContentControl BorderThickness="1,0,1,1"
+                      BorderBrush="{DynamicResource WindowChromeBorderBrush}"
+                      x:Name="WindowContent">
+      </ContentControl>
+      <Panel Grid.Row="1" Background="{DynamicResource WindowChromeBackgroundColor}" >
+        <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
+          <TextBlock>Status Bar</TextBlock>
+        </DockPanel>
+        <DockPanel HorizontalAlignment="Right">
+          <Button Classes="framelessButton"
+                  Margin="0,0,5,2"
+                  Cursor="Hand"
+                  Click="On_ButtonToggleNotificationList_Click"
+                  ToolTip.Tip="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_Tooltip}">
+            <StackPanel Orientation="Horizontal">
+              <c:Icon Margin="0,1,0,0" Type="NotificationsList" />
+              <TextBlock
+                VerticalAlignment="Center"
+                Margin="1,0,0,1"
+                Text="{Binding Notifications.Count, Converter={StaticResource ICollectionCountToBadgeCountConverter}}" />
+            </StackPanel>
+          </Button>
+        </DockPanel>
+      </Panel>
+
+      <!--Overlay-->
+      <Grid x:Name="Overlay" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <DockPanel IsVisible="{Binding NotificationsExpanded}" Margin="3" HorizontalAlignment="Right" VerticalAlignment="Bottom">
+          <Grid>
+            <Grid.Effect>
+              <DropShadowEffect OffsetX="0" OffsetY="0" BlurRadius="5" Opacity=".8" Color="#000000" />
+            </Grid.Effect>
+            <Grid.RowDefinitions>
+              <RowDefinition Height="30" />
+              <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="50" />
+            </Grid.ColumnDefinitions>
+
+            <Border Grid.ColumnSpan="2" Grid.RowSpan="2"
+                    Background="{DynamicResource WindowChromeBackgroundColor}"
+                    BorderBrush="{DynamicResource WindowChromeBorderColor}"
+                    BorderThickness="1" />
+            <TextBlock Foreground="{DynamicResource NeutralControlForegroundColor}"
+                       Text="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_Title}"
+                       Margin="5,0,0,0"
+                       VerticalAlignment="Center"/>
+            <DockPanel Grid.Column="1" HorizontalAlignment="Right" >
+              <Button Classes="framelessButton"
+                 Margin="0,0,5,2"
+                 Cursor="Hand"
+                 Click="On_ButtonToggleNotificationList_Click"
+                 ToolTip.Tip="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_Tooltip}">
+                <StackPanel Orientation="Horizontal">
+                  <c:Icon Margin="0,1,0,0" Type="Close" />
+                </StackPanel>
+              </Button>
+            </DockPanel>
+            <ScrollViewer Grid.Row="1" Grid.ColumnSpan="2"
+                          MaxHeight="300"
+                          VerticalScrollBarVisibility="Auto"
+                          HorizontalScrollBarVisibility="Disabled">
+              <StackPanel>
+                <ItemsControl ItemsSource="{Binding Notifications}" />
+                <TextBlock IsVisible="{Binding !Notifications.Count}"
+                           Text="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_EmptyList}"
+                           Margin="0,0,0,5"
+                           Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                           HorizontalAlignment="Center" />
+              </StackPanel>
+            </ScrollViewer>
+          </Grid>
+        </DockPanel>
+      </Grid>
+    </Grid>
   </DockPanel>
 </v:ViewBase>

@@ -14,12 +14,20 @@
       <Color x:Key="WindowChromeBorderColor">#dddddd</Color>
       <Color x:Key="WindowChromeBackgroundColor">#dddddd</Color>
       <Color x:Key="WindowChromeTitleColor">#222222</Color>
+      
       <Color x:Key="NeutralControlBackgroundColor">#dddddd</Color>
       <Color x:Key="NeutralControlHoverColor">#d4d4d4</Color>
       <Color x:Key="NeutralControlPressedColor">#b4b4b4</Color>
       <Color x:Key="NeutralControlBorderColor">#d4d4d4</Color>
       <Color x:Key="NeutralControlBorderHoverColor">#e4e4e4</Color>
       <Color x:Key="NeutralControlForegroundColor">#222222</Color>
+      <Color x:Key="NeutralControlForegroundMutedColor">#555555</Color>
+      
+      <Color x:Key="OverlayBackdropColor">#e1e1e1</Color>
+      <Color x:Key="OverlayBackdropBorderColor">#cccccc</Color>
+
+      <!--TextEditor-->
+      <Color x:Key="TextEditorTextAreaSelectionBrush">#b4b4b4</Color>
 
       <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
 
@@ -30,14 +38,22 @@
       <Color x:Key="WindowChromeBorderColor">#333333</Color>
       <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
       <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
+      
       <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
       <Color x:Key="NeutralControlHoverColor">#444444</Color>
       <Color x:Key="NeutralControlPressedColor">#555555</Color>
       <Color x:Key="NeutralControlBorderColor">#555555</Color>
       <Color x:Key="NeutralControlBorderHoverColor">#666666</Color>
       <Color x:Key="NeutralControlForegroundColor">#dddddd</Color>
+      <Color x:Key="NeutralControlForegroundMutedColor">#aaaaaa</Color>
+      
+      <Color x:Key="OverlayBackdropColor">#1f1f1f</Color>
+      <Color x:Key="OverlayBackdropBorderColor">#333</Color>
 
-      <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="#333333" />
+      <!--TextEditor-->
+      <Color x:Key="TextEditorTextAreaSelectionBrush">#555555</Color>
+
+      <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
 
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>

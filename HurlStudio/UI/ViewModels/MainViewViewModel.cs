@@ -1,4 +1,5 @@
-﻿using HurlStudio.UI.Views;
+﻿using HurlStudio.Model.Notifications;
+using HurlStudio.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,39 +13,29 @@ namespace HurlStudio.UI.ViewModels
 {
     public class MainViewViewModel : ViewModelBase, INavigatableViewModel
     {
-        private MainWindowViewModel _mainWindowViewModel;
+        private MainWindowViewModel? _mainWindowViewModel;
         private LoadingViewViewModel? _loadingViewViewModel;
         private EditorViewViewModel? _editorViewViewModel;
+        private bool _notificationsExpanded;
+
 
         private bool _initializationCompleted;
-
-
-        public bool InitializationCompleted
-        {
-            get => _initializationCompleted;
-            set
-            {
-                _initializationCompleted = value;
-                Notify();
-            }
-        }
+        private ObservableCollection<Notification> _notifications;
 
 
         public MainViewViewModel() : base(typeof(MainView))
         {
             _initializationCompleted = false;
+            _notifications = new ObservableCollection<Notification>();
         }
 
         public MainViewViewModel(MainWindowViewModel mainWindowViewModel) : this()
         {
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindowViewModel.MainViewViewModel = this;
-            
-            //_editorViewViewModel.RootViewModel = this;
-            //_loadingViewViewModel.RootViewModel = this;
         }
 
-        public MainWindowViewModel MainWindow
+        public MainWindowViewModel? MainWindow
         {
             get => _mainWindowViewModel;
             set
@@ -70,6 +61,36 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _editorViewViewModel = value;
+                Notify();
+            }
+        }
+
+        public bool InitializationCompleted
+        {
+            get => _initializationCompleted;
+            set
+            {
+                _initializationCompleted = value;
+                Notify();
+            }
+        }
+
+        public ObservableCollection<Notification> Notifications
+        {
+            get => _notifications;
+            set
+            {
+                _notifications = value;
+                Notify();
+            }
+        }
+
+        public bool NotificationsExpanded
+        {
+            get => _notificationsExpanded;
+            set
+            {
+                _notificationsExpanded = value;
                 Notify();
             }
         }

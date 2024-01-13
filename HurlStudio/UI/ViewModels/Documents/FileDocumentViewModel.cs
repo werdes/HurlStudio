@@ -28,19 +28,30 @@ namespace HurlStudio.UI.ViewModels.Documents
                 if(_file != null)
                 {
                     _file.PropertyChanged += On_File_PropertyChanged;
-
-                    this.Title = Path.GetFileName(_file.Location);
-                    Notify(nameof(Title));
                 }
+
+                this.ChangeTitle();
             }
+        }
+
+        private void ChangeTitle()
+        {
+            if (_file != null)
+            {
+                this.Title = Path.GetFileName(_file.Location);
+            }
+            else
+            {
+                this.Title = Localization.Localization.Common_Undefined;
+            }
+            Notify(nameof(Title));
         }
 
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(File.Location) && _file != null)
+            if(e.PropertyName == nameof(File.Location))
             {
-                this.Title = Path.GetFileName(_file.Location);
-                Notify(nameof(Title));
+                this.ChangeTitle();
             }
         }
     }

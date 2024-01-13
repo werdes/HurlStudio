@@ -1,0 +1,28 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:vm="clr-namespace:HurlStudio.Model.UiState;assembly=HurlStudio"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.RecentFile"
+             x:DataType="vm:FileHistoryEntry">
+  <UserControl.Resources>
+    <converters:PathToDirectoryNameConverter x:Key="PathToDirectoryNameConverter" />
+    <converters:UtcDateTimeToLocaleConverter x:Key="UtcDateTimeToLocaleConverter" />
+  </UserControl.Resources>
+  <Grid Margin="0,2" Cursor="Hand" PointerPressed="On_RecentFile_PointerPressed">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    
+    <c:Icon Type="File" Grid.Column="0" />
+    <TextBlock Grid.Column="1" Text="{Binding Location, Converter={StaticResource PathToDirectoryNameConverter}}" Foreground="{DynamicResource NeutralControlForegroundColor}"/>
+    <StackPanel Grid.Column="1" HorizontalAlignment="Right">
+      <TextBlock Opacity=".7" Text="{Binding LastOpened, Converter={StaticResource UtcDateTimeToLocaleConverter}}" Foreground="{DynamicResource NeutralControlForegroundColor}" />
+    </StackPanel>
+  </Grid>
+</UserControl>

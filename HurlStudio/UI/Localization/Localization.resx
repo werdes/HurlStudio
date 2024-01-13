@@ -117,6 +117,60 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Common.DateTime.About" xml:space="preserve">
+    <value>{about}</value>
+  </data>
+  <data name="Common.DateTime.AboutAMinute" xml:space="preserve">
+    <value>{a minute}</value>
+  </data>
+  <data name="Common.DateTime.AboutAMonth" xml:space="preserve">
+    <value>{about a month}</value>
+  </data>
+  <data name="Common.DateTime.AboutAnHour" xml:space="preserve">
+    <value>{about an hour}</value>
+  </data>
+  <data name="Common.DateTime.AboutAYear" xml:space="preserve">
+    <value>{about a year}</value>
+  </data>
+  <data name="Common.DateTime.ADay" xml:space="preserve">
+    <value>{a day}</value>
+  </data>
+  <data name="Common.DateTime.Days" xml:space="preserve">
+    <value>{days}</value>
+  </data>
+  <data name="Common.DateTime.Hours" xml:space="preserve">
+    <value>{hours}</value>
+  </data>
+  <data name="Common.DateTime.LessThanAMinute" xml:space="preserve">
+    <value>{less than a minute}</value>
+  </data>
+  <data name="Common.DateTime.Minutes" xml:space="preserve">
+    <value>{minutes}</value>
+  </data>
+  <data name="Common.DateTime.Months" xml:space="preserve">
+    <value>{months}</value>
+  </data>
+  <data name="Common.DateTime.Prefix.Ago" xml:space="preserve">
+    <value>{}</value>
+  </data>
+  <data name="Common.DateTime.Prefix.FromNow" xml:space="preserve">
+    <value>{}</value>
+  </data>
+  <data name="Common.DateTime.Suffix.Ago" xml:space="preserve">
+    <value>{ago}</value>
+  </data>
+  <data name="Common.DateTime.Suffix.FromNow" xml:space="preserve">
+    <value>{from now}</value>
+  </data>
+  <data name="Common.DateTime.Years" xml:space="preserve">
+    <value>{years}</value>
+  </data>
+  <data name="Common.Exception.Title" xml:space="preserve">
+    <value>{Common.Exception.Title}</value>
+  </data>
+  <data name="Common.Undefined" xml:space="preserve">
+    <value>{Common.Undefined}</value>
+  </data>
   <data name="Dock.Document.ContextMenu.Close" xml:space="preserve">
     <value>{Dock.Document.ContextMenu.Close}</value>
   </data>
@@ -272,6 +326,15 @@
   </data>
   <data name="View.Main.Menu.File.SaveAll" xml:space="preserve">
     <value>{View.Main.Menu.File.SaveAll}</value>
+  </data>
+  <data name="View.Main.StatusBar.NotificationsList.EmptyList" xml:space="preserve">
+    <value>{View.Main.StatusBar.NotificationsList.EmptyList}</value>
+  </data>
+  <data name="View.Main.StatusBar.NotificationsList.Title" xml:space="preserve">
+    <value>{View.Main.StatusBar.NotificationsList.Title}</value>
+  </data>
+  <data name="View.Main.StatusBar.NotificationsList.Tooltip" xml:space="preserve">
+    <value>{View.Main.StatusBar.NotificationsList.Tooltip}</value>
   </data>
   <data name="Window.Main.Title" xml:space="preserve">
     <value>{Window.Main.Title}</value>

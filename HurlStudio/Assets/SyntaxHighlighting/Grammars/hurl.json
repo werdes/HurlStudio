@@ -1,0 +1,26 @@
+{
+  "version": "0.1.0",
+  "name": "hurl",
+  "scopeName": "hurl",
+  "patterns": [
+    {
+      "name": "keyword.method",
+      "match": "\\b(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\\b"
+    },
+    {
+      "name": "response.statuscode",
+      "match": "\\b(HTTP\\/1.0|HTTP\\/1.1|HTTP\\/2|HTTP\\/3|HTTP)( *)\\b([0-9]{3})",
+      "captures": {
+        "1": {
+          "name": "keyword.http"
+        },
+        "2": {
+          "name": "space"
+        },
+        "3": {
+          "name": "response.statuscode"
+        }
+      }
+    }
+  ]
+}

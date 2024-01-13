@@ -1,5 +1,7 @@
 using Avalonia.Controls;
+using Avalonia.Controls.Notifications;
 using Dock.Model.Core;
+using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using Microsoft.Extensions.Configuration;
@@ -14,23 +16,21 @@ namespace HurlStudio.UI.Views
         private ILogger _log;
         private IConfiguration _configuration;
         private LayoutFactory _layoutFactory;
+        private INotificationService _notificationService;
         private EditorViewViewModel _viewModel;
-        private DockControlLocator _locator;
 
-        public EditorView(EditorViewViewModel viewModel, ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, DockControlLocator dockControlLocator) : base(typeof(EditorViewViewModel))
+        public EditorView(EditorViewViewModel viewModel, ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService) : base(typeof(EditorViewViewModel))
         {
             _viewModel = viewModel;
             _log = logger;
             _configuration = configuration;
             _layoutFactory = layoutFactory;
-            _locator = dockControlLocator;
+            _notificationService = notificationService;
 
             this.DataContext = viewModel;
             this.DebugFactoryEvents(layoutFactory);
 
             _layoutFactory.DockableRemoved += On_LayoutFactory_DockableRemoved;
-
-            this.DataTemplates.Add(_locator);
 
             InitializeComponent();
         }
@@ -69,7 +69,6 @@ namespace HurlStudio.UI.Views
                 if (_viewModel.Layout != null)
                 {
                     _layoutFactory.InitLayout(_viewModel.Layout);
-                    
                 }
             }
             catch (Exception ex)

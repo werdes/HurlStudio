@@ -34,18 +34,6 @@ namespace HurlStudio.UI.Controls
         /// <returns></returns>
         public Control Build(object? data)
         {
-            //ViewModelBasedControl[] controls = _controlBuilder.GetInstancesOfAllRegisteredServices();
-            //ViewModelBasedControl? selectedControl = controls.Where(x => x.GetAttachedViewModelType() == data.GetType()).FirstOrDefault();
-
-            //if (selectedControl != null)
-            //{
-            //    if (selectedControl.DataContext == null)
-            //    {
-            //        selectedControl.DataContext = data;
-            //    }
-            //    return (Control)selectedControl;
-            //}
-
             if (data != null)
             {
                 try

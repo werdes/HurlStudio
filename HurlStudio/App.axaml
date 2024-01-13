@@ -12,6 +12,7 @@
       <ResourceDictionary.MergedDictionaries>
         <ResourceInclude Source="/UI/Resources/DockDictionary.axaml" />
         <ResourceInclude Source="/UI/Resources/ColorDictionary.axaml" />
+        <ResourceInclude Source="/UI/Resources/TextEditorDictionary.axaml" />
       </ResourceDictionary.MergedDictionaries>
       <idcr:ControlRecycling x:Key="ControlRecyclingKey" />
 
@@ -41,6 +42,7 @@
     <SimpleTheme />
 
     <StyleInclude Source="avares://Dock.Avalonia/Themes/DockSimpleTheme.axaml" />
+    <StyleInclude Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
 
     <Style Selector="idc|DockControl">
       <Setter Property="(ids:DockProperties.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />

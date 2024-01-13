@@ -61,6 +61,168 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {about} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_About {
+            get {
+                return ResourceManager.GetString("Common.DateTime.About", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {a minute} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_AboutAMinute {
+            get {
+                return ResourceManager.GetString("Common.DateTime.AboutAMinute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {about a month} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_AboutAMonth {
+            get {
+                return ResourceManager.GetString("Common.DateTime.AboutAMonth", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {about an hour} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_AboutAnHour {
+            get {
+                return ResourceManager.GetString("Common.DateTime.AboutAnHour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {about a year} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_AboutAYear {
+            get {
+                return ResourceManager.GetString("Common.DateTime.AboutAYear", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {a day} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_ADay {
+            get {
+                return ResourceManager.GetString("Common.DateTime.ADay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {days} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Days {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Days", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {hours} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Hours {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Hours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {less than a minute} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_LessThanAMinute {
+            get {
+                return ResourceManager.GetString("Common.DateTime.LessThanAMinute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {minutes} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Minutes {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Minutes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {months} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Months {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Months", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Prefix_Ago {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Prefix.Ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Prefix_FromNow {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Prefix.FromNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {ago} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Suffix_Ago {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Suffix.Ago", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {from now} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Suffix_FromNow {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Suffix.FromNow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {years} ähnelt.
+        /// </summary>
+        public static string Common_DateTime_Years {
+            get {
+                return ResourceManager.GetString("Common.DateTime.Years", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Exception.Title} ähnelt.
+        /// </summary>
+        public static string Common_Exception_Title {
+            get {
+                return ResourceManager.GetString("Common.Exception.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Undefined} ähnelt.
+        /// </summary>
+        public static string Common_Undefined {
+            get {
+                return ResourceManager.GetString("Common.Undefined", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.Close} ähnelt.
         /// </summary>
         public static string Dock_Document_ContextMenu_Close {
@@ -525,6 +687,33 @@ namespace HurlStudio.UI.Localization {
         public static string View_Main_Menu_File_SaveAll {
             get {
                 return ResourceManager.GetString("View.Main.Menu.File.SaveAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.NotificationsList.EmptyList} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_NotificationsList_EmptyList {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.NotificationsList.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.NotificationsList.Title} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_NotificationsList_Title {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.NotificationsList.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.NotificationsList.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_NotificationsList_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.NotificationsList.Tooltip", resourceCulture);
             }
         }
         

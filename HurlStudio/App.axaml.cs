@@ -43,6 +43,9 @@ using HurlStudio.UI.ViewModels.Tools;
 using HurlStudio.UI.ViewModels.Documents;
 using HurlStudio.UI.Controls.CollectionExplorer;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.UiState;
+using HurlStudio.Services.Notifications;
+using HurlStudio.Model.Notifications;
 
 namespace HurlStudio;
 
@@ -57,6 +60,11 @@ public partial class App : Application
     public override void Initialize()
     {
         AvaloniaXamlLoader.Load(this);
+
+        if (Design.IsDesignMode)
+        {
+            RequestedThemeVariant = ThemeVariant.Dark;
+        }
     }
 
     /// <summary>
@@ -69,10 +77,9 @@ public partial class App : Application
         // Without this line you will get duplicate validations from both Avalonia and CT
         BindingPlugins.DataValidators.RemoveAt(0);
 
-        //if (!Design.IsDesignMode)
-        //{
         try
         {
+
             BuildServiceProvider();
             SetUiCulture();
             SetTheme();
@@ -91,13 +98,13 @@ public partial class App : Application
                     desktop.MainWindow = mainWindow;
                 }
             }
-            //}
 
             base.OnFrameworkInitializationCompleted();
 
 #if DEBUG
             this.AttachDevTools();
 #endif
+
         }
         catch (Exception ex)
         {
@@ -158,6 +165,8 @@ public partial class App : Application
         controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
         controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
         controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
+        controlBuilder.RegisterProviderAssociated<RecentFile, FileHistoryEntry>(() => Services.GetRequiredService<RecentFile>());
+        controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
 
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Collection, CollectionContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Collection>());
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
@@ -220,13 +229,13 @@ public partial class App : Application
         services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
         services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
         services.AddSingleton<IEditorService, EditorService>();
-        services.AddSingleton<DockControlLocator>();
+        services.AddSingleton<INotificationService, NotificationService>();
         services.AddSingleton<ControlLocator>();
 
         services.AddSingleton<ICollectionService, CollectionService>();
         services.AddSingleton<IEnvironmentService, EnvironmentService>();
 
-        ConfigureLayoutControlViewmodels(services);
+        ConfigureDockControlViewmodels(services);
         ConfigureControls(services);
         ConfigureViews(services);
         ConfigureViewModels(services);
@@ -277,7 +286,7 @@ public partial class App : Application
     /// Configures the tool/document viewmodels
     /// </summary>
     /// <param name="services"></param>
-    private static void ConfigureLayoutControlViewmodels(IServiceCollection services)
+    private static void ConfigureDockControlViewmodels(IServiceCollection services)
     {
         // Viewmodel Builders
         services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
@@ -304,6 +313,8 @@ public partial class App : Application
         services.AddTransient<FileSettingsTool>();
         services.AddTransient<FileDocument>();
         services.AddTransient<WelcomeDocument>();
+        services.AddTransient<RecentFile>();
+        services.AddTransient<NotificationCard>();
 
         // Collection Explorer components
         services.AddTransient<UI.Controls.CollectionExplorer.Collection>();

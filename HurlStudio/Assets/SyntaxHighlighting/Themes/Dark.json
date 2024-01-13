@@ -1,0 +1,27 @@
+{
+  "$schema": "vscode://schemas/color-theme",
+  "name": "Dark",
+  "tokenColors": [
+    {
+      "name": "HTTP Methods",
+      "scope": [ "keyword.method" ],
+      "settings": {
+        "foreground": "#4EC9B0"
+      }
+    },
+    {
+      "name": "Response HTTP Keyword",
+      "scope": [ "keyword.http" ],
+      "settings": {
+        "foreground": "#C586C0"
+      }
+    },
+    {
+      "name": "Response HTTP Statuscode",
+      "scope": [ "response.statuscode" ],
+      "settings": {
+        "foreground": "#b5cea8"
+      }
+    }
+  ]
+}

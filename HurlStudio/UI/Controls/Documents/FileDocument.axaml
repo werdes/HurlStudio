@@ -3,13 +3,35 @@
              xmlns:c="clr-namespace:HurlStudio.UI.Controls.Documents"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
              xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:ae="using:AvaloniaEdit"
              xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Documents"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="HurlStudio.UI.Controls.Documents.FileDocument"
-             x:DataType="vm:FileDocumentViewModel">
-  <TextBlock Text="{Binding File.Location}">
+             x:DataType="vm:FileDocumentViewModel"
+             
+             Initialized="On_FileDocument_Initialized"
+             Loaded="On_FileDocument_Loaded">
+  <!--<TextBlock Text="{Binding File.Location}">
     
-  </TextBlock>
+  </TextBlock>-->
+  <Grid>
+    <ae:TextEditor
+      Name="Editor"
+      FontFamily="Cascaida Code,Consolas,Menlo,Monospace"
+      HorizontalScrollBarVisibility="Auto"
+      Background="{DynamicResource NeutralControlBackgroundColor}"
+      Foreground="{DynamicResource NeutralControlForegroundColor}"
+      ShowLineNumbers="True"
+      VerticalScrollBarVisibility="Visible"
+      VerticalAlignment="Stretch">
+      <ae:TextEditor.Options>
+        <ae:TextEditorOptions EnableHyperlinks="False"
+                              AllowScrollBelowDocument="True"
+                              EnableRectangularSelection="True"
+                              ShowBoxForControlCharacters="True"/>
+      </ae:TextEditor.Options>
+    </ae:TextEditor>
+  </Grid>
 </UserControl>

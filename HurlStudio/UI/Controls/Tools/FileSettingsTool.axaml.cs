@@ -6,14 +6,18 @@ namespace HurlStudio.UI.Controls.Tools
 {
     public partial class FileSettingsTool : ViewModelBasedControl<FileSettingsToolViewModel>
     {
+        private FileSettingsToolViewModel? _viewModel; 
+
         public FileSettingsTool()
         {
             InitializeComponent();
+            _viewModel = null;
         }
 
         protected override void SetViewModelInstance(FileSettingsToolViewModel viewModel)
         {
-            throw new System.NotImplementedException();
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

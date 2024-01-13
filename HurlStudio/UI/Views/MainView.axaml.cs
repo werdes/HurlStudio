@@ -22,6 +22,12 @@ using HurlStudio.Collections.Model.Environment;
 using Avalonia;
 using Avalonia.Styling;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Services.UiState;
+using HurlStudio.Model.UiState;
+using HurlStudio.Common.Extensions;
+using HurlStudio.Services.Notifications;
+using Microsoft.Extensions.DependencyInjection;
+using System.ComponentModel;
 
 namespace HurlStudio.UI.Views
 {
@@ -35,13 +41,25 @@ namespace HurlStudio.UI.Views
         private ICollectionService _collectionService;
         private IEnvironmentService _environmentService;
         private IEditorService _editorService;
+        private IUiStateService _uiStateService;
+        private INotificationService _notificationService;
+        private ControlLocator _controlLocator;
 
+        /// <summary>
+        /// Design time constructor
+        /// </summary>
+        /// <exception cref="AccessViolationException"></exception>
         public MainView() : base(typeof(MainViewViewModel))
         {
+            if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
+
+            _log = App.Services.GetRequiredService<ILogger<MainView>>();
+            _notificationService = App.Services.GetRequiredService<INotificationService>();
+
             InitializeComponent();
         }
 
-        public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService) : base(typeof(MainViewViewModel))
+        public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService) : base(typeof(MainViewViewModel))
         {
             _viewModel = viewModel;
             _viewFrame = viewFrame;
@@ -49,14 +67,20 @@ namespace HurlStudio.UI.Views
             _log = logger;
             _configuration = configuration;
             _userSettingsService = userSettingsService;
+            _environmentService = environmentService;
             _collectionService = collectionService;
             _environmentService = environmentService;
             _editorService = editorService;
+            _controlLocator = controlLocator;
+            _uiStateService = uiStateService;
+            _notificationService = notificationService;
 
             this.DataContext = _viewModel;
+            this.DataTemplates.Add(_controlLocator);
+
+            _notificationService.NotificationAdded += On_NotificationService_NotificationAdded;
 
             InitializeComponent();
-            _environmentService = environmentService;
         }
 
         /// <summary>
@@ -81,12 +105,12 @@ namespace HurlStudio.UI.Views
                     _viewFrame.NavigateTo(_viewModel.LoadingView);
 
                     UserSettings? userSettings = await _userSettingsService.GetUserSettingsAsync(false);
-                    _log.LogInformation($"view init");
-                    _log.LogDebug(userSettings?.UiLanguageString);
+                    UiState? uiState = await _uiStateService.GetUiStateAsync(true);
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
                     _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
                     _viewModel.EditorView.Documents = await _editorService.GetOpenDocuments();
+                    _viewModel.EditorView.FileHistoryEntries.AddRangeIfNotNull(uiState?.FileHistoryEntries);
 
                     _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
                     _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());
@@ -101,7 +125,42 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _log.LogCritical(ex, nameof(On_MainView_Loaded));
-                await this.ShowErrorMessage(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Show notification panel on new notification
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_NotificationService_NotificationAdded(object? sender, Model.EventArgs.NotificationAddedEventArgs e)
+        {
+            try
+            {
+                _viewModel.NotificationsExpanded = true;
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(On_NotificationService_NotificationAdded));
+            }
+        }
+
+        /// <summary>
+        /// Toggle the notification list visibility
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonToggleNotificationList_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            try
+            {
+                _viewModel.NotificationsExpanded = !_viewModel.NotificationsExpanded;
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(On_ButtonToggleNotificationList_Click));
+                _notificationService.Notify(ex);
             }
         }
     }

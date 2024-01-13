@@ -7,6 +7,11 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Model.Enums
 {
+    /// <summary>
+    /// Icon colors:
+    ///  Light: #333333
+    ///  Dark:  #cccccc
+    /// </summary>
     public enum Icon
     {
         [Icon("back.png")]
@@ -53,6 +58,20 @@ namespace HurlStudio.Model.Enums
         AddFile,
         [Icon("import.png")]
         Import,
+        [Icon("notifications_list.png")]
+        NotificationsList,
+        [Icon("close.png")]
+        Close,
+        [Icon("notification_none.png")]
+        NotificationNone,
+        [Icon("notification_info.png")]
+        NotificationInfo,
+        [Icon("notification_warning.png")]
+        NotificationWarning,
+        [Icon("notification_error.png")]
+        NotificationError,
+        [Icon("trash.png")]
+        Trash,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

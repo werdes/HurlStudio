@@ -24,7 +24,7 @@ namespace HurlStudio.Common.Extensions
             }
         }
 
-        public static void AddRangeIfNotNull<T>(this ObservableCollection<T> source, IEnumerable<T> values)
+        public static void AddRangeIfNotNull<T>(this ObservableCollection<T> source, IEnumerable<T>? values)
         {
             if (values != null)
             {
@@ -40,6 +40,23 @@ namespace HurlStudio.Common.Extensions
             if (!source.Contains(item))
             {
                 source.Insert(index, item);
+            }
+        }
+
+        public static void RemoveAll<T>(this ObservableCollection<T> source, Func<T, bool> predicate)
+        {
+            List<T> itemsForRemoval = new List<T>();
+            foreach (T element in source)
+            {
+                if (predicate(element))
+                {
+                    itemsForRemoval.Add(element);
+                }
+            }
+
+            foreach (T element in itemsForRemoval)
+            {
+                source.Remove(element);
             }
         }
     }

@@ -5,19 +5,22 @@
   <Design.PreviewWith>
     <Border Padding="20" Background="{DynamicResource NeutralControlBackgroundColor}">
       <StackPanel>
-        <Button Content="Test"></Button>
+        <Button Classes="button" Content="Test"></Button>
         <Button Classes="toolbarButton">
           <c:Icon Type="Save" />
         </Button>
         <Rectangle Height="10" />
-        <Button Classes="collapseButton">
+        <Button Classes="framelessButton">
           <c:Icon Type="Collapsed" />
+        </Button>
+        <Button Classes="framelessButton">
+          <c:Icon Type="NotificationsList" />
         </Button>
       </StackPanel>
     </Border>
   </Design.PreviewWith>
 
-  <Style Selector="Button" >
+  <Style Selector="Button.button" >
     <Style Selector="^:pressed /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
     </Style>
@@ -28,6 +31,7 @@
     <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="Margin" Value="0" />
     <Setter Property="Padding" Value="2" />
+    <Setter Property="Cursor" Value="Hand" />
 
     <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
@@ -70,13 +74,13 @@
     </Style>
   </Style>
 
-  <Style Selector="Button.collapseButton">
+  <Style Selector="Button.framelessButton">
     <Setter Property="Opacity" Value="0.5" />
     <Setter Property="Padding" Value="2" />
     <Setter Property="BorderThickness" Value="0" />
     <Setter Property="Background" Value="Transparent" />
     <Setter Property="Cursor" Value="Hand" />
-    
+
     <Style Selector="^:pointerover /template/ ContentPresenter#PART_ContentPresenter">
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Background" Value="Transparent" />
@@ -85,7 +89,7 @@
       <Setter Property="BorderThickness" Value="0" />
       <Setter Property="Background" Value="Transparent" />
     </Style>
-    
+
     <Style Selector="^:pointerover">
       <Setter Property="Opacity" Value="1" />
     </Style>
