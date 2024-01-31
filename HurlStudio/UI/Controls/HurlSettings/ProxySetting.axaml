@@ -1,0 +1,95 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:ProxySetting"             
+             x:Class="HurlStudio.UI.Controls.HurlSettings.ProxySetting">
+  <Grid Margin="3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="10" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    
+    <!--Host/Port-->
+    <Label VerticalAlignment="Center"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ProxySetting_HostAndPort_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Margin="0,0,5,0"
+             Text="{Binding Host}"
+             VerticalAlignment="Center" />
+
+    <TextBlock Text=":"
+               Grid.Column="2"
+               VerticalAlignment="Center"/>
+    <GridSplitter Grid.Column="2"
+                  Background="Transparent" />
+
+    <TextBox Classes="framelessTextBox"
+             Text="{Binding Port}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"
+             Grid.Column="3"/>
+    
+    <!--Username-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="1"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ProxySetting_User_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.ColumnSpan="3"
+             Grid.Row="1"
+             Margin="0,0,5,0"
+             Text="{Binding User}"
+             VerticalAlignment="Center" />
+
+
+    <!--Password-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="2"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ProxySetting_Password_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.ColumnSpan="3"
+             Grid.Row="2"
+             Margin="0,0,5,0"
+             Text="{Binding Password}"
+             PasswordChar="*"
+             VerticalAlignment="Center" />
+    
+    <!--Protocol-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="3"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ProxySetting_Protocol_Label}" />
+
+    <ComboBox Classes="framelessComboBox"
+              Grid.Column="1"
+              Grid.ColumnSpan="3"
+              ItemsSource="{x:Static commonenums:ProxyProtocolExtensions.DisplayValues}"
+              SelectedValue="{Binding Protocol}"
+              Grid.Row="3"
+              Margin="0,0,5,0"
+              VerticalAlignment="Center" />
+
+  </Grid>
+</UserControl>

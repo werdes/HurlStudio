@@ -25,8 +25,6 @@ namespace HurlStudio.Model.CollectionContainer
 
             _folders.CollectionChanged += On_CollectionComponent_CollectionChanged;
             _files.CollectionChanged += On_CollectionComponent_CollectionChanged;
-
-            //ControlSelectionChanged += On_CollectionComponentHierarchyBase_ControlUnselected;
         }
 
         private void On_CollectionComponent_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -39,10 +37,12 @@ namespace HurlStudio.Model.CollectionContainer
                     {
                         CollectionComponentBase component = (CollectionComponentBase)obj;
                         component.ControlSelectionChanged += On_CollectionComponentHierarchyBase_ControlUnselected;
+                        component.CollectionComponentMoved += On_CollectionComponentHierarchyBase_CollectionComponentMoved;
                     }
                 }
             }
         }
+
 
         public ObservableCollection<CollectionFolder> Folders
         {

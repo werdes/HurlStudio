@@ -25,6 +25,9 @@ namespace HurlStudio.Model.UserSettings
         private CultureInfo _uiLanguage;
         private ObservableCollection<string>? _collectionFiles;
         private ApplicationTheme _theme;
+        private bool _showEndOfLine;
+        private bool _showWhitespace;
+        private bool _wordWrap;
 
         public UserSettings(CultureInfo defaultUiLanguage, ApplicationTheme defaultTheme)
         {
@@ -86,6 +89,39 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _collectionFiles = value;
+                Notify();
+            }
+        }
+
+        [JsonPropertyName("show_end_of_line")]
+        public bool ShowEndOfLine
+        {
+            get => _showEndOfLine;
+            set
+            {
+                _showEndOfLine = value;
+                Notify();
+            }
+        }
+
+        [JsonPropertyName("show_whitespace")]
+        public bool ShowWhitespace
+        {
+            get => _showWhitespace;
+            set
+            {
+                _showWhitespace = value;
+                Notify();
+            }
+        }
+
+        [JsonPropertyName("word_wrap")]
+        public bool WordWrap
+        {
+            get => _wordWrap;
+            set
+            {
+                _wordWrap = value;
                 Notify();
             }
         }

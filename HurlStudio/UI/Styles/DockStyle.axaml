@@ -8,7 +8,7 @@
 
   <!-- Add Styles Here -->
   <Style Selector="DocumentTabStripItem /template/ Border">
-    <Setter Property="Background" Value="Red"/>
+    
   </Style>
 
 </Styles>

@@ -3,6 +3,7 @@ using Dock.Model.Mvvm.Controls;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Editor;
+using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Tools;
@@ -16,15 +17,39 @@ namespace HurlStudio.UI.Controls.Tools
         private EditorViewViewModel _editorViewViewModel;
         private CollectionExplorerToolViewModel? _viewModel;
         private IEditorService _editorService;
+        private INotificationService _notificationService;
 
-        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator)
+        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService)
         {
             InitializeComponent();
             _log = logger;
             _editorViewViewModel = editorViewViewModel;
             _editorService = editorService;
+            _notificationService = notificationService;
+
+            _editorViewViewModel.Collections.CollectionChanged += On_Collections_CollectionChanged;
         }
 
+        /// <summary>
+        /// On Collection change -> bind new items to local handlers
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_Collections_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (e.NewItems != null && e.NewItems.Count > 0)
+            {
+                foreach (CollectionContainer collection in e.NewItems)
+                {
+                    this.BindCollectionEvents(collection);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Sets the controls view model 
+        /// </summary>
+        /// <param name="viewModel"></param>
         protected override void SetViewModelInstance(CollectionExplorerToolViewModel viewModel)
         {
             _viewModel = viewModel;
@@ -41,8 +66,18 @@ namespace HurlStudio.UI.Controls.Tools
         {
             foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
-                collectionContainer.ControlSelectionChanged += On_CollectionContainer_ControlSelectionChanged;
+                BindCollectionEvents(collectionContainer);
             }
+        }
+
+        /// <summary>
+        /// Binds a collections events to local handlers
+        /// </summary>
+        /// <param name="collectionContainer"></param>
+        private void BindCollectionEvents(CollectionContainer collectionContainer)
+        {
+            collectionContainer.ControlSelectionChanged += On_CollectionContainer_ControlSelectionChanged;
+            collectionContainer.CollectionComponentMoved += On_CollectionContainer_CollectionComponentMoved;
         }
 
         /// <summary>
@@ -131,10 +166,10 @@ namespace HurlStudio.UI.Controls.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void On_Collection_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
+        private async void On_CollectionContainer_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
         {
-            if(_viewModel == null) return; // should not happen, since moving an object requires an object to be present, which
-                                           // originates from the view model
+            if (_viewModel == null) return; // should not happen, since moving an object requires an object to be present, which
+                                            // originates from the view model
             try
             {
                 _viewModel.IsEnabled = false;
@@ -186,7 +221,8 @@ namespace HurlStudio.UI.Controls.Tools
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_Collection_CollectionComponentMoved));
+                _log.LogCritical(ex, nameof(On_CollectionContainer_CollectionComponentMoved));
+                _notificationService.Notify(ex);
             }
             finally
             {

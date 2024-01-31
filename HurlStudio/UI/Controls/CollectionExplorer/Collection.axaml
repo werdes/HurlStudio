@@ -21,7 +21,8 @@
         Background="{DynamicResource WindowBackgroundColor}">
     <Grid.ContextMenu>
       <ContextMenu>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFile}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFile}"
+                  IsVisible="{Binding !Collection.ExcludeRootDirectory}">
           <MenuItem.Icon>
             <c:Icon Type="AddFile" />
           </MenuItem.Icon>

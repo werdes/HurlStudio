@@ -10,11 +10,12 @@ namespace HurlStudio.Collections.Settings
     public interface IHurlSetting
     {
         HurlStudio.HurlLib.HurlArgument.IHurlArgument[] GetArguments();
-        IHurlSetting FillFromString(string value);
+        IHurlSetting? FillFromString(string value);
         string GetConfigurationName();
+        string? GetConfigurationKey();
         string GetConfigurationValue();
         string GetConfigurationString();
+        string GetDisplayString();
         HurlSettingInheritanceBehavior GetInheritanceBehavior();
-
     }
 }

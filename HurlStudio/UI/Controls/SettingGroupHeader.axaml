@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             
+             Name="Header"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.SettingGroupHeader">
+  <StackPanel Orientation="Horizontal"
+              Background="{DynamicResource NeutralControlBackgroundColor}">
+    <c:Icon Type="{Binding #Header.Icon}"
+            Margin="3"/>
+    <Label Content="{Binding #Header.Text}"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"/>
+    <Label Content="{Binding #Header.SubText}"
+           Foreground="{DynamicResource NeutralControlForegroundMutedColor}"/>
+    
+  </StackPanel>
+</UserControl>

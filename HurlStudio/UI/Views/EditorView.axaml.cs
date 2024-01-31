@@ -1,9 +1,11 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Dock.Model.Core;
+using Dock.Model.Mvvm.Controls;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.ViewModels.Documents;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -44,7 +46,7 @@ namespace HurlStudio.UI.Views
         {
             if (sender == null || sender is not LayoutFactory layoutFactory) return;
 
-            if(_viewModel.Documents.Count == 0)
+            if (_viewModel.Documents.Count == 0)
             {
                 _layoutFactory.AddWelcomeDocument();
             }
@@ -69,6 +71,7 @@ namespace HurlStudio.UI.Views
                 if (_viewModel.Layout != null)
                 {
                     _layoutFactory.InitLayout(_viewModel.Layout);
+                    _layoutFactory.ActiveDockableChanged += On_LayoutFactory_ActiveDockableChanged;
                 }
             }
             catch (Exception ex)
@@ -78,13 +81,38 @@ namespace HurlStudio.UI.Views
             }
         }
 
+        /// <summary>
+        /// On Tab change 
+        /// -> Reevaluate Undo/Redo actions
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_LayoutFactory_ActiveDockableChanged(object? sender, global::Dock.Model.Core.Events.ActiveDockableChangedEventArgs e)
+        {
+            _log.LogDebug($"[ActiveDockableChanged] Title='{e.Dockable?.Title}'");
+
+            if (e.Dockable != null && e.Dockable is FileDocumentViewModel document)
+            {
+                if (document.Document != null)
+                {
+                    this._viewModel.CanRedo = document.Document.UndoStack.CanRedo;
+                    this._viewModel.CanUndo = document.Document.UndoStack.CanUndo;
+                }
+                else
+                {
+                    this._viewModel.CanRedo = false;
+                    this._viewModel.CanUndo = false;
+                }
+            }
+            else
+            {
+                this._viewModel.CanRedo = false;
+                this._viewModel.CanUndo = false;
+            }
+        }
+
         private void DebugFactoryEvents(LayoutFactory factory)
         {
-            factory.ActiveDockableChanged += (_, args) =>
-            {
-                _log.LogDebug($"[ActiveDockableChanged] Title='{args.Dockable?.Title}'");
-            };
-
             factory.FocusedDockableChanged += (_, args) =>
             {
                 _log.LogDebug($"[FocusedDockableChanged] Title='{args.Dockable?.Title}'");
@@ -172,6 +200,48 @@ namespace HurlStudio.UI.Views
             {
                 _log.LogDebug($"[WindowMoveDragEnd] Title='{args.Window?.Title}', X='{args.Window?.X}', Y='{args.Window?.Y}");
             };
+        }
+
+        /// <summary>
+        /// On Undo click -> call active document editor's undo action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonUndo_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_viewModel != null &&
+               _viewModel.DocumentDock != null &&
+               _viewModel.DocumentDock.ActiveDockable != null &&
+               _viewModel.DocumentDock.ActiveDockable is FileDocumentViewModel file)
+            {
+                if (file.Document != null && file.Document.UndoStack.CanUndo)
+                {
+                    file.Document.UndoStack.Undo();
+                    _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
+                    _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
+                }
+            }
+        }
+
+        /// <summary>
+        /// On Redo click -> call active document editor's redo action
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonRedo_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_viewModel != null &&
+               _viewModel.DocumentDock != null &&
+               _viewModel.DocumentDock.ActiveDockable != null &&
+               _viewModel.DocumentDock.ActiveDockable is FileDocumentViewModel file)
+            {
+                if (file.Document != null && file.Document.UndoStack.CanRedo)
+                {
+                    file.Document.UndoStack.Redo();
+                    _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
+                    _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
+                }
+            }
         }
     }
 }

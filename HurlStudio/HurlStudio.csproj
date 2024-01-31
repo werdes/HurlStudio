@@ -73,6 +73,9 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
+      <DependentUpon>VariableSetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Tools\CollectionExplorerTool.axaml.cs">
       <DependentUpon>CollectionExplorerTool.axaml</DependentUpon>
     </Compile>

@@ -9,6 +9,7 @@ namespace HurlStudio.Common.Enums
     public enum HurlSettingInheritanceBehavior
     {
         Overwrite,
+        UniqueKey,
         Append
     }
 }

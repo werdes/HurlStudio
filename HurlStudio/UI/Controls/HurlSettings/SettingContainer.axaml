@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:vm="clr-namespace:HurlStudio.Model.HurlSettings;assembly=HurlStudio"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="50"
+             
+             Name="Container"
+             x:DataType="vm:HurlSettingContainer"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.SettingContainer">
+  <UserControl.Resources>
+    <converters:IHurlSettingToLocalizedTitleConverter x:Key="IHurlSettingToLocalizedTitleConverter" />
+    <converters:IHurlSettingToDisplayTextConverter x:Key="IHurlSettingToDisplayTextConverter" />
+    <converters:BoolPositiveToBlurRadiusConverter x:Key="BoolPositiveToBlurRadiusConverter" />
+    <converters:BoolTrueTo50PercentOpacityConverter x:Key="BoolTrueTo50PercentOpacityConverter" />
+  </UserControl.Resources>
+
+  <Grid>
+    <Grid Margin="3">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="20" />
+        <RowDefinition Height="*" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Button Classes="framelessButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
+        <StackPanel>
+          <controls:Icon Type="Collapsed" IsVisible="{Binding Collapsed}" />
+          <controls:Icon Type="Expanded" IsVisible="{Binding !Collapsed}" />
+        </StackPanel>
+      </Button>
+      <StackPanel Grid.Column="1"
+                  Opacity="{Binding DisplayOpacity}"
+                  Orientation="Horizontal">
+        <Button Classes="framelessButton" Click="On_ButtonEnable_Click">
+          <StackPanel>
+            <controls:Icon Type="CheckedBox"
+                           IsVisible="{Binding Enabled}"
+                           ToolTip.Tip="{x:Static localization:Localization.Setting_Enabled_Tooltip}"/>
+            <controls:Icon Type="UncheckedBox"
+                           IsVisible="{Binding !Enabled}"
+                           ToolTip.Tip="{x:Static localization:Localization.Setting_Disabled_Tooltip}"/>
+          </StackPanel>
+        </Button>
+        <controls:Icon Type="Overwritten"
+                       IsVisible="{Binding Overwritten}"
+                       ToolTip.Tip="{x:Static localization:Localization.Setting_Overwritten_Tooltip}"/>
+        <TextBlock Margin="4,0,0,0"
+                   VerticalAlignment="Center"
+                   TextDecorations="{Binding DisplayTextDecoration}"
+                   Foreground="{DynamicResource NeutralControlForegroundColor}"
+                   Text="{Binding Path=Setting, Converter={StaticResource IHurlSettingToLocalizedTitleConverter}}"/>
+        <TextBlock Margin="4,0,0,0"
+                   VerticalAlignment="Center"
+                   IsVisible="{Binding Collapsed}"
+                   TextDecorations="{Binding DisplayTextDecoration}"
+                   Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                   Text="{Binding Setting.DisplayString}"/>
+      </StackPanel>
+
+      <StackPanel IsVisible="{Binding !Collapsed}"
+                  Opacity="{Binding DisplayOpacity}"
+                  Grid.ColumnSpan="2" Grid.Row="1">
+        <ContentPresenter Content="{Binding Setting}"
+                          IsEnabled="{Binding !IsReadOnly}" />
+      </StackPanel>
+    </Grid>
+    <Border BorderThickness="0,0,0,1"
+            BorderBrush="{DynamicResource NeutralControlBackgroundColor}"/>
+  </Grid>
+</UserControl>

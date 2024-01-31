@@ -98,29 +98,35 @@ namespace HurlStudio.UI.Views
                 if (_viewFrame == null) throw new ArgumentNullException($"No view frame was provided to {nameof(MainView)}");
                 this.WindowContent.Content = _viewFrame;
 
-                if (_viewModel != null &&
-                    _viewModel.LoadingView != null &&
-                    _viewModel.EditorView != null)
-                {
-                    _viewFrame.NavigateTo(_viewModel.LoadingView);
+                if (_viewModel == null || _viewModel.LoadingView == null || _viewModel.EditorView == null)
+                    throw new ArgumentNullException($"No view model was provided to {nameof(MainView)}");
 
-                    UserSettings? userSettings = await _userSettingsService.GetUserSettingsAsync(false);
-                    UiState? uiState = await _uiStateService.GetUiStateAsync(true);
+                _viewFrame.NavigateTo(_viewModel.LoadingView);
 
-                    _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
-                    _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
-                    _viewModel.EditorView.Documents = await _editorService.GetOpenDocuments();
-                    _viewModel.EditorView.FileHistoryEntries.AddRangeIfNotNull(uiState?.FileHistoryEntries);
+                UserSettings? userSettings = await _userSettingsService.GetUserSettingsAsync(false);
+                UiState? uiState = await _uiStateService.GetUiStateAsync(true);
 
-                    _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
-                    _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());
+                if (userSettings == null) throw new ArgumentNullException($"No user settings provided");
 
-                    _viewModel.InitializationCompleted = true;
-                    _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
 
-                    _viewFrame.NavigateTo(_viewModel.EditorView);
-                }
-                else throw new ArgumentNullException($"View models were not initialized correctly");
+
+                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
+                _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
+                _viewModel.EditorView.Documents = await _editorService.GetOpenDocuments();
+                _viewModel.EditorView.FileHistoryEntries.AddRangeIfNotNull(uiState?.FileHistoryEntries);
+                _viewModel.EditorView.ShowWhitespace = userSettings.ShowWhitespace;
+                _viewModel.EditorView.ShowEndOfLine = userSettings.ShowEndOfLine;
+                _viewModel.EditorView.WordWrap = userSettings.WordWrap;
+
+                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
+                _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());
+
+                _viewModel.InitializationCompleted = true;
+                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
+
+
+                _viewFrame.NavigateTo(_viewModel.EditorView);
+
             }
             catch (Exception ex)
             {

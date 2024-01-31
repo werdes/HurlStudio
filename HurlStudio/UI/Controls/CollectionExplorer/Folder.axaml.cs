@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Editor;
+using HurlStudio.Services.Notifications;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
@@ -23,11 +24,14 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
         private ILogger _logger;
         private IEditorService _editorService;
+        private INotificationService _notificationService;
 
-        public Folder(ILogger<Folder> logger, IEditorService editorService)
+        public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService)
+            : base(notificationService, logger)
         {
             _logger = logger;
             _editorService = editorService;
+            _notificationService = notificationService;
 
             InitializeComponent();
 
@@ -85,6 +89,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             catch (Exception ex)
             {
                 _logger.LogCritical(ex, nameof(OpenComponentDocument));
+                _notificationService.Notify(ex);
             }
         }
     }

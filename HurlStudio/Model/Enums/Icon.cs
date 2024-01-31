@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HurlStudio.UI.Localization;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -14,6 +15,8 @@ namespace HurlStudio.Model.Enums
     /// </summary>
     public enum Icon
     {
+        [Icon("blank.png")]
+        Blank,
         [Icon("back.png")]
         Back,
         [Icon("forward.png")]
@@ -26,6 +29,8 @@ namespace HurlStudio.Model.Enums
         File,
         [Icon("folder.png")]
         Folder,
+        [Icon("folder_clear.png")]
+        FolderClear,
         [Icon("collection.png")]
         Collection,
         [Icon("open.png")]
@@ -72,6 +77,29 @@ namespace HurlStudio.Model.Enums
         NotificationError,
         [Icon("trash.png")]
         Trash,
+        [Icon("reveal_explorer.png")]
+        RevealExplorer,
+        [Icon("word_wrap.png")]
+        WordWrap,
+        [Icon("end_of_line.png")]
+        EndOfLine,
+        [Icon("whitespace.png")]
+        Whitespace,
+        [Icon("close_tabs.png")]
+        CloseTabs,
+        [Icon("statusbar_idle.png")]
+        StatusBarIdle,
+        [Icon("redo.png")]
+        Redo,
+        [Icon("undo.png")]
+        Undo,
+        [Icon("overwritten.png")]
+        Overwritten,
+        [Icon("checked_box.png")]
+        CheckedBox,
+        [Icon("unchecked_box.png")]
+        UncheckedBox,
+
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
@@ -84,7 +112,7 @@ namespace HurlStudio.Model.Enums
             _fileName = fileName;
         }
 
-        public string Path { get => _fileName; }
+        public string FileName { get => _fileName; }
     }
 
     public static class IconExtensions
@@ -97,7 +125,7 @@ namespace HurlStudio.Model.Enums
                 IconAttribute? attribute = iconField.GetCustomAttributes<IconAttribute>(false).FirstOrDefault();
                 if (attribute != null)
                 {
-                    return attribute.Path;
+                    return attribute.FileName;
                 }
             }
 

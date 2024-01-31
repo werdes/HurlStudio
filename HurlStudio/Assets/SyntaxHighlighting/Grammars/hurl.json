@@ -2,25 +2,186 @@
   "version": "0.1.0",
   "name": "hurl",
   "scopeName": "hurl",
+  "repository": {
+    "url": {
+      "name": "notation.url",
+      "match": "https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{1,256}\\.[a-zA-Z0-9()]{1,6}\\b([-a-zA-Z0-9()@:%_\\+.~#?&//=]*)",
+      "patterns": [
+        {
+          "include": "#variables"
+        }
+      ]
+    },
+    "parentheses": {
+      "begin": "(\\()",
+      "beginCaptures": {
+        "1": {
+          "name": "notation.parentheses.open"
+        }
+      },
+      "end": "(\\))",
+      "endCaptures": {
+        "1": {
+          "name": "notation.parentheses.close"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#notation"
+        }
+      ]
+    },
+    "brackets": {
+      "begin": "(\\[)",
+      "beginCaptures": {
+        "1": {
+          "name": "notation.brackets.open"
+        }
+      },
+      "end": "(\\])",
+      "endCaptures": {
+        "1": {
+          "name": "notation.brackets.close"
+        }
+      },
+      "patterns": [
+        {
+          "include": "#keywords"
+        },
+        {
+          "include": "#notation"
+        }
+      ]
+    },
+    "quotes": {
+      "patterns": [
+        {
+          "name": "notation.quotes.single",
+          "begin": "'",
+          "beginCaptures": {
+            "0": {
+              "name": "notation.quotes.single.begin"
+            }
+          },
+          "end": "(\\')|((?:[^\\\\\\n])$)",
+          "endCaptures": {
+            "1": {
+              "name": "notation.quotes.single.end"
+            },
+            "2": {
+              "name": "invalid.illegal.newline"
+            }
+          },
+          "patterns": [
+            {
+              "name": "notation.escape",
+              "match": "\\\\(x[0-9a-fA-F]{1,4}|u[0-9a-fA-F]{4}|.)"
+            },
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#notation"
+            }
+          ]
+        },
+        {
+          "name": "notation.quotes.double",
+          "begin": "(?<!@)\"",
+          "beginCaptures": {
+            "0": {
+              "name": "notation.quotes.double.begin"
+            }
+          },
+          "end": "(\")|((?:[^\\\\\\n])$)",
+          "endCaptures": {
+            "1": {
+              "name": "notation.quotes.double.end.cs"
+            },
+            "2": {
+              "name": "invalid.illegal.newline"
+            }
+          },
+          "patterns": [
+            {
+              "name": "notation.escape",
+              "match": "\\\\(x[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4}|.)"
+            },
+            {
+              "include": "#keywords"
+            },
+            {
+              "include": "#notation"
+            }
+          ]
+        }
+      ]
+    },
+    "variables": {
+      "name": "notation.variable",
+      "match": "{{?([A-Za-z_\\-0-9]*)}?}"
+    },
+    "notation": {
+      "patterns": [
+        {
+          "name": "notation.comment",
+          "match": "#(.*)"
+        },
+        {
+          "name": "notation.keyvalue.key",
+          "match": "^(.*)\\:"
+        },
+        {
+          "include": "#url"
+        },
+        {
+          "include": "#parentheses"
+        },
+        {
+          "include": "#brackets"
+        },
+        {
+          "include": "#quotes"
+        },
+        {
+          "include": "#variables"
+        }
+      ]
+    },
+    "keywords": {
+      "patterns": [
+        {
+          "name": "keyword.method",
+          "match": "\\b(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\\b"
+        },
+        {
+          "name": "response",
+          "match": "\\b(HTTP\\/1.0|HTTP\\/1.1|HTTP\\/2|HTTP\\/3|HTTP)(?: *)\\b([0-9]{3})",
+          "captures": {
+            "1": {
+              "name": "keyword.http"
+            },
+            "2": {
+              "name": "response.statuscode"
+            }
+          }
+        },
+        {
+          "name": "keyword.section",
+          "match": "\\[(BasicAuth|Options|Asserts|Captures|Cookies|MultipartFormData|FormParams|QueryStringParams)\\]"
+        }
+      ]
+    }
+  },
   "patterns": [
     {
-      "name": "keyword.method",
-      "match": "\\b(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\\b"
+      "include": "#keywords"
     },
     {
-      "name": "response.statuscode",
-      "match": "\\b(HTTP\\/1.0|HTTP\\/1.1|HTTP\\/2|HTTP\\/3|HTTP)( *)\\b([0-9]{3})",
-      "captures": {
-        "1": {
-          "name": "keyword.http"
-        },
-        "2": {
-          "name": "space"
-        },
-        "3": {
-          "name": "response.statuscode"
-        }
-      }
+      "include": "#notation"
     }
   ]
 }

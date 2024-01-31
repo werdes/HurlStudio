@@ -1,6 +1,7 @@
 <UserControl xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:c="clr-namespace:HurlStudio.UI.Controls.Documents"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:cs="clr-namespace:HurlStudio.UI.Controls.HurlSettings;assembly=HurlStudio"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
              xmlns:v="clr-namespace:HurlStudio.UI.Views"
              xmlns:ae="using:AvaloniaEdit"
@@ -13,25 +14,70 @@
              
              Initialized="On_FileDocument_Initialized"
              Loaded="On_FileDocument_Loaded">
-  <!--<TextBlock Text="{Binding File.Location}">
-    
-  </TextBlock>-->
   <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="3*" />
+      <ColumnDefinition Width="3" />
+      <ColumnDefinition Width="1*" />
+    </Grid.ColumnDefinitions>
     <ae:TextEditor
       Name="Editor"
       FontFamily="Cascaida Code,Consolas,Menlo,Monospace"
       HorizontalScrollBarVisibility="Auto"
-      Background="{DynamicResource NeutralControlBackgroundColor}"
-      Foreground="{DynamicResource NeutralControlForegroundColor}"
+      Background="{DynamicResource TextEditorBackgroundColor}"
+      Foreground="{DynamicResource TextEditorForegroundColor}"
+      Document="{Binding Document}"
       ShowLineNumbers="True"
       VerticalScrollBarVisibility="Visible"
-      VerticalAlignment="Stretch">
-      <ae:TextEditor.Options>
-        <ae:TextEditorOptions EnableHyperlinks="False"
-                              AllowScrollBelowDocument="True"
-                              EnableRectangularSelection="True"
-                              ShowBoxForControlCharacters="True"/>
-      </ae:TextEditor.Options>
-    </ae:TextEditor>
+      VerticalAlignment="Stretch" />
+    <GridSplitter Grid.Column="1"/>
+
+    <!--Settings column-->
+    <ScrollViewer Grid.Column="2">
+      <StackPanel Orientation="Vertical">
+        <!--Environment settings-->
+        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Environment_Title}"
+                              Icon="Environment"
+                              IsVisible="{Binding EnvironmentSettingContainers.Count}"/>
+        <ItemsControl ItemsSource="{Binding EnvironmentSettingContainers}" />
+
+        
+        <!--Collection settings-->
+        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Collection_Title}"
+                              Icon="Collection"
+                              IsVisible="{Binding CollectionSettingContainers.Count}"/>
+        <ItemsControl ItemsSource="{Binding CollectionSettingContainers}" />
+       
+        
+        <!--Folder settings-->
+        <ItemsControl ItemsSource="{Binding FolderSettingContainers}">
+          <ItemsControl.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Vertical"
+                          IsVisible="{Binding Containers.Count}">
+                <c:SettingGroupHeader 
+                  Text="{x:Static localization:Localization.Dock_Document_File_Settings_Folder_Title}"
+                  SubText="{Binding Folder.Folder.Location}"
+                  Icon="FolderClear"/>
+                <ItemsControl ItemsSource="{Binding Containers}" />
+                <!--<TextBlock IsVisible="{Binding !Containers.Count}"
+                           Text="{x:Static localization:Localization.Dock_Document_File_Settings_Folder_EmptyList}"
+                           Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                           HorizontalAlignment="Center" />-->
+              </StackPanel>
+            </DataTemplate>
+          </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!--File settings-->
+        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_File_Title}"
+                      Icon="File" />
+        <ItemsControl ItemsSource="{Binding FileSettingContainers}" />
+        <TextBlock IsVisible="{Binding !FileSettingContainers.Count}"
+                   Text="{x:Static localization:Localization.Dock_Document_File_Settings_File_EmptyList}"
+                   Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                   HorizontalAlignment="Center" />
+      </StackPanel>
+    </ScrollViewer>
   </Grid>
 </UserControl>

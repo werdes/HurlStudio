@@ -3,13 +3,14 @@ using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ProxySetting : BaseSetting, IHurlSetting
+    public class ProxySetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
     {
         public const string CONFIGURATION_NAME = "proxy";
         private const string SUBCONFIGURATION_KEY_PROTOCOL = "protocol";
@@ -26,7 +27,7 @@ namespace HurlStudio.Collections.Settings
         private string? _password;
         private ProxyProtocol? _protocol;
 
-        public ProxySetting()
+        public ProxySetting() : base()
         {
 
         }
@@ -34,32 +35,54 @@ namespace HurlStudio.Collections.Settings
         public ProxyProtocol? Protocol
         {
             get => _protocol;
-            set => _protocol = value;
+            set
+            {
+                _protocol = value;
+                Notify();
+            }
         }
 
         public string? Password
         {
             get => _password;
-            set => _password = value;
+            set
+            {
+                _password = value;
+                Notify();
+            }
         }
 
         public string? User
         {
             get => _user;
-            set => _user = value;
+            set
+            {
+                _user = value;
+                Notify();
+            }
         }
 
         public string? Host
         {
             get => _host;
-            set => _host = value;
+            set
+            {
+                _host = value;
+                Notify();
+                Notify(nameof(DisplayString));
+            }
         }
 
         public ushort? Port
         {
             get => _port;
-            set => _port = value;
+            set
+            {
+                _port = value;
+                Notify();
+            }
         }
+
 
         /// <summary>
         /// Fills from Configuration line
@@ -67,7 +90,7 @@ namespace HurlStudio.Collections.Settings
         /// Example:
         /// </summary>
         /// <param name="value"></param>
-        public IHurlSetting FillFromString(string value)
+        public override IHurlSetting? FillFromString(string value)
         {
             string[] parts = value.Split(SUBCONFIGURATION_SEPARATOR);
             foreach (string part in parts)
@@ -94,7 +117,7 @@ namespace HurlStudio.Collections.Settings
         /// Returns the Hurl arguments for this setting
         /// </summary>
         /// <returns></returns>
-        public IHurlArgument[] GetArguments()
+        public override IHurlArgument[] GetArguments()
         {
             ProxyArgument proxyArgument = null;
 
@@ -111,6 +134,15 @@ namespace HurlStudio.Collections.Settings
             {
                 proxyArgument
             };
+        }
+
+        /// <summary>
+        /// Returns an empty string, since the proxy setting is not key-based
+        /// </summary>
+        /// <returns></returns>
+        public override string? GetConfigurationKey()
+        {
+            return string.Empty;
         }
 
         /// <summary>
@@ -143,12 +175,21 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
+        /// Returns a string to display next to the title
+        /// </summary>
+        /// <returns></returns>
+        public override string GetDisplayString()
+        {
+            return this.Host ?? string.Empty;
+        }
+
+        /// <summary>
         /// Returns the inheritance behavior of this setting: 
         ///  Multiple proxy settings are not allowed, so 
         ///  these settings will overwrite each other
         /// </summary>
         /// <returns>Inheritance behavior of this setting</returns>
-        public HurlSettingInheritanceBehavior GetInheritanceBehavior()
+        public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
             return HurlSettingInheritanceBehavior.Overwrite;
         }

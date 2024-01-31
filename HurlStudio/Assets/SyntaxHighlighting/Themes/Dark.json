@@ -3,17 +3,24 @@
   "name": "Dark",
   "tokenColors": [
     {
-      "name": "HTTP Methods",
+      "name": "Dynamic Keywords",
       "scope": [ "keyword.method" ],
       "settings": {
         "foreground": "#4EC9B0"
       }
     },
     {
-      "name": "Response HTTP Keyword",
+      "name": "Static Keywords",
       "scope": [ "keyword.http" ],
       "settings": {
         "foreground": "#C586C0"
+      }
+    },
+    {
+      "name": "Section Keywords",
+      "scope": [ "keyword.section" ],
+      "settings": {
+        "foreground": "#6991b2"
       }
     },
     {
@@ -22,6 +29,56 @@
       "settings": {
         "foreground": "#b5cea8"
       }
+    },
+    {
+      "name": "Comments",
+      "scope": [ "notation.comment" ],
+      "settings": {
+        "foreground": "#6adb6d"
+      }
+    },
+    {
+      "name": "Variables",
+      "scope": [ "notation.variable" ],
+      "settings": {
+        "foreground": "#e682da"
+      }
+    },
+    {
+      "name": "Key Value: Key",
+      "scope": [ "notation.keyvalue.key" ],
+      "settings": {
+        "foreground": "#96d0ff"
+      }
+    },
+    {
+      "name": "Parentheses and Brackets",
+      "scope": [
+        "notation.parentheses.open",
+        "notation.parentheses.close",
+        "notation.brackets.open",
+        "notation.brackets.close",
+        "notation.quotes.single",
+      ],
+      "settings": {
+        "foreground": "#e8618b"
+      }
+    },
+    {
+      "name": "Quotes",
+      "scope": [
+        "notation.quotes.double",
+        "notation.quotes.single"
+      ],
+      "settings": {
+        "foreground": "#d69d85"
+      }
+    },
+    {
+      "name": "URLs",
+      "scope": [
+        "notation.url"
+      ]
     }
   ]
 }

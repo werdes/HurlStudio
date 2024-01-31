@@ -268,6 +268,78 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Collection.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Collection_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Collection.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Collection.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Collection_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Collection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Environment.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Environment_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Environment.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Environment.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Environment_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Environment.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.File.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_File_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.File.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.File.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_File_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.File.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Folder.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Folder_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Folder.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Folder.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Folder_Title {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Folder.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Welcome.Actions.ImportCollection.Description} ähnelt.
         /// </summary>
         public static string Dock_Document_Welcome_Actions_ImportCollection_Description {
@@ -547,6 +619,105 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Disabled.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_Disabled_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.Disabled.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Enabled.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_Enabled_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.Enabled.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Overwritten.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_Overwritten_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.Overwritten.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.HostAndPort.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_HostAndPort_Label {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.HostAndPort.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.Password.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_Password_Label {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.Password.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.Protocol.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_Protocol_Label {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.Protocol.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.User.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_User_Label {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.User.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariableSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_VariableSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.VariableSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariableSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_VariableSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.VariableSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Back.Tooltip} ähnelt.
         /// </summary>
         public static string View_Editor_Toolbar_Back_Tooltip {
@@ -574,6 +745,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Redo.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Redo_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Redo.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Save.Tooltip} ähnelt.
         /// </summary>
         public static string View_Editor_Toolbar_Save_Tooltip {
@@ -588,6 +768,42 @@ namespace HurlStudio.UI.Localization {
         public static string View_Editor_Toolbar_SaveAll_Tooltip {
             get {
                 return ResourceManager.GetString("View.Editor.Toolbar.SaveAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.ShowEndOfLine.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_ShowEndOfLine_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.ShowEndOfLine.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.ShowWhitespace.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_ShowWhitespace_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.ShowWhitespace.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Undo.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_Undo_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.Undo.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.WordWrap.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_WordWrap_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.WordWrap.Tooltip", resourceCulture);
             }
         }
         
@@ -714,6 +930,24 @@ namespace HurlStudio.UI.Localization {
         public static string View_Main_StatusBar_NotificationsList_Tooltip {
             get {
                 return ResourceManager.GetString("View.Main.StatusBar.NotificationsList.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.Idle.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_Idle_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.Idle.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.OpeningFile.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_OpeningFile_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.OpeningFile.Text", resourceCulture);
             }
         }
         

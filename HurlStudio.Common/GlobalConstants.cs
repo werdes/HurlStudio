@@ -18,6 +18,8 @@ namespace HurlStudio.Common
         public const string COLLECTION_FILE_EXTENSION = ".hurlc";
         public const string ENVIRONMENT_FILE_EXTENSION = ".hurle";
 
+        public const string GRAMMAR_HURL_NAME = "hurl";
+
         public const int DEFAULT_FILE_HISTORY_LENGTH = 5;
         public const int ENVIRONMENT_EXITCODE_ERROR = 1;
     }

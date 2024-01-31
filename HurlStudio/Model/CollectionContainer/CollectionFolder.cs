@@ -14,13 +14,15 @@ namespace HurlStudio.Model.CollectionContainer
     public class CollectionFolder : CollectionComponentHierarchyBase
     {
         private CollectionContainer _collectionContainer;
+        private CollectionFolder? _parentFolder;
         private HurlFolder? _folder;
         private string _location;
         private bool _found;
 
-        public CollectionFolder(CollectionContainer collectionContainer, string location) : base()
+        public CollectionFolder(CollectionContainer collectionContainer, CollectionFolder? parentFolder, string location) : base()
         {
             _collectionContainer = collectionContainer;
+            _parentFolder = parentFolder;
             _location = location;
             _found = true;
         }
@@ -51,6 +53,16 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collectionContainer = value;
+                Notify();
+            }
+        }
+
+        public CollectionFolder? ParentFolder
+        {
+            get => _parentFolder;
+            set
+            {
+                _parentFolder = value;
                 Notify();
             }
         }

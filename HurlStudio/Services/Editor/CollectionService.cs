@@ -67,7 +67,7 @@ namespace HurlStudio.Services.Editor
                 // Root location
                 if(!collection.ExcludeRootDirectory)
                 {
-                    CollectionFolder? collectionRootFolder = await GetFolderRecursive(0, collectionContainer, collectionRootPath, collectionRootPath, uiState);
+                    CollectionFolder? collectionRootFolder = await GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState);
                     if (collectionRootFolder != null)
                     {
                         collectionContainer.Files.AddRange(collectionRootFolder.Files);
@@ -91,12 +91,12 @@ namespace HurlStudio.Services.Editor
                         // go ahead and traverse the location
                         if (collection.ExcludeRootDirectory || !PathExtensions.IsChildOfDirectory(absoluteLocationPath, collectionRootPath))
                         {
-                            collectionContainer.Folders.AddIfNotNull(await GetFolderRecursive(0, collectionContainer, absoluteLocationPath, collectionRootPath, uiState));
+                            collectionContainer.Folders.AddIfNotNull(await GetFolderRecursive(0, collectionContainer, null, absoluteLocationPath, collectionRootPath, uiState));
                         }
                     }
                     else
                     {
-                        collectionContainer.Folders.Add(new CollectionFolder(collectionContainer, absoluteLocationPath)
+                        collectionContainer.Folders.Add(new CollectionFolder(collectionContainer, null, absoluteLocationPath)
                         {
                             Found = false,
                             Collapsed = true
@@ -117,11 +117,11 @@ namespace HurlStudio.Services.Editor
         /// <param name="location">The absolute location of the directory to be traversed</param>
         /// <param name="collectionRoot">The absolute path of the collection file</param>
         /// <returns>A Folder file</returns>
-        private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, string location, string collectionRoot, Model.UiState.UiState? uiState)
+        private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, CollectionFolder? parent, string location, string collectionRoot, Model.UiState.UiState? uiState)
         {
 
             if (depth > _collectionLoaderMaxDirectoryDepth) return null;
-            CollectionFolder collectionFolder = new CollectionFolder(collectionContainer, location);
+            CollectionFolder collectionFolder = new CollectionFolder(collectionContainer, parent, location);
             bool folderCollapsed = false;
             if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(), out folderCollapsed) ?? false)
             {
@@ -138,7 +138,7 @@ namespace HurlStudio.Services.Editor
             // Recursively traverse through the directory tree
             foreach (string folderSubdirectory in folderSubdirectories)
             {
-                collectionFolder.Folders.AddIfNotNull(await GetFolderRecursive(depth + 1, collectionContainer, folderSubdirectory, collectionRoot, uiState));
+                collectionFolder.Folders.AddIfNotNull(await GetFolderRecursive(depth + 1, collectionContainer, collectionFolder, folderSubdirectory, collectionRoot, uiState));
             }
 
             // Files
@@ -148,7 +148,7 @@ namespace HurlStudio.Services.Editor
                 // Get path of the file relative to the location of the collection file
                 string relativeFilePathToCollectionRoot = Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, hurlFile));
 
-                // As Settings are saved in the collection file under a file location,
+                // As HurlSettings are saved in the collection file under a file location,
                 // try to find a setting with a matching file location
                 HurlFile? fileSettings = collectionContainer.Collection.FileSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FileLocation.ConvertDirectorySeparator()) == relativeFilePathToCollectionRoot).FirstOrDefault();
 

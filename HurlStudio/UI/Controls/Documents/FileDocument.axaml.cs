@@ -3,6 +3,7 @@ using Avalonia.Platform;
 using Avalonia.Styling;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
+using HurlStudio.Common;
 using HurlStudio.Model.Enums;
 using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.Editor;
@@ -40,6 +41,7 @@ namespace HurlStudio.UI.Controls.Documents
             _userSettingsService = userSettingsService;
             _log = logger;
 
+
             InitializeComponent();
         }
 
@@ -47,8 +49,49 @@ namespace HurlStudio.UI.Controls.Documents
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
+
+            _viewModel.EditorViewViewModel.PropertyChanged += On_EditorViewViewModel_PropertyChanged;
         }
 
+        /// <summary>
+        /// Listen on property changes on the editor view model, since the editor doesn't support option binding
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_EditorViewViewModel_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (_textEditor == null) return;
+            if (_viewModel == null) return;
+
+            if (e.PropertyName == nameof(_viewModel.EditorViewViewModel.ShowEndOfLine))
+            {
+                _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
+                _userSettingsService.GetUserSettings(false).ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
+                //await _userSettingsService.StoreUserSettingsAsync();
+            }
+            else if (e.PropertyName == nameof(_viewModel.EditorViewViewModel.ShowWhitespace))
+            {
+                _textEditor.Options.ShowSpaces = _viewModel.EditorViewViewModel.ShowWhitespace;
+                _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
+
+                _userSettingsService.GetUserSettings(false).ShowWhitespace = _viewModel.EditorViewViewModel.ShowWhitespace;
+                //await _userSettingsService.StoreUserSettingsAsync();
+            }
+            else if (e.PropertyName == nameof(_viewModel.EditorViewViewModel.WordWrap))
+            {
+                _textEditor.WordWrap = _viewModel.EditorViewViewModel.WordWrap;
+
+                _userSettingsService.GetUserSettings(false).WordWrap = _viewModel.EditorViewViewModel.WordWrap;
+                //await _userSettingsService.StoreUserSettingsAsync();
+            }
+        }
+
+        /// <summary>
+        /// On Control initialize
+        /// supply the text editor options
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void On_FileDocument_Initialized(object? sender, EventArgs e)
         {
             try
@@ -57,22 +100,24 @@ namespace HurlStudio.UI.Controls.Documents
                 {
                     _textEditor = this.FindControl<TextEditor>("Editor");
 
+
                     if (_textEditor != null)
                     {
                         _textEditor.TextArea.RightClickMovesCaret = true;
+                        _textEditor.Options.EnableHyperlinks = false;
+                        _textEditor.Options.AllowScrollBelowDocument = true;
+                        _textEditor.Options.EnableRectangularSelection = true;
+                        _textEditor.Options.ShowBoxForControlCharacters = true;
+                        _textEditor.WordWrap = _viewModel.EditorViewViewModel.WordWrap;
+                        _textEditor.Options.ShowSpaces = _viewModel.EditorViewViewModel.ShowWhitespace;
+                        _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
+                        _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
 
                         UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
+
                         LocalResourceGrammarRegistryOptions registryOptions = new LocalResourceGrammarRegistryOptions(userSettings.Theme);
-                        
-                        string? fileName = "csharp.json";
-                        string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
-
-                        if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(assemblyName))
-                        {
-                            TextMate.Installation installation = _textEditor.InstallTextMate(registryOptions);
-                            installation.SetGrammar("hurl");
-                        }
-
+                        TextMate.Installation textMateInstallation = _textEditor.InstallTextMate(registryOptions);
+                        textMateInstallation.SetGrammar(GlobalConstants.GRAMMAR_HURL_NAME);
                     }
                 }
             }
@@ -85,10 +130,10 @@ namespace HurlStudio.UI.Controls.Documents
 
         private void On_FileDocument_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_textEditor != null && _viewModel != null && _viewModel.File != null)
-            {
-                _textEditor.Document = new AvaloniaEdit.Document.TextDocument(File.ReadAllText(_viewModel.File.Location));
-            }
+            //if (_textEditor != null && _viewModel != null && _viewModel.File != null)
+            //{
+            //    _textEditor.Document = new AvaloniaEdit.Document.TextDocument(File.ReadAllText(_viewModel.File.Location));
+            //}
         }
     }
 }

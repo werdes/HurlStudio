@@ -453,3 +453,4 @@ $RECYCLE.BIN/
 !.vscode/launch.json
 !.vscode/extensions.json
 /HurlStudio/UI/Localization/Localization.Designer.cs
+/HurlStudio/Assets/SyntaxHighlighting/Grammars/csharp.json

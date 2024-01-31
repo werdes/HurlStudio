@@ -5,7 +5,9 @@ using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.UiState;
+using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.UiState;
+using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Logging;
@@ -27,11 +29,17 @@ namespace HurlStudio.UI.ViewModels
         private ObservableCollection<HurlEnvironment> _environments;
         private ObservableCollection<IDockable> _documents;
         private ObservableCollection<FileHistoryEntry> _fileHistoryEntries;
-        private IDockable? _activeDocument;
+        private DocumentDock? _documentDock;
+        private Document? _activeDocument;
         private IRootDock? _layout;
-        private IUiStateService _uiStateService;
+        private bool _showEndOfLine;
+        private bool _showWhitespace;
+        private bool _wordWrap;
+        private bool _canUndo;
+        private bool _canRedo;
+        private HurlEnvironment? _activeEnvironment;
 
-        public EditorViewViewModel(ILogger<EditorViewViewModel> logger) : base(typeof(EditorView))
+        public EditorViewViewModel(ILogger<EditorViewViewModel> logger, IUserSettingsService userSettingsService) : base(typeof(EditorView))
         {
             _collections = new ObservableCollection<CollectionContainer>();
             _environments = new ObservableCollection<HurlEnvironment>();
@@ -39,6 +47,7 @@ namespace HurlStudio.UI.ViewModels
             _documents = new ObservableCollection<IDockable>();
             _activeDocument = null;
             _log = logger;
+
         }
 
 
@@ -82,7 +91,17 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public IDockable? ActiveDocument
+        public DocumentDock? DocumentDock
+        {
+            get => _documentDock;
+            set
+            {
+                _documentDock = value;
+                Notify();
+            }
+        }
+
+        public Document? ActiveDocument
         {
             get => _activeDocument;
             set
@@ -98,6 +117,66 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _layout = value;
+                Notify();
+            }
+        }
+
+        public bool ShowEndOfLine
+        {
+            get => _showEndOfLine;
+            set
+            {
+                _showEndOfLine = value;
+                Notify();
+            }
+        }
+
+        public bool ShowWhitespace
+        {
+            get => _showWhitespace;
+            set
+            {
+                _showWhitespace = value;
+                Notify();
+            }
+        }
+
+        public bool WordWrap
+        {
+            get => _wordWrap;
+            set
+            {
+                _wordWrap = value;
+                Notify();
+            }
+        }
+
+        public bool CanUndo
+        {
+            get => _canUndo;
+            set
+            {
+                _canUndo = value;
+                Notify();
+            }
+        }
+
+        public bool CanRedo
+        {
+            get => _canRedo;
+            set
+            {
+                _canRedo = value;
+                Notify();
+            }
+        }
+
+        public HurlEnvironment? ActiveEnvironment
+        {
+            get => _activeEnvironment;
+            set
+            {
+                _activeEnvironment = value;
                 Notify();
             }
         }

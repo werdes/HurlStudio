@@ -59,18 +59,7 @@
     </Panel>
 
     <ScrollViewer Grid.Row="1">
-      <ItemsControl ItemsSource="{Binding EditorViewModel.Collections}" Margin="1" >
-        <!--<ItemsControl.ItemsPanel>
-          <ItemsPanelTemplate>
-            <StackPanel Orientation="Vertical" />
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <ce:Collection CollectionContainer="{Binding}" CollectionComponentMoved="On_Collection_CollectionComponentMoved" />
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>-->
-      </ItemsControl>
+      <ItemsControl ItemsSource="{Binding EditorViewModel.Collections}" Margin="1" />
     </ScrollViewer>
   </Grid>
 </UserControl>

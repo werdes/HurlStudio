@@ -34,7 +34,6 @@ namespace HurlStudio.UI.Dock
 
         private IRootDock _rootDock;
         private CollectionExplorerToolViewModel _collectionExplorer;
-        private IDocumentDock _documentDock;
         private EditorViewViewModel _editorViewViewModel;
 
         public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ViewModelBasedControl> controlBuilder, EditorViewViewModel editorViewViewModel)
@@ -57,8 +56,8 @@ namespace HurlStudio.UI.Dock
             collectionExplorer.Id = COLLECTION_EXPLORER_TOOL_ID;
             collectionExplorer.IsEnabled = true;
 
-            FileSettingsToolViewModel fileSettings = _toolLayoutBuilder.Get<FileSettingsToolViewModel>();
-            fileSettings.Id = FILE_SETTINGS_TOOL_ID;
+            //FileSettingsToolViewModel fileSettings = _toolLayoutBuilder.Get<FileSettingsToolViewModel>();
+            //fileSettings.Id = FILE_SETTINGS_TOOL_ID;
 
             ProportionalDock leftDock = new ProportionalDock()
             {
@@ -89,21 +88,6 @@ namespace HurlStudio.UI.Dock
                 CanCreateDocument = false
             };
 
-
-            ProportionalDock rightDock = new ProportionalDock()
-            {
-                Proportion = 0.20,
-                Orientation = Orientation.Vertical,
-                ActiveDockable = null,
-                VisibleDockables = CreateList<IDockable>(
-                    new ToolDock()
-                    {
-                        ActiveDockable = fileSettings,
-                        GripMode = GripMode.Hidden
-                    }
-                )
-            };
-
             var windowLayout = CreateRootDock();
             windowLayout.Title = MAIN_DOCK_ID;
             var windowLayoutContent = new ProportionalDock
@@ -113,9 +97,7 @@ namespace HurlStudio.UI.Dock
                 VisibleDockables = CreateList<IDockable>(
                     leftDock,
                     new ProportionalDockSplitter(),
-                    documentDock,
-                    new ProportionalDockSplitter(),
-                    rightDock
+                    documentDock
                 )
             };
 
@@ -132,7 +114,7 @@ namespace HurlStudio.UI.Dock
 
             _rootDock = rootDock;
             _collectionExplorer = collectionExplorer;
-            _documentDock = documentDock;
+            _editorViewViewModel.DocumentDock = documentDock;
 
             return rootDock;
         }
@@ -144,15 +126,22 @@ namespace HurlStudio.UI.Dock
 
         public void AddDocument(IDockable document)
         {
-            this.AddDockable(_documentDock, document);
+            if (_editorViewViewModel != null && _editorViewViewModel.DocumentDock != null)
+            {
+                this.AddDockable(_editorViewViewModel.DocumentDock, document);
+
+            }
         }
 
         public void AddWelcomeDocument()
         {
-            IDockable welcomeDocument = _documentLayoutBuilder.Get<WelcomeDocumentViewModel>();
-            this.AddDockable(_documentDock, welcomeDocument);
-            this.SetActiveDockable(welcomeDocument);
-            this.SetFocusedDockable(_rootDock, welcomeDocument);
+            if (_editorViewViewModel != null && _editorViewViewModel.DocumentDock != null)
+            {
+                IDockable welcomeDocument = _documentLayoutBuilder.Get<WelcomeDocumentViewModel>();
+                this.AddDockable(_editorViewViewModel.DocumentDock, welcomeDocument);
+                this.SetActiveDockable(welcomeDocument);
+                this.SetFocusedDockable(_rootDock, welcomeDocument);
+            }
         }
     }
 }

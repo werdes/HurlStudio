@@ -46,6 +46,7 @@ using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.UiState;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Model.Notifications;
+using HurlStudio.UI.Controls.HurlSettings;
 
 namespace HurlStudio;
 
@@ -161,6 +162,7 @@ public partial class App : Application
         ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
         ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
 
+        // Controls
         controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
         controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
         controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
@@ -172,11 +174,20 @@ public partial class App : Application
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Folder, CollectionFolder>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Folder>());
 
-        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
-        toolControlBuilder.RegisterProvider<FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsToolViewModel>());
+        // HurlSettings
+        controlBuilder.RegisterProviderAssociated<SettingContainer, Model.HurlSettings.HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
+        controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
+        controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
+        
 
+        // Tools
+        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
+
+        // Documents
         documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
         documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
+
+
     }
 
     /// <summary>
@@ -320,6 +331,11 @@ public partial class App : Application
         services.AddTransient<UI.Controls.CollectionExplorer.Collection>();
         services.AddTransient<UI.Controls.CollectionExplorer.File>();
         services.AddTransient<UI.Controls.CollectionExplorer.Folder>();
+
+        // Hurl Settings
+        services.AddTransient<SettingContainer>();
+        services.AddTransient<ProxySetting>();
+        services.AddTransient<VariableSetting>();
     }
 
     /// <summary>

@@ -12,12 +12,22 @@ namespace HurlStudio.Collections.Utility
     {
         private static readonly Dictionary<string, Type> _possibleSettingTypes = new Dictionary<string, Type>()
         {
-            { ProxySetting.CONFIGURATION_NAME, typeof(ProxySetting) }
+            { ProxySetting.CONFIGURATION_NAME, typeof(ProxySetting) },
+            { VariableSetting.CONFIGURATION_NAME, typeof(VariableSetting) },    
         };
 
         public IniSettingParser()
         {
             
+        }
+
+        /// <summary>
+        /// Returns a list of available setting types
+        /// </summary>
+        /// <returns></returns>
+        public Type[] GetAvailableTypes()
+        {
+            return _possibleSettingTypes.Values.ToArray();
         }
 
         /// <summary>
@@ -34,7 +44,7 @@ namespace HurlStudio.Collections.Utility
                 IHurlSetting? setting = GetSetting(settingName);
                 if (setting != null)
                 {
-                    return GetSetting(settingName)?.FillFromString(settingValue);
+                    return setting.FillFromString(settingValue);
                 }
             }
             return null;

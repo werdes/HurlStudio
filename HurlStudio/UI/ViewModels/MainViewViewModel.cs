@@ -1,4 +1,5 @@
-﻿using HurlStudio.Model.Notifications;
+﻿using HurlStudio.Model.Enums;
+using HurlStudio.Model.Notifications;
 using HurlStudio.UI.Views;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,8 @@ namespace HurlStudio.UI.ViewModels
         private LoadingViewViewModel? _loadingViewViewModel;
         private EditorViewViewModel? _editorViewViewModel;
         private bool _notificationsExpanded;
+        private StatusBarStatus _statusBarStatus;
+        private string _statusBarDetail;
 
 
         private bool _initializationCompleted;
@@ -27,6 +30,9 @@ namespace HurlStudio.UI.ViewModels
         {
             _initializationCompleted = false;
             _notifications = new ObservableCollection<Notification>();
+
+            _statusBarDetail = string.Empty;
+            _statusBarStatus = StatusBarStatus.Idle;
         }
 
         public MainViewViewModel(MainWindowViewModel mainWindowViewModel) : this()
@@ -91,6 +97,26 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _notificationsExpanded = value;
+                Notify();
+            }
+        }
+
+        public string StatusBarDetail
+        {
+            get => _statusBarDetail;
+            set
+            {
+                _statusBarDetail = value;
+                Notify();
+            }
+        }
+
+        public StatusBarStatus StatusBarStatus
+        {
+            get => _statusBarStatus;
+            set
+            {
+                _statusBarStatus = value;
                 Notify();
             }
         }

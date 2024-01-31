@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.EventArgs;
+using HurlStudio.Services.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
@@ -15,13 +16,16 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 {
     public abstract class CollectionExplorerControlBase<T> : ViewModelBasedControl<T>
     {
-        public event EventHandler<CollectionComponentMovedEventArgs> CollectionComponentMoved;
-
         private volatile bool _pressed = false;
         private Point? _pressedPosition = null;
+        private INotificationService _notificationService;
+        private ILogger _log;
 
-        public CollectionExplorerControlBase()
+        public CollectionExplorerControlBase(INotificationService notificationService, ILogger logger)
         {
+            _notificationService = notificationService;
+            _log = logger;
+
             this.AddHandler(DragDrop.DropEvent, On_CollectionExplorerControlBase_Drop);
             this.AddHandler(DragDrop.DragEnterEvent, On_CollectionExplorerControlBase_DragEnter);
             this.AddHandler(DragDrop.DragLeaveEvent, On_CollectionExplorerControlBase_DragLeave);
@@ -34,20 +38,21 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         protected async void On_CollectionExplorerControlBase_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             PointerPointProperties pointerProperties = e.GetCurrentPoint(this).Properties;
+            CollectionComponentBase? component = this.GetBoundCollectionComponent();
+
             _pressed = pointerProperties.IsLeftButtonPressed;
             if (_pressed)
             {
                 _pressedPosition = e.GetCurrentPoint(this).Position;
             }
 
-            if(e.ClickCount == 2)
-            {
-                await OpenComponentDocument();
-            }
-
-            CollectionComponentBase? component = this.GetBoundCollectionComponent();
             if (component != null)
             {
+                if (e.ClickCount == 2 && component.Selected)
+                {
+                    await OpenComponentDocument();
+                }
+
                 component.Selected = true;
             }
 
@@ -127,26 +132,15 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
                 if (source != null)
                 {
-                    CollectionComponentMovedEventArgs collectionComponentMovedEventArgs = new CollectionComponentMovedEventArgs(source, this.GetBoundCollectionComponent());
-
-                    this.CollectionComponentMoved?.Invoke(this, collectionComponentMovedEventArgs);
+                    source.Move(this.GetBoundCollectionComponent());
                 }
                 e.Handled = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-
+                _log.LogCritical(ex, nameof(On_CollectionExplorerControlBase_Drop));
+                _notificationService.Notify(ex);
             }
-        }
-
-        /// <summary>
-        /// Relay the CollectionComponentMoved event
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        protected void On_CollectionExplorerControlBase_CollectionComponentMoved(object sender, CollectionComponentMovedEventArgs e)
-        {
-            this.CollectionComponentMoved?.Invoke(sender, e);
         }
     }
 }

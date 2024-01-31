@@ -13,12 +13,14 @@ namespace HurlStudio.Model.CollectionContainer
     public class CollectionFile : CollectionComponentBase
     {
         private CollectionFolder _collectionFolder;
+        private CollectionContainer _collectionContainer;
         private HurlFile? _file;
         private string _location;
 
         public CollectionFile(CollectionFolder collectionFolder, string location)
         {
             _collectionFolder = collectionFolder;
+            _collectionContainer = collectionFolder.CollectionContainer;
             _location = location;
         }
 
@@ -38,6 +40,16 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _file = value;
+                Notify();
+            }
+        }
+
+        public CollectionContainer Collection
+        {
+            get => _collectionContainer;
+            set
+            {
+                _collectionContainer = value;
                 Notify();
             }
         }

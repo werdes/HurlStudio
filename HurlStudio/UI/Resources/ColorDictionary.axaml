@@ -27,7 +27,9 @@
       <Color x:Key="OverlayBackdropBorderColor">#cccccc</Color>
 
       <!--TextEditor-->
-      <Color x:Key="TextEditorTextAreaSelectionBrush">#b4b4b4</Color>
+      <Color x:Key="TextEditorTextAreaSelectionBrush">#d3d3d3</Color>
+      <Color x:Key="TextEditorBackgroundColor">#ffffff</Color>
+      <Color x:Key="TextEditorForegroundColor">#111111</Color>
 
       <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
 
@@ -52,6 +54,8 @@
 
       <!--TextEditor-->
       <Color x:Key="TextEditorTextAreaSelectionBrush">#555555</Color>
+      <Color x:Key="TextEditorBackgroundColor">#333333</Color>
+      <Color x:Key="TextEditorForegroundColor">#dddddd</Color>
 
       <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />
 

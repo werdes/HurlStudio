@@ -37,6 +37,9 @@
     <!-- Common styles -->
     <StyleInclude Source="/UI/Styles/MenuStyle.axaml" />
     <StyleInclude Source="/UI/Styles/ButtonStyle.axaml" />
+    <StyleInclude Source="/UI/Styles/TextBoxStyle.axaml" />
+    <StyleInclude Source="/UI/Styles/ComboBoxStyle.axaml" />
+    <StyleInclude Source="/UI/Styles/ToggleButtonStyle.axaml" />
 
     <actipro:ModernTheme />
     <SimpleTheme />

@@ -15,6 +15,9 @@
             x:DataType="vm:MainViewViewModel">
   <v:ViewBase.Resources>
     <converters:ICollectionCountToBadgeCountConverter x:Key="ICollectionCountToBadgeCountConverter" />
+    <converters:StatusBarStatusToLocalizedTextConverter x:Key="StatusBarStatusToLocalizedTextConverter" />
+    <converters:StatusBarStatusToBackgroundBrushConverter x:Key="StatusBarStatusToBackgroundBrushConverter" />
+    <converters:StatusBarStatusToIconTypeConverter x:Key="StatusBarStatusToIconTypeConverter" />
   </v:ViewBase.Resources>
   <Design.DataContext>
     <vm:MainViewViewModel />
@@ -93,25 +96,31 @@
                       BorderBrush="{DynamicResource WindowChromeBorderBrush}"
                       x:Name="WindowContent">
       </ContentControl>
-      <Panel Grid.Row="1" Background="{DynamicResource WindowChromeBackgroundColor}" >
-        <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
-          <TextBlock>Status Bar</TextBlock>
-        </DockPanel>
-        <DockPanel HorizontalAlignment="Right">
-          <Button Classes="framelessButton"
-                  Margin="0,0,5,2"
-                  Cursor="Hand"
-                  Click="On_ButtonToggleNotificationList_Click"
-                  ToolTip.Tip="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_Tooltip}">
-            <StackPanel Orientation="Horizontal">
-              <c:Icon Margin="0,1,0,0" Type="NotificationsList" />
-              <TextBlock
-                VerticalAlignment="Center"
-                Margin="1,0,0,1"
-                Text="{Binding Notifications.Count, Converter={StaticResource ICollectionCountToBadgeCountConverter}}" />
-            </StackPanel>
-          </Button>
-        </DockPanel>
+      <Panel Grid.Row="1" Background="{DynamicResource WindowChromeBackgroundColor}">
+        <Panel Background="{Binding StatusBarStatus, Converter={StaticResource StatusBarStatusToBackgroundBrushConverter}}">
+          <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0">
+            <c:Icon Opacity=".5" Type="{Binding StatusBarStatus, Converter={StaticResource StatusBarStatusToIconTypeConverter}}" />
+            <TextBlock Text="{Binding StatusBarStatus, Converter={StaticResource StatusBarStatusToLocalizedTextConverter}}" 
+                       Foreground="{DynamicResource NeutralControlForegroundColor} "/>
+            <TextBlock Text="{Binding StatusBarDetail}" 
+                       Foreground="{DynamicResource NeutralControlForegroundMutedColor}" />
+          </StackPanel>
+          <DockPanel HorizontalAlignment="Right" VerticalAlignment="Bottom">
+            <Button Classes="framelessButton"
+                    Margin="0,0,5,2"
+                    Cursor="Hand"
+                    Click="On_ButtonToggleNotificationList_Click"
+                    ToolTip.Tip="{x:Static localization:Localization.View_Main_StatusBar_NotificationsList_Tooltip}">
+              <StackPanel Orientation="Horizontal">
+                <c:Icon Margin="0,1,0,0" Type="NotificationsList" />
+                <TextBlock
+                  VerticalAlignment="Center"
+                  Margin="1,0,0,1"
+                  Text="{Binding Notifications.Count, Converter={StaticResource ICollectionCountToBadgeCountConverter}}" />
+              </StackPanel>
+            </Button>
+          </DockPanel>
+        </Panel>
       </Panel>
 
       <!--Overlay-->

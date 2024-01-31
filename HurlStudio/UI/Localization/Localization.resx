@@ -186,6 +186,30 @@
   <data name="Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
     <value>{Dock.Document.ContextMenu.CloseRight}</value>
   </data>
+  <data name="Dock.Document.File.Settings.Collection.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Collection.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Collection.Title" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Collection.Title}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Environment.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Environment.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Environment.Title" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Environment.Title}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.File.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.File.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.File.Title" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.File.Title}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Folder.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Folder.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Folder.Title" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Folder.Title}</value>
+  </data>
   <data name="Dock.Document.Welcome.Actions.ImportCollection.Description" xml:space="preserve">
     <value>{Dock.Document.Welcome.Actions.ImportCollection.Description}</value>
   </data>
@@ -279,6 +303,39 @@
   <data name="MessageBox.ErrorTitle" xml:space="preserve">
     <value>{MessageBox.ErrorTitle}</value>
   </data>
+  <data name="Setting.Disabled.Tooltip" xml:space="preserve">
+    <value>{Setting.Disabled.Tooltip}</value>
+  </data>
+  <data name="Setting.Enabled.Tooltip" xml:space="preserve">
+    <value>{Setting.Enabled.Tooltip}</value>
+  </data>
+  <data name="Setting.Overwritten.Tooltip" xml:space="preserve">
+    <value>{Setting.Overwritten.Tooltip}</value>
+  </data>
+  <data name="Setting.ProxySetting.Description" xml:space="preserve">
+    <value>{Setting.ProxySetting.Description}</value>
+  </data>
+  <data name="Setting.ProxySetting.HostAndPort.Label" xml:space="preserve">
+    <value>{Setting.ProxySetting.HostAndPort.Label}</value>
+  </data>
+  <data name="Setting.ProxySetting.Password.Label" xml:space="preserve">
+    <value>{Setting.ProxySetting.Password.Label}</value>
+  </data>
+  <data name="Setting.ProxySetting.Protocol.Label" xml:space="preserve">
+    <value>{Setting.ProxySetting.Protocol.Label}</value>
+  </data>
+  <data name="Setting.ProxySetting.Title" xml:space="preserve">
+    <value>{Setting.ProxySetting.Title}</value>
+  </data>
+  <data name="Setting.ProxySetting.User.Label" xml:space="preserve">
+    <value>{Setting.ProxySetting.User.Label}</value>
+  </data>
+  <data name="Setting.VariableSetting.Description" xml:space="preserve">
+    <value>{Setting.VariableSetting.Description}</value>
+  </data>
+  <data name="Setting.VariableSetting.Title" xml:space="preserve">
+    <value>{Setting.VariableSetting.Title}</value>
+  </data>
   <data name="View.Editor.Toolbar.Back.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Back.Tooltip}</value>
   </data>
@@ -288,11 +345,26 @@
   <data name="View.Editor.Toolbar.Open.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Open.Tooltip}</value>
   </data>
+  <data name="View.Editor.Toolbar.Redo.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Redo.Tooltip}</value>
+  </data>
   <data name="View.Editor.Toolbar.Save.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Save.Tooltip}</value>
   </data>
   <data name="View.Editor.Toolbar.SaveAll.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.SaveAll.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.ShowEndOfLine.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.ShowEndOfLine.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.ShowWhitespace.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.ShowWhitespace.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.Undo.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.Undo.Tooltip}</value>
+  </data>
+  <data name="View.Editor.Toolbar.WordWrap.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.WordWrap.Tooltip}</value>
   </data>
   <data name="View.Loading.ActivityText.LoadingCollections" xml:space="preserve">
     <value>{View.Loading.ActivityText.LoadingCollections}</value>
@@ -335,6 +407,12 @@
   </data>
   <data name="View.Main.StatusBar.NotificationsList.Tooltip" xml:space="preserve">
     <value>{View.Main.StatusBar.NotificationsList.Tooltip}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.Idle.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.Idle.Text}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.OpeningFile.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.OpeningFile.Text}</value>
   </data>
   <data name="Window.Main.Title" xml:space="preserve">
     <value>{Window.Main.Title}</value>
