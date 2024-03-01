@@ -1,0 +1,46 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="35"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.ClientCertificateSetting"
+             x:DataType="setting:ClientCertificateSetting">
+  <Grid Margin="3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="20" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <TextBox Classes="framelessTextBox"
+             Grid.ColumnSpan="2"
+             Margin="0,0,5,0"
+             Text="{Binding Certificate}"
+             VerticalAlignment="Center" />
+    <Button Classes="framelessButton"
+            Grid.Column="2"
+            ToolTip.Tip="{x:Static localization:Localization.Setting_ClientCertificateSetting_FilePicker_Tooltip}"
+            Click="On_ButtonOpen_Click">
+      <c:Icon Type="OpenNeutral" />
+    </Button>
+    
+    <TextBlock Text="{x:Static localization:Localization.Setting_ClientCertificateSetting_Password_Label}"
+               Grid.Row="1"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Row="1"
+             Grid.Column="1"
+             Grid.ColumnSpan="2"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"
+             PasswordChar="*"
+             Text="{Binding Password}" />
+  </Grid>
+</UserControl>

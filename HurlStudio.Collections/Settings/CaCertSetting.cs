@@ -1,6 +1,4 @@
-﻿using HurlStudio.Collections.Attributes;
-using HurlStudio.Common.Enums;
-using HurlStudio.Common.Extensions;
+﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System;
 using System.Collections.Generic;
@@ -12,39 +10,23 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class VariableSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class CaCertSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
     {
-        public const string CONFIGURATION_NAME = "variable";
-        private const string KEY_VALUE_SEPARATOR = ":";
+        public const string CONFIGURATION_NAME = "ca_cert";
 
-        private readonly Regex VARIABLE_SETTING_REGEX = new Regex("([A-Za-z0-9_\\-]+)(?:\\:)(.*)", RegexOptions.Compiled);
+        private string? _file;
 
-        private string? _key;
-        private string? _value;
-
-        public VariableSetting() : base()
+        public CaCertSetting() : base()
         {
             
         }
 
-        [HurlSettingKey]
-        public string? Key
+        public string? File
         {
-            get => _key;
+            get => _file;
             set
             {
-                _key = value;
-                Notify();
-                Notify(nameof(DisplayString));
-            }
-        }
-
-        public string? Value
-        {
-            get => _value;
-            set
-            {
-                _value = value;
+                _file = value;
                 Notify();
             }
         }
@@ -56,12 +38,9 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            Match match = VARIABLE_SETTING_REGEX.Match(value);
-            if (match.Success && match.Groups.Count > 0)
+            if(!string.IsNullOrWhiteSpace(value))
             {
-                this.Key = match.Groups.Values.Get(1)?.Value;
-                this.Value = match.Groups.Values.Get(2)?.Value;
-
+                this.File = value;
                 return this;
             }
             return null;
@@ -73,25 +52,23 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            List<IHurlArgument> arguments = new List<IHurlArgument>();
-            if (this.Key != null)
+            return new[]
             {
-                arguments.Add(new VariableArgument(this.Key, this.Value ?? string.Empty));
-            }
-            return arguments.ToArray();
+                new CaCertArgument(this.File ?? string.Empty)
+            };
         }
 
         /// <summary>
-        /// Returns the unique key (variable key) for this setting
+        /// Returns null, since this setting isn't key/value based
         /// </summary>
         /// <returns></returns>
         public override string? GetConfigurationKey()
         {
-            return this.Key;
+            return null;
         }
 
         /// <summary>
-        /// Returns the configuration name (variable)
+        /// Returns the configuration name (ca_cert)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -100,12 +77,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the variable key and value
+        /// Returns the serialized value of this setting (e.g. the cert file path)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return this.Key + KEY_VALUE_SEPARATOR + (this.Value ?? string.Empty);
+            return this.File ?? string.Empty;
         }
 
         /// <summary>
@@ -114,16 +91,16 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.Key ?? string.Empty;
+            return Path.GetFileName(this.File) ?? string.Empty;
         }
 
         /// <summary>
-        /// Returns the inheritance behavior -> UniqueKey, so overwritten by key
+        /// Returns the inheritance behavior -> Overwrite -> Setting is unique to a file
         /// </summary>
         /// <returns></returns>
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
-            return HurlSettingInheritanceBehavior.UniqueKey;
+            return HurlSettingInheritanceBehavior.Overwrite;
         }
     }
 }

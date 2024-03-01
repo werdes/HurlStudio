@@ -178,7 +178,11 @@ public partial class App : Application
         controlBuilder.RegisterProviderAssociated<SettingContainer, Model.HurlSettings.HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
         controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
         controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
-        
+        controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
+        controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
+        controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
+
+
 
         // Tools
         toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
@@ -186,7 +190,7 @@ public partial class App : Application
         // Documents
         documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
         documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
-
+        
 
     }
 
@@ -336,6 +340,9 @@ public partial class App : Application
         services.AddTransient<SettingContainer>();
         services.AddTransient<ProxySetting>();
         services.AddTransient<VariableSetting>();
+        services.AddTransient<AwsSigV4Setting>();
+        services.AddTransient<CaCertSetting>();
+        services.AddTransient<ClientCertificateSetting>();
     }
 
     /// <summary>

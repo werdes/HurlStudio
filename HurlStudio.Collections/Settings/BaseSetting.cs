@@ -13,6 +13,7 @@ namespace HurlStudio.Collections.Settings
     public abstract class BaseSetting : INotifyPropertyChanged, IHurlSetting
     {
         public event PropertyChangedEventHandler? PropertyChanged;
+
         protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private const string NAME_VALUE_SEPARATOR = "=";

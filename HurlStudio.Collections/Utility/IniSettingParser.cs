@@ -10,15 +10,38 @@ namespace HurlStudio.Collections.Utility
 {
     public class IniSettingParser : ISettingParser
     {
-        private static readonly Dictionary<string, Type> _possibleSettingTypes = new Dictionary<string, Type>()
-        {
-            { ProxySetting.CONFIGURATION_NAME, typeof(ProxySetting) },
-            { VariableSetting.CONFIGURATION_NAME, typeof(VariableSetting) },    
-        };
+        private Lazy<Dictionary<string, Type>> _possibleSettingTypesLazy;
+        private Dictionary<string, Type> _possibleSettingTypes => _possibleSettingTypesLazy.Value;
 
         public IniSettingParser()
         {
-            
+            _possibleSettingTypesLazy = new Lazy<Dictionary<string, Type>>(() => this.RegisterSettingTypes());
+
+            //this.RegisterSettingTypes();
+        }
+
+        /// <summary>
+        /// Registers the implementing types of IHurlSetting for parsing
+        /// </summary>
+        private Dictionary<string, Type> RegisterSettingTypes()
+        {
+            Dictionary<string, Type> settingTypes = new Dictionary<string, Type>();
+            Type interfaceType = typeof(IHurlSetting);
+            List<Type> implementingTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
+                                                .Where(x => interfaceType.IsAssignableFrom(x))
+                                                .Where(x => !x.IsAbstract)
+                                                .ToList();
+
+            foreach (Type settingType in implementingTypes)
+            {
+                IHurlSetting? hurlSetting = (IHurlSetting?)Activator.CreateInstance(settingType);
+                if (hurlSetting != null)
+                {
+                    settingTypes.Add(hurlSetting.GetConfigurationName(), settingType);
+                }
+            }
+
+            return settingTypes;
         }
 
         /// <summary>
@@ -38,8 +61,8 @@ namespace HurlStudio.Collections.Utility
         public IHurlSetting? Parse(string value)
         {
             string? settingName = value.Split('=').Get(0);
-            string? settingValue = value.Split('=').Get(1);
-            if (!string.IsNullOrEmpty(settingName) && !string.IsNullOrEmpty(settingValue))
+            string? settingValue = string.Join('=', value.Split('=').Skip(1));
+            if (!string.IsNullOrEmpty(settingName))
             {
                 IHurlSetting? setting = GetSetting(settingName);
                 if (setting != null)
@@ -58,7 +81,7 @@ namespace HurlStudio.Collections.Utility
         private IHurlSetting? GetSetting(string settingName)
         {
             Type? settingType = _possibleSettingTypes.FirstOrDefault(x => x.Key.Equals(settingName)).Value;
-            if(settingType != null)
+            if (settingType != null)
             {
                 return Activator.CreateInstance(settingType) as IHurlSetting;
             }

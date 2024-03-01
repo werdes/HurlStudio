@@ -2,7 +2,7 @@ using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Collections.Settings;
 
-namespace HurlStudio.UI.Controls.HurlSettings
+namespace HurlStudio.UI.Controls
 {
     public partial class SettingContainer : ViewModelBasedControl<Model.HurlSettings.HurlSettingContainer>
     {
@@ -42,6 +42,32 @@ namespace HurlStudio.UI.Controls.HurlSettings
             if (_settingContainer != null)
             {
                 _settingContainer.Enabled = !_settingContainer.Enabled;
+            }
+        }
+
+        /// <summary>
+        /// Enabled state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonMoveUp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer != null)
+            {
+                _settingContainer.MoveUp();
+            }
+        }
+        
+        /// <summary>
+        /// Enabled state
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonMoveDown_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer != null)
+            {
+                _settingContainer.MoveDown();
             }
         }
     }

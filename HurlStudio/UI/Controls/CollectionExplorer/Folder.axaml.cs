@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using HurlStudio.Common.Utility;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Editor;
@@ -22,14 +23,14 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         public static readonly StyledProperty<CollectionFolder> CollectionFolderProperty =
             AvaloniaProperty.Register<Folder, CollectionFolder>(nameof(CollectionFolder));
 
-        private ILogger _logger;
+        private ILogger _log;
         private IEditorService _editorService;
         private INotificationService _notificationService;
 
         public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService)
             : base(notificationService, logger)
         {
-            _logger = logger;
+            _log = logger;
             _editorService = editorService;
             _notificationService = notificationService;
 
@@ -88,7 +89,28 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             }
             catch (Exception ex)
             {
-                _logger.LogCritical(ex, nameof(OpenComponentDocument));
+                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens the folder containing the collection file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (CollectionFolder == null) return;
+            if (CollectionFolder.Location == null) return;
+
+            try
+            {
+                OSUtility.RevealFileInExplorer(CollectionFolder.Location);
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(OpenComponentDocument));
                 _notificationService.Notify(ex);
             }
         }

@@ -137,12 +137,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns an empty string, since the proxy setting is not key-based
+        /// Returns null, since the proxy setting is not key-based
         /// </summary>
         /// <returns></returns>
         public override string? GetConfigurationKey()
         {
-            return string.Empty;
+            return null;
         }
 
         /// <summary>

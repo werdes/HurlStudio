@@ -20,6 +20,7 @@
     <None Remove="Assets\SyntaxHighlighting\hurl.json" />
     <None Remove="Assets\SyntaxHighlighting\Themes\Dark.json" />
     <None Remove="Assets\SyntaxHighlighting\Themes\Light.json" />
+    <None Remove="UI\Controls\HurlSettings\ClientCertificateSetting.axaml~RF7e533b.TMP" />
     <None Remove="UI\Views\MainView.axaml.cs~RFf00a70.TMP" />
   </ItemGroup>
 
@@ -73,6 +74,16 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\AwsSigV4Setting.axaml.cs">
+      <DependentUpon>AwsSigV4Setting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\ClientCertificateSetting.axaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>ClientCertificateSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\CaCertSetting.axaml.cs">
+      <DependentUpon>CaCertSetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
       <DependentUpon>VariableSetting.axaml</DependentUpon>
     </Compile>
@@ -106,6 +117,9 @@
     <AvaloniaResource Update="Assets\SyntaxHighlighting\Grammars\csharp.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </AvaloniaResource>
+    <AvaloniaXaml Update="UI\Controls\HurlSettings\ClientCertificateSetting.axaml">
+      <SubType>Designer</SubType>
+    </AvaloniaXaml>
     <None Update="log.config">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>

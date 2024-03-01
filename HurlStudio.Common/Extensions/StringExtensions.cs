@@ -40,5 +40,27 @@ namespace HurlStudio.Common.Extensions
             }
             return directory;
         }
+
+        /// <summary>
+        /// Parses a string to a nullable bool
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static bool? NullableTryParseBool(this string text)
+        {
+            bool value;
+            return bool.TryParse(text, out value) ? (bool?)value : null;
+        }
+
+        /// <summary>
+        /// Parses a string to a nullable int
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static int? NullableTryParseInt(this string text)
+        {
+            int value;
+            return int.TryParse(text, out value) ? (int?)value : null;
+        }
     }
 }

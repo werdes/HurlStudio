@@ -475,6 +475,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.RevealInExplorer} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_RevealInExplorer {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.RevealInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Properties} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_File_Properties {
@@ -489,6 +498,15 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_File_Rename {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.RevealInExplorer} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_RevealInExplorer {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.RevealInExplorer", resourceCulture);
             }
         }
         
@@ -543,6 +561,15 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_Folder_Rename {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.RevealInExplorer} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_RevealInExplorer {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.RevealInExplorer", resourceCulture);
             }
         }
         
@@ -615,6 +642,123 @@ namespace HurlStudio.UI.Localization {
         public static string MessageBox_ErrorTitle {
             get {
                 return ResourceManager.GetString("MessageBox.ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Provider1.Label} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Provider1_Label {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Provider1.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Provider2.Label} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Provider2_Label {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Provider2.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Region.Label} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Region_Label {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Region.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Service.Label} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Service_Label {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Service.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Title {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.FilePicker.Pattern.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_FilePicker_Pattern_Title {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.FilePicker.Pattern.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.Password.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_Password_Label {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.Password.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.Title", resourceCulture);
             }
         }
         

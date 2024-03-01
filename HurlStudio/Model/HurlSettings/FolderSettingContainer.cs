@@ -1,4 +1,5 @@
-﻿using HurlStudio.Model.CollectionContainer;
+﻿using HurlStudio.Common.UI;
+using HurlStudio.Model.CollectionContainer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,16 +16,16 @@ namespace HurlStudio.Model.HurlSettings
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private ObservableCollection<HurlSettingContainer> _containers;
+        private OrderedObservableCollection<HurlSettingContainer> _containers;
         private CollectionFolder _collectionFolder;
 
         public FolderSettingContainer(CollectionFolder folder)
         {
-            _containers = new ObservableCollection<HurlSettingContainer>();
+            _containers = new OrderedObservableCollection<HurlSettingContainer>();
             _collectionFolder = folder;
         }
 
-        public ObservableCollection<HurlSettingContainer> Containers
+        public OrderedObservableCollection<HurlSettingContainer> Containers
         {
             get => _containers;
             set

@@ -54,7 +54,7 @@
 
       <!--TextEditor-->
       <Color x:Key="TextEditorTextAreaSelectionBrush">#555555</Color>
-      <Color x:Key="TextEditorBackgroundColor">#333333</Color>
+      <Color x:Key="TextEditorBackgroundColor">#1e1e1e</Color>
       <Color x:Key="TextEditorForegroundColor">#dddddd</Color>
 
       <SolidColorBrush x:Key="WindowChromeBorderBrush" Color="{DynamicResource WindowChromeBorderColor}" />

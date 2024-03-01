@@ -1,0 +1,75 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:AwsSigV4Setting"             
+             x:Class="HurlStudio.UI.Controls.HurlSettings.AwsSigV4Setting">
+  <Grid Margin="3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    
+    <!--Provder 1-->
+    <Label VerticalAlignment="Center"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_AwsSigV4Setting_Provider1_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Margin="0,0,5,0"
+             Text="{Binding Provider1}"
+             VerticalAlignment="Center" />
+
+    <!--Provider 2-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="1"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_AwsSigV4Setting_Provider2_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="1"
+             Margin="0,0,5,0"
+             Text="{Binding Provider2}"
+             VerticalAlignment="Center" />
+
+
+    <!--Region-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="2"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_AwsSigV4Setting_Region_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="2"
+             Margin="0,0,5,0"
+             Text="{Binding Region}"
+             VerticalAlignment="Center" />
+    
+    <!--Service-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="3"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_AwsSigV4Setting_Service_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="3"
+             Margin="0,0,5,0"
+             Text="{Binding Service}"
+             VerticalAlignment="Center" />
+  </Grid>
+</UserControl>

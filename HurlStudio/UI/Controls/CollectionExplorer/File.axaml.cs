@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using HurlStudio.Common.Utility;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
@@ -72,6 +73,26 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 await _editorService.OpenFile(CollectionFile);
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens the folder containing the collection file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (CollectionFile == null) return;
+            if (CollectionFile.Location == null) return;
+            try
+            {
+                OSUtility.RevealFileInExplorer(CollectionFile.Location);
             }
             catch (Exception ex)
             {

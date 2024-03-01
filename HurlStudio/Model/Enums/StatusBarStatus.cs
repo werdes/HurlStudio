@@ -48,7 +48,7 @@ namespace HurlStudio.Model.Enums
 
         public static Brush GetBackgroundBrush(this StatusBarStatus status)
         {
-            switch (status) { 
+            switch (status) {
                 case StatusBarStatus.Idle:
                 default:
                     return new SolidColorBrush(Colors.Transparent);

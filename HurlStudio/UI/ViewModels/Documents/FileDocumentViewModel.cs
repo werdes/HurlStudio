@@ -1,5 +1,6 @@
 ﻿using AvaloniaEdit.Document;
 using Dock.Model.Mvvm.Controls;
+using HurlStudio.Common.UI;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.HurlSettings;
 using System;
@@ -18,10 +19,10 @@ namespace HurlStudio.UI.ViewModels.Documents
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
 
-        private ObservableCollection<HurlSettingContainer> _collectionSettingContainers;
-        private ObservableCollection<HurlSettingContainer> _fileSettingContainers;
+        private OrderedObservableCollection<HurlSettingContainer> _collectionSettingContainers;
+        private OrderedObservableCollection<HurlSettingContainer> _fileSettingContainers;
         private ObservableCollection<FolderSettingContainer> _folderSettingContainers;
-        private ObservableCollection<HurlSettingContainer> _environmentSettingContainers;
+        private OrderedObservableCollection<HurlSettingContainer> _environmentSettingContainers;
 
         public FileDocumentViewModel(EditorViewViewModel editorViewViewModel)
         {
@@ -31,10 +32,10 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             _editorViewViewModel = editorViewViewModel;
 
-            _collectionSettingContainers = new ObservableCollection<HurlSettingContainer>();
-            _fileSettingContainers = new ObservableCollection<HurlSettingContainer>();
+            _collectionSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
+            _fileSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
             _folderSettingContainers = new ObservableCollection<FolderSettingContainer>();
-            _environmentSettingContainers = new ObservableCollection<HurlSettingContainer>();
+            _environmentSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
         }
 
         public CollectionFile? File
@@ -79,7 +80,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
-        public ObservableCollection<HurlSettingContainer> CollectionSettingContainers
+        public OrderedObservableCollection<HurlSettingContainer> CollectionSettingContainers
         {
             get => _collectionSettingContainers;
             set
@@ -89,7 +90,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
-        public ObservableCollection<HurlSettingContainer> FileSettingContainers
+        public OrderedObservableCollection<HurlSettingContainer> FileSettingContainers
         {
             get => _fileSettingContainers;
             set
@@ -109,7 +110,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
-        public ObservableCollection<HurlSettingContainer> EnvironmentSettingContainers
+        public OrderedObservableCollection<HurlSettingContainer> EnvironmentSettingContainers
         {
             get => _environmentSettingContainers;
             set

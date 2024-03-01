@@ -10,7 +10,7 @@
              
              Name="Container"
              x:DataType="vm:HurlSettingContainer"
-             x:Class="HurlStudio.UI.Controls.HurlSettings.SettingContainer">
+             x:Class="HurlStudio.UI.Controls.SettingContainer">
   <UserControl.Resources>
     <converters:IHurlSettingToLocalizedTitleConverter x:Key="IHurlSettingToLocalizedTitleConverter" />
     <converters:IHurlSettingToDisplayTextConverter x:Key="IHurlSettingToDisplayTextConverter" />
@@ -27,6 +27,8 @@
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="20" />
         <ColumnDefinition Width="*" />
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="20" />
       </Grid.ColumnDefinitions>
 
       <Button Classes="framelessButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
@@ -64,9 +66,15 @@
                    Text="{Binding Setting.DisplayString}"/>
       </StackPanel>
 
+      <Button Classes="framelessButton" Grid.Column="2" Click="On_ButtonMoveUp_Click">
+          <controls:Icon Type="MoveUp" />
+      </Button>
+      <Button Classes="framelessButton" Grid.Column="3" Click="On_ButtonMoveDown_Click">
+        <controls:Icon Type="MoveDown" />
+      </Button>
       <StackPanel IsVisible="{Binding !Collapsed}"
                   Opacity="{Binding DisplayOpacity}"
-                  Grid.ColumnSpan="2" Grid.Row="1">
+                  Grid.ColumnSpan="4" Grid.Row="1">
         <ContentPresenter Content="{Binding Setting}"
                           IsEnabled="{Binding !IsReadOnly}" />
       </StackPanel>

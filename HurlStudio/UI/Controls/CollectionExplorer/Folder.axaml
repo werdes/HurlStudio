@@ -46,6 +46,12 @@
           </MenuItem.Icon>
         </MenuItem>
         <Separator />
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_RevealInExplorer}"
+                  Click="On_MenuItem_RevealInExplorer_Click">
+          <MenuItem.Icon>
+            <c:Icon Type="RevealExplorer" />
+          </MenuItem.Icon>
+        </MenuItem>
         <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Properties}">
           <MenuItem.Icon>
             <c:Icon Type="Properties" />

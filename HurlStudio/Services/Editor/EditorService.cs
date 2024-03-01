@@ -24,6 +24,7 @@ using AvaloniaEdit;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.Services.Notifications;
+using HurlStudio.Common.UI;
 
 namespace HurlStudio.Services.Editor
 {
@@ -114,6 +115,9 @@ namespace HurlStudio.Services.Editor
 
             try
             {
+                _mainViewViewModel.StatusBarStatus = Model.Enums.StatusBarStatus.OpeningFile;
+                _mainViewViewModel.StatusBarDetail = file.Location;
+
                 IDockable? openDocument = _editorViewViewModel.Documents.Where(x => x is FileDocumentViewModel)
                                                                         .Select(x => (FileDocumentViewModel)x)
                                                                         .Where(x => x.File != null && x.File.Equals(file))
@@ -122,16 +126,13 @@ namespace HurlStudio.Services.Editor
                 // Document isn't opened in the dock already
                 if (openDocument == null)
                 {
-                    _mainViewViewModel.StatusBarStatus = Model.Enums.StatusBarStatus.OpeningFile;
-                    _mainViewViewModel.StatusBarDetail = file.Location;
-
                     FileDocumentViewModel fileDocument = _documentControlBuilder.Get<FileDocumentViewModel>();
                     fileDocument.Id = file.GetId();
                     fileDocument.File = file;
-                    fileDocument.Document = new AvaloniaEdit.Document.TextDocument(await System.IO.File.ReadAllTextAsync(file.Location));
+                    fileDocument.Document = new AvaloniaEdit.Document.TextDocument(await System.IO.File.ReadAllTextAsync(file.Location, Encoding.UTF8));
 
                     // Load settings
-                    this.LoadSettingsForFile(file, fileDocument);
+                    await Task.Run(() => this.LoadSettingsForFile(file, fileDocument));
 
                     // Open in dock
                     _layoutFactory.AddDocument(fileDocument);
@@ -155,7 +156,7 @@ namespace HurlStudio.Services.Editor
                 _log.LogCritical(ex, nameof(OpenFile));
                 _notificationService.Notify(ex);
 
-                throw ex;
+                throw new Exception($"Opening file [{file.Location}] failed", ex);
             }
             finally
             {
@@ -217,9 +218,75 @@ namespace HurlStudio.Services.Editor
             foreach (HurlSettingContainer hurlSettingContainer in allSettingContainers)
             {
                 hurlSettingContainer.SettingEnabledChanged += On_HurlSettingContainer_SettingEnabledChanged;
+                hurlSettingContainer.SettingOrderChanged += On_HurlSettingContainer_SettingOrderChanged;
+                hurlSettingContainer.SettingKeyChanged += On_HurlSettingContainer_SettingKeyChanged;
             }
 
-            this.EvaluateInheritances(allSettingContainers);
+            this.EvaluateInheritances(fileDocument, true);
+        }
+
+        /// <summary>
+        /// On Setting key change -> reevaluate inheritances
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <exception cref="NotImplementedException"></exception>
+        private async void On_HurlSettingContainer_SettingKeyChanged(object? sender, Model.EventArgs.SettingKeyChangedEventArgs e)
+        {
+            if (sender != null && sender is HurlSettingContainer container)
+            {
+                await Task.Run(() => this.EvaluateInheritances(container.Document, false));
+            }
+        }
+
+        /// <summary>
+        /// Apply sort value on OrderChanged event
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_HurlSettingContainer_SettingOrderChanged(object? sender, Model.EventArgs.SettingOrderChangedEventArgs e)
+        {
+            if (sender != null && sender is HurlSettingContainer container)
+            {
+                OrderedObservableCollection<HurlSettingContainer>? source = null;
+
+                // Get Source
+                if (container.Document.EnvironmentSettingContainers.Contains(e.Setting))
+                {
+                    source = container.Document.EnvironmentSettingContainers;
+                }
+                if (container.Document.CollectionSettingContainers.Contains(e.Setting))
+                {
+                    source = container.Document.CollectionSettingContainers;
+                }
+                if (container.Document.FileSettingContainers.Contains(e.Setting))
+                {
+                    source = container.Document.FileSettingContainers;
+                }
+                foreach (FolderSettingContainer folderSettingContainer in container.Document.FolderSettingContainers)
+                {
+                    if (folderSettingContainer.Containers.Contains(e.Setting))
+                    {
+                        source = folderSettingContainer.Containers;
+                    }
+                }
+
+                if(source != null)
+                {
+                    switch (e.MoveDirection)
+                    {
+                        case Model.Enums.MoveDirection.Up:
+                            source.MoveItemUp(e.Setting);
+                            break;
+                        case Model.Enums.MoveDirection.Down:
+                            source.MoveItemDown(e.Setting);
+                            break;
+                    }
+
+                    // Reevaluate inheritances
+                    await Task.Run(() => this.EvaluateInheritances(container.Document, false));
+                }
+            }
         }
 
         /// <summary>
@@ -227,32 +294,31 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_HurlSettingContainer_SettingEnabledChanged(object? sender, Model.EventArgs.SettingEnabledChangedEventArgs e)
+        private async void On_HurlSettingContainer_SettingEnabledChanged(object? sender, Model.EventArgs.SettingEnabledChangedEventArgs e)
         {
-            if(sender != null && sender is HurlSettingContainer container)
+            if (sender != null && sender is HurlSettingContainer container)
             {
-                List<HurlSettingContainer> allSettingContainers = new List<HurlSettingContainer>();
-                allSettingContainers.AddRange(container.Document.FileSettingContainers);
-                allSettingContainers.AddRange(container.Document.FolderSettingContainers.SelectMany(x => x.Containers).Reverse());
-                allSettingContainers.AddRange(container.Document.CollectionSettingContainers);
-                allSettingContainers.AddRange(container.Document.EnvironmentSettingContainers);
-
-                this.EvaluateInheritances(allSettingContainers);
+                await Task.Run(() => this.EvaluateInheritances(container.Document, false));
             }
         }
 
         /// <summary>
-        /// Reevaluates the inheritance types into Overwritten flags
+        /// Reevaluates the inheritance types into 'Overwritten' flags
         /// </summary>
-        /// <param name="allSettingContainers"></param>
-        private void EvaluateInheritances(List<HurlSettingContainer> allSettingContainers)
+        /// <param name="fileDocument"></param>
+        private void EvaluateInheritances(FileDocumentViewModel fileDocument, bool collapseContainers)
         {
-            foreach (HurlSettingContainer hurlSettingContainer in allSettingContainers)
-            {
-                hurlSettingContainer.Overwritten = false;
-            }
+            List<HurlSettingContainer> allSettingContainers = new List<HurlSettingContainer>();
+            allSettingContainers.AddRange(fileDocument.EnvironmentSettingContainers);
+            allSettingContainers.AddRange(fileDocument.CollectionSettingContainers);
+            allSettingContainers.AddRange(fileDocument.FolderSettingContainers.SelectMany(x => x.Containers));
+            allSettingContainers.AddRange(fileDocument.FileSettingContainers);
 
-            for (int i = 0; i < allSettingContainers.Count; i++)
+            allSettingContainers.ForEach(x => x.Overwritten = false);
+
+            // Go through the list backwards 
+            // since we want later entries to overwrite earlier ones
+            for (int i = allSettingContainers.Count - 1; i >= 0; i--)
             {
                 HurlSettingContainer container = allSettingContainers[i];
 
@@ -260,15 +326,15 @@ namespace HurlStudio.Services.Editor
                     container.Enabled &&
                     container.Setting.GetInheritanceBehavior() != Common.Enums.HurlSettingInheritanceBehavior.Append)
                 {
-                    // Go over the rest of the rest of the settings
-                    for (int j = i + 1; j < allSettingContainers.Count; j++)
+                    // Go over the preceding settings to find matching ones to be overwritten
+                    for (int j = i - 1; j >= 0; j--)
                     {
-                        // Same type on overwrite setting -> set all following settings of this type to overwritten
+                        // Same type on overwrite setting -> set all earlier settings of this type to overwritten
                         if (container.Setting.GetInheritanceBehavior() == Common.Enums.HurlSettingInheritanceBehavior.Overwrite &&
                             allSettingContainers[j].Setting.GetType() == container.Setting.GetType())
                         {
                             allSettingContainers[j].Overwritten = true;
-                            allSettingContainers[j].Collapsed = true;
+                            allSettingContainers[j].Collapsed = collapseContainers ? true : allSettingContainers[j].Collapsed;
                         }
                         // Same type on unique key setting -> compare configuration key, if matching set container to overwritten
                         else if (container.Setting.GetInheritanceBehavior() == Common.Enums.HurlSettingInheritanceBehavior.UniqueKey &&
@@ -276,7 +342,7 @@ namespace HurlStudio.Services.Editor
                                 allSettingContainers[j].Setting.GetConfigurationKey() == container.Setting.GetConfigurationKey())
                         {
                             allSettingContainers[j].Overwritten = true;
-                            allSettingContainers[j].Collapsed = true;
+                            allSettingContainers[j].Collapsed = collapseContainers ? true : allSettingContainers[j].Collapsed;
                         }
                     }
                 }

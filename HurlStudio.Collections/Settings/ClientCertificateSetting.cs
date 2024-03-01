@@ -1,5 +1,4 @@
-﻿using HurlStudio.Collections.Attributes;
-using HurlStudio.Common.Enums;
+﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System;
@@ -12,39 +11,36 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class VariableSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class ClientCertificateSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
     {
-        public const string CONFIGURATION_NAME = "variable";
-        private const string KEY_VALUE_SEPARATOR = ":";
+        public const string CONFIGURATION_NAME = "client_certificate";
+        private const string VALUE_SEPARATOR = "|";
+        private readonly Regex CLIENT_CERTIFICATE_SETTING_REGEX = new Regex("([^" + Regex.Escape(VALUE_SEPARATOR) + "]*)" + Regex.Escape(VALUE_SEPARATOR) + "([^" + Regex.Escape(VALUE_SEPARATOR) + "]*)", RegexOptions.Compiled);
 
-        private readonly Regex VARIABLE_SETTING_REGEX = new Regex("([A-Za-z0-9_\\-]+)(?:\\:)(.*)", RegexOptions.Compiled);
+        private string? _certificate;
+        private string? _password;
 
-        private string? _key;
-        private string? _value;
-
-        public VariableSetting() : base()
+        public ClientCertificateSetting() : base()
         {
             
         }
 
-        [HurlSettingKey]
-        public string? Key
+        public string? Certificate
         {
-            get => _key;
+            get => _certificate;
             set
             {
-                _key = value;
+                _certificate = value;
                 Notify();
-                Notify(nameof(DisplayString));
             }
         }
 
-        public string? Value
+        public string? Password
         {
-            get => _value;
+            get => _password;
             set
             {
-                _value = value;
+                _password = value;
                 Notify();
             }
         }
@@ -56,11 +52,11 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            Match match = VARIABLE_SETTING_REGEX.Match(value);
+            Match match = CLIENT_CERTIFICATE_SETTING_REGEX.Match(value);
             if (match.Success && match.Groups.Count > 0)
             {
-                this.Key = match.Groups.Values.Get(1)?.Value;
-                this.Value = match.Groups.Values.Get(2)?.Value;
+                this.Certificate = match.Groups.Values.Get(1)?.Value;
+                this.Password = match.Groups.Values.Get(2)?.Value;
 
                 return this;
             }
@@ -74,24 +70,31 @@ namespace HurlStudio.Collections.Settings
         public override IHurlArgument[] GetArguments()
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
-            if (this.Key != null)
+            if (!string.IsNullOrEmpty(this.Certificate))
             {
-                arguments.Add(new VariableArgument(this.Key, this.Value ?? string.Empty));
+                if (!string.IsNullOrEmpty(this.Password))
+                {
+                    arguments.Add(new ClientCertificateArgument(this.Certificate, this.Password));
+                }
+                else
+                {
+                    arguments.Add(new ClientCertificateArgument(this.Certificate));
+                }
             }
             return arguments.ToArray();
         }
 
         /// <summary>
-        /// Returns the unique key (variable key) for this setting
+        /// Returns null, since this setting isn't key/value based
         /// </summary>
         /// <returns></returns>
         public override string? GetConfigurationKey()
         {
-            return this.Key;
+            return null;
         }
 
         /// <summary>
-        /// Returns the configuration name (variable)
+        /// Returns the configuration name (client_certificate)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -100,12 +103,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the variable key and value
+        /// Returns the serialized value, consisting of the certificate and password, joined by a separator (|)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return this.Key + KEY_VALUE_SEPARATOR + (this.Value ?? string.Empty);
+            return $"{this.Certificate}{VALUE_SEPARATOR}{this.Password}";
         }
 
         /// <summary>
@@ -114,16 +117,16 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.Key ?? string.Empty;
+            return this.GetConfigurationValue();
         }
 
         /// <summary>
-        /// Returns the inheritance behavior -> UniqueKey, so overwritten by key
+        /// Returns the inheritance behavior -> Overwrite -> Setting is unique to a file
         /// </summary>
         /// <returns></returns>
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
-            return HurlSettingInheritanceBehavior.UniqueKey;
+            return HurlSettingInheritanceBehavior.Overwrite;
         }
     }
 }

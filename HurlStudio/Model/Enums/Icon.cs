@@ -99,7 +99,10 @@ namespace HurlStudio.Model.Enums
         CheckedBox,
         [Icon("unchecked_box.png")]
         UncheckedBox,
-
+        [Icon("move_up.png")]
+        MoveUp,
+        [Icon("move_down.png")]
+        MoveDown,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

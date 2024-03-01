@@ -23,7 +23,7 @@ namespace HurlStudio.Common.Extensions
 
         public static T? Get<T>(this IEnumerable<T> collection, int index)
         {
-            if(collection.Count() > index) return collection.ElementAt(index);
+            if(collection.Count() > index && index >= 0) return collection.ElementAt(index);
             return default(T);
         }
 

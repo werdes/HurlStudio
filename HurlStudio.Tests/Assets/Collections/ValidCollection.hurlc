@@ -22,8 +22,11 @@ location=../HurlFiles/TestFile2.hurl
 proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:testpassword
 variable=var1:test2
 variable=var2:test3
+aws_sig_v4=aws::eu-central-1:foos
+ca_cert=E:\Files\test.pem
 
 [FileSettings]
 location=../HurlFiles/NonExistantHurlFile.hurl
 variable=varNonExisting1:ValueNonExisting1
 variable=varNonExisting2:ValueNonExisting2
+client_certificate=D:\Files\Certs\Test.crt|TestPassword

@@ -9,9 +9,9 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class ConnectTimeoutArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--connect-timeout";
-        private int _seconds;
+        private uint _seconds;
 
-        public ConnectTimeoutArgument(int seconds) => _seconds = seconds;
+        public ConnectTimeoutArgument(uint seconds) => _seconds = seconds;
 
         /// <summary>
         /// Returns the arguments

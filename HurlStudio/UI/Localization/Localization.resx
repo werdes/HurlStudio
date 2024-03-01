@@ -255,11 +255,17 @@
   <data name="Dock.Tool.CollectionExplorer.Collection.Rename" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Collection.Rename}</value>
   </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.RevealInExplorer" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.RevealInExplorer}</value>
+  </data>
   <data name="Dock.Tool.CollectionExplorer.File.Properties" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.File.Properties}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.File.Rename" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.File.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.RevealInExplorer" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.RevealInExplorer}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.Folder.AddFile" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Folder.AddFile}</value>
@@ -278,6 +284,9 @@
   </data>
   <data name="Dock.Tool.CollectionExplorer.Folder.Rename" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Folder.Rename}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.RevealInExplorer" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.RevealInExplorer}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.Title" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Title}</value>
@@ -302,6 +311,45 @@
   </data>
   <data name="MessageBox.ErrorTitle" xml:space="preserve">
     <value>{MessageBox.ErrorTitle}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Provider1.Label" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Provider1.Label}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Provider2.Label" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Provider2.Label}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Region.Label" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Region.Label}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Service.Label" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Service.Label}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Title" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Title}</value>
+  </data>
+  <data name="Setting.CaCertSetting.FilePicker.Pattern.Title" xml:space="preserve">
+    <value>{Setting.CaCertSetting.FilePicker.Pattern.Title}</value>
+  </data>
+  <data name="Setting.CaCertSetting.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.CaCertSetting.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.CaCertSetting.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.CaCertSetting.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.CaCertSetting.Title" xml:space="preserve">
+    <value>{Setting.CaCertSetting.Title}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.Password.Label" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.Password.Label}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.Title" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.Title}</value>
   </data>
   <data name="Setting.Disabled.Tooltip" xml:space="preserve">
     <value>{Setting.Disabled.Tooltip}</value>

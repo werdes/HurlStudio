@@ -1,5 +1,6 @@
 using Avalonia;
 using Avalonia.Controls;
+using HurlStudio.Common.Utility;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
@@ -7,6 +8,8 @@ using HurlStudio.UI.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
@@ -62,7 +65,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if(this.DataContext == null) return;
+            if (this.DataContext == null) return;
             CollectionContainer.Collapsed = !CollectionContainer.Collapsed;
         }
 
@@ -84,6 +87,27 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 await _editorService.OpenCollectionSettings(CollectionContainer);
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens the folder containing the collection file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (CollectionContainer == null) return;
+            if (CollectionContainer.Collection == null) return;
+            if (CollectionContainer.Collection.FileLocation == null) return;
+            try
+            {
+                OSUtility.RevealFileInExplorer(CollectionContainer.Collection.FileLocation);
             }
             catch (Exception ex)
             {
