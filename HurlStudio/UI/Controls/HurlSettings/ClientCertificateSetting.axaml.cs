@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.HurlSettings
 {
@@ -38,33 +39,69 @@ namespace HurlStudio.UI.Controls.HurlSettings
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void On_ButtonOpen_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private async void On_ButtonOpenCertificate_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_mainWindow == null) return;
             if (_caCertSetting == null) return; 
             
             try
             {
-                if (_mainWindow.StorageProvider.CanOpen)
+                string? certificateFile = await this.OpenFile();
+                if(!string.IsNullOrEmpty(certificateFile))
                 {
-                    FilePickerOpenOptions filePickerOpenOptions = new FilePickerOpenOptions();
-                    filePickerOpenOptions.AllowMultiple = false;
-                    filePickerOpenOptions.Title = Localization.Localization.Setting_CaCertSetting_FilePicker_Title;
-                    filePickerOpenOptions.FileTypeFilter = new[] { FilePickerFileTypes.All };
-
-                    IReadOnlyList<IStorageFile> files = await _mainWindow.StorageProvider.OpenFilePickerAsync(filePickerOpenOptions);
-
-                    if (files.Count == 1)
-                    {
-                        _caCertSetting.Certificate = files.First().Path.AbsolutePath;
-                    }
+                    _caCertSetting.CertificateFile = certificateFile;
                 }
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_ButtonOpen_Click));
+                _log.LogCritical(ex, nameof(On_ButtonOpenCertificate_Click));
                 _notificationService.Notify(ex);
             }
+        }
+
+        /// <summary>
+        /// Display file explorer to select a file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonOpenKey_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_mainWindow == null) return;
+            if (_caCertSetting == null) return;
+
+            try
+            {
+                string? keyFile = await this.OpenFile();
+                if (!string.IsNullOrEmpty(keyFile))
+                {
+                    _caCertSetting.KeyFile = keyFile;
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(On_ButtonOpenKey_Click));
+                _notificationService.Notify(ex);
+            }
+        }
+
+        private async Task<string?> OpenFile()
+        {
+            if (_mainWindow.StorageProvider.CanOpen)
+            {
+                FilePickerOpenOptions filePickerOpenOptions = new FilePickerOpenOptions();
+                filePickerOpenOptions.AllowMultiple = false;
+                filePickerOpenOptions.Title = Localization.Localization.Setting_CaCertSetting_FilePicker_Title;
+                filePickerOpenOptions.FileTypeFilter = new[] { FilePickerFileTypes.All };
+
+                IReadOnlyList<IStorageFile> files = await _mainWindow.StorageProvider.OpenFilePickerAsync(filePickerOpenOptions);
+
+                if (files.Count == 1)
+                {
+                    return files.First().Path.AbsolutePath;
+                }
+            }
+
+            return null;
         }
     }
 }

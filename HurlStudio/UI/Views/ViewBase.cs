@@ -8,20 +8,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HurlStudio.UI.Controls;
 
 namespace HurlStudio.UI.Views
 {
-    public class ViewBase : UserControl
+    public abstract class ViewBase<T> : ViewModelBasedControl<T>
     {
-        private Type _attachedViewModelType = null;
-        public Type AttachedViewModelType { get => _attachedViewModelType; }
-
-        public ViewBase(Type attachedViewModelType)
-        {
-            _attachedViewModelType = attachedViewModelType;
-        }
-
-
         /// <summary>
         /// Displays an error type message box
         /// </summary>
@@ -34,7 +26,7 @@ namespace HurlStudio.UI.Views
             string messageText = message ?? exception.Message;
             string titleText = title ?? Localization.Localization.MessageBox_ErrorTitle;
 
-            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard(titleText, messageText, ButtonEnum.Ok, Icon.Error);
+            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard(titleText, messageText, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
             await box.ShowWindowAsync();
         }
     }

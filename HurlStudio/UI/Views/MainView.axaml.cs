@@ -28,13 +28,14 @@ using HurlStudio.Common.Extensions;
 using HurlStudio.Services.Notifications;
 using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
+using System.Linq;
+using HurlStudio.UI.ViewModels.Controls;
 
 namespace HurlStudio.UI.Views
 {
-    public partial class MainView : ViewBase
+    public partial class MainView : ViewBase<MainViewViewModel>
     {
-        private MainViewViewModel _viewModel;
-        private ViewFrame? _viewFrame;
+        private MainViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
@@ -44,25 +45,22 @@ namespace HurlStudio.UI.Views
         private IUiStateService _uiStateService;
         private INotificationService _notificationService;
         private ControlLocator _controlLocator;
+        private ViewFrameViewModel _viewFrameViewModel;
 
         /// <summary>
         /// Design time constructor
         /// </summary>
-        /// <exception cref="AccessViolationException"></exception>
-        public MainView() : base(typeof(MainViewViewModel))
+        public MainView()
         {
-            if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
-
             _log = App.Services.GetRequiredService<ILogger<MainView>>();
             _notificationService = App.Services.GetRequiredService<INotificationService>();
 
             InitializeComponent();
         }
 
-        public MainView(MainViewViewModel viewModel, ViewFrame viewFrame, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService) : base(typeof(MainViewViewModel))
+        public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel)
         {
             _viewModel = viewModel;
-            _viewFrame = viewFrame;
 
             _log = logger;
             _configuration = configuration;
@@ -74,6 +72,7 @@ namespace HurlStudio.UI.Views
             _controlLocator = controlLocator;
             _uiStateService = uiStateService;
             _notificationService = notificationService;
+            _viewFrameViewModel = viewFrameViewModel;
 
             this.DataContext = _viewModel;
             this.DataTemplates.Add(_controlLocator);
@@ -95,13 +94,11 @@ namespace HurlStudio.UI.Views
         {
             try
             {
-                if (_viewFrame == null) throw new ArgumentNullException($"No view frame was provided to {nameof(MainView)}");
-                this.WindowContent.Content = _viewFrame;
-
                 if (_viewModel == null || _viewModel.LoadingView == null || _viewModel.EditorView == null)
                     throw new ArgumentNullException($"No view model was provided to {nameof(MainView)}");
 
-                _viewFrame.NavigateTo(_viewModel.LoadingView);
+                _viewFrameViewModel.SelectedViewModel = _viewModel.LoadingView;
+
 
                 UserSettings? userSettings = await _userSettingsService.GetUserSettingsAsync(false);
                 UiState? uiState = await _uiStateService.GetUiStateAsync(true);
@@ -119,13 +116,15 @@ namespace HurlStudio.UI.Views
                 _viewModel.EditorView.WordWrap = userSettings.WordWrap;
 
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
-                _viewModel.EditorView.Environments = new ObservableCollection<HurlEnvironment>(await _environmentService.GetEnvironmentsAsync());
+                _viewModel.EditorView.Environments = new ObservableCollection<CollectionEnvironment>(
+                    (await _environmentService.GetEnvironmentsAsync())
+                    .Select(x => new CollectionEnvironment(x)));
 
                 _viewModel.InitializationCompleted = true;
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
 
 
-                _viewFrame.NavigateTo(_viewModel.EditorView);
+                _viewFrameViewModel.SelectedViewModel = _viewModel.EditorView;
 
             }
             catch (Exception ex)
@@ -144,6 +143,7 @@ namespace HurlStudio.UI.Views
         {
             try
             {
+                if(_viewModel == null) throw new ArgumentNullException(nameof(_viewModel));
                 _viewModel.NotificationsExpanded = true;
             }
             catch (Exception ex)
@@ -161,6 +161,7 @@ namespace HurlStudio.UI.Views
         {
             try
             {
+                if (_viewModel == null) throw new ArgumentNullException(nameof(_viewModel));
                 _viewModel.NotificationsExpanded = !_viewModel.NotificationsExpanded;
             }
             catch (Exception ex)
@@ -168,6 +169,12 @@ namespace HurlStudio.UI.Views
                 _log.LogCritical(ex, nameof(On_ButtonToggleNotificationList_Click));
                 _notificationService.Notify(ex);
             }
+        }
+
+        protected override void SetViewModelInstance(MainViewViewModel viewModel)
+        {
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

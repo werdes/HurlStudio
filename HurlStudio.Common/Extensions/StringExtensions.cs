@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Web;
@@ -61,6 +62,20 @@ namespace HurlStudio.Common.Extensions
         {
             int value;
             return int.TryParse(text, out value) ? (int?)value : null;
+        }
+
+        /// <summary>
+        /// Converts a string into a representing sha256 hash
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToSha256Hash(this string text)
+        {
+            using (SHA256 sha256 = SHA256.Create())
+            {
+                byte[] buffer = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+                return BitConverter.ToString(buffer, 0, buffer.Length).Replace("-", "");
+            }
         }
     }
 }

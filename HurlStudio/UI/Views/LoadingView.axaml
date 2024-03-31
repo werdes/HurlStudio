@@ -1,4 +1,4 @@
-<v:ViewBase xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,9 +14,9 @@
   <Design.DataContext>
     <vm:LoadingViewViewModel />
   </Design.DataContext>
-  <v:ViewBase.Resources>
+  <UserControl.Resources>
     <converters:LoadingViewStepConverter x:Key="LoadingViewStepConverter" />
-  </v:ViewBase.Resources>
+  </UserControl.Resources>
   <DockPanel>
     <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
       <Image Height="64" Width="64" Source="/Assets/Images/icon.png" >
@@ -45,4 +45,4 @@
       </TextBlock>
     </StackPanel>
   </DockPanel>
-</v:ViewBase>
+</UserControl>

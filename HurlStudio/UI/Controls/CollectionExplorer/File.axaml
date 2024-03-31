@@ -14,15 +14,15 @@
              DragDrop.AllowDrop="False"
              
              Initialized="On_File_Initialized"
-             PointerPressed="On_CollectionExplorerControlBase_PointerPressed"
              PointerReleased="On_CollectionExplorerControlBase_PointerReleased"
              PointerMoved="On_CollectionExplorerControlBase_PointerMoved">
   <UserControl.Resources>
     <converters:CollectionFileToNameConverter x:Key="CollectionFileToNameConverter" />
   </UserControl.Resources>
 
-  <Grid VerticalAlignment="Top" Margin="0,0,0,0" 
-        Background="{DynamicResource WindowBackgroundColor}">
+  <Grid VerticalAlignment="Top" Margin="0,0,0,0"
+        Background="{DynamicResource WindowBackgroundColor}"
+        PointerPressed="On_TitlePanel_PointerPressed">
     <Grid.ContextMenu>
       <ContextMenu>
         <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_File_Rename}">

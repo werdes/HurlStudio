@@ -10,6 +10,8 @@ namespace HurlStudio.Collections.Utility
 {
     public class IniSettingParser : ISettingParser
     {
+        private const char COMMENT_SEPARATOR = '#';
+
         private Lazy<Dictionary<string, Type>> _possibleSettingTypesLazy;
         private Dictionary<string, Type> _possibleSettingTypes => _possibleSettingTypesLazy.Value;
 
@@ -17,7 +19,6 @@ namespace HurlStudio.Collections.Utility
         {
             _possibleSettingTypesLazy = new Lazy<Dictionary<string, Type>>(() => this.RegisterSettingTypes());
 
-            //this.RegisterSettingTypes();
         }
 
         /// <summary>
@@ -60,6 +61,7 @@ namespace HurlStudio.Collections.Utility
         /// <returns>Hurl Setting</returns>
         public IHurlSetting? Parse(string value)
         {
+            value = value.Split(COMMENT_SEPARATOR).Get(0) ?? string.Empty;
             string? settingName = value.Split('=').Get(0);
             string? settingValue = string.Join('=', value.Split('=').Skip(1));
             if (!string.IsNullOrEmpty(settingName))

@@ -13,7 +13,6 @@
              DragDrop.AllowDrop="True"
              
              Initialized="On_Collection_Initialized"
-             PointerPressed="On_CollectionExplorerControlBase_PointerPressed"
              PointerReleased="On_CollectionExplorerControlBase_PointerReleased"
              PointerMoved="On_CollectionExplorerControlBase_PointerMoved">
 
@@ -78,11 +77,17 @@
     </Button>
     <controls:Icon Type="Collection" Grid.Column="1" Opacity=".7" Width="16" Height="16"/>
 
-    <Panel Classes="collectionComponentTitle" Grid.Column="2" Background="Transparent">
-      <TextBlock Margin="4,0,0,0" VerticalAlignment="Center" Text="{Binding Collection.Name}" />
+    <Panel Classes="collectionComponentTitle" 
+           Grid.Column="2"
+           Background="Transparent"
+           PointerPressed="On_TitlePanel_PointerPressed">
+      <TextBlock Margin="4,0,0,0" 
+                 VerticalAlignment="Center" 
+                 Text="{Binding Collection.Name}" />
 
       <!--Action Buttons-->
-      <DockPanel HorizontalAlignment="Right" VerticalAlignment="Center">
+      <DockPanel HorizontalAlignment="Right" 
+                 VerticalAlignment="Center">
         <Button Classes="collectionComponentButton"
                 ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFolder_Tooltip}">
           <controls:Icon Type="AddFolder" />

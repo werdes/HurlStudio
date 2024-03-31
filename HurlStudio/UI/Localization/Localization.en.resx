@@ -123,4 +123,7 @@
   <data name="Window.Main.Title" xml:space="preserve">
     <value>HurlStudio</value>
   </data>
+  <data name="View.Editor.Label" xml:space="preserve">
+    <value>Collections</value>
+  </data>
 </root>

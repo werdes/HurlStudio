@@ -1,6 +1,7 @@
 ﻿using Avalonia.Platform;
 using HurlStudio.Model.Enums;
 using Microsoft.CodeAnalysis.CSharp.Scripting;
+using Microsoft.Extensions.Logging;
 using SkiaSharp;
 using System;
 using System.Collections.Generic;
@@ -22,11 +23,12 @@ namespace HurlStudio.UI.Editor
     public class LocalResourceGrammarRegistryOptions : IRegistryOptions
     {
         private ApplicationTheme _theme;
+        private ILogger _log;
 
-
-        public LocalResourceGrammarRegistryOptions(ApplicationTheme theme)
+        public LocalResourceGrammarRegistryOptions(ApplicationTheme theme, ILogger log)
         {
             _theme = theme;
+            _log = log;
         }
 
         public IRawTheme GetDefaultTheme()
@@ -57,6 +59,14 @@ namespace HurlStudio.UI.Editor
                             }
                         }
                     }
+                    else
+                    {
+                        _log.LogWarning($"Asset [{path}] can't be opened");
+                    }
+                }
+                else
+                {
+                    _log.LogWarning($"Asset [{path}] doesn't exist");
                 }
             }
 #pragma warning disable CS8603
@@ -87,6 +97,14 @@ namespace HurlStudio.UI.Editor
                             }
                         }
                     }
+                    else
+                    {
+                        _log.LogWarning($"Asset [{path}] can't be opened");
+                    }
+                }
+                else
+                {
+                    _log.LogWarning($"Asset [{path}] doesn't exist");
                 }
             }
 #pragma warning disable CS8603 

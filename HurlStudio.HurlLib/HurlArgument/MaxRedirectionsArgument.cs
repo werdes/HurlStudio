@@ -9,9 +9,9 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class MaxRedirectionsArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--max-redirs";
-        private int _maxRedirections;
+        private uint _maxRedirections;
 
-        public MaxRedirectionsArgument(int maxRedirections) => _maxRedirections = maxRedirections;
+        public MaxRedirectionsArgument(uint maxRedirections) => _maxRedirections = maxRedirections;
 
         /// <summary>
         /// Returns the arguments

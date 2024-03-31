@@ -15,22 +15,22 @@ namespace HurlStudio.Collections.Settings
     {
         public const string CONFIGURATION_NAME = "client_certificate";
         private const string VALUE_SEPARATOR = "|";
-        private readonly Regex CLIENT_CERTIFICATE_SETTING_REGEX = new Regex("([^" + Regex.Escape(VALUE_SEPARATOR) + "]*)" + Regex.Escape(VALUE_SEPARATOR) + "([^" + Regex.Escape(VALUE_SEPARATOR) + "]*)", RegexOptions.Compiled);
 
-        private string? _certificate;
+        private string? _certificateFile;
         private string? _password;
+        private string? _keyFile;
 
         public ClientCertificateSetting() : base()
         {
             
         }
 
-        public string? Certificate
+        public string? CertificateFile
         {
-            get => _certificate;
+            get => _certificateFile;
             set
             {
-                _certificate = value;
+                _certificateFile = value;
                 Notify();
             }
         }
@@ -45,6 +45,16 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        public string? KeyFile
+        {
+            get => _keyFile;
+            set
+            {
+                _keyFile = value;
+                Notify();
+            }
+        }
+
         /// <summary>
         /// Deserializes the supplied configuration string into this instance
         /// </summary>
@@ -52,11 +62,12 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            Match match = CLIENT_CERTIFICATE_SETTING_REGEX.Match(value);
-            if (match.Success && match.Groups.Count > 0)
+            string[] parts = value.Split(VALUE_SEPARATOR);
+            if (parts.Length > 0)
             {
-                this.Certificate = match.Groups.Values.Get(1)?.Value;
-                this.Password = match.Groups.Values.Get(2)?.Value;
+                this.CertificateFile = parts.Get(0);
+                this.Password = parts.Get(1);
+                this.KeyFile = parts.Get(2);
 
                 return this;
             }
@@ -70,15 +81,15 @@ namespace HurlStudio.Collections.Settings
         public override IHurlArgument[] GetArguments()
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
-            if (!string.IsNullOrEmpty(this.Certificate))
+            if (!string.IsNullOrEmpty(this.CertificateFile))
             {
                 if (!string.IsNullOrEmpty(this.Password))
                 {
-                    arguments.Add(new ClientCertificateArgument(this.Certificate, this.Password));
+                    arguments.Add(new ClientCertificateArgument(this.CertificateFile, this.Password));
                 }
                 else
                 {
-                    arguments.Add(new ClientCertificateArgument(this.Certificate));
+                    arguments.Add(new ClientCertificateArgument(this.CertificateFile));
                 }
             }
             return arguments.ToArray();
@@ -108,7 +119,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return $"{this.Certificate}{VALUE_SEPARATOR}{this.Password}";
+            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password}";
         }
 
         /// <summary>

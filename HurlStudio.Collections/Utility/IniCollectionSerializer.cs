@@ -29,8 +29,6 @@ namespace HurlStudio.Collections.Utility
         private const string SECTION_FILE_SETTINGS_TITLE_KEY = "title";
         private const string SECTION_FOLDER_SETTINGS_HEADER = "[FolderSettings]";
         private const string SECTION_FOLDER_SETTINGS_LOCATION_KEY = "location";
-        private const string SECTION_ORDER_KEY = "order";
-        private const string SECTION_VISIBILITY_KEY = "order";
 
 
         /// <summary>
@@ -77,33 +75,16 @@ namespace HurlStudio.Collections.Utility
         private void DeserializeFolderSettingsSection(List<string> lines, ref HurlCollection collection)
         {
             HurlFolder hurlFolder = new HurlFolder();
-            int[]? orders = null;
             bool[]? visibilities = null;
 
             foreach (string line in lines)
             {
                 string locationKey = SECTION_FOLDER_SETTINGS_LOCATION_KEY + "=";
-                string orderKey = SECTION_ORDER_KEY + "=";
-                string visibilityKey = SECTION_VISIBILITY_KEY + "=";
 
                 if (line.StartsWith(locationKey))
                 {
                     // Folder path
                     hurlFolder.Location = line.Split('=').Get(1) ?? string.Empty;
-                }
-                else if (line.StartsWith(orderKey))
-                {
-                    orders = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseInt())
-                                                               .Where(x => x != null && x.HasValue)
-                                                               .Select(x => x.Value)
-                                                               .ToArray();
-                }
-                else if (line.StartsWith(visibilityKey))
-                {
-                    visibilities = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseBool())
-                                                                     .Where(x => x != null && x.HasValue)
-                                                                     .Select(x => x.Value)
-                                                                     .ToArray();
                 }
                 else
                 {
@@ -127,15 +108,11 @@ namespace HurlStudio.Collections.Utility
         private void DeserializeFileSettingsSection(List<string> lines, ref HurlCollection collection)
         {
             HurlFile hurlFile = new HurlFile();
-            int[]? orders = null;
-            bool[]? visibilities = null;
 
             foreach (string line in lines)
             {
                 string locationKey = SECTION_FILE_SETTINGS_LOCATION_KEY + "=";
                 string titleKey = SECTION_FILE_SETTINGS_TITLE_KEY + "=";
-                string orderKey = SECTION_ORDER_KEY + "=";
-                string visibilityKey = SECTION_VISIBILITY_KEY + "=";
 
                 if (line.StartsWith(locationKey))
                 {
@@ -145,20 +122,6 @@ namespace HurlStudio.Collections.Utility
                 else if (line.StartsWith(titleKey))
                 {
                     hurlFile.FileTitle = line.Split('=').Get(1) ?? string.Empty;
-                }
-                else if (line.StartsWith(orderKey))
-                {
-                    orders = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseInt())
-                                                               .Where(x => x != null && x.HasValue)
-                                                               .Select(x => x.Value)
-                                                               .ToArray();
-                }
-                else if (line.StartsWith(visibilityKey))
-                {
-                    visibilities = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseBool())
-                                                                     .Where(x => x != null && x.HasValue)
-                                                                     .Select(x => x.Value)
-                                                                     .ToArray();
                 }
                 else
                 {
@@ -174,58 +137,26 @@ namespace HurlStudio.Collections.Utility
             collection.FileSettings.Add(hurlFile);
         }
 
+
         /// <summary>
         /// Deserializes the collection settings part of the collection
         /// </summary>
-        /// <param name="lines">plain text lines of a CollectionSectionType.CollectionSettings section container</param>
+        /// <param name="lines">plain text lines of a CollectionSectionType.Settings section container</param>
         /// <param name="collection">Target collection</param>
         private void DeserializeCollectionSettingsSection(List<string> lines, ref HurlCollection collection)
         {
-            int[]? orders = null;
-            bool[]? visibilities = null;
             foreach (string line in lines)
             {
-                string orderKey = SECTION_ORDER_KEY + "=";
-                string visibilityKey = SECTION_VISIBILITY_KEY + "=";
+                IHurlSetting? hurlSetting = _settingParser.Parse(line);
+                if (hurlSetting != null)
+                {
+                    collection.CollectionSettings.Add(hurlSetting);
+                }
 
-                if (line.StartsWith(orderKey))
-                {
-                    orders = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseInt())
-                                                               .Where(x => x != null && x.HasValue)
-                                                               .Select(x => x.Value)
-                                                               .ToArray();
-                }
-                else if (line.StartsWith(visibilityKey))
-                {
-                    visibilities = line.Split('=').Get(1)?.Split(',').Select(x => x.NullableTryParseBool())
-                                                                     .Where(x => x != null && x.HasValue)
-                                                                     .Select(x => x.Value)
-                                                                     .ToArray();
-                }
-                else
-                {
-                    IHurlSetting? hurlSetting = _settingParser.Parse(line);
-                    if (hurlSetting != null)
-                    {
-                        collection.CollectionSettings.Add(hurlSetting);
-                    }
-                }
             }
         }
 
-        /// <summary>
-        /// Sorts the settings by given order, if available
-        /// </summary>
-        /// <param name="orders"></param>
-        /// <param name="settings"></param>
-        private void ApplyOrders(int[]? orders, List<IHurlSetting> settings)
-        {
-            if(orders != null && orders.Length == settings.Count)
-            {
-                settings = settings.OrderBy(x => orders[settings.IndexOf(x)]).ToList();
-            }
-        }
-        
+
         /// <summary>
         /// Deserializes the locations part of the collection
         /// </summary>
@@ -385,7 +316,7 @@ namespace HurlStudio.Collections.Utility
         /// <returns></returns>
         public async Task SerializeFileAsync(HurlCollection collection, string filePath, Encoding encoding)
         {
-            string serializedContent = Serialize(collection);
+            string serializedContent = await Task.Run(() => Serialize(collection));
             await File.WriteAllTextAsync(filePath, serializedContent, encoding);
         }
     }

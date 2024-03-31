@@ -3,6 +3,7 @@ using Avalonia.Controls;
 using HurlStudio.Model.UiState;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
+using HurlStudio.UI.Controls;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Configuration;
@@ -18,8 +19,8 @@ namespace HurlStudio.UI.Windows
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
-        private ServiceManager<ViewBase>? _viewFactory;
         private MainWindowViewModel? _viewModel;
+        private ServiceManager<ViewModelBasedControl> _controlBuilder;
 
         public MainWindow()
         {
@@ -27,21 +28,20 @@ namespace HurlStudio.UI.Windows
 
             _log = App.Services.GetRequiredService<ILogger<MainWindow>>();
             _configuration = App.Services.GetRequiredService<IConfiguration>();
-            _viewFactory = App.Services.GetRequiredService<ServiceManager<ViewBase>>();
             _userSettingsService = App.Services.GetRequiredService<IUserSettingsService>();
             _uiStateService = App.Services.GetRequiredService<IUiStateService>();
             _viewModel = App.Services.GetRequiredService<MainWindowViewModel>(); 
             InitializeComponent();
         }
 
-        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, ServiceManager<ViewBase> viewFactory, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel)
+        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel, ServiceManager<ViewModelBasedControl> controlBuilder)
         {
             _log = logger;
             _configuration = configuration;
-            _viewFactory = viewFactory;
             _userSettingsService = userSettingsService;
             _uiStateService = uiStateService;
             _viewModel = mainWindowViewModel;
+            _controlBuilder = controlBuilder;
 
             InitializeComponent();
         }
@@ -56,9 +56,9 @@ namespace HurlStudio.UI.Windows
         {
             try
             {
-                if (_viewFactory == null) throw new ArgumentNullException($"No viewFactory was supplied to {nameof(MainWindow)}");
+                if (_controlBuilder == null) throw new ArgumentNullException($"No control locator was supplied to {nameof(MainWindow)}");
 
-                ViewBase? view = _viewFactory?.Get(typeof(MainView));
+                ViewBase<MainViewViewModel>? view = _controlBuilder?.Get<MainView>();
                 if (view != null)
                 {
                     // Bind the window offScreenMargin to the view margin

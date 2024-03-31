@@ -17,6 +17,7 @@ namespace HurlStudio.UI.ViewModels
 
         private Type _attachedViewType;
         private ViewModelBase? _rootViewModel;
+        private bool _active;
 
 
         public Type AttachedViewType { get => _attachedViewType; }
@@ -38,6 +39,16 @@ namespace HurlStudio.UI.ViewModels
         {
             _attachedViewType = attachedViewType;
             _rootViewModel = null;
+        }
+
+        public bool IsActive
+        {
+            get => _active;
+            set
+            {
+                _active = value;
+                Notify();
+            }
         }
     }
 }

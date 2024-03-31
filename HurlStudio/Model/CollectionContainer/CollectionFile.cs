@@ -1,4 +1,5 @@
 ﻿using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -73,9 +74,9 @@ namespace HurlStudio.Model.CollectionContainer
         {
             if (_collectionFolder == null) throw new ArgumentNullException(nameof(Folder));
 
-            string id = _collectionFolder.GetId();
+            string folderId = _collectionFolder.GetId();
             string fileName = Path.GetFileName(_location);
-            return $"{id}#{fileName}";
+            return $"{folderId}#{fileName}".ToSha256Hash();
         }
 
         public override string ToString()

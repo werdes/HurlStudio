@@ -3,6 +3,7 @@ using HurlStudio.Common;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.Enums;
 using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.Views;
 using HurlStudio.UI.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -161,17 +162,17 @@ namespace HurlStudio.Services.UiState
         {
             if (_uiState == null) _uiState = GetDefaultUiState();
 
-            foreach(CollectionContainer collectionContainer in editorViewViewModel.Collections)
+            foreach (CollectionContainer collectionContainer in editorViewViewModel.Collections)
             {
                 string collectionId = collectionContainer.GetId();
 
-                if(!_uiState.ExpandedCollectionExplorerComponents.ContainsKey(collectionId))
+                if (!_uiState.ExpandedCollectionExplorerComponents.ContainsKey(collectionId))
                 {
                     _uiState.ExpandedCollectionExplorerComponents.Add(collectionId, false);
                 }
                 _uiState.ExpandedCollectionExplorerComponents[collectionId] = collectionContainer.Collapsed;
 
-                foreach(CollectionFolder collectionFolder in collectionContainer.Folders)
+                foreach (CollectionFolder collectionFolder in collectionContainer.Folders)
                 {
                     this.BuildUiStateFolder(collectionFolder);
                 }
@@ -194,14 +195,14 @@ namespace HurlStudio.Services.UiState
             }
             _uiState.ExpandedCollectionExplorerComponents[folderId] = folder.Collapsed;
 
-            foreach( CollectionFolder subFolder in folder.Folders)
+            foreach (CollectionFolder subFolder in folder.Folders)
             {
                 this.BuildUiStateFolder(subFolder);
             }
         }
 
         /// <summary>
-        /// Sets the collections from viewModel to the ui state object
+        /// Sets the collections from _viewModel to the ui state object
         /// </summary>
         /// <param name="editorView">view model of the editor view</param>
         public void SetCollectionExplorerState(EditorViewViewModel editorView)
@@ -233,6 +234,40 @@ namespace HurlStudio.Services.UiState
 
             _uiState.FileHistoryEntries.Clear();
             _uiState.FileHistoryEntries.AddRange(editorView.FileHistoryEntries);
+        }
+
+        /// <summary>
+        /// Sets the collapsed state of settings
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="visible"></param>
+        public void SetSettingCollapsedState(string id, bool visible)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if(!_uiState.SettingCollapsedStates.ContainsKey(id))
+            {
+                _uiState.SettingCollapsedStates.Add(id, false);
+            }
+            _uiState.SettingCollapsedStates[id] = visible;
+        }
+
+        /// <summary>
+        /// Sets the collapsed state of settings
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="visible"></param>
+        public void SetSettingEnabledState(string id, bool visible)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (!_uiState.SettingEnabledStates.ContainsKey(id))
+            {
+                _uiState.SettingEnabledStates.Add(id, false);
+            }
+            _uiState.SettingEnabledStates[id] = visible;
         }
     }
 }

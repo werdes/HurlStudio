@@ -18,5 +18,7 @@ namespace HurlStudio.Services.UiState
         void SetCollectionExplorerState(EditorViewViewModel editorView);
         void SetMainWindowState(MainWindow mainWindow);
         void SetFileHistory(EditorViewViewModel editorView);
+        void SetSettingCollapsedState(string id, bool visible);
+        void SetSettingEnabledState(string id, bool visible);
     }
 }

@@ -1,8 +1,10 @@
 ﻿using Avalonia.Media;
 using HurlStudio.Collections.Attributes;
 using HurlStudio.Collections.Settings;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;
 using HurlStudio.Model.EventArgs;
+using HurlStudio.Services.UiState;
 using HurlStudio.UI.Controls.Documents;
 using HurlStudio.UI.ViewModels.Documents;
 using System;
@@ -23,6 +25,7 @@ namespace HurlStudio.Model.HurlSettings
         public event EventHandler<SettingEnabledChangedEventArgs>? SettingEnabledChanged;
         public event EventHandler<SettingOrderChangedEventArgs>? SettingOrderChanged;
         public event EventHandler<SettingKeyChangedEventArgs>? SettingKeyChanged;
+        public event EventHandler<SettingCollapsedChangedEventArgs>? SettingCollapsedChanged;
 
         protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -33,14 +36,16 @@ namespace HurlStudio.Model.HurlSettings
         private bool _enabled;
         private BaseSetting _setting;
         private FileDocumentViewModel _document;
+        private HurlSettingSection _section;
 
-        public HurlSettingContainer(FileDocumentViewModel document, BaseSetting setting, bool isReadOnly)
+        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
             _enabled = true;
             _setting = setting;
             _document = document;
+            _section = section;
 
             _setting.PropertyChanged += On_Setting_PropertyChanged;
         }
@@ -56,7 +61,7 @@ namespace HurlStudio.Model.HurlSettings
 
             if (propertyInfo != null)
             {
-                if(propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingKeyAttribute)))
+                if (propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingKeyAttribute)))
                 {
                     this.SettingKeyChanged?.Invoke(this, new SettingKeyChangedEventArgs(this));
                 }
@@ -80,6 +85,7 @@ namespace HurlStudio.Model.HurlSettings
             {
                 _collapsed = value;
                 Notify();
+                SettingCollapsedChanged?.Invoke(this, new SettingCollapsedChangedEventArgs(_collapsed));
             }
         }
 
@@ -117,6 +123,11 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
+        public HurlSettingSection Section
+        {
+            get => _section;
+        }
+
         public FileDocumentViewModel Document
         {
             get => _document;
@@ -136,5 +147,14 @@ namespace HurlStudio.Model.HurlSettings
         public void MoveUp() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Up));
         public void MoveDown() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Down));
 
+        public string GetId()
+        {
+            if (_section == null) throw new ArgumentNullException(nameof(Section));
+            if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(Section.CollectionComponent));
+            if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
+
+            string id = _section.CollectionComponent.GetId() + "#" + _section.SettingContainers.IndexOf(this);
+            return id.ToSha256Hash();
+        }
     }
 }

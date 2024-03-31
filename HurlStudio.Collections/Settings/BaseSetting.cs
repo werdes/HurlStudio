@@ -18,7 +18,6 @@ namespace HurlStudio.Collections.Settings
 
         private const string NAME_VALUE_SEPARATOR = "=";
 
-
         public BaseSetting()
         {
         }
@@ -40,7 +39,7 @@ namespace HurlStudio.Collections.Settings
         public abstract HurlSettingInheritanceBehavior GetInheritanceBehavior();
 
         /// <summary>
-        /// DisplayString for Binding purposes
+        /// DisplayString for binding purposes
         /// </summary>
         public string DisplayString
         {

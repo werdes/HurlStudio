@@ -1,4 +1,5 @@
 ﻿using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -90,7 +91,7 @@ namespace HurlStudio.Model.CollectionContainer
 
             string id = _collectionContainer.GetId();
             string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.FileLocation) ?? string.Empty, _location);
-            return $"{id}#{path}";
+            return $"{id}#{path}".ToSha256Hash();
         }
 
         public override string ToString()

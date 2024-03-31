@@ -18,6 +18,7 @@ using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 using TextMateSharp.Grammars;
 using TextMateSharp.Internal.Grammars.Reader;
 using TextMateSharp.Internal.Types;
@@ -113,11 +114,16 @@ namespace HurlStudio.UI.Controls.Documents
                         _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
                         _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
 
+
                         UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
 
-                        LocalResourceGrammarRegistryOptions registryOptions = new LocalResourceGrammarRegistryOptions(userSettings.Theme);
-                        TextMate.Installation textMateInstallation = _textEditor.InstallTextMate(registryOptions);
-                        textMateInstallation.SetGrammar(GlobalConstants.GRAMMAR_HURL_NAME);
+                        LocalResourceGrammarRegistryOptions registryOptions = new LocalResourceGrammarRegistryOptions(userSettings.Theme, _log);
+                        if (registryOptions != null)
+                        {
+                            TextMate.Installation textMateInstallation = _textEditor.InstallTextMate(registryOptions);
+                            textMateInstallation.SetGrammar(GlobalConstants.GRAMMAR_HURL_NAME);
+                        }
+                        else throw new ArgumentNullException(nameof(registryOptions));
                     }
                 }
             }

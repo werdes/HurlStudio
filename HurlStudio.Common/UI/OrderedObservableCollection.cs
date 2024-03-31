@@ -30,7 +30,10 @@ namespace HurlStudio.Common.UI
             if (this.Contains(item))
             {
                 int idx = this.IndexOf(item);
-                this.MoveItem(idx, idx - 1);
+                if (idx > 0)
+                {
+                    this.MoveItem(idx, idx - 1);
+                }
             }
         }
 
@@ -40,7 +43,10 @@ namespace HurlStudio.Common.UI
             if (this.Contains(item))
             {
                 int idx = this.IndexOf(item);
-                this.MoveItem(idx, idx + 1);
+                if (idx < this.Count - 1)
+                {
+                    this.MoveItem(idx, idx + 1);
+                }
             }
         }
     }

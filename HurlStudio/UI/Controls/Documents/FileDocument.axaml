@@ -22,7 +22,7 @@
     </Grid.ColumnDefinitions>
     <ae:TextEditor
       Name="Editor"
-      FontFamily="Cascaida Code,Consolas,Menlo,Monospace"
+      FontFamily="Cascaida Code,Consolas,DejaVu Sans Mono,Menlo,Monospace"
       HorizontalScrollBarVisibility="Auto"
       Background="{DynamicResource TextEditorBackgroundColor}"
       Foreground="{DynamicResource TextEditorForegroundColor}"
@@ -35,22 +35,23 @@
     <!--Settings column-->
     <ScrollViewer Grid.Column="2">
       <StackPanel Orientation="Vertical">
+        <ItemsControl ItemsSource="{Binding SettingSections}" />
         <!--Environment settings-->
-        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Environment_Title}"
+        <!--<c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Environment_Title}"
                               Icon="Environment"
                               IsVisible="{Binding EnvironmentSettingContainers.Count}"/>
-        <ItemsControl ItemsSource="{Binding EnvironmentSettingContainers}" />
+        <ItemsControl ItemsSource="{Binding EnvironmentSettingContainers}" />-->
 
 
         <!--Collection settings-->
-        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Collection_Title}"
+        <!--<c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Collection_Title}"
                               Icon="Collection"
                               IsVisible="{Binding CollectionSettingContainers.Count}"/>
-        <ItemsControl ItemsSource="{Binding CollectionSettingContainers}" />
+        <ItemsControl ItemsSource="{Binding CollectionSettingContainers}" />-->
 
 
         <!--Folder settings-->
-        <ItemsControl ItemsSource="{Binding FolderSettingContainers}">
+        <!--<ItemsControl ItemsSource="{Binding FolderSettingContainers}">
           <ItemsControl.ItemTemplate>
             <DataTemplate>
               <StackPanel Orientation="Vertical"
@@ -60,23 +61,23 @@
                   SubText="{Binding Folder.Folder.Location}"
                   Icon="FolderClear"/>
                 <ItemsControl ItemsSource="{Binding Containers}" />
-                <!--<TextBlock IsVisible="{Binding !Containers.Count}"
+                --><!--<TextBlock IsVisible="{Binding !Containers.Count}"
                            Text="{x:Static localization:Localization.Dock_Document_File_Settings_Folder_EmptyList}"
                            Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
-                           HorizontalAlignment="Center" />-->
+                           HorizontalAlignment="Center" />--><!--
               </StackPanel>
             </DataTemplate>
           </ItemsControl.ItemTemplate>
-        </ItemsControl>
+        </ItemsControl>-->
 
         <!--File settings-->
-        <c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_File_Title}"
+        <!--<c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_File_Title}"
                       Icon="File" />
         <ItemsControl ItemsSource="{Binding FileSettingContainers}" />
         <TextBlock IsVisible="{Binding !FileSettingContainers.Count}"
                    Text="{x:Static localization:Localization.Dock_Document_File_Settings_File_EmptyList}"
                    Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
-                   HorizontalAlignment="Center" />
+                   HorizontalAlignment="Center" />-->
       </StackPanel>
     </ScrollViewer>
   </Grid>

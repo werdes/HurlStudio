@@ -1,7 +1,9 @@
 using Avalonia.Controls;
 using Avalonia.Controls.Notifications;
 using Dock.Model.Core;
+using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
+using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
@@ -13,32 +15,31 @@ using System.Linq;
 
 namespace HurlStudio.UI.Views
 {
-    public partial class EditorView : ViewBase
+    public partial class EditorView : ViewBase<EditorViewViewModel>
     {
+        private EditorViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private LayoutFactory _layoutFactory;
         private INotificationService _notificationService;
-        private EditorViewViewModel _viewModel;
+        private IEditorService _editorService;
 
-        public EditorView(EditorViewViewModel viewModel, ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService) : base(typeof(EditorViewViewModel))
+        public EditorView(ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService, IEditorService editorService)
         {
-            _viewModel = viewModel;
             _log = logger;
             _configuration = configuration;
             _layoutFactory = layoutFactory;
             _notificationService = notificationService;
+            _editorService = editorService;
 
-            this.DataContext = viewModel;
             this.DebugFactoryEvents(layoutFactory);
-
-            _layoutFactory.DockableRemoved += On_LayoutFactory_DockableRemoved;
 
             InitializeComponent();
         }
 
         /// <summary>
         /// Prevent dock collapse by adding a welcome document once the last document is closed
+        /// -> Also tell the editor service to close the file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -46,7 +47,7 @@ namespace HurlStudio.UI.Views
         {
             if (sender == null || sender is not LayoutFactory layoutFactory) return;
 
-            if (_viewModel.Documents.Count == 0)
+            if (_viewModel?.Documents.Count == 0)
             {
                 _layoutFactory.AddWelcomeDocument();
             }
@@ -55,7 +56,7 @@ namespace HurlStudio.UI.Views
         /// <summary>
         /// Parameterless constructor for avalonia design
         /// </summary>
-        public EditorView() : base(typeof(EditorViewViewModel)) { }
+        public EditorView() { }
 
         /// <summary>
         /// Create the Dock layout on view load
@@ -72,12 +73,29 @@ namespace HurlStudio.UI.Views
                 {
                     _layoutFactory.InitLayout(_viewModel.Layout);
                     _layoutFactory.ActiveDockableChanged += On_LayoutFactory_ActiveDockableChanged;
+                    _layoutFactory.DockableRemoved += On_LayoutFactory_DockableRemoved;
+                    _layoutFactory.DockableClosed += On_LayoutFactory_DockableClosed;
                 }
             }
             catch (Exception ex)
             {
                 _log.LogCritical(ex, nameof(On_EditorView_Loaded));
                 await this.ShowErrorMessage(ex);
+            }
+        }
+
+        /// <summary>
+        /// On Dockable Closed 
+        /// -> tell the editor service to close the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_LayoutFactory_DockableClosed(object? sender, global::Dock.Model.Core.Events.DockableClosedEventArgs e)
+        {
+            // tell the editor service to close the file
+            if (e.Dockable != null && e.Dockable is FileDocumentViewModel fileDocumentViewModel)
+            {
+                _editorService.CloseFileDocument(fileDocumentViewModel);
             }
         }
 
@@ -126,11 +144,6 @@ namespace HurlStudio.UI.Views
             factory.DockableRemoved += (_, args) =>
             {
                 _log.LogDebug($"[DockableRemoved] Title='{args.Dockable?.Title}'");
-            };
-
-            factory.DockableClosed += (_, args) =>
-            {
-                _log.LogDebug($"[DockableClosed] Title='{args.Dockable?.Title}'");
             };
 
             factory.DockableMoved += (_, args) =>
@@ -242,6 +255,12 @@ namespace HurlStudio.UI.Views
                     _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
                 }
             }
+        }
+
+        protected override void SetViewModelInstance(EditorViewViewModel viewModel)
+        {
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

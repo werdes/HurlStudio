@@ -75,8 +75,8 @@
       <StackPanel IsVisible="{Binding !Collapsed}"
                   Opacity="{Binding DisplayOpacity}"
                   Grid.ColumnSpan="4" Grid.Row="1">
-        <ContentPresenter Content="{Binding Setting}"
-                          IsEnabled="{Binding !IsReadOnly}" />
+        <ContentControl Content="{Binding Setting}"
+                        IsEnabled="{Binding !IsReadOnly}" />
       </StackPanel>
     </Grid>
     <Border BorderThickness="0,0,0,1"

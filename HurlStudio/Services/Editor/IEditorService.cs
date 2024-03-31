@@ -1,6 +1,7 @@
 ﻿using Dock.Model.Core;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Model.CollectionContainer;
+using HurlStudio.UI.ViewModels.Documents;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +22,7 @@ namespace HurlStudio.Services.Editor
         Task<ObservableCollection<IDockable>> GetOpenDocuments();
         Task OpenFile(CollectionFile file);
         Task OpenFile(string fileLocation);
+        Task CloseFileDocument(FileDocumentViewModel? fileDocument);
         Task OpenFolderSettings(CollectionFolder folder);
         Task OpenCollectionSettings(CollectionContainer collection);
     }

@@ -35,7 +35,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         protected abstract CollectionComponentBase GetBoundCollectionComponent();
         protected abstract Task OpenComponentDocument();
 
-        protected async void On_CollectionExplorerControlBase_PointerPressed(object? sender, PointerPressedEventArgs e)
+        protected async void On_TitlePanel_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             PointerPointProperties pointerProperties = e.GetCurrentPoint(this).Properties;
             CollectionComponentBase? component = this.GetBoundCollectionComponent();

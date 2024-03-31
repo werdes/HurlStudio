@@ -14,7 +14,8 @@
       <Color x:Key="WindowChromeBorderColor">#dddddd</Color>
       <Color x:Key="WindowChromeBackgroundColor">#dddddd</Color>
       <Color x:Key="WindowChromeTitleColor">#222222</Color>
-      
+
+      <Color x:Key="NeutralControlBackground2Color">#c8c8c8</Color>
       <Color x:Key="NeutralControlBackgroundColor">#dddddd</Color>
       <Color x:Key="NeutralControlHoverColor">#d4d4d4</Color>
       <Color x:Key="NeutralControlPressedColor">#b4b4b4</Color>
@@ -40,7 +41,8 @@
       <Color x:Key="WindowChromeBorderColor">#333333</Color>
       <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
       <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
-      
+
+      <Color x:Key="NeutralControlBackground2Color">#383838</Color>
       <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
       <Color x:Key="NeutralControlHoverColor">#444444</Color>
       <Color x:Key="NeutralControlPressedColor">#555555</Color>

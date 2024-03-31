@@ -9,10 +9,10 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class DelayArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--delay";
-        private int _delay;
+        private uint _delay;
 
-        public DelayArgument(int delay) => _delay = delay;
-        public DelayArgument(TimeSpan delay) => _delay = (int)delay.TotalMilliseconds;
+        public DelayArgument(uint delay) => _delay = delay;
+        public DelayArgument(TimeSpan delay) => _delay = (uint)delay.TotalMilliseconds;
 
         /// <summary>
         /// Returns the arguments

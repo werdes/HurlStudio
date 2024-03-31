@@ -1,4 +1,4 @@
-<v:ViewBase xmlns="https://github.com/avaloniaui"
+<UserControl xmlns="https://github.com/avaloniaui"
             xmlns:v="clr-namespace:HurlStudio.UI.Views"
             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
@@ -11,8 +11,8 @@
             Loaded="On_EditorView_Loaded"
             x:Class="HurlStudio.UI.Views.EditorView"
             x:DataType="vm:EditorViewViewModel">
-  <v:ViewBase.Resources>
-  </v:ViewBase.Resources>
+  <UserControl.Resources>
+  </UserControl.Resources>
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="30" />
@@ -95,4 +95,4 @@
                  Margin="4"
                  Background="Red"/>
   </Grid>
-</v:ViewBase>
+</UserControl>

@@ -33,6 +33,8 @@ namespace HurlStudio.Model.Enums
         FolderClear,
         [Icon("collection.png")]
         Collection,
+        [Icon("collection_32.png")]
+        Collection32,
         [Icon("open.png")]
         Open,
         [Icon("save.png")]
@@ -103,6 +105,8 @@ namespace HurlStudio.Model.Enums
         MoveUp,
         [Icon("move_down.png")]
         MoveDown,
+        [Icon("question_32.png")]
+        Question32,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

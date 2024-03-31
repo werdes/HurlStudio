@@ -2,7 +2,58 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Controls;assembly=HurlStudio"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="HurlStudio.UI.Controls.ViewFrame"
-             Initialized="On_ViewFrame_Initialized">
+             
+             x:DataType="vm:ViewFrameViewModel">
+  <UserControl.Resources>
+    <converters:ViewModelBaseToIconConverter x:Key="ViewModelBaseToIconConverter" />
+    <converters:ViewModelBaseToVisibilityConverter x:Key="ViewModelBaseToVisibilityConverter" />
+    <converters:ViewModelBaseToLocalizedLabelTextConverter x:Key="ViewModelBaseToLocalizedLabelTextConverter" />
+  </UserControl.Resources>
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="65" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+
+    <!-- View list-->
+    <ItemsControl Grid.Column="0"
+                  Background="{DynamicResource NeutralControlBackground2Color}"
+                  ItemsSource="{Binding ViewModels}" >
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Border BorderThickness="2,0,0,0"
+                    BorderBrush="{DynamicResource NeutralControlForegroundColor}"
+                    IsVisible="{Binding IsActive}"/>
+
+            <Button Classes="framelessButton"
+                    IsVisible="{Binding, Converter={StaticResource ViewModelBaseToVisibilityConverter}}"
+                    Opacity="1"
+                    Margin="0,5,0,5"
+                    Tag="{Binding}"
+                    Click="On_ButtonChangeView_Click">
+              <StackPanel Orientation="Vertical">
+                <c:Icon Type="{Binding, Converter={StaticResource ViewModelBaseToIconConverter}}"
+                        Margin="0,0,0,3"/>
+                <TextBlock HorizontalAlignment="Center"
+                           FontSize="8"
+                           Margin="2,0,2,0"
+                           Text="{Binding, Converter={StaticResource ViewModelBaseToLocalizedLabelTextConverter}}" />
+              </StackPanel>
+            </Button>
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+
+
+    <!-- View container-->
+    <ContentControl Content="{Binding SelectedViewModel}"
+                    Grid.Column="1" />
+  </Grid>
 </UserControl>

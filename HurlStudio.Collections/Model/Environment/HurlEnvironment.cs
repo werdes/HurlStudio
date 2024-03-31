@@ -10,18 +10,18 @@ namespace HurlStudio.Collections.Model.Environment
     public class HurlEnvironment
     {
         private string _name;
-        private List<IHurlSetting> _collectionSettings;
+        private List<IHurlSetting> _settings;
 
         public HurlEnvironment()
         {
             _name = string.Empty;
-            _collectionSettings = new List<IHurlSetting>();
+            _settings = new List<IHurlSetting>();
         }
 
-        public List<IHurlSetting> CollectionSettings
+        public List<IHurlSetting> Settings
         {
-            get => _collectionSettings;
-            set => _collectionSettings = value;
+            get => _settings;
+            set => _settings = value;
         }
 
         public string Name

@@ -1,0 +1,37 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:cs="clr-namespace:HurlStudio.UI.Controls.HurlSettings;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:ae="using:AvaloniaEdit"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:model="clr-namespace:HurlStudio.Model.HurlSettings;assembly=HurlStudio"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.SettingSection"
+             x:DataType="model:HurlSettingSection">
+  <UserControl.Resources>
+    <converters:HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter x:Key="HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter" />
+    <converters:HurlSettingSectionTypeToIconConverter x:Key="HurlSettingSectionTypeToIconConverter" />
+  </UserControl.Resources>
+  <StackPanel>
+    <!--<c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Collection_Title}"
+                                Icon="Collection"
+                                IsVisible="{Binding SettingContainers.Count}"/>-->
+    <StackPanel Orientation="Horizontal"
+                Background="{DynamicResource NeutralControlBackgroundColor}"
+                IsVisible="{Binding SettingContainers.Count}">
+      <c:Icon Type="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToIconConverter}}"
+              Margin="3"/>
+      <Label Content="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter}}"
+             Foreground="{DynamicResource NeutralControlForegroundColor}"/>
+      <Label Content="{Binding SectionSubText}"
+             Foreground="{DynamicResource NeutralControlForegroundMutedColor}"/>
+
+    </StackPanel>
+    <ItemsControl ItemsSource="{Binding SettingContainers}" />
+  </StackPanel>
+</UserControl>

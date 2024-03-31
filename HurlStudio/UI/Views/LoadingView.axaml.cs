@@ -3,12 +3,19 @@ using HurlStudio.UI.ViewModels;
 
 namespace HurlStudio.UI.Views
 {
-    public partial class LoadingView : ViewBase
+    public partial class LoadingView : ViewBase<LoadingViewViewModel>
     {
-        public LoadingView(LoadingViewViewModel viewModel) : base(typeof(LoadingViewViewModel))
+        private LoadingViewViewModel? _viewModel;
+
+        public LoadingView() 
         {
-            this.DataContext = viewModel;
             InitializeComponent();
+        }
+
+        protected override void SetViewModelInstance(LoadingViewViewModel viewModel)
+        {
+            _viewModel = viewModel;
+            this.DataContext = _viewModel;
         }
     }
 }

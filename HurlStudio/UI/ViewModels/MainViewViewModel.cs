@@ -1,5 +1,6 @@
 ﻿using HurlStudio.Model.Enums;
 using HurlStudio.Model.Notifications;
+using HurlStudio.UI.ViewModels.Controls;
 using HurlStudio.UI.Views;
 using System;
 using System.Collections.Generic;
@@ -12,8 +13,9 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.ViewModels
 {
-    public class MainViewViewModel : ViewModelBase, INavigatableViewModel
+    public class MainViewViewModel : ViewModelBase
     {
+        private ViewFrameViewModel? _viewFrameViewModel;
         private MainWindowViewModel? _mainWindowViewModel;
         private LoadingViewViewModel? _loadingViewViewModel;
         private EditorViewViewModel? _editorViewViewModel;
@@ -39,6 +41,16 @@ namespace HurlStudio.UI.ViewModels
         {
             _mainWindowViewModel = mainWindowViewModel;
             _mainWindowViewModel.MainViewViewModel = this;
+        }
+
+        public ViewFrameViewModel? ViewFrameViewModel
+        {
+            get => _viewFrameViewModel;
+            set
+            {
+                _viewFrameViewModel = value;
+                Notify();
+            }
         }
 
         public MainWindowViewModel? MainWindow
@@ -119,19 +131,6 @@ namespace HurlStudio.UI.ViewModels
                 _statusBarStatus = value;
                 Notify();
             }
-        }
-
-        /// <summary>
-        /// Returns a list of available view models for navigation within a view frame
-        /// </summary>
-        /// <returns></returns>
-        public IEnumerable<ViewModelBase> GetNavigationTargets()
-        {
-            return new List<ViewModelBase>()
-            {
-                LoadingView,
-                EditorView
-            };
         }
     }
 }

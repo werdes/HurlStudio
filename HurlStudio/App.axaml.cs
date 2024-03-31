@@ -47,6 +47,8 @@ using HurlStudio.Model.UiState;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Model.Notifications;
 using HurlStudio.UI.Controls.HurlSettings;
+using HurlStudio.Model.HurlSettings;
+using HurlStudio.UI.ViewModels.Controls;
 
 namespace HurlStudio;
 
@@ -86,7 +88,6 @@ public partial class App : Application
             SetTheme();
 
             RegisterControls();
-            RegisterViews();
             RegisterViewModelHierarchy();
 
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
@@ -162,6 +163,11 @@ public partial class App : Application
         ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
         ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
 
+        // Views
+        controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
+        controlBuilder.RegisterProviderAssociated<LoadingView, LoadingViewViewModel>(() => Services.GetRequiredService<LoadingView>());
+        controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
+
         // Controls
         controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
         controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
@@ -169,10 +175,12 @@ public partial class App : Application
         controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
         controlBuilder.RegisterProviderAssociated<RecentFile, FileHistoryEntry>(() => Services.GetRequiredService<RecentFile>());
         controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
+        controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
 
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Collection, CollectionContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Collection>());
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Folder, CollectionFolder>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Folder>());
+        controlBuilder.RegisterProviderAssociated<UI.Controls.ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<UI.Controls.ViewFrame>());
 
         // HurlSettings
         controlBuilder.RegisterProviderAssociated<SettingContainer, Model.HurlSettings.HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
@@ -195,22 +203,13 @@ public partial class App : Application
     }
 
     /// <summary>
-    /// Registers the views in the viewBuilder service manager
-    /// </summary>
-    private static void RegisterViews()
-    {
-        ServiceManager<ViewBase> viewBuilder = Services.GetRequiredService<ServiceManager<ViewBase>>();
-        viewBuilder.Register(Services.GetRequiredService<MainView>());
-        viewBuilder.Register(Services.GetRequiredService<LoadingView>());
-        viewBuilder.Register(Services.GetRequiredService<EditorView>());
-    }
-
-    /// <summary>
     ///  Registers the view models within each other
     /// </summary>
     private static void RegisterViewModelHierarchy()
     {
         MainViewViewModel mainViewViewModel = Services.GetRequiredService<MainViewViewModel>();
+        mainViewViewModel.ViewFrameViewModel = Services.GetRequiredService<ViewFrameViewModel>();
+
         mainViewViewModel.EditorView = Services.GetRequiredService<EditorViewViewModel>().SetRoot(mainViewViewModel) as EditorViewViewModel;
         mainViewViewModel.LoadingView = Services.GetRequiredService<LoadingViewViewModel>().SetRoot(mainViewViewModel) as LoadingViewViewModel;
     }
@@ -252,7 +251,6 @@ public partial class App : Application
 
         ConfigureDockControlViewmodels(services);
         ConfigureControls(services);
-        ConfigureViews(services);
         ConfigureViewModels(services);
 
 
@@ -270,31 +268,10 @@ public partial class App : Application
         services.AddSingleton<LoadingViewViewModel>();
         services.AddSingleton<EditorViewViewModel>();
         services.AddSingleton<MainViewViewModel>();
+        services.AddSingleton<ViewFrameViewModel>();
 
         services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
                                                                              .Register(provider.GetRequiredService<MainViewViewModel>()));
-    }
-
-    /// <summary>
-    /// Configures the views
-    /// </summary>
-    /// <param name="services"></param>
-    private static void ConfigureViews(IServiceCollection services)
-    {
-        // View Builder
-        services.AddSingleton<ServiceManager<ViewBase>>(provider => new ServiceManager<ViewBase>());
-
-        // View Frame
-        services.AddSingleton<ViewFrame>(provider => new ViewFrame(provider.GetRequiredService<MainViewViewModel>(),
-                                                                   provider.GetRequiredService<ServiceManager<ViewBase>>()));
-
-        // Views
-        services.AddSingleton<MainView>();
-        services.AddSingleton<LoadingView>();
-        services.AddSingleton<EditorView>();
-
-        // Windows
-        services.AddSingleton<MainWindow>();
     }
 
     /// <summary>
@@ -323,6 +300,14 @@ public partial class App : Application
         // Control Builder
         services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
 
+        // Views
+        services.AddSingleton<MainView>();
+        services.AddSingleton<LoadingView>();
+        services.AddSingleton<EditorView>();
+
+        // Windows
+        services.AddSingleton<MainWindow>();
+
         // Controls
         services.AddTransient<CollectionExplorerTool>();
         services.AddTransient<FileSettingsTool>();
@@ -330,6 +315,8 @@ public partial class App : Application
         services.AddTransient<WelcomeDocument>();
         services.AddTransient<RecentFile>();
         services.AddTransient<NotificationCard>();
+        services.AddTransient<SettingSection>();
+        services.AddTransient<ViewFrame>();
 
         // Collection Explorer components
         services.AddTransient<UI.Controls.CollectionExplorer.Collection>();
@@ -369,7 +356,7 @@ public partial class App : Application
     }
 
     /// <summary>
-    /// Initializes the NLog logger configuration
+    /// Initializes the NLog _log configuration
     /// -> Avalonia previewer starts at the solution directory, which doesn't contain a logging configuration file
     /// </summary>
     private static LoggingConfiguration InitializeLogging(string baseDir)

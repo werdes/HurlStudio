@@ -26,7 +26,7 @@ namespace HurlStudio.UI.ViewModels
         private ILogger _log;
 
         private ObservableCollection<CollectionContainer> _collections;
-        private ObservableCollection<HurlEnvironment> _environments;
+        private ObservableCollection<CollectionEnvironment> _environments;
         private ObservableCollection<IDockable> _documents;
         private ObservableCollection<FileHistoryEntry> _fileHistoryEntries;
         private DocumentDock? _documentDock;
@@ -37,12 +37,12 @@ namespace HurlStudio.UI.ViewModels
         private bool _wordWrap;
         private bool _canUndo;
         private bool _canRedo;
-        private HurlEnvironment? _activeEnvironment;
+        private CollectionEnvironment? _activeEnvironment;
 
         public EditorViewViewModel(ILogger<EditorViewViewModel> logger, IUserSettingsService userSettingsService) : base(typeof(EditorView))
         {
             _collections = new ObservableCollection<CollectionContainer>();
-            _environments = new ObservableCollection<HurlEnvironment>();
+            _environments = new ObservableCollection<CollectionEnvironment>();
             _fileHistoryEntries = new ObservableCollection<FileHistoryEntry>();
             _documents = new ObservableCollection<IDockable>();
             _activeDocument = null;
@@ -61,7 +61,7 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public ObservableCollection<HurlEnvironment> Environments
+        public ObservableCollection<CollectionEnvironment> Environments
         {
             get => _environments;
             set
@@ -171,7 +171,7 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public HurlEnvironment? ActiveEnvironment
+        public CollectionEnvironment? ActiveEnvironment
         {
             get => _activeEnvironment;
             set

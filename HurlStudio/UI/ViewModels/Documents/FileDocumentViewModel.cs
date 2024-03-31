@@ -19,23 +19,15 @@ namespace HurlStudio.UI.ViewModels.Documents
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
 
-        private OrderedObservableCollection<HurlSettingContainer> _collectionSettingContainers;
-        private OrderedObservableCollection<HurlSettingContainer> _fileSettingContainers;
-        private ObservableCollection<FolderSettingContainer> _folderSettingContainers;
-        private OrderedObservableCollection<HurlSettingContainer> _environmentSettingContainers;
+        private OrderedObservableCollection<HurlSettingSection> _settingSections;
 
         public FileDocumentViewModel(EditorViewViewModel editorViewViewModel)
         {
             CanFloat = false;
             CanPin = false;
-                       
 
             _editorViewViewModel = editorViewViewModel;
-
-            _collectionSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
-            _fileSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
-            _folderSettingContainers = new ObservableCollection<FolderSettingContainer>();
-            _environmentSettingContainers = new OrderedObservableCollection<HurlSettingContainer>();
+            _settingSections = new OrderedObservableCollection<HurlSettingSection>();
         }
 
         public CollectionFile? File
@@ -80,42 +72,12 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
-        public OrderedObservableCollection<HurlSettingContainer> CollectionSettingContainers
+        public OrderedObservableCollection<HurlSettingSection> SettingSections
         {
-            get => _collectionSettingContainers;
+            get => _settingSections;
             set
             {
-                _collectionSettingContainers = value;
-                Notify();
-            }
-        }
-
-        public OrderedObservableCollection<HurlSettingContainer> FileSettingContainers
-        {
-            get => _fileSettingContainers;
-            set
-            {
-                _fileSettingContainers = value;
-                Notify();
-            }
-        }
-
-        public ObservableCollection<FolderSettingContainer> FolderSettingContainers
-        {
-            get => _folderSettingContainers;
-            set
-            {
-                _folderSettingContainers = value;
-                Notify();
-            }
-        }
-
-        public OrderedObservableCollection<HurlSettingContainer> EnvironmentSettingContainers
-        {
-            get => _environmentSettingContainers;
-            set
-            {
-                _environmentSettingContainers = value;
+                _settingSections = value;
                 Notify();
             }
         }

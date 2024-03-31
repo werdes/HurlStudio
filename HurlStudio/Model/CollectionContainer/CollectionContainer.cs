@@ -1,4 +1,5 @@
 ﻿using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Common.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -37,7 +38,7 @@ namespace HurlStudio.Model.CollectionContainer
         public override string GetId()
         {
             if(_collection.FileLocation == null) throw new ArgumentNullException(nameof(_collection.FileLocation));
-            return _collection.FileLocation;
+            return _collection.FileLocation.ToSha256Hash();
         }
 
         public override string ToString()

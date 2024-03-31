@@ -727,6 +727,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.CertificateFile.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_CertificateFile_Label {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.CertificateFile.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.FilePicker.Title} ähnelt.
         /// </summary>
         public static string Setting_ClientCertificateSetting_FilePicker_Title {
@@ -741,6 +750,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ClientCertificateSetting_FilePicker_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.ClientCertificateSetting.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.KeyFile.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_KeyFile_Label {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.KeyFile.Label", resourceCulture);
             }
         }
         
@@ -862,6 +880,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Label} ähnelt.
+        /// </summary>
+        public static string View_Editor_Label {
+            get {
+                return ResourceManager.GetString("View.Editor.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.Back.Tooltip} ähnelt.
         /// </summary>
         public static string View_Editor_Toolbar_Back_Tooltip {
@@ -966,6 +993,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Loading_ActivityText_LoadingEnvironments {
             get {
                 return ResourceManager.GetString("View.Loading.ActivityText.LoadingEnvironments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Loading.Label} ähnelt.
+        /// </summary>
+        public static string View_Loading_Label {
+            get {
+                return ResourceManager.GetString("View.Loading.Label", resourceCulture);
             }
         }
         

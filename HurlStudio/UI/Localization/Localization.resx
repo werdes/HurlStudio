@@ -339,11 +339,17 @@
   <data name="Setting.CaCertSetting.Title" xml:space="preserve">
     <value>{Setting.CaCertSetting.Title}</value>
   </data>
+  <data name="Setting.ClientCertificateSetting.CertificateFile.Label" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.CertificateFile.Label}</value>
+  </data>
   <data name="Setting.ClientCertificateSetting.FilePicker.Title" xml:space="preserve">
     <value>{Setting.ClientCertificateSetting.FilePicker.Title}</value>
   </data>
   <data name="Setting.ClientCertificateSetting.FilePicker.Tooltip" xml:space="preserve">
     <value>{Setting.ClientCertificateSetting.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.KeyFile.Label" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.KeyFile.Label}</value>
   </data>
   <data name="Setting.ClientCertificateSetting.Password.Label" xml:space="preserve">
     <value>{Setting.ClientCertificateSetting.Password.Label}</value>
@@ -384,6 +390,9 @@
   <data name="Setting.VariableSetting.Title" xml:space="preserve">
     <value>{Setting.VariableSetting.Title}</value>
   </data>
+  <data name="View.Editor.Label" xml:space="preserve">
+    <value>{View.Editor.Label}</value>
+  </data>
   <data name="View.Editor.Toolbar.Back.Tooltip" xml:space="preserve">
     <value>{View.Editor.Toolbar.Back.Tooltip}</value>
   </data>
@@ -419,6 +428,9 @@
   </data>
   <data name="View.Loading.ActivityText.LoadingEnvironments" xml:space="preserve">
     <value>{View.Loading.ActivityText.LoadingEnvironments}</value>
+  </data>
+  <data name="View.Loading.Label" xml:space="preserve">
+    <value>{View.Loading.Label}</value>
   </data>
   <data name="View.Loading.Title" xml:space="preserve">
     <value>{View.Loading.Title}</value>
