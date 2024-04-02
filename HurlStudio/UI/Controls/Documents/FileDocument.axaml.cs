@@ -43,7 +43,7 @@ namespace HurlStudio.UI.Controls.Documents
             _log = logger;
 
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(FileDocumentViewModel viewModel)
@@ -51,7 +51,7 @@ namespace HurlStudio.UI.Controls.Documents
             _viewModel = viewModel;
             this.DataContext = _viewModel;
 
-            _viewModel.EditorViewViewModel.PropertyChanged += On_EditorViewViewModel_PropertyChanged;
+            _viewModel.EditorViewViewModel.PropertyChanged += this.On_EditorViewViewModel_PropertyChanged;
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace HurlStudio.UI.Controls.Documents
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_FileDocument_Initialized));
+                _log.LogCritical(ex, nameof(this.On_FileDocument_Initialized));
                 _notificationService.Notify(ex);
             }
         }

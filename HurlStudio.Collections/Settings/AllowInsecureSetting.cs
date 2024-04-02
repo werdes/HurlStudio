@@ -26,7 +26,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _allowInsecure = value;
-                Notify();
+                this.Notify();
             }
         }
 

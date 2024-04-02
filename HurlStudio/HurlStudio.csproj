@@ -40,18 +40,18 @@
     <PackageReference Condition="'$(Configuration)' == 'Debug'" Include="Avalonia.Diagnostics" Version="11.0.10" />
     <PackageReference Include="Avalonia.Themes.Simple" Version="11.0.10" />
     <PackageReference Include="AvaloniaEdit.TextMate" Version="11.0.6" />
-    <PackageReference Include="Dock.Avalonia" Version="11.0.0.6" />
-    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.6" />
+    <PackageReference Include="Dock.Avalonia" Version="11.0.0.7" />
+    <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.7" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="8.0.1" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
     <PackageReference Include="NLog" Version="5.2.8" />
     <PackageReference Include="NLog.Extensions.Logging" Version="5.3.8" />
-    <PackageReference Include="System.Text.Json" Version="8.0.2" />
+    <PackageReference Include="System.Text.Json" Version="8.0.3" />
     <PackageReference Include="TextMateSharp.Grammars" Version="1.0.56" />
   </ItemGroup>
 
@@ -126,8 +126,5 @@
     <AvaloniaXaml Update="UI\Controls\HurlSettings\ClientCertificateSetting.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-    <None Update="log.config">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 </Project>

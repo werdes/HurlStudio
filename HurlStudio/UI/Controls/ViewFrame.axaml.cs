@@ -25,7 +25,7 @@ namespace HurlStudio.UI.Controls
             _log = logger;
             _locator = controlLocator;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(ViewFrameViewModel viewModel)

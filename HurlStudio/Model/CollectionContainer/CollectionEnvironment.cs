@@ -23,13 +23,13 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _enviroment = value;
-                Notify();
+                this.Notify();
             }
         }
 
         public override string GetId()
         {
-            if (_enviroment == null) throw new ArgumentNullException(nameof(Environment));
+            if (_enviroment == null) throw new ArgumentNullException(nameof(this.Environment));
 
             return _enviroment.Name.ToSha256Hash();
         }

@@ -12,10 +12,10 @@ namespace HurlStudio.UI.ViewModels.Tools
     {
         public FileSettingsToolViewModel()
         {
-            CanClose = false;
-            CanFloat = false;
-            CanPin = false;
-            Title = Localization.Localization.Dock_Tool_FileSettings_Title;
+            this.CanClose = false;
+            this.CanFloat = false;
+            this.CanPin = false;
+            this.Title = Localization.Localization.Dock_Tool_FileSettings_Title;
         }
     }
 }

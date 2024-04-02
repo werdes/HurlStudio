@@ -26,10 +26,10 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             _notificationService = notificationService;
             _log = logger;
 
-            this.AddHandler(DragDrop.DropEvent, On_CollectionExplorerControlBase_Drop);
-            this.AddHandler(DragDrop.DragEnterEvent, On_CollectionExplorerControlBase_DragEnter);
-            this.AddHandler(DragDrop.DragLeaveEvent, On_CollectionExplorerControlBase_DragLeave);
-            this.AddHandler(DragDrop.DragOverEvent, On_CollectionExplorerControlBase_DragOver);
+            this.AddHandler(DragDrop.DropEvent, this.On_CollectionExplorerControlBase_Drop);
+            this.AddHandler(DragDrop.DragEnterEvent, this.On_CollectionExplorerControlBase_DragEnter);
+            this.AddHandler(DragDrop.DragLeaveEvent, this.On_CollectionExplorerControlBase_DragLeave);
+            this.AddHandler(DragDrop.DragOverEvent, this.On_CollectionExplorerControlBase_DragOver);
         }
 
         protected abstract CollectionComponentBase GetBoundCollectionComponent();
@@ -50,7 +50,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             {
                 if (e.ClickCount == 2 && component.Selected)
                 {
-                    await OpenComponentDocument();
+                    await this.OpenComponentDocument();
                 }
 
                 component.Selected = true;
@@ -138,7 +138,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_CollectionExplorerControlBase_Drop));
+                _log.LogCritical(ex, nameof(this.On_CollectionExplorerControlBase_Drop));
                 _notificationService.Notify(ex);
             }
         }

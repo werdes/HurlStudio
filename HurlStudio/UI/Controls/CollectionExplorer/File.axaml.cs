@@ -15,8 +15,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
     {
         private CollectionFile CollectionFile
         {
-            get => (CollectionFile)GetValue(CollectionFileProperty);
-            set => SetValue(CollectionFileProperty, value);
+            get => (CollectionFile)this.GetValue(CollectionFileProperty);
+            set => this.SetValue(CollectionFileProperty, value);
         }
 
         public static readonly StyledProperty<CollectionFile> CollectionFileProperty =
@@ -33,7 +33,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             _log = logger;
             _notificationService = notificationService;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -42,7 +42,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="viewModel"></param>
         protected override void SetViewModelInstance(CollectionFile viewModel)
         {
-            CollectionFile = viewModel;
+            this.CollectionFile = viewModel;
         }
 
         /// <summary>
@@ -50,7 +50,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_File_Initialized(object? sender, System.EventArgs e)
+        private void On_File_Initialized(object? sender, EventArgs e)
         {
             this.DataContext = this.CollectionFile;
         }
@@ -72,11 +72,11 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         {
             try
             {
-                await _editorService.OpenFile(CollectionFile);
+                await _editorService.OpenFile(this.CollectionFile);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
                 _notificationService.Notify(ex);
             }
         }
@@ -88,15 +88,15 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (CollectionFile == null) return;
-            if (CollectionFile.Location == null) return;
+            if (this.CollectionFile == null) return;
+            if (this.CollectionFile.Location == null) return;
             try
             {
-                OSUtility.RevealFileInExplorer(CollectionFile.Location);
+                OSUtility.RevealFileInExplorer(this.CollectionFile.Location);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
                 _notificationService.Notify(ex);
             }
         }

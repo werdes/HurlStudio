@@ -27,7 +27,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _file = value;
-                Notify();
+                this.Notify();
             }
         }
 

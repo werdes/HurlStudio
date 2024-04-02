@@ -33,7 +33,7 @@ namespace HurlStudio.UI.Editor
 
         public IRawTheme GetDefaultTheme()
         {
-            return GetTheme(_theme.ToString());
+            return this.GetTheme(_theme.ToString());
         }
 
         public IRawTheme GetTheme(string scopeName)

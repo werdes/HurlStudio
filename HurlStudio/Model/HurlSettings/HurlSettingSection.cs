@@ -14,7 +14,7 @@ namespace HurlStudio.Model.HurlSettings
     public class HurlSettingSection : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private OrderedObservableCollection<HurlSettingContainer> _settingContainers;
         private CollectionComponentBase? _collectionComponent;
@@ -29,8 +29,16 @@ namespace HurlStudio.Model.HurlSettings
             
             if(collectionComponent is CollectionFolder collectionFolder)
             {
-                _sectionSubText = collectionFolder.Location;
-                collectionFolder.PropertyChanged += On_CollectionFolder_PropertyChanged;
+                _sectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
+                collectionFolder.PropertyChanged += this.On_CollectionFolder_PropertyChanged;
+            }
+            else if(collectionComponent is CollectionEnvironment environment)
+            {
+                _sectionSubText = environment.Environment.Name;
+            }
+            else
+            {
+                _sectionSubText= string.Empty;
             }
         }
 
@@ -43,7 +51,7 @@ namespace HurlStudio.Model.HurlSettings
         {
             if(sender != null && sender is CollectionFolder collectionFolder && e.PropertyName == nameof(collectionFolder.Location))
             {
-                this.SectionSubText = collectionFolder.Location;
+                this.SectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
             }
         }
 
@@ -53,7 +61,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _settingContainers = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -63,7 +71,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _collectionComponent = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -73,7 +81,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _sectionType = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -83,7 +91,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _sectionSubText = value;
-                Notify();
+                this.Notify();
             }
         }
     }

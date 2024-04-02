@@ -71,7 +71,7 @@ namespace HurlStudio.Services.UserSettings
         /// </summary>
         public async Task StoreUserSettingsAsync()
         {
-            string path = GetUserSettingsFilePath();
+            string path = this.GetUserSettingsFilePath();
 
             if (_userSettings == null) throw new ArgumentNullException($"no user setting were provided to {nameof(JsonUserSettingsService)}");
 
@@ -84,7 +84,7 @@ namespace HurlStudio.Services.UserSettings
         /// </summary>
         public void StoreUserSettings()
         {
-            string path = GetUserSettingsFilePath();
+            string path = this.GetUserSettingsFilePath();
 
             if (_userSettings == null) throw new ArgumentNullException($"no user setting were provided to {nameof(JsonUserSettingsService)}");
 
@@ -98,7 +98,7 @@ namespace HurlStudio.Services.UserSettings
         /// <returns></returns>
         private async Task LoadUserSettingsAsync()
         {
-            string path = GetUserSettingsFilePath();
+            string path = this.GetUserSettingsFilePath();
             if (File.Exists(path))
             {
                 string json = await File.ReadAllTextAsync(path, Encoding.UTF8);
@@ -106,7 +106,7 @@ namespace HurlStudio.Services.UserSettings
             }
             else
             {
-                _userSettings = GetDefaultUserSettings();
+                _userSettings = this.GetDefaultUserSettings();
                 await this.StoreUserSettingsAsync();
             }
         }
@@ -117,7 +117,7 @@ namespace HurlStudio.Services.UserSettings
         /// <returns></returns>
         private void LoadUserSettings()
         {
-            string path = GetUserSettingsFilePath();
+            string path = this.GetUserSettingsFilePath();
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path, Encoding.UTF8);
@@ -125,7 +125,7 @@ namespace HurlStudio.Services.UserSettings
             }
             else
             {
-                _userSettings = GetDefaultUserSettings();
+                _userSettings = this.GetDefaultUserSettings();
                 this.StoreUserSettings();
             }
         }

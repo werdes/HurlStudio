@@ -15,7 +15,7 @@ namespace HurlStudio.Collections.Settings
     {
         public const string CONFIGURATION_NAME = "aws_sig_v4";
         private const string VALUE_SEPARATOR = ":";
-        private readonly Regex AWS_SIG_V4_SETTING_REGEX = new Regex("([^:]*):([^:]*):([^:]*):([^:]*)", RegexOptions.Compiled);
+        private readonly Regex AWS_SIG_V4_SETTING_REGEX = new Regex($"([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*)", RegexOptions.Compiled);
 
         private string? _provider1;
         private string? _provider2;
@@ -33,7 +33,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _provider1 = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -43,7 +43,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _provider2 = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -53,7 +53,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _region = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -63,7 +63,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _service = value;
-                Notify();
+                this.Notify();
             }
         }
 

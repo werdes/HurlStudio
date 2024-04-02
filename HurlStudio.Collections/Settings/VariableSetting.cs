@@ -34,8 +34,8 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _key = value;
-                Notify();
-                Notify(nameof(DisplayString));
+                this.Notify();
+                this.Notify(nameof(this.DisplayString));
             }
         }
 
@@ -45,7 +45,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _value = value;
-                Notify();
+                this.Notify();
             }
         }
 

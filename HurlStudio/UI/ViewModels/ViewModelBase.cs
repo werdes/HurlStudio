@@ -13,7 +13,7 @@ namespace HurlStudio.UI.ViewModels
     public class ViewModelBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private Type _attachedViewType;
         private ViewModelBase? _rootViewModel;
@@ -30,7 +30,7 @@ namespace HurlStudio.UI.ViewModels
         public ViewModelBase SetRoot(ViewModelBase? rootViewModel)
         {
             _rootViewModel = rootViewModel;
-            Notify(nameof(RootViewModel));
+            this.Notify(nameof(this.RootViewModel));
 
             return this;
         }
@@ -47,7 +47,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _active = value;
-                Notify();
+                this.Notify();
             }
         }
     }

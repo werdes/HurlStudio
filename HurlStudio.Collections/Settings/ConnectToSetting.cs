@@ -34,7 +34,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _host1 = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -45,7 +45,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _port1 = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _host2 = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -65,7 +65,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _port2 = value;
-                Notify();
+                this.Notify();
             }
         }
 

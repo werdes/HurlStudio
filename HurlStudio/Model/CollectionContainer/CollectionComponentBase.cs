@@ -16,7 +16,7 @@ namespace HurlStudio.Model.CollectionContainer
         public event EventHandler<CollectionComponentMovedEventArgs>? CollectionComponentMoved;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private bool _selected;
 
@@ -30,24 +30,26 @@ namespace HurlStudio.Model.CollectionContainer
             get => _selected;
             set
             {
-                ControlSelectionChanged?.Invoke(this, new ControlSelectionChangedEventArgs(value));
+                this.ControlSelectionChanged?.Invoke(this, new ControlSelectionChangedEventArgs(value));
 
                 _selected = value;
-                Notify();
+                this.Notify();
             }
         }
 
         public virtual void Unselect()
         {
             _selected = false;
-            Notify(nameof(Selected));
+            this.Notify(nameof(this.Selected));
         }
 
         protected void On_CollectionComponentHierarchyBase_ControlUnselected(object? sender, ControlSelectionChangedEventArgs e)
-            => ControlSelectionChanged?.Invoke(sender, e);
+            =>
+                this.ControlSelectionChanged?.Invoke(sender, e);
         
         protected void On_CollectionComponentHierarchyBase_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
-            => CollectionComponentMoved?.Invoke(sender, e);
+            =>
+                this.CollectionComponentMoved?.Invoke(sender, e);
 
         public void Move(CollectionComponentBase target)
         {

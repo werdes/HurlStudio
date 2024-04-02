@@ -40,7 +40,7 @@ namespace HurlStudio.UI.ViewModels.Controls
                     _selectedViewModel.IsActive = true;
                 }
 
-                Notify();
+                this.Notify();
             }
         }
 
@@ -50,7 +50,7 @@ namespace HurlStudio.UI.ViewModels.Controls
             set
             {
                 _viewModels = value;
-                Notify();
+                this.Notify();
             }
         }
     }

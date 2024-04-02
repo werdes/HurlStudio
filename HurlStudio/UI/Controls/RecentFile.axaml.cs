@@ -17,7 +17,7 @@ namespace HurlStudio.UI.Controls
             _editorService = editorService;
             _log = logger;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(FileHistoryEntry viewModel)
@@ -26,16 +26,23 @@ namespace HurlStudio.UI.Controls
             this.DataContext = viewModel;
         }
 
-        private void On_RecentFile_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
+        /// <summary>
+        /// Open the file in a new tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_RecentFile_PointerPressed(object? sender, Avalonia.Input.PointerPressedEventArgs e)
         {
             if (_viewModel == null) return;
+            if (!e.Pointer.IsPrimary) return;
+            
             try
             {
-                _editorService.OpenFile(_viewModel.Location);
+                await _editorService.OpenFile(_viewModel.Location);
             }
             catch(Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_RecentFile_PointerPressed));
+                _log.LogCritical(ex, nameof(this.On_RecentFile_PointerPressed));
             }
         }
     }

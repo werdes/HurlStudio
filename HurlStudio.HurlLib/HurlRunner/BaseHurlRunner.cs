@@ -28,7 +28,7 @@ namespace HurlStudio.HurlLib.HurlRunner
         /// <param name="arguments"></param>
         /// <returns></returns>
         public async Task<HurlRunnerResult> RunHurlAsync(string file, params IHurlArgument[] arguments) =>
-           await RunHurlAsync(file, arguments);
+           await this.RunHurlAsync(file, arguments);
 
         /// <summary>
         /// Starts the hurl process, waits for its completion, and returns its output

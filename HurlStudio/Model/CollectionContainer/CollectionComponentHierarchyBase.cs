@@ -23,8 +23,8 @@ namespace HurlStudio.Model.CollectionContainer
             _files = new ObservableCollection<CollectionFile>();
             _collapsed = false;
 
-            _folders.CollectionChanged += On_CollectionComponent_CollectionChanged;
-            _files.CollectionChanged += On_CollectionComponent_CollectionChanged;
+            _folders.CollectionChanged += this.On_CollectionComponent_CollectionChanged;
+            _files.CollectionChanged += this.On_CollectionComponent_CollectionChanged;
         }
 
         private void On_CollectionComponent_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -36,8 +36,8 @@ namespace HurlStudio.Model.CollectionContainer
                     if(obj is CollectionComponentBase)
                     {
                         CollectionComponentBase component = (CollectionComponentBase)obj;
-                        component.ControlSelectionChanged += On_CollectionComponentHierarchyBase_ControlUnselected;
-                        component.CollectionComponentMoved += On_CollectionComponentHierarchyBase_CollectionComponentMoved;
+                        component.ControlSelectionChanged += this.On_CollectionComponentHierarchyBase_ControlUnselected;
+                        component.CollectionComponentMoved += this.On_CollectionComponentHierarchyBase_CollectionComponentMoved;
                     }
                 }
             }
@@ -50,9 +50,9 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _folders = value;
-                _folders.CollectionChanged -= On_CollectionComponent_CollectionChanged;
-                _folders.CollectionChanged += On_CollectionComponent_CollectionChanged;
-                Notify();
+                _folders.CollectionChanged -= this.On_CollectionComponent_CollectionChanged;
+                _folders.CollectionChanged += this.On_CollectionComponent_CollectionChanged;
+                this.Notify();
             }
         }
 
@@ -62,9 +62,9 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _files = value;
-                _files.CollectionChanged -= On_CollectionComponent_CollectionChanged;
-                _files.CollectionChanged += On_CollectionComponent_CollectionChanged;
-                Notify();
+                _files.CollectionChanged -= this.On_CollectionComponent_CollectionChanged;
+                _files.CollectionChanged += this.On_CollectionComponent_CollectionChanged;
+                this.Notify();
             }
         }
 
@@ -74,7 +74,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collapsed = value;
-                Notify();
+                this.Notify();
             }
         }
         

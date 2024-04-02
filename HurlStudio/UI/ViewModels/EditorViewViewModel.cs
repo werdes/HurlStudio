@@ -57,7 +57,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _collections = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -67,7 +67,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _environments = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -77,7 +77,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _documents = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -87,7 +87,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _fileHistoryEntries = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -97,7 +97,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _documentDock = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -107,7 +107,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _activeDocument = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -117,7 +117,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _layout = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -127,7 +127,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _showEndOfLine = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -137,7 +137,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _showWhitespace = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -147,7 +147,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _wordWrap = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -157,7 +157,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _canUndo = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -167,7 +167,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _canRedo = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -177,7 +177,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _activeEnvironment = value;
-                Notify();
+                this.Notify();
             }
         }
     }

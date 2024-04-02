@@ -16,7 +16,7 @@
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="65" />
+      <ColumnDefinition Width="60" />
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
 
@@ -32,18 +32,18 @@
                     IsVisible="{Binding IsActive}"/>
 
             <Button Classes="framelessButton"
-                    IsVisible="{Binding, Converter={StaticResource ViewModelBaseToVisibilityConverter}}"
+                    IsVisible="{Binding ., Converter={StaticResource ViewModelBaseToVisibilityConverter}}"
                     Opacity="1"
                     Margin="0,5,0,5"
                     Tag="{Binding}"
                     Click="On_ButtonChangeView_Click">
               <StackPanel Orientation="Vertical">
-                <c:Icon Type="{Binding, Converter={StaticResource ViewModelBaseToIconConverter}}"
+                <c:Icon Type="{Binding ., Converter={StaticResource ViewModelBaseToIconConverter}}"
                         Margin="0,0,0,3"/>
                 <TextBlock HorizontalAlignment="Center"
                            FontSize="8"
                            Margin="2,0,2,0"
-                           Text="{Binding, Converter={StaticResource ViewModelBaseToLocalizedLabelTextConverter}}" />
+                           Text="{Binding ., Converter={StaticResource ViewModelBaseToLocalizedLabelTextConverter}}" />
               </StackPanel>
             </Button>
           </Grid>

@@ -61,7 +61,6 @@ namespace HurlStudio.UI.Controls
         {
             if(data == null) return false;
 
-            _log.LogDebug($"Matched {data.GetType().Name} ({data.ToString()})");
             return _controlBuilder.CheckAssociation(data.GetType());
         }
     }

@@ -27,7 +27,7 @@ namespace HurlStudio.UI.ViewModels.Tools
         public bool IsEnabled
         {
             get => _isEnabled;
-            set => SetProperty(ref _isEnabled, value);
+            set => this.SetProperty(ref _isEnabled, value);
         }
 
     }

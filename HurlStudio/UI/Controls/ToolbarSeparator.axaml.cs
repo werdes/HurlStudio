@@ -6,7 +6,7 @@ namespace HurlStudio.UI.Controls
     {
         public ToolbarSeparator()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
     }
 }

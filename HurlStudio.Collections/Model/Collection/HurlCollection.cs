@@ -70,7 +70,7 @@ namespace HurlStudio.Collections.Model.Collection
         }
         public override string ToString()
         {
-            return $"{FileLocation}, {Name}";
+            return $"{this.FileLocation}, {this.Name}";
         }
     }
 }

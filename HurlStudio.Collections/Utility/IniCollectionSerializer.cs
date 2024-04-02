@@ -249,7 +249,7 @@ namespace HurlStudio.Collections.Utility
         public async Task<HurlCollection> DeserializeFileAsync(string filePath, Encoding encoding)
         {
             string fileContent = await File.ReadAllTextAsync(filePath, encoding);
-            return Deserialize(fileContent, filePath);
+            return this.Deserialize(fileContent, filePath);
         }
 
         /// <summary>
@@ -316,7 +316,7 @@ namespace HurlStudio.Collections.Utility
         /// <returns></returns>
         public async Task SerializeFileAsync(HurlCollection collection, string filePath, Encoding encoding)
         {
-            string serializedContent = await Task.Run(() => Serialize(collection));
+            string serializedContent = await Task.Run(() => this.Serialize(collection));
             await File.WriteAllTextAsync(filePath, serializedContent, encoding);
         }
     }

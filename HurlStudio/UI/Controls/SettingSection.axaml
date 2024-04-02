@@ -18,9 +18,6 @@
     <converters:HurlSettingSectionTypeToIconConverter x:Key="HurlSettingSectionTypeToIconConverter" />
   </UserControl.Resources>
   <StackPanel>
-    <!--<c:SettingGroupHeader Text="{x:Static localization:Localization.Dock_Document_File_Settings_Collection_Title}"
-                                Icon="Collection"
-                                IsVisible="{Binding SettingContainers.Count}"/>-->
     <StackPanel Orientation="Horizontal"
                 Background="{DynamicResource NeutralControlBackgroundColor}"
                 IsVisible="{Binding SettingContainers.Count}">

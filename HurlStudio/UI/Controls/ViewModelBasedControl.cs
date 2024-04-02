@@ -19,12 +19,12 @@ namespace HurlStudio.UI.Controls
         {
         }
 
-        public override Type? GetAttachedViewModelType() => AttachedViewModelType;
+        public override Type? GetAttachedViewModelType() => this.AttachedViewModelType;
         protected abstract void SetViewModelInstance(T viewModel);
 
         public override void SetViewModel(object viewModel)
         {
-            SetViewModelInstance((T)viewModel);
+            this.SetViewModelInstance((T)viewModel);
         }
     }
 

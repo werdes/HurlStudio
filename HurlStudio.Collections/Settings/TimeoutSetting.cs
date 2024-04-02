@@ -1,4 +1,5 @@
 ﻿using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System;
 using System.Collections.Generic;
@@ -9,25 +10,37 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ConnectTimeoutSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class TimeoutSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
     {
-        public const string CONFIGURATION_NAME = "connect_timeout";
+        public const string CONFIGURATION_NAME = "timeout";
+        public const char VALUE_SEPARATOR = '|';
         private const uint DEFAULT_VALUE = 30;
 
-        private uint? _seconds;
+        private uint? _connectTimeoutSeconds;
+        private uint? _maxTimeSeconds;
 
-        public ConnectTimeoutSetting() : base()
+        public TimeoutSetting() : base()
         {
 
         }
 
-        public uint? Seconds
+        public uint? ConnectTimeoutSeconds
         {
-            get => _seconds;
+            get => _connectTimeoutSeconds;
             set
             {
-                _seconds = value;
-                Notify();
+                _connectTimeoutSeconds = value;
+                this.Notify();
+            }
+        }
+
+        public uint? MaxTimeSeconds
+        {
+            get => _maxTimeSeconds;
+            set
+            {
+                _maxTimeSeconds = value;
+                this.Notify();
             }
         }
 
@@ -38,12 +51,17 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint seconds = DEFAULT_VALUE;
-            if (uint.TryParse(value, out seconds))
+            uint connectTimeoutSeconds = DEFAULT_VALUE;
+            uint maxTimeSeconds = DEFAULT_VALUE;
+
+            if (uint.TryParse(value.Split(VALUE_SEPARATOR).Get(0), out connectTimeoutSeconds) &&
+                uint.TryParse(value.Split(VALUE_SEPARATOR).Get(1), out maxTimeSeconds))
             {
-                _seconds = seconds;
+                _connectTimeoutSeconds = connectTimeoutSeconds;
+                _maxTimeSeconds = maxTimeSeconds;
                 return this;
             }
+
             return null;
         }
 
@@ -53,9 +71,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            return new[]
+            return new IHurlArgument[]
             {
-                new ConnectTimeoutArgument(_seconds ?? DEFAULT_VALUE)
+                new ConnectTimeoutArgument(_connectTimeoutSeconds ?? DEFAULT_VALUE),
+                new MaxTimeArgument(_maxTimeSeconds ?? DEFAULT_VALUE)
             };
         }
 
@@ -83,7 +102,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return (_seconds ?? DEFAULT_VALUE).ToString();
+            return (_connectTimeoutSeconds ?? DEFAULT_VALUE).ToString();
         }
 
         /// <summary>
@@ -92,7 +111,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return GetConfigurationValue();
+            return this.GetConfigurationValue();
         }
 
         /// <summary>

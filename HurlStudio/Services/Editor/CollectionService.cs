@@ -51,7 +51,7 @@ namespace HurlStudio.Services.Editor
         {
             ObservableCollection<CollectionContainer> collectionContainers = new ObservableCollection<CollectionContainer>();
             Model.UiState.UiState? uiState = await _uiStateService.GetUiStateAsync(true);
-            IEnumerable<HurlCollection> collections = await GetCollectionsAsync();
+            IEnumerable<HurlCollection> collections = await this.GetCollectionsAsync();
 
             foreach (HurlCollection collection in collections)
             {
@@ -67,7 +67,7 @@ namespace HurlStudio.Services.Editor
                 // Root location
                 if(!collection.ExcludeRootDirectory)
                 {
-                    CollectionFolder? collectionRootFolder = await GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState);
+                    CollectionFolder? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState);
                     if (collectionRootFolder != null)
                     {
                         collectionContainer.Files.AddRange(collectionRootFolder.Files);
@@ -91,7 +91,7 @@ namespace HurlStudio.Services.Editor
                         // go ahead and traverse the location
                         if (collection.ExcludeRootDirectory || !PathExtensions.IsChildOfDirectory(absoluteLocationPath, collectionRootPath))
                         {
-                            collectionContainer.Folders.AddIfNotNull(await GetFolderRecursive(0, collectionContainer, null, absoluteLocationPath, collectionRootPath, uiState));
+                            collectionContainer.Folders.AddIfNotNull(await this.GetFolderRecursive(0, collectionContainer, null, absoluteLocationPath, collectionRootPath, uiState));
                         }
                     }
                     else
@@ -138,7 +138,7 @@ namespace HurlStudio.Services.Editor
             // Recursively traverse through the directory tree
             foreach (string folderSubdirectory in folderSubdirectories)
             {
-                collectionFolder.Folders.AddIfNotNull(await GetFolderRecursive(depth + 1, collectionContainer, collectionFolder, folderSubdirectory, collectionRoot, uiState));
+                collectionFolder.Folders.AddIfNotNull(await this.GetFolderRecursive(depth + 1, collectionContainer, collectionFolder, folderSubdirectory, collectionRoot, uiState));
             }
 
             // Files

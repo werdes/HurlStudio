@@ -29,6 +29,8 @@ namespace HurlStudio.Tests
         [TestMethod]
         public void TestValidAwsV4Settings()
         {
+            List<AwsSigV4Setting> settings = new List<AwsSigV4Setting>();
+
             string[] testValues = {
                 "aws_sig_v4=aws:amz:eu-central-1:foos",
                 "aws_sig_v4=aws::eu-central-1:foos",
@@ -46,7 +48,47 @@ namespace HurlStudio.Tests
                 IHurlSetting? hurlSetting = _parser?.Parse(testValue);
                 Assert.IsNotNull(hurlSetting);
                 Assert.IsInstanceOfType(hurlSetting, typeof(AwsSigV4Setting));
+
+                settings.Add(hurlSetting as AwsSigV4Setting);
             }
+
+            Assert.AreEqual(settings.Count, testValues.Length);
+            Assert.AreEqual(settings[0].Provider1, "aws");
+            Assert.AreEqual(settings[0].Provider2, "amz");
+            Assert.AreEqual(settings[0].Region, "eu-central-1");
+            Assert.AreEqual(settings[0].Service, "foos");
+            Assert.AreEqual(settings[1].Provider1, "aws");
+            Assert.AreEqual(settings[1].Provider2, "");
+            Assert.AreEqual(settings[1].Region, "eu-central-1");
+            Assert.AreEqual(settings[1].Service, "foos");
+            Assert.AreEqual(settings[2].Provider1, "aws");
+            Assert.AreEqual(settings[2].Provider2, "amz");
+            Assert.AreEqual(settings[2].Region, "");
+            Assert.AreEqual(settings[2].Service, "foos");
+            Assert.AreEqual(settings[3].Provider1, "aws");
+            Assert.AreEqual(settings[3].Provider2, "amz");
+            Assert.AreEqual(settings[3].Region, "");
+            Assert.AreEqual(settings[3].Service, "");
+            Assert.AreEqual(settings[4].Provider1, "aws");
+            Assert.AreEqual(settings[4].Provider2, "9");
+            Assert.AreEqual(settings[4].Region, "");
+            Assert.AreEqual(settings[4].Service, "");
+            Assert.AreEqual(settings[5].Provider1, "aws");
+            Assert.AreEqual(settings[5].Provider2, ",");
+            Assert.AreEqual(settings[5].Region, "");
+            Assert.AreEqual(settings[5].Service, "");
+            Assert.AreEqual(settings[6].Provider1, "aws");
+            Assert.AreEqual(settings[6].Provider2, "");
+            Assert.AreEqual(settings[6].Region, "");
+            Assert.AreEqual(settings[6].Service, "foos");
+            Assert.AreEqual(settings[7].Provider1, "aws");
+            Assert.AreEqual(settings[7].Provider2, "");
+            Assert.AreEqual(settings[7].Region, "");
+            Assert.AreEqual(settings[7].Service, "");
+            Assert.AreEqual(settings[8].Provider1, "");
+            Assert.AreEqual(settings[8].Provider2, "");
+            Assert.AreEqual(settings[8].Region, "");
+            Assert.AreEqual(settings[8].Service, "");
         }
 
         /// <summary>
@@ -131,20 +173,35 @@ namespace HurlStudio.Tests
         }
 
         [TestMethod]
-        public void TestValidConnectTimeoutSettings()
+        public void TestValidTimeoutSettings()
         {
+            List<TimeoutSetting> settings = new List<TimeoutSetting>();
+
             string[] testValues = {
-                @"connect_timeout=30",
-                @"connect_timeout=60",
-                @"connect_timeout=0",
+                @"timeout=30|30",
+                @"timeout=60|30",
+                @"timeout=0|30",
+                @"timeout=30|0",
             };
 
             foreach (string testValue in testValues)
             {
                 IHurlSetting? hurlSetting = _parser?.Parse(testValue);
                 Assert.IsNotNull(hurlSetting);
-                Assert.IsInstanceOfType(hurlSetting, typeof(ConnectTimeoutSetting));
+                Assert.IsInstanceOfType(hurlSetting, typeof(TimeoutSetting));
+
+                settings.Add(hurlSetting as TimeoutSetting);
             }
+
+            Assert.AreEqual(settings.Count, testValues.Length);
+            Assert.AreEqual(settings[0].ConnectTimeoutSeconds, 30u);
+            Assert.AreEqual(settings[0].MaxTimeSeconds, 30u);
+            Assert.AreEqual(settings[1].ConnectTimeoutSeconds, 60u);
+            Assert.AreEqual(settings[1].MaxTimeSeconds, 30u);
+            Assert.AreEqual(settings[2].ConnectTimeoutSeconds, 0u);
+            Assert.AreEqual(settings[2].MaxTimeSeconds, 30u);
+            Assert.AreEqual(settings[3].ConnectTimeoutSeconds, 30u);
+            Assert.AreEqual(settings[3].MaxTimeSeconds, 0u);
         }
 
 
@@ -248,7 +305,7 @@ namespace HurlStudio.Tests
             }
 
             Assert.AreEqual(1, settings.Count);
-            Assert.AreEqual(settings[0].Delay, (uint)1000);
+            Assert.AreEqual(settings[0].Delay, 1000u);
         }
 
 

@@ -21,7 +21,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _currentActivity = value;
-                Notify();
+                this.Notify();
             }
         }
 

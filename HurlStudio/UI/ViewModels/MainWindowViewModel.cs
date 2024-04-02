@@ -25,7 +25,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isWindows = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -35,7 +35,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isMac = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -45,7 +45,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isLinux = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _mainViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 

@@ -9,7 +9,7 @@ namespace HurlStudio.UI.Controls
 
         public SettingSection()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(HurlSettingSection viewModel)

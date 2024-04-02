@@ -49,7 +49,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _viewFrameViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -59,7 +59,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _mainWindowViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -69,7 +69,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _loadingViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -79,7 +79,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _editorViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -89,7 +89,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _initializationCompleted = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -99,7 +99,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _notifications = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -109,7 +109,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _notificationsExpanded = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -119,7 +119,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _statusBarDetail = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -129,7 +129,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _statusBarStatus = value;
-                Notify();
+                this.Notify();
             }
         }
     }

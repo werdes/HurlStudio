@@ -12,7 +12,7 @@ namespace HurlStudio.Model.Notifications
     public class Notification : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
         private NotificationType _type;
@@ -32,7 +32,7 @@ namespace HurlStudio.Model.Notifications
             set
             {
                 _type = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -42,7 +42,7 @@ namespace HurlStudio.Model.Notifications
             set
             {
                 _title = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -52,7 +52,7 @@ namespace HurlStudio.Model.Notifications
             set
             {
                 _text = value;
-                Notify();
+                this.Notify();
             }
         }
 

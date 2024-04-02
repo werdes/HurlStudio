@@ -35,14 +35,12 @@ namespace HurlStudio.Services.Notifications
 
             _mainViewModel.Notifications.Add(notification);
 
-            NotificationAdded?.Invoke(this, new NotificationAddedEventArgs(notification));
+            this.NotificationAdded?.Invoke(this, new NotificationAddedEventArgs(notification));
         }
 
-        public void Notify(NotificationType notificationType, string title, string text) =>
-            Notify(new Notification(notificationType, title, text));
+        public void Notify(NotificationType notificationType, string title, string text) => this.Notify(new Notification(notificationType, title, text));
 
-        public void Notify(Exception exception) => 
-            Notify(new Notification(NotificationType.Error, Localization.Common_Exception_Title, exception.Message));
+        public void Notify(Exception exception) => this.Notify(new Notification(NotificationType.Error, Localization.Common_Exception_Title, exception.Message));
 
         /// <summary>
         /// Removes a notification from the main view viewmodels notification list

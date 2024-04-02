@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.HurlLib.HurlArgument
 {
-    public class MaxTimeArgument : IHurlArgument
+    public class IPv6Argument : IHurlArgument
     {
-        private const string NAME_ARGUMENT = "--max-time";
-        private uint _maxSeconds;
-
-        public MaxTimeArgument(uint maxSeconds) => _maxSeconds = maxSeconds;
-        public MaxTimeArgument(TimeSpan maxTime) => _maxSeconds = (uint)maxTime.TotalSeconds;
+        private const string NAME_ARGUMENT = "--ipv6";
 
         /// <summary>
         /// Returns the arguments
@@ -22,8 +18,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         {
             return new string[]
             {
-                NAME_ARGUMENT,
-                _maxSeconds.ToString()
+                NAME_ARGUMENT
             };
         }
     }

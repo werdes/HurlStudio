@@ -14,7 +14,7 @@ namespace HurlStudio.Collections.Settings
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private const string NAME_VALUE_SEPARATOR = "=";
 
@@ -27,8 +27,8 @@ namespace HurlStudio.Collections.Settings
 
         public string GetConfigurationString()
         {
-            string settingName = GetConfigurationName();
-            string settingValue = GetConfigurationValue();
+            string settingName = this.GetConfigurationName();
+            string settingValue = this.GetConfigurationValue();
             return $"{settingName}{NAME_VALUE_SEPARATOR}{settingValue}";
         }
 

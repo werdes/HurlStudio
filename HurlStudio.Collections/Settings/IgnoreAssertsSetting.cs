@@ -26,7 +26,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _ignoreAsserts = value;
-                Notify();
+                this.Notify();
             }
         }
 

@@ -14,14 +14,14 @@ namespace HurlStudio.Collections.Model.Serializer
 
         public HurlCollectionSectionContainer()
         {
-            Type = CollectionSectionType.None;
-            Lines = new List<string>();
+            this.Type = CollectionSectionType.None;
+            this.Lines = new List<string>();
         }
 
         public HurlCollectionSectionContainer(CollectionSectionType sectionType)
         {
-            Type = sectionType;
-            Lines = new List<string>();
+            this.Type = sectionType;
+            this.Lines = new List<string>();
         }
     }
 }

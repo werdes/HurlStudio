@@ -31,7 +31,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _certificateFile = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -41,7 +41,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _password = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -51,7 +51,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _keyFile = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -81,6 +81,7 @@ namespace HurlStudio.Collections.Settings
         public override IHurlArgument[] GetArguments()
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
+
             if (!string.IsNullOrEmpty(this.CertificateFile))
             {
                 if (!string.IsNullOrEmpty(this.Password))
@@ -92,6 +93,11 @@ namespace HurlStudio.Collections.Settings
                     arguments.Add(new ClientCertificateArgument(this.CertificateFile));
                 }
             }
+            if (!string.IsNullOrEmpty(this.KeyFile))
+            {
+                arguments.Add(new KeyArgument(this.KeyFile));
+            }
+
             return arguments.ToArray();
         }
 

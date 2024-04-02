@@ -14,7 +14,7 @@ namespace HurlStudio.UI.Controls
         {
             _notificationService = notificationService;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(Notification viewModel)

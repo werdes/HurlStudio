@@ -34,7 +34,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _location = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -44,7 +44,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _folder = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -54,7 +54,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collectionContainer = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -64,7 +64,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _parentFolder = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -74,7 +74,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _found = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -85,9 +85,9 @@ namespace HurlStudio.Model.CollectionContainer
         /// <exception cref="ArgumentNullException">if the collection or its location is null</exception>
         public override string GetId()
         {
-            if (_collectionContainer == null) throw new ArgumentNullException(nameof(CollectionContainer));
-            if (_collectionContainer.Collection == null) throw new ArgumentNullException(nameof(CollectionContainer.Collection));
-            if (_collectionContainer.Collection.FileLocation == null) throw new ArgumentNullException(nameof(CollectionContainer.Collection.FileLocation));
+            if (_collectionContainer == null) throw new ArgumentNullException(nameof(this.CollectionContainer));
+            if (_collectionContainer.Collection == null) throw new ArgumentNullException(nameof(this.CollectionContainer.Collection));
+            if (_collectionContainer.Collection.FileLocation == null) throw new ArgumentNullException(nameof(this.CollectionContainer.Collection.FileLocation));
 
             string id = _collectionContainer.GetId();
             string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.FileLocation) ?? string.Empty, _location);
@@ -96,7 +96,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionFolder)}: {GetId()} | {Folder}";
+            return $"{nameof(CollectionFolder)}: {this.GetId()} | {this.Folder}";
         }
     }
 }

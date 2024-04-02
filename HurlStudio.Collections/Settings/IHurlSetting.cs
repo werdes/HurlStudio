@@ -9,7 +9,7 @@ namespace HurlStudio.Collections.Settings
 {
     public interface IHurlSetting
     {
-        HurlStudio.HurlLib.HurlArgument.IHurlArgument[] GetArguments();
+        HurlLib.HurlArgument.IHurlArgument[] GetArguments();
         IHurlSetting? FillFromString(string value);
         string GetConfigurationName();
         string? GetConfigurationKey();

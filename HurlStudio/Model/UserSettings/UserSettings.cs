@@ -20,7 +20,7 @@ namespace HurlStudio.Model.UserSettings
         public event EventHandler<UiLanguageChangedEventArgs>? UiLanguageChanged;
         public event EventHandler<ThemeChangedEventArgs>? ThemeChanged;
 
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private CultureInfo _uiLanguage;
         private ObservableCollection<string>? _collectionFiles;
@@ -56,7 +56,7 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _theme = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -70,8 +70,8 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _uiLanguage = value;
-                Notify();
-                UiLanguageChanged?.Invoke(this, new UiLanguageChangedEventArgs(_uiLanguage));
+                this.Notify();
+                this.UiLanguageChanged?.Invoke(this, new UiLanguageChangedEventArgs(_uiLanguage));
             }
         }
 
@@ -89,7 +89,7 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _collectionFiles = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -100,7 +100,7 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _showEndOfLine = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -111,7 +111,7 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _showWhitespace = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -122,7 +122,7 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _wordWrap = value;
-                Notify();
+                this.Notify();
             }
         }
     }

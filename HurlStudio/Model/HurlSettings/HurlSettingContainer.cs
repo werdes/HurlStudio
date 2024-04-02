@@ -27,7 +27,7 @@ namespace HurlStudio.Model.HurlSettings
         public event EventHandler<SettingKeyChangedEventArgs>? SettingKeyChanged;
         public event EventHandler<SettingCollapsedChangedEventArgs>? SettingCollapsedChanged;
 
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
 
         private bool _isReadOnly;
@@ -47,7 +47,7 @@ namespace HurlStudio.Model.HurlSettings
             _document = document;
             _section = section;
 
-            _setting.PropertyChanged += On_Setting_PropertyChanged;
+            _setting.PropertyChanged += this.On_Setting_PropertyChanged;
         }
 
         /// <summary>
@@ -74,7 +74,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _isReadOnly = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -84,8 +84,8 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _collapsed = value;
-                Notify();
-                SettingCollapsedChanged?.Invoke(this, new SettingCollapsedChangedEventArgs(_collapsed));
+                this.Notify();
+                this.SettingCollapsedChanged?.Invoke(this, new SettingCollapsedChangedEventArgs(_collapsed));
             }
         }
 
@@ -95,9 +95,9 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _overwritten = value;
-                Notify();
-                Notify(nameof(DisplayOpacity));
-                Notify(nameof(DisplayTextDecoration));
+                this.Notify();
+                this.Notify(nameof(this.DisplayOpacity));
+                this.Notify(nameof(this.DisplayTextDecoration));
             }
         }
 
@@ -107,9 +107,9 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _enabled = value;
-                Notify();
-                Notify(nameof(DisplayOpacity));
-                SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_enabled));
+                this.Notify();
+                this.Notify(nameof(this.DisplayOpacity));
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_enabled));
             }
         }
 
@@ -119,7 +119,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _setting = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -149,8 +149,8 @@ namespace HurlStudio.Model.HurlSettings
 
         public string GetId()
         {
-            if (_section == null) throw new ArgumentNullException(nameof(Section));
-            if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(Section.CollectionComponent));
+            if (_section == null) throw new ArgumentNullException(nameof(this.Section));
+            if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(this.Section.CollectionComponent));
             if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
             string id = _section.CollectionComponent.GetId() + "#" + _section.SettingContainers.IndexOf(this);

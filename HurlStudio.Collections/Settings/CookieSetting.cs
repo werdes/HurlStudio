@@ -29,7 +29,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _cookieReadFile = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -39,7 +39,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _cookieWriteFile = value;
-                Notify();
+                this.Notify();
             }
         }
 

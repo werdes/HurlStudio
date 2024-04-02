@@ -31,7 +31,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collectionFolder = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -41,7 +41,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _file = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -51,7 +51,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collectionContainer = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -61,7 +61,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _location = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -72,7 +72,7 @@ namespace HurlStudio.Model.CollectionContainer
         /// <exception cref="ArgumentNullException">if the containing folder is null</exception>
         public override string GetId()
         {
-            if (_collectionFolder == null) throw new ArgumentNullException(nameof(Folder));
+            if (_collectionFolder == null) throw new ArgumentNullException(nameof(this.Folder));
 
             string folderId = _collectionFolder.GetId();
             string fileName = Path.GetFileName(_location);
@@ -81,7 +81,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionFile)}: {GetId()} | {File}";
+            return $"{nameof(CollectionFile)}: {this.GetId()} | {this.File}";
         }
     }
 }

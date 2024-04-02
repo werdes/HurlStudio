@@ -30,8 +30,8 @@ namespace HurlStudio.UI.Windows
             _configuration = App.Services.GetRequiredService<IConfiguration>();
             _userSettingsService = App.Services.GetRequiredService<IUserSettingsService>();
             _uiStateService = App.Services.GetRequiredService<IUiStateService>();
-            _viewModel = App.Services.GetRequiredService<MainWindowViewModel>(); 
-            InitializeComponent();
+            _viewModel = App.Services.GetRequiredService<MainWindowViewModel>();
+            this.InitializeComponent();
         }
 
         public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel, ServiceManager<ViewModelBasedControl> controlBuilder)
@@ -43,7 +43,7 @@ namespace HurlStudio.UI.Windows
             _viewModel = mainWindowViewModel;
             _controlBuilder = controlBuilder;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -89,8 +89,8 @@ namespace HurlStudio.UI.Windows
             }
             catch(Exception ex)
             {
-                _log?.LogCritical(ex, nameof(On_MainWindow_Initialized));
-                await base.ShowErrorMessage(ex);
+                _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
+                await this.ShowErrorMessage(ex);
             }
         }
 
@@ -99,7 +99,7 @@ namespace HurlStudio.UI.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void On_MainWindow_Closed(object? sender, System.EventArgs e)
+        protected void On_MainWindow_Closed(object? sender, EventArgs e)
         {
             try
             {
@@ -117,8 +117,8 @@ namespace HurlStudio.UI.Windows
             }
             catch (Exception ex)
             {
-                _log?.LogCritical(ex, nameof(On_MainWindow_Initialized));
-                base.ShowErrorMessage(ex).Wait();
+                _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
+                this.ShowErrorMessage(ex).Wait();
             }
         }
 
@@ -138,8 +138,8 @@ namespace HurlStudio.UI.Windows
             }
             catch (Exception ex)
             {
-                _log?.LogCritical(ex, nameof(On_MainWindow_Initialized));
-                await base.ShowErrorMessage(ex);
+                _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
+                await this.ShowErrorMessage(ex);
             }
         }
     }

@@ -21,13 +21,13 @@ namespace HurlStudio.UI.Controls.Tools
 
         public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             _log = logger;
             _editorViewViewModel = editorViewViewModel;
             _editorService = editorService;
             _notificationService = notificationService;
 
-            _editorViewViewModel.Collections.CollectionChanged += On_Collections_CollectionChanged;
+            _editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace HurlStudio.UI.Controls.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_CollectionExplorerTool_Initialized(object? sender, System.EventArgs e)
+        private void On_CollectionExplorerTool_Initialized(object? sender, EventArgs e)
         {
             foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
-                BindCollectionEvents(collectionContainer);
+                this.BindCollectionEvents(collectionContainer);
             }
         }
 
@@ -76,8 +76,8 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="collectionContainer"></param>
         private void BindCollectionEvents(CollectionContainer collectionContainer)
         {
-            collectionContainer.ControlSelectionChanged += On_CollectionContainer_ControlSelectionChanged;
-            collectionContainer.CollectionComponentMoved += On_CollectionContainer_CollectionComponentMoved;
+            collectionContainer.ControlSelectionChanged += this.On_CollectionContainer_ControlSelectionChanged;
+            collectionContainer.CollectionComponentMoved += this.On_CollectionContainer_CollectionComponentMoved;
         }
 
         /// <summary>
@@ -102,11 +102,11 @@ namespace HurlStudio.UI.Controls.Tools
         {
             try
             {
-                SetCollapsedStateForCollections(false);
+                this.SetCollapsedStateForCollections(false);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_ButtonExpandAll_Click));
+                _log.LogCritical(ex, nameof(this.On_ButtonExpandAll_Click));
             }
         }
 
@@ -119,11 +119,11 @@ namespace HurlStudio.UI.Controls.Tools
         {
             try
             {
-                SetCollapsedStateForCollections(true);
+                this.SetCollapsedStateForCollections(true);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_ButtonCollapseAll_Click));
+                _log.LogCritical(ex, nameof(this.On_ButtonCollapseAll_Click));
             }
         }
 
@@ -137,7 +137,7 @@ namespace HurlStudio.UI.Controls.Tools
             {
                 foreach (CollectionFolder folder in collectionContainer.Folders)
                 {
-                    SetCollapsedStateForFolder(isCollapsed, folder);
+                    this.SetCollapsedStateForFolder(isCollapsed, folder);
                 }
 
                 collectionContainer.Collapsed = isCollapsed;
@@ -156,7 +156,7 @@ namespace HurlStudio.UI.Controls.Tools
                 folder.Collapsed = isCollapsed;
                 foreach (CollectionFolder subFolder in folder.Folders)
                 {
-                    SetCollapsedStateForFolder(isCollapsed, subFolder);
+                    this.SetCollapsedStateForFolder(isCollapsed, subFolder);
                 }
             }
         }
@@ -221,7 +221,7 @@ namespace HurlStudio.UI.Controls.Tools
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_CollectionContainer_CollectionComponentMoved));
+                _log.LogCritical(ex, nameof(this.On_CollectionContainer_CollectionComponentMoved));
                 _notificationService.Notify(ex);
             }
             finally

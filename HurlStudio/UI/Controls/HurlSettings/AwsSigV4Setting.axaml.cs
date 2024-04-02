@@ -9,7 +9,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
         public AwsSigV4Setting()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(Collections.Settings.AwsSigV4Setting viewModel)

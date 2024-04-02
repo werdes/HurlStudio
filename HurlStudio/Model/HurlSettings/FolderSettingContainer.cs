@@ -14,7 +14,7 @@ namespace HurlStudio.Model.HurlSettings
     public class FolderSettingContainer : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private OrderedObservableCollection<HurlSettingContainer> _containers;
         private CollectionFolder _collectionFolder;
@@ -31,7 +31,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _containers = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -41,7 +41,7 @@ namespace HurlStudio.Model.HurlSettings
             set
             {
                 _collectionFolder = value;
-                Notify();
+                this.Notify();
             }
         }
     }

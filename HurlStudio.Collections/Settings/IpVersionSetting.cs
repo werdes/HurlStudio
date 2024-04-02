@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Enums;
+using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System;
 using System.Collections.Generic;
@@ -9,23 +10,23 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class FileRootSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class IpVersionSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
     {
-        public const string CONFIGURATION_NAME = "file_root";
+        public const string CONFIGURATION_NAME = "ip_version";
 
-        private string? _directory;
+        private IpVersion? _ipVersion;
 
-        public FileRootSetting() : base()
+        public IpVersionSetting() : base()
         {
             
         }
 
-        public string? Directory
+        public IpVersion? IpVersion
         {
-            get => _directory;
+            get => _ipVersion;
             set
             {
-                _directory = value;
+                _ipVersion = value;
                 this.Notify();
             }
         }
@@ -37,9 +38,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            if (!string.IsNullOrWhiteSpace(value))
+            IpVersion ipVersion;
+            if (Enum.TryParse<IpVersion>(value, out ipVersion))
             {
-                this.Directory = value;
+                _ipVersion = ipVersion;
                 return this;
             }
             return null;
@@ -51,14 +53,14 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            List<IHurlArgument> arguments = new List<IHurlArgument>();
-
-            if (!string.IsNullOrWhiteSpace(_directory))
+            switch (_ipVersion)
             {
-                arguments.Add(new FileRootArgument(_directory));
+                case Enums.IpVersion.IPv4: return new[] { new IPv4Argument() };
+                case Enums.IpVersion.IPv6: return new[] { new IPv6Argument() };
             }
 
-            return arguments.ToArray();
+            // In case "auto" or no value is selected, don't provide an argument and let hurl decide
+            return new IHurlArgument[] { };
         }
 
         /// <summary>
@@ -71,7 +73,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (file_root)
+        /// Returns the configuration name (ip_version)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -80,12 +82,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the serialized value
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _directory ?? string.Empty;
+            return _ipVersion?.ToString() ?? string.Empty;
         }
 
         /// <summary>
@@ -94,7 +96,14 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return Path.GetDirectoryName(_directory) ?? string.Empty;
+            switch (_ipVersion)
+            {
+                case Enums.IpVersion.IPv4: return "v4";
+                case Enums.IpVersion.IPv6: return "v6";
+                case Enums.IpVersion.Auto: return "auto";
+            }
+
+            return string.Empty;
         }
 
         /// <summary>

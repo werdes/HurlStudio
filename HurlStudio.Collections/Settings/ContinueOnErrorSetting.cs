@@ -26,7 +26,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _continueOnError = value;
-                Notify();
+                this.Notify();
             }
         }
 

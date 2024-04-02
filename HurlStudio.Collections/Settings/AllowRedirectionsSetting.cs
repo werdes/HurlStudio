@@ -30,7 +30,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _allowRedirections = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -40,7 +40,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _redirectionsTrusted = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -50,7 +50,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _maxRedirections = value;
-                Notify();
+                this.Notify();
             }
         }
 

@@ -13,9 +13,9 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public WelcomeDocumentViewModel(EditorViewViewModel editorViewViewModel)
         {
-            CanFloat = false;
-            CanPin = false;
-            Title = Localization.Localization.Dock_Document_Welcome_Title;
+            this.CanFloat = false;
+            this.CanPin = false;
+            this.Title = Localization.Localization.Dock_Document_Welcome_Title;
 
             _editorViewViewModel = editorViewViewModel;
         }
@@ -23,7 +23,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         public EditorViewViewModel EditorViewViewModel
         {
             get => _editorViewViewModel;
-            set => SetProperty(ref _editorViewViewModel, value);
+            set => this.SetProperty(ref _editorViewViewModel, value);
         }
     }
 }

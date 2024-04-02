@@ -24,7 +24,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
             _log = logger;
             _notificationService = notificationService;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(Collections.Settings.CaCertSetting viewModel)
@@ -68,7 +68,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_ButtonOpen_Click));
+                _log.LogCritical(ex, nameof(this.On_ButtonOpen_Click));
                 _notificationService.Notify(ex);
             }
 

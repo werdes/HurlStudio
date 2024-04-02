@@ -9,7 +9,7 @@ namespace HurlStudio.UI.Views
 
         public LoadingView() 
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(LoadingViewViewModel viewModel)

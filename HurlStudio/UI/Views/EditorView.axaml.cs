@@ -34,7 +34,7 @@ namespace HurlStudio.UI.Views
 
             this.DebugFactoryEvents(layoutFactory);
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -72,14 +72,14 @@ namespace HurlStudio.UI.Views
                 if (_viewModel.Layout != null)
                 {
                     _layoutFactory.InitLayout(_viewModel.Layout);
-                    _layoutFactory.ActiveDockableChanged += On_LayoutFactory_ActiveDockableChanged;
-                    _layoutFactory.DockableRemoved += On_LayoutFactory_DockableRemoved;
-                    _layoutFactory.DockableClosed += On_LayoutFactory_DockableClosed;
+                    _layoutFactory.ActiveDockableChanged += this.On_LayoutFactory_ActiveDockableChanged;
+                    _layoutFactory.DockableRemoved += this.On_LayoutFactory_DockableRemoved;
+                    _layoutFactory.DockableClosed += this.On_LayoutFactory_DockableClosed;
                 }
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_EditorView_Loaded));
+                _log.LogCritical(ex, nameof(this.On_EditorView_Loaded));
                 await this.ShowErrorMessage(ex);
             }
         }
@@ -113,19 +113,19 @@ namespace HurlStudio.UI.Views
             {
                 if (document.Document != null)
                 {
-                    this._viewModel.CanRedo = document.Document.UndoStack.CanRedo;
-                    this._viewModel.CanUndo = document.Document.UndoStack.CanUndo;
+                    _viewModel.CanRedo = document.Document.UndoStack.CanRedo;
+                    _viewModel.CanUndo = document.Document.UndoStack.CanUndo;
                 }
                 else
                 {
-                    this._viewModel.CanRedo = false;
-                    this._viewModel.CanUndo = false;
+                    _viewModel.CanRedo = false;
+                    _viewModel.CanUndo = false;
                 }
             }
             else
             {
-                this._viewModel.CanRedo = false;
-                this._viewModel.CanUndo = false;
+                _viewModel.CanRedo = false;
+                _viewModel.CanUndo = false;
             }
         }
 

@@ -23,8 +23,8 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public FileDocumentViewModel(EditorViewViewModel editorViewViewModel)
         {
-            CanFloat = false;
-            CanPin = false;
+            this.CanFloat = false;
+            this.CanPin = false;
 
             _editorViewViewModel = editorViewViewModel;
             _settingSections = new OrderedObservableCollection<HurlSettingSection>();
@@ -38,8 +38,8 @@ namespace HurlStudio.UI.ViewModels.Documents
                 this.SetProperty(ref _file, value);
                 if (_file != null)
                 {
-                    _file.PropertyChanged -= On_File_PropertyChanged;
-                    _file.PropertyChanged += On_File_PropertyChanged;
+                    _file.PropertyChanged -= this.On_File_PropertyChanged;
+                    _file.PropertyChanged += this.On_File_PropertyChanged;
                 }
 
                 this.ChangeTitle();
@@ -52,7 +52,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             set
             {
                 _editorViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -64,11 +64,11 @@ namespace HurlStudio.UI.ViewModels.Documents
                 _document = value;
                 if(_document != null)
                 {
-                    _document.TextChanged -= On_Document_TextChanged;
-                    _document.TextChanged += On_Document_TextChanged;
+                    _document.TextChanged -= this.On_Document_TextChanged;
+                    _document.TextChanged += this.On_Document_TextChanged;
                 }
 
-                Notify();
+                this.Notify();
             }
         }
 
@@ -78,7 +78,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             set
             {
                 _settingSections = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -92,12 +92,13 @@ namespace HurlStudio.UI.ViewModels.Documents
             {
                 this.Title = Localization.Localization.Common_Undefined;
             }
-            Notify(nameof(Title));
+
+            this.Notify(nameof(this.Title));
         }
 
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(File.Location))
+            if (e.PropertyName == nameof(this.File.Location))
             {
                 this.ChangeTitle();
             }

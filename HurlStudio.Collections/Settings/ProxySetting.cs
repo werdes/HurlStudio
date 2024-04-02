@@ -38,7 +38,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _protocol = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -48,7 +48,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _password = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -58,7 +58,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _user = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -68,8 +68,8 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _host = value;
-                Notify();
-                Notify(nameof(DisplayString));
+                this.Notify();
+                this.Notify(nameof(this.DisplayString));
             }
         }
 
@@ -79,7 +79,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _port = value;
-                Notify();
+                this.Notify();
             }
         }
 

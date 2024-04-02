@@ -10,7 +10,7 @@ namespace HurlStudio.UI.Controls
 
         public SettingContainer()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(Model.HurlSettings.HurlSettingContainer viewModel)

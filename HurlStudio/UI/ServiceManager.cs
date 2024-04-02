@@ -101,7 +101,7 @@ namespace HurlStudio.UI
         /// <returns>the service manager</returns>
         /// <exception cref="ArgumentNullException">if the service instance is null</exception>
         /// <exception cref="InvalidOperationException">if a service of the given type has already been registered</exception>
-        public ServiceManager<T> RegisterProviderAssociated<TService, TAssociated>(Func<T> provider)
+        public ServiceManager<T> RegisterProviderAssociated<TService, TAssociated>(Func<T> provider) where TService : T
         {
             lock (_instances)
                 lock (_associations)
@@ -164,14 +164,14 @@ namespace HurlStudio.UI
         /// </summary>
         /// <typeparam name="TService">Service type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public TService Get<TService>() where TService : T => (TService)Get(typeof(TService));
+        public TService Get<TService>() where TService : T => (TService)this.Get(typeof(TService));
 
         /// <summary>
         /// Syntactic sugar for the GetAssociated method
         /// </summary>
         /// <typeparam name="TAssociated">Associated type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public T GetAssociated<TAssociated>() => GetAssociated(typeof(TAssociated));
+        public T GetAssociated<TAssociated>() => this.GetAssociated(typeof(TAssociated));
 
         /// <summary>
         /// Checks, if an associated type is registered

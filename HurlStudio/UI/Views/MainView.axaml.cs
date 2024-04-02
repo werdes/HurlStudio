@@ -55,7 +55,7 @@ namespace HurlStudio.UI.Views
             _log = App.Services.GetRequiredService<ILogger<MainView>>();
             _notificationService = App.Services.GetRequiredService<INotificationService>();
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel)
@@ -77,9 +77,9 @@ namespace HurlStudio.UI.Views
             this.DataContext = _viewModel;
             this.DataTemplates.Add(_controlLocator);
 
-            _notificationService.NotificationAdded += On_NotificationService_NotificationAdded;
+            _notificationService.NotificationAdded += this.On_NotificationService_NotificationAdded;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -129,7 +129,7 @@ namespace HurlStudio.UI.Views
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_MainView_Loaded));
+                _log.LogCritical(ex, nameof(this.On_MainView_Loaded));
                 _notificationService.Notify(ex);
             }
         }
@@ -148,7 +148,7 @@ namespace HurlStudio.UI.Views
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_NotificationService_NotificationAdded));
+                _log.LogCritical(ex, nameof(this.On_NotificationService_NotificationAdded));
             }
         }
 
@@ -166,7 +166,7 @@ namespace HurlStudio.UI.Views
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(On_ButtonToggleNotificationList_Click));
+                _log.LogCritical(ex, nameof(this.On_ButtonToggleNotificationList_Click));
                 _notificationService.Notify(ex);
             }
         }

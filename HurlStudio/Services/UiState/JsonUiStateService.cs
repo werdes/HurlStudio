@@ -76,7 +76,7 @@ namespace HurlStudio.Services.UiState
         /// </summary>
         public async Task StoreUiStateAsync()
         {
-            string path = GetUiStateFilePath();
+            string path = this.GetUiStateFilePath();
 
             if (_uiState == null) throw new ArgumentNullException($"no ui state was provided to {nameof(JsonUiStateService)}");
 
@@ -89,7 +89,7 @@ namespace HurlStudio.Services.UiState
         /// </summary>
         public void StoreUiState()
         {
-            string path = GetUiStateFilePath();
+            string path = this.GetUiStateFilePath();
 
             if (_uiState == null) throw new ArgumentNullException($"no ui state was provided to {nameof(JsonUiStateService)}");
 
@@ -103,7 +103,7 @@ namespace HurlStudio.Services.UiState
         /// <returns></returns>
         private async Task LoadUiStateAsync()
         {
-            string path = GetUiStateFilePath();
+            string path = this.GetUiStateFilePath();
             if (File.Exists(path))
             {
                 string json = await File.ReadAllTextAsync(path, Encoding.UTF8);
@@ -111,7 +111,7 @@ namespace HurlStudio.Services.UiState
             }
             else
             {
-                _uiState = GetDefaultUiState();
+                _uiState = this.GetDefaultUiState();
                 await this.StoreUiStateAsync();
             }
         }
@@ -122,7 +122,7 @@ namespace HurlStudio.Services.UiState
         /// <returns></returns>
         private void LoadUiState()
         {
-            string path = GetUiStateFilePath();
+            string path = this.GetUiStateFilePath();
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path, Encoding.UTF8);
@@ -130,7 +130,7 @@ namespace HurlStudio.Services.UiState
             }
             else
             {
-                _uiState = GetDefaultUiState();
+                _uiState = this.GetDefaultUiState();
                 this.StoreUiState();
             }
         }
@@ -160,7 +160,7 @@ namespace HurlStudio.Services.UiState
         /// </summary>
         private void BuildUiStateCollections(EditorViewViewModel editorViewViewModel)
         {
-            if (_uiState == null) _uiState = GetDefaultUiState();
+            if (_uiState == null) _uiState = this.GetDefaultUiState();
 
             foreach (CollectionContainer collectionContainer in editorViewViewModel.Collections)
             {
@@ -207,7 +207,7 @@ namespace HurlStudio.Services.UiState
         /// <param name="editorView">view model of the editor view</param>
         public void SetCollectionExplorerState(EditorViewViewModel editorView)
         {
-            BuildUiStateCollections(editorView);
+            this.BuildUiStateCollections(editorView);
         }
 
         /// <summary>

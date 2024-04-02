@@ -51,7 +51,7 @@ namespace HurlStudio.Collections.Utility
         /// <returns></returns>
         public Type[] GetAvailableTypes()
         {
-            return _possibleSettingTypes.Values.ToArray();
+            return this._possibleSettingTypes.Values.ToArray();
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace HurlStudio.Collections.Utility
             string? settingValue = string.Join('=', value.Split('=').Skip(1));
             if (!string.IsNullOrEmpty(settingName))
             {
-                IHurlSetting? setting = GetSetting(settingName);
+                IHurlSetting? setting = this.GetSetting(settingName);
                 if (setting != null)
                 {
                     return setting.FillFromString(settingValue);
@@ -82,7 +82,7 @@ namespace HurlStudio.Collections.Utility
         /// <returns></returns>
         private IHurlSetting? GetSetting(string settingName)
         {
-            Type? settingType = _possibleSettingTypes.FirstOrDefault(x => x.Key.Equals(settingName)).Value;
+            Type? settingType = this._possibleSettingTypes.FirstOrDefault(x => x.Key.Equals(settingName)).Value;
             if (settingType != null)
             {
                 return Activator.CreateInstance(settingType) as IHurlSetting;

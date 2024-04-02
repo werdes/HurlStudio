@@ -26,7 +26,7 @@ namespace HurlStudio.Collections.Settings
             set
             {
                 _delay = value;
-                Notify();
+                this.Notify();
             }
         }
 

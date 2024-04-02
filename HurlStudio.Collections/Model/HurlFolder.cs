@@ -33,7 +33,7 @@ namespace HurlStudio.Collections.Model.Collection
 
         public override string ToString()
         {
-            return $"{Location}";
+            return $"{this.Location}";
         }
     }
 }

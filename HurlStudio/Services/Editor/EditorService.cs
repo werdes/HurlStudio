@@ -145,8 +145,8 @@ namespace HurlStudio.Services.Editor
 
                     // Place fileDocument in history
                     _editorViewViewModel.FileHistoryEntries.RemoveAll(x => x.Location == file.Location);
-                    _editorViewViewModel.FileHistoryEntries.Add(new Model.UiState.FileHistoryEntry(file.Location, DateTime.UtcNow));
-                    _editorViewViewModel.FileHistoryEntries = new ObservableCollection<Model.UiState.FileHistoryEntry>(_editorViewViewModel.FileHistoryEntries.OrderByDescending(x => x.LastOpened).Take(_fileHistoryLength));
+                    _editorViewViewModel.FileHistoryEntries.Add(new FileHistoryEntry(file.Location, DateTime.UtcNow));
+                    _editorViewViewModel.FileHistoryEntries = new ObservableCollection<FileHistoryEntry>(_editorViewViewModel.FileHistoryEntries.OrderByDescending(x => x.LastOpened).Take(_fileHistoryLength));
                 }
                 else
                 {
@@ -252,10 +252,10 @@ namespace HurlStudio.Services.Editor
                 }
 
                 // Bind events for reevaluation
-                hurlSettingContainer.SettingEnabledChanged += On_HurlSettingContainer_SettingEnabledChanged;
-                hurlSettingContainer.SettingOrderChanged += On_HurlSettingContainer_SettingOrderChanged;
-                hurlSettingContainer.SettingKeyChanged += On_HurlSettingContainer_SettingKeyChanged;
-                hurlSettingContainer.SettingCollapsedChanged += On_HurlSettingContainer_SettingCollapsedChanged;
+                hurlSettingContainer.SettingEnabledChanged += this.On_HurlSettingContainer_SettingEnabledChanged;
+                hurlSettingContainer.SettingOrderChanged += this.On_HurlSettingContainer_SettingOrderChanged;
+                hurlSettingContainer.SettingKeyChanged += this.On_HurlSettingContainer_SettingKeyChanged;
+                hurlSettingContainer.SettingCollapsedChanged += this.On_HurlSettingContainer_SettingCollapsedChanged;
             }
 
             this.EvaluateInheritances(fileDocument);
@@ -272,7 +272,7 @@ namespace HurlStudio.Services.Editor
             {
                 await Task.Run(() =>
                 {
-                    this._uiStateService.SetSettingCollapsedState(container.GetId(), e.Collapsed);
+                    _uiStateService.SetSettingCollapsedState(container.GetId(), e.Collapsed);
                 });
             }
         }
@@ -302,7 +302,7 @@ namespace HurlStudio.Services.Editor
                 await Task.Run(() =>
                 {
                     this.EvaluateInheritances(container.Document);
-                    this._uiStateService.SetSettingEnabledState(container.GetId(), e.Enabled);
+                    _uiStateService.SetSettingEnabledState(container.GetId(), e.Enabled);
                 });
             }
         }
@@ -432,9 +432,9 @@ namespace HurlStudio.Services.Editor
 
                 foreach (HurlSettingContainer hurlSettingContainer in allSettingContainers)
                 {
-                    hurlSettingContainer.SettingEnabledChanged -= On_HurlSettingContainer_SettingEnabledChanged;
-                    hurlSettingContainer.SettingOrderChanged -= On_HurlSettingContainer_SettingOrderChanged;
-                    hurlSettingContainer.SettingKeyChanged -= On_HurlSettingContainer_SettingKeyChanged;
+                    hurlSettingContainer.SettingEnabledChanged -= this.On_HurlSettingContainer_SettingEnabledChanged;
+                    hurlSettingContainer.SettingOrderChanged -= this.On_HurlSettingContainer_SettingOrderChanged;
+                    hurlSettingContainer.SettingKeyChanged -= this.On_HurlSettingContainer_SettingKeyChanged;
                 }
             }
 

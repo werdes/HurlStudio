@@ -10,7 +10,7 @@ namespace HurlStudio.UI.Controls.Tools
 
         public FileSettingsTool()
         {
-            InitializeComponent();
+            this.InitializeComponent();
             _viewModel = null;
         }
 

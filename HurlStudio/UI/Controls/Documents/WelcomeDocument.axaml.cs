@@ -10,7 +10,7 @@ namespace HurlStudio.UI.Controls.Documents
 
         public WelcomeDocument()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(WelcomeDocumentViewModel viewModel)

@@ -69,7 +69,7 @@ namespace HurlStudio.UI.Dock
                 CanFloat = false,
                 IsCollapsable = false,
                 CanPin = false,
-                VisibleDockables = CreateList<IDockable>(
+                VisibleDockables = this.CreateList<IDockable>(
                     new ToolDock()
                     {
                         IsCollapsable = false,
@@ -88,13 +88,13 @@ namespace HurlStudio.UI.Dock
                 CanCreateDocument = false
             };
 
-            var windowLayout = CreateRootDock();
+            var windowLayout = this.CreateRootDock();
             windowLayout.Title = MAIN_DOCK_ID;
             var windowLayoutContent = new ProportionalDock
             {
                 Orientation = Orientation.Horizontal,
                 IsCollapsable = false,
-                VisibleDockables = CreateList<IDockable>(
+                VisibleDockables = this.CreateList<IDockable>(
                     leftDock,
                     new ProportionalDockSplitter(),
                     documentDock
@@ -102,12 +102,12 @@ namespace HurlStudio.UI.Dock
             };
 
             windowLayout.IsCollapsable = false;
-            windowLayout.VisibleDockables = CreateList<IDockable>(windowLayoutContent);
+            windowLayout.VisibleDockables = this.CreateList<IDockable>(windowLayoutContent);
             windowLayout.ActiveDockable = windowLayoutContent;
 
-            var rootDock = CreateRootDock();
+            var rootDock = this.CreateRootDock();
             rootDock.IsCollapsable = false;
-            rootDock.VisibleDockables = CreateList<IDockable>(windowLayout);
+            rootDock.VisibleDockables = this.CreateList<IDockable>(windowLayout);
             rootDock.ActiveDockable = windowLayout;
             rootDock.DefaultDockable = windowLayout;
 

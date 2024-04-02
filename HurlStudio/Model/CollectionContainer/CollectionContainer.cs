@@ -26,7 +26,7 @@ namespace HurlStudio.Model.CollectionContainer
             set
             {
                 _collection = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -43,7 +43,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionContainer)}: {GetId()} | {Collection}";
+            return $"{nameof(CollectionContainer)}: {this.GetId()} | {this.Collection}";
         }
     }
 }

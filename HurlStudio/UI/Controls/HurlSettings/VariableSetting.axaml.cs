@@ -9,7 +9,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
         public VariableSetting()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         protected override void SetViewModelInstance(Collections.Settings.VariableSetting viewModel)

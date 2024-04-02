@@ -18,8 +18,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
     {
         private CollectionContainer CollectionContainer
         {
-            get => (CollectionContainer)GetValue(CollectionContainerProperty);
-            set => SetValue(CollectionContainerProperty, value);
+            get => (CollectionContainer)this.GetValue(CollectionContainerProperty);
+            set => this.SetValue(CollectionContainerProperty, value);
         }
 
         public static readonly StyledProperty<CollectionContainer> CollectionContainerProperty =
@@ -36,7 +36,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             _log = logger;
             _notificationService = notificationService;
 
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
         /// <summary>
@@ -45,7 +45,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="viewModel"></param>
         protected override void SetViewModelInstance(CollectionContainer viewModel)
         {
-            CollectionContainer = viewModel;
+            this.CollectionContainer = viewModel;
         }
 
         /// <summary>
@@ -53,9 +53,9 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_Collection_Initialized(object? sender, System.EventArgs e)
+        private void On_Collection_Initialized(object? sender, EventArgs e)
         {
-            this.DataContext = CollectionContainer;
+            this.DataContext = this.CollectionContainer;
         }
 
         /// <summary>
@@ -66,7 +66,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (this.DataContext == null) return;
-            CollectionContainer.Collapsed = !CollectionContainer.Collapsed;
+            this.CollectionContainer.Collapsed = !this.CollectionContainer.Collapsed;
         }
 
         /// <summary>
@@ -86,11 +86,11 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         {
             try
             {
-                await _editorService.OpenCollectionSettings(CollectionContainer);
+                await _editorService.OpenCollectionSettings(this.CollectionContainer);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
                 _notificationService.Notify(ex);
             }
         }
@@ -102,16 +102,16 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (CollectionContainer == null) return;
-            if (CollectionContainer.Collection == null) return;
-            if (CollectionContainer.Collection.FileLocation == null) return;
+            if (this.CollectionContainer == null) return;
+            if (this.CollectionContainer.Collection == null) return;
+            if (this.CollectionContainer.Collection.FileLocation == null) return;
             try
             {
-                OSUtility.RevealFileInExplorer(CollectionContainer.Collection.FileLocation);
+                OSUtility.RevealFileInExplorer(this.CollectionContainer.Collection.FileLocation);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(OpenComponentDocument));
+                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
                 _notificationService.Notify(ex);
             }
         }

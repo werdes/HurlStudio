@@ -20,8 +20,8 @@ namespace HurlStudio.UI.Controls
     {
         public Model.Enums.Icon Type
         {
-            get => (Model.Enums.Icon)GetValue(TypeProperty);
-            set => SetValue(TypeProperty, value);
+            get => (Model.Enums.Icon)this.GetValue(TypeProperty);
+            set => this.SetValue(TypeProperty, value);
         }
 
         public static readonly StyledProperty<Model.Enums.Icon> TypeProperty =
@@ -29,7 +29,7 @@ namespace HurlStudio.UI.Controls
 
         public Icon()
         {
-            this.Initialized += On_Icon_Initialized;
+            this.Initialized += this.On_Icon_Initialized;
             this.Height = 16;
             this.Width = 16;
         }
@@ -42,7 +42,7 @@ namespace HurlStudio.UI.Controls
         private void On_Icon_Initialized(object? sender, EventArgs e)
         {
             ThemeVariant currentThemeVariant = this.ActualThemeVariant;
-            string? fileName = Type.GetFileName();
+            string? fileName = this.Type.GetFileName();
             string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
 
             if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(assemblyName))

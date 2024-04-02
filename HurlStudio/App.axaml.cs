@@ -66,7 +66,7 @@ public partial class App : Application
 
         if (Design.IsDesignMode)
         {
-            RequestedThemeVariant = ThemeVariant.Dark;
+            this.RequestedThemeVariant = ThemeVariant.Dark;
         }
     }
 
@@ -84,13 +84,13 @@ public partial class App : Application
         {
 
             BuildServiceProvider();
-            SetUiCulture();
-            SetTheme();
+            this.SetUiCulture();
+            this.SetTheme();
 
             RegisterControls();
             RegisterViewModelHierarchy();
 
-            if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (this.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
                 MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
@@ -138,9 +138,9 @@ public partial class App : Application
         IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
         UserSettings? userSettings = userSettingsService.GetUserSettings(false);
 
-        if (Application.Current != null && userSettings != null)
+        if (Current != null && userSettings != null)
         {
-            Application.Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
+            Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
         }
     }
 
@@ -177,13 +177,13 @@ public partial class App : Application
         controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
         controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
 
-        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Collection, CollectionContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Collection>());
+        controlBuilder.RegisterProviderAssociated<Collection, CollectionContainer>(() => Services.GetRequiredService<Collection>());
         controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
-        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.Folder, CollectionFolder>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.Folder>());
-        controlBuilder.RegisterProviderAssociated<UI.Controls.ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<UI.Controls.ViewFrame>());
+        controlBuilder.RegisterProviderAssociated<Folder, CollectionFolder>(() => Services.GetRequiredService<Folder>());
+        controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
 
         // HurlSettings
-        controlBuilder.RegisterProviderAssociated<SettingContainer, Model.HurlSettings.HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
+        controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
         controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
         controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
         controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
@@ -300,13 +300,13 @@ public partial class App : Application
         // Control Builder
         services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
 
+        // Windows
+        services.AddSingleton<MainWindow>();
+
         // Views
         services.AddSingleton<MainView>();
         services.AddSingleton<LoadingView>();
         services.AddSingleton<EditorView>();
-
-        // Windows
-        services.AddSingleton<MainWindow>();
 
         // Controls
         services.AddTransient<CollectionExplorerTool>();
@@ -319,9 +319,9 @@ public partial class App : Application
         services.AddTransient<ViewFrame>();
 
         // Collection Explorer components
-        services.AddTransient<UI.Controls.CollectionExplorer.Collection>();
+        services.AddTransient<Collection>();
         services.AddTransient<UI.Controls.CollectionExplorer.File>();
-        services.AddTransient<UI.Controls.CollectionExplorer.Folder>();
+        services.AddTransient<Folder>();
 
         // Hurl Settings
         services.AddTransient<SettingContainer>();
