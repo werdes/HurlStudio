@@ -1,28 +1,37 @@
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
-using HurlStudio.Common.UI;
 using HurlStudio.HurlLib.HurlArgument;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class NoProxySetting : BaseSetting, IHurlSetting
+    public class BasicUserSetting : BaseSetting, IHurlSetting
     {
-        private const string CONFIGURATION_NAME = "no_proxy";
-        private const string VALUE_SEPARATOR = ",";
-        
-        private OrderedObservableCollection<string> _noProxyHosts;
+        private const string CONFIGURATION_NAME = "user";
+        private const char VALUE_SEPARATOR = ':';
 
-        public NoProxySetting()
+        private string? _user;
+        private string? _password;
+
+        public BasicUserSetting()
         {
-            _noProxyHosts = new OrderedObservableCollection<string>();
         }
 
-        public OrderedObservableCollection<string> NoProxyHosts
+        public string? User
         {
-            get => _noProxyHosts;
+            get => _user;
             set
             {
-                _noProxyHosts = value;
+                _user = value;
+                this.Notify();
+            }
+        }
+
+        public string? Password
+        {
+            get => _password;
+            set
+            {
+                _password = value;
                 this.Notify();
             }
         }
@@ -34,9 +43,10 @@ namespace HurlStudio.Collections.Settings
         public override IHurlArgument[] GetArguments()
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
-            if (_noProxyHosts.Count > 0)
+            
+            if (!string.IsNullOrEmpty(this.User))
             {
-                arguments.Add(new NoProxyArgument(_noProxyHosts.ToList()));
+                arguments.Add(new UserArgument(this.User, this.Password ?? string.Empty));
             }
 
             return arguments.ToArray();
@@ -49,10 +59,18 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            if (string.IsNullOrEmpty(value)) return null;
-            
-            _noProxyHosts.AddRange(value.Split(VALUE_SEPARATOR));
-            return _noProxyHosts.Count > 0 ? this : null;
+            string[] parts = value.Split(VALUE_SEPARATOR);
+            if (parts.Length == 0) return null;
+
+            this.User = parts.Get(0);
+
+            string? passwordBase64 = parts.Get(1);
+            if (!string.IsNullOrEmpty(passwordBase64))
+            {
+                this.Password = passwordBase64.DecodeBase64();
+            }
+
+            return this;
         }
 
         /// <summary>
@@ -71,17 +89,17 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return string.Empty;
+            return this.User ?? string.Empty;
         }
 
         /// <summary>
-        /// Returns the inheritance behavior -> Merge -> Items of this settings will be merged
+        /// Returns the inheritance behavior -> Overwrite -> Only one user can be passed
         /// into a new instance of the returned argument at execution time
         /// </summary>
         /// <returns></returns>
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
-            return HurlSettingInheritanceBehavior.Merge;
+            return HurlSettingInheritanceBehavior.Overwrite;
         }
         
         /// <summary>
@@ -94,12 +112,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the serialized value 
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return string.Join(VALUE_SEPARATOR, _noProxyHosts);
+            return $"{this.User}{VALUE_SEPARATOR}{this.Password?.EncodeBase64()}";
         }
     }
 }

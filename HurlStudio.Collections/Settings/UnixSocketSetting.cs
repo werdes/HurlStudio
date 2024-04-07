@@ -1,30 +1,30 @@
-﻿using HurlStudio.Common.Enums;
+using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class DelaySetting : BaseSetting, IHurlSetting
+    public class UnixSocketSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "delay";
+        private const string CONFIGURATION_NAME = "unix_socket";
 
-        private uint? _delay;
+        private string? _path;
 
-        public DelaySetting()
+        public UnixSocketSetting()
         {
-
+            
         }
 
-        public uint? Delay
+        public string? Path
         {
-            get => _delay;
+            get => _path;
             set
             {
-                _delay = value;
+                _path = value;
                 this.Notify();
             }
         }
-
+        
+        
         /// <summary>
         /// Deserializes the supplied configuration string into this instance
         /// </summary>
@@ -32,13 +32,8 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint outVal;
-            if (uint.TryParse(value, out outVal))
-            {
-                this.Delay = outVal;
-                return this;
-            }
-            return null;
+            this.Path = value;
+            return this;
         }
 
         /// <summary>
@@ -49,9 +44,9 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if (_delay.HasValue)
+            if (!string.IsNullOrWhiteSpace(_path))
             {
-                arguments.Add(new DelayArgument(_delay.Value));
+                arguments.Add(new UnixSocketArgument(_path));
             }
 
             return arguments.ToArray();
@@ -67,7 +62,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (delay)
+        /// Returns the configuration name (unix_socket)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -76,12 +71,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "0", if null
+        /// Returns the serialized value
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _delay?.ToString() ?? 0.ToString();
+            return _path ?? string.Empty;
         }
 
         /// <summary>

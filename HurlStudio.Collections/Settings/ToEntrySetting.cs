@@ -1,26 +1,26 @@
-﻿using HurlStudio.Common.Enums;
+using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class DelaySetting : BaseSetting, IHurlSetting
+    public class ToEntrySetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "delay";
+        private const string CONFIGURATION_NAME = "to_entry";
 
-        private uint? _delay;
+        private uint? _toEntry;
 
-        public DelaySetting()
+        public ToEntrySetting()
         {
-
+            
         }
 
-        public uint? Delay
+        public uint? ToEntry
         {
-            get => _delay;
+            get => _toEntry;
             set
             {
-                _delay = value;
+                _toEntry = value;
                 this.Notify();
             }
         }
@@ -32,13 +32,12 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint outVal;
-            if (uint.TryParse(value, out outVal))
-            {
-                this.Delay = outVal;
-                return this;
-            }
-            return null;
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            if (!uint.TryParse(value, out uint toEntry)) return null;
+
+            this.ToEntry = toEntry;
+
+            return this;
         }
 
         /// <summary>
@@ -49,9 +48,9 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if (_delay.HasValue)
+            if(_toEntry.HasValue)
             {
-                arguments.Add(new DelayArgument(_delay.Value));
+                arguments.Add(new ToEntryArgument(_toEntry.Value));
             }
 
             return arguments.ToArray();
@@ -67,7 +66,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (delay)
+        /// Returns the configuration name (retry)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -76,12 +75,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "0", if null
+        /// Returns the serialized value
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _delay?.ToString() ?? 0.ToString();
+            return this.ToEntry.ToString() ?? 0.ToString();
         }
 
         /// <summary>

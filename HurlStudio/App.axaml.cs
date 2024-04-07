@@ -50,342 +50,346 @@ using HurlStudio.UI.Controls.HurlSettings;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.UI.ViewModels.Controls;
 
-namespace HurlStudio;
-
-public partial class App : Application
+namespace HurlStudio
 {
-    public static IServiceProvider Services { get; private set; }
-    public static IConfiguration? Config { get; private set; }
-
-    /// <summary>
-    /// Entrypoint after Avalonia initialization
-    /// </summary>
-    public override void Initialize()
+    public partial class App : Application
     {
-        AvaloniaXamlLoader.Load(this);
+        public static IServiceProvider Services { get; private set; }
+        public static IConfiguration? Config { get; private set; }
 
-        if (Design.IsDesignMode)
+        /// <summary>
+        /// Entrypoint after Avalonia initialization
+        /// </summary>
+        public override void Initialize()
         {
-            this.RequestedThemeVariant = ThemeVariant.Dark;
-        }
-    }
+            AvaloniaXamlLoader.Load(this);
 
-    /// <summary>
-    /// Avalona Framework Initialization completed 
-    /// - create the main window
-    /// </summary>
-    public override void OnFrameworkInitializationCompleted()
-    {
-        // Line below is needed to remove Avalonia data validation.
-        // Without this line you will get duplicate validations from both Avalonia and CT
-        BindingPlugins.DataValidators.RemoveAt(0);
-
-        try
-        {
-
-            BuildServiceProvider();
-            this.SetUiCulture();
-            this.SetTheme();
-
-            RegisterControls();
-            RegisterViewModelHierarchy();
-
-            if (this.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
+            if (Design.IsDesignMode)
             {
-                MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
-                MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
-                if (mainWindow != null)
+                this.RequestedThemeVariant = ThemeVariant.Dark;
+            }
+        }
+
+        /// <summary>
+        /// Avalona Framework Initialization completed 
+        /// - create the main window
+        /// </summary>
+        public override void OnFrameworkInitializationCompleted()
+        {
+            // Line below is needed to remove Avalonia data validation.
+            // Without this line you will get duplicate validations from both Avalonia and CT
+            BindingPlugins.DataValidators.RemoveAt(0);
+
+            try
+            {
+
+                BuildServiceProvider();
+                this.SetUiCulture();
+                this.SetTheme();
+
+                RegisterControls();
+                RegisterViewModelHierarchy();
+
+                if (this.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
-                    mainWindow.DataContext = viewModel;
-                    desktop.MainWindow = mainWindow;
+                    MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
+                    MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
+                    if (mainWindow != null)
+                    {
+                        mainWindow.DataContext = viewModel;
+                        desktop.MainWindow = mainWindow;
+                    }
+                }
+
+                base.OnFrameworkInitializationCompleted();
+
+#if DEBUG
+                this.AttachDevTools();
+#endif
+
+            }
+            catch (Exception ex)
+            {
+                IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
+                box.ShowWindowAsync();
+            }
+        }
+
+
+        /// <summary>
+        /// Sets the UI Culture for Localization
+        /// </summary>
+        private void SetUiCulture()
+        {
+            IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
+            UserSettings? userSettings = userSettingsService.GetUserSettings(false);
+
+            if (userSettings != null)
+            {
+                Localization.Culture = userSettings?.UiLanguage ?? CultureInfo.InvariantCulture;
+            }
+        }
+
+        /// <summary>
+        /// Sets the confirgured Theme
+        /// </summary>
+        private void SetTheme()
+        {
+            IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
+            UserSettings? userSettings = userSettingsService.GetUserSettings(false);
+
+            if (Current != null && userSettings != null)
+            {
+                Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
+            }
+        }
+
+        /// <summary>
+        /// Build the service provider
+        /// </summary>
+        private static void BuildServiceProvider()
+        {
+            IServiceCollection services = ConfigureServices();
+            Services = services.BuildServiceProvider();
+        }
+
+
+        /// <summary>
+        /// Registers user controls in the ControlBase service manager
+        /// </summary>
+        private static void RegisterControls()
+        {
+            ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
+            ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
+            ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
+
+            // Views
+            controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
+            controlBuilder.RegisterProviderAssociated<LoadingView, LoadingViewViewModel>(() => Services.GetRequiredService<LoadingView>());
+            controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
+
+            // Controls
+            controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
+            controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
+            controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
+            controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
+            controlBuilder.RegisterProviderAssociated<RecentFile, FileHistoryEntry>(() => Services.GetRequiredService<RecentFile>());
+            controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
+            controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
+
+            controlBuilder.RegisterProviderAssociated<Collection, CollectionContainer>(() => Services.GetRequiredService<Collection>());
+            controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
+            controlBuilder.RegisterProviderAssociated<Folder, CollectionFolder>(() => Services.GetRequiredService<Folder>());
+            controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
+
+            // HurlSettings
+            controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
+            controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
+            controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
+            controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
+            controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
+            controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
+
+
+
+            // Tools
+            toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
+
+            // Documents
+            documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
+            documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
+        
+
+        }
+
+        /// <summary>
+        ///  Registers the view models within each other
+        /// </summary>
+        private static void RegisterViewModelHierarchy()
+        {
+            MainViewViewModel mainViewViewModel = Services.GetRequiredService<MainViewViewModel>();
+            mainViewViewModel.ViewFrameViewModel = Services.GetRequiredService<ViewFrameViewModel>();
+
+            mainViewViewModel.EditorView = Services.GetRequiredService<EditorViewViewModel>().SetRoot(mainViewViewModel) as EditorViewViewModel;
+            mainViewViewModel.LoadingView = Services.GetRequiredService<LoadingViewViewModel>().SetRoot(mainViewViewModel) as LoadingViewViewModel;
+        }
+
+        /// <summary>
+        /// Assembles the service collection
+        /// </summary>
+        /// <returns>The service collection</returns>
+        private static IServiceCollection ConfigureServices()
+        {
+            ServiceCollection services = new ServiceCollection();
+
+            Config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true)
+                .Build();
+            string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GlobalConstants.APPLICATION_DIRECTORY_NAME);
+            CreateRequiredDirectories(baseDir);
+
+            services.AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
+                loggingBuilder.AddNLog(InitializeLogging(baseDir));
+            });
+            services.AddDataProtection();
+            
+            
+            services.AddSingleton<LayoutFactory>();
+
+            services.AddSingleton<IConfiguration>(Config);
+            services.AddSingleton<IUserSettingsService, JsonUserSettingsService>();
+            services.AddSingleton<IUiStateService, JsonUiStateService>();
+            services.AddSingleton<IniSettingParser>();
+            services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
+            services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
+            services.AddSingleton<IEditorService, EditorService>();
+            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddSingleton<ControlLocator>();
+
+            services.AddSingleton<ICollectionService, CollectionService>();
+            services.AddSingleton<IEnvironmentService, EnvironmentService>();
+
+            ConfigureDockControlViewmodels(services);
+            ConfigureControls(services);
+            ConfigureViewModels(services);
+
+
+            return services;
+        }
+
+        /// <summary>
+        /// Configures the view models
+        /// </summary>
+        /// <param name="services"></param>
+        private static void ConfigureViewModels(IServiceCollection services)
+        {
+            services.AddSingleton<MainWindowViewModel>();
+
+            services.AddSingleton<LoadingViewViewModel>();
+            services.AddSingleton<EditorViewViewModel>();
+            services.AddSingleton<MainViewViewModel>();
+            services.AddSingleton<ViewFrameViewModel>();
+
+            services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
+                .Register(provider.GetRequiredService<MainViewViewModel>()));
+        }
+
+        /// <summary>
+        /// Configures the tool/document viewmodels
+        /// </summary>
+        /// <param name="services"></param>
+        private static void ConfigureDockControlViewmodels(IServiceCollection services)
+        {
+            // Viewmodel Builders
+            services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
+            services.AddSingleton<ServiceManager<Document>>(provider => new ServiceManager<Document>());
+
+            // View models
+            services.AddSingleton<CollectionExplorerToolViewModel>();
+            services.AddTransient<FileSettingsToolViewModel>();
+            services.AddTransient<FileDocumentViewModel>();
+            services.AddTransient<WelcomeDocumentViewModel>();
+        }
+
+        /// <summary>
+        /// Configures the controls
+        /// </summary>
+        /// <param name="services"></param>
+        private static void ConfigureControls(IServiceCollection services)
+        {
+            // Control Builder
+            services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
+
+            // Windows
+            services.AddSingleton<MainWindow>();
+
+            // Views
+            services.AddSingleton<MainView>();
+            services.AddSingleton<LoadingView>();
+            services.AddSingleton<EditorView>();
+
+            // Controls
+            services.AddTransient<CollectionExplorerTool>();
+            services.AddTransient<FileSettingsTool>();
+            services.AddTransient<FileDocument>();
+            services.AddTransient<WelcomeDocument>();
+            services.AddTransient<RecentFile>();
+            services.AddTransient<NotificationCard>();
+            services.AddTransient<SettingSection>();
+            services.AddTransient<ViewFrame>();
+
+            // Collection Explorer components
+            services.AddTransient<Collection>();
+            services.AddTransient<UI.Controls.CollectionExplorer.File>();
+            services.AddTransient<Folder>();
+
+            // Hurl Settings
+            services.AddTransient<SettingContainer>();
+            services.AddTransient<ProxySetting>();
+            services.AddTransient<VariableSetting>();
+            services.AddTransient<AwsSigV4Setting>();
+            services.AddTransient<CaCertSetting>();
+            services.AddTransient<ClientCertificateSetting>();
+        }
+
+        /// <summary>
+        /// Creates the required directories (under <paramref name="baseDir"/> folder)
+        /// </summary>
+        /// <param name="baseDir">The base directory (most likely the ApplicationData special folder)</param>
+        private static void CreateRequiredDirectories(string baseDir)
+        {
+            string[] requiredDirectories = new string[]
+            {
+                baseDir,
+                Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME),
+                Path.Combine(baseDir, GlobalConstants.ENVIRONMENTS_DIRECTORY_NAME)
+            };
+
+            foreach (string directory in requiredDirectories)
+            {
+                if (!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
                 }
             }
 
-            base.OnFrameworkInitializationCompleted();
-
-#if DEBUG
-            this.AttachDevTools();
-#endif
-
         }
-        catch (Exception ex)
+
+        /// <summary>
+        /// Initializes the NLog _log configuration
+        /// -> Avalonia previewer starts at the solution directory, which doesn't contain a logging configuration file
+        /// </summary>
+        private static LoggingConfiguration InitializeLogging(string baseDir)
         {
-            IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-            box.ShowWindowAsync();
-        }
-    }
-
-
-    /// <summary>
-    /// Sets the UI Culture for Localization
-    /// </summary>
-    private void SetUiCulture()
-    {
-        IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
-        UserSettings? userSettings = userSettingsService.GetUserSettings(false);
-
-        if (userSettings != null)
-        {
-            Localization.Culture = userSettings?.UiLanguage ?? CultureInfo.InvariantCulture;
-        }
-    }
-
-    /// <summary>
-    /// Sets the confirgured Theme
-    /// </summary>
-    private void SetTheme()
-    {
-        IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
-        UserSettings? userSettings = userSettingsService.GetUserSettings(false);
-
-        if (Current != null && userSettings != null)
-        {
-            Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
-        }
-    }
-
-    /// <summary>
-    /// Build the service provider
-    /// </summary>
-    private static void BuildServiceProvider()
-    {
-        IServiceCollection services = ConfigureServices();
-        Services = services.BuildServiceProvider();
-    }
-
-
-    /// <summary>
-    /// Registers user controls in the ControlBase service manager
-    /// </summary>
-    private static void RegisterControls()
-    {
-        ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
-        ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
-        ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
-
-        // Views
-        controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
-        controlBuilder.RegisterProviderAssociated<LoadingView, LoadingViewViewModel>(() => Services.GetRequiredService<LoadingView>());
-        controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
-
-        // Controls
-        controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
-        controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
-        controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
-        controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
-        controlBuilder.RegisterProviderAssociated<RecentFile, FileHistoryEntry>(() => Services.GetRequiredService<RecentFile>());
-        controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
-        controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
-
-        controlBuilder.RegisterProviderAssociated<Collection, CollectionContainer>(() => Services.GetRequiredService<Collection>());
-        controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
-        controlBuilder.RegisterProviderAssociated<Folder, CollectionFolder>(() => Services.GetRequiredService<Folder>());
-        controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
-
-        // HurlSettings
-        controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
-        controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
-        controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
-        controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
-        controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
-        controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
-
-
-
-        // Tools
-        toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
-
-        // Documents
-        documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
-        documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
-        
-
-    }
-
-    /// <summary>
-    ///  Registers the view models within each other
-    /// </summary>
-    private static void RegisterViewModelHierarchy()
-    {
-        MainViewViewModel mainViewViewModel = Services.GetRequiredService<MainViewViewModel>();
-        mainViewViewModel.ViewFrameViewModel = Services.GetRequiredService<ViewFrameViewModel>();
-
-        mainViewViewModel.EditorView = Services.GetRequiredService<EditorViewViewModel>().SetRoot(mainViewViewModel) as EditorViewViewModel;
-        mainViewViewModel.LoadingView = Services.GetRequiredService<LoadingViewViewModel>().SetRoot(mainViewViewModel) as LoadingViewViewModel;
-    }
-
-    /// <summary>
-    /// Assembles the service collection
-    /// </summary>
-    /// <returns>The service collection</returns>
-    private static IServiceCollection ConfigureServices()
-    {
-        ServiceCollection services = new ServiceCollection();
-
-        Config = new ConfigurationBuilder().SetBasePath(Directory.GetCurrentDirectory())
-                                           .AddJsonFile("appsettings.json", true)
-                                           .Build();
-        string baseDir = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), GlobalConstants.APPLICATION_DIRECTORY_NAME);
-        CreateRequiredDirectories(baseDir);
-
-        services.AddLogging(loggingBuilder =>
-        {
-            loggingBuilder.ClearProviders();
-            loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-            loggingBuilder.AddNLog(InitializeLogging(baseDir));
-        });
-        services.AddSingleton<LayoutFactory>();
-
-        services.AddSingleton<IConfiguration>(Config);
-        services.AddSingleton<IUserSettingsService, JsonUserSettingsService>();
-        services.AddSingleton<IUiStateService, JsonUiStateService>();
-        services.AddSingleton<IniSettingParser>();
-        services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
-        services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
-        services.AddSingleton<IEditorService, EditorService>();
-        services.AddSingleton<INotificationService, NotificationService>();
-        services.AddSingleton<ControlLocator>();
-
-        services.AddSingleton<ICollectionService, CollectionService>();
-        services.AddSingleton<IEnvironmentService, EnvironmentService>();
-
-        ConfigureDockControlViewmodels(services);
-        ConfigureControls(services);
-        ConfigureViewModels(services);
-
-
-        return services;
-    }
-
-    /// <summary>
-    /// Configures the view models
-    /// </summary>
-    /// <param name="services"></param>
-    private static void ConfigureViewModels(IServiceCollection services)
-    {
-        services.AddSingleton<MainWindowViewModel>();
-
-        services.AddSingleton<LoadingViewViewModel>();
-        services.AddSingleton<EditorViewViewModel>();
-        services.AddSingleton<MainViewViewModel>();
-        services.AddSingleton<ViewFrameViewModel>();
-
-        services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
-                                                                             .Register(provider.GetRequiredService<MainViewViewModel>()));
-    }
-
-    /// <summary>
-    /// Configures the tool/document viewmodels
-    /// </summary>
-    /// <param name="services"></param>
-    private static void ConfigureDockControlViewmodels(IServiceCollection services)
-    {
-        // Viewmodel Builders
-        services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
-        services.AddSingleton<ServiceManager<Document>>(provider => new ServiceManager<Document>());
-
-        // View models
-        services.AddSingleton<CollectionExplorerToolViewModel>();
-        services.AddTransient<FileSettingsToolViewModel>();
-        services.AddTransient<FileDocumentViewModel>();
-        services.AddTransient<WelcomeDocumentViewModel>();
-    }
-
-    /// <summary>
-    /// Configures the controls
-    /// </summary>
-    /// <param name="services"></param>
-    private static void ConfigureControls(IServiceCollection services)
-    {
-        // Control Builder
-        services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
-
-        // Windows
-        services.AddSingleton<MainWindow>();
-
-        // Views
-        services.AddSingleton<MainView>();
-        services.AddSingleton<LoadingView>();
-        services.AddSingleton<EditorView>();
-
-        // Controls
-        services.AddTransient<CollectionExplorerTool>();
-        services.AddTransient<FileSettingsTool>();
-        services.AddTransient<FileDocument>();
-        services.AddTransient<WelcomeDocument>();
-        services.AddTransient<RecentFile>();
-        services.AddTransient<NotificationCard>();
-        services.AddTransient<SettingSection>();
-        services.AddTransient<ViewFrame>();
-
-        // Collection Explorer components
-        services.AddTransient<Collection>();
-        services.AddTransient<UI.Controls.CollectionExplorer.File>();
-        services.AddTransient<Folder>();
-
-        // Hurl Settings
-        services.AddTransient<SettingContainer>();
-        services.AddTransient<ProxySetting>();
-        services.AddTransient<VariableSetting>();
-        services.AddTransient<AwsSigV4Setting>();
-        services.AddTransient<CaCertSetting>();
-        services.AddTransient<ClientCertificateSetting>();
-    }
-
-    /// <summary>
-    /// Creates the required directories (under <paramref name="baseDir"/> folder)
-    /// </summary>
-    /// <param name="baseDir">The base directory (most likely the ApplicationData special folder)</param>
-    private static void CreateRequiredDirectories(string baseDir)
-    {
-        string[] requiredDirectories = new string[]
-        {
-            baseDir,
-            Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME),
-            Path.Combine(baseDir, GlobalConstants.ENVIRONMENTS_DIRECTORY_NAME)
-        };
-
-        foreach (string directory in requiredDirectories)
-        {
-            if (!Directory.Exists(directory))
+            LoggingConfiguration config = new LoggingConfiguration();
+            NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
             {
-                Directory.CreateDirectory(directory);
-            }
-        }
-
-    }
-
-    /// <summary>
-    /// Initializes the NLog _log configuration
-    /// -> Avalonia previewer starts at the solution directory, which doesn't contain a logging configuration file
-    /// </summary>
-    private static LoggingConfiguration InitializeLogging(string baseDir)
-    {
-        LoggingConfiguration config = new LoggingConfiguration();
-        NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
-        {
-            Name = "LogTarget",
-            FileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.log"),
-            Encoding = Encoding.UTF8,
-            MaxArchiveFiles = 3,
-            ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Sequence,
-            ArchiveAboveSize = 10485760,
-            ArchiveFileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.{#######}.a"),
-            Layout = @"${longdate}| ${level:upperCase=true:padding=5}| ${callsite:includSourcePath=true:padding=100}| ${message} ${exception:format=ToString}"
-            //Layout = @"${longdate}|${level}|${message} |${all-event-properties} ${exception:format=tostring}"
-        };
+                Name = "LogTarget",
+                FileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.log"),
+                Encoding = Encoding.UTF8,
+                MaxArchiveFiles = 3,
+                ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Sequence,
+                ArchiveAboveSize = 10485760,
+                ArchiveFileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.{#######}.a"),
+                Layout = @"${longdate}| ${level:upperCase=true:padding=5}| ${callsite:includSourcePath=true:padding=100}| ${message} ${exception:format=ToString}"
+                //Layout = @"${longdate}|${level}|${message} |${all-event-properties} ${exception:format=tostring}"
+            };
 
 #if DEBUG
-        LoggingRule loggingRule = new LoggingRule("*", loggingTarget);
-        loggingRule.EnableLoggingForLevels(NLog.LogLevel.Trace, NLog.LogLevel.Fatal);
+            LoggingRule loggingRule = new LoggingRule("*", loggingTarget);
+            loggingRule.EnableLoggingForLevels(NLog.LogLevel.Trace, NLog.LogLevel.Fatal);
 #else
         LoggingRule loggingRule = new LoggingRule("*", NLog.LogLevel.Info, loggingTarget);
         loggingRule.EnableLoggingForLevels(NLog.LogLevel.Info, NLog.LogLevel.Fatal);
 #endif
 
-        config.AddRule(loggingRule);
-        config.AddTarget(loggingTarget);
+            config.AddRule(loggingRule);
+            config.AddTarget(loggingTarget);
 
-        return config;
+            return config;
+        }
     }
 }

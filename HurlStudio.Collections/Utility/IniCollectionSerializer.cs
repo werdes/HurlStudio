@@ -263,7 +263,7 @@ namespace HurlStudio.Collections.Utility
 
             // General section
             builder.AppendLine(SECTION_GENERAL_HEADER);
-            builder.AppendLine($"{SECTION_GENERAL_NAME_KEY}={collection.Name.UrlEncode()}");
+            builder.AppendLine($"{SECTION_GENERAL_NAME_KEY}={collection.Name.EncodeUrl()}");
             builder.AppendLine();
 
             // AdditionalLocations section

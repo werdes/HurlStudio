@@ -1,21 +1,16 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class FileRootSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class FileRootSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "file_root";
+        private const string CONFIGURATION_NAME = "file_root";
 
         private string? _directory;
 
-        public FileRootSetting() : base()
+        public FileRootSetting()
         {
             
         }

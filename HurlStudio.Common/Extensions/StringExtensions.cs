@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Encodings;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Web;
 
@@ -10,12 +12,12 @@ namespace HurlStudio.Common.Extensions
 {
     public static class StringExtensions
     {
-        public static string UrlEncode(this string value)
+        public static string EncodeUrl(this string value)
         {
             return HttpUtility.UrlEncode(value);
         }
 
-        public static string UrlDecode(this string value)
+        public static string DecodeUrl(this string value)
         {
             return HttpUtility.UrlDecode(value);
         }
@@ -76,6 +78,28 @@ namespace HurlStudio.Common.Extensions
                 byte[] buffer = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
                 return BitConverter.ToString(buffer, 0, buffer.Length).Replace("-", "");
             }
+        }
+
+        /// <summary>
+        /// Encodes a string as Base64
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string EncodeBase64(this string text)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(text);
+            return Convert.ToBase64String(bytes);
+        }
+        
+        /// <summary>
+        /// Decodes a string from Base64
+        /// </summary>
+        /// <param name="base64Text"></param>
+        /// <returns></returns>
+        public static string DecodeBase64(this string base64Text)
+        {
+            byte[] bytes = Convert.FromBase64String(base64Text);
+            return Encoding.UTF8.GetString(bytes);
         }
     }
 }

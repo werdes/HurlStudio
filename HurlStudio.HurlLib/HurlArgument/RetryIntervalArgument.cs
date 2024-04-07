@@ -9,19 +9,19 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class RetryIntervalArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--retry-interval";
-        private int _retryInterval;
+        private uint _retryInterval;
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="retryInterval">Duration between each retry in ms</param>
-        public RetryIntervalArgument(int retryInterval) => _retryInterval = retryInterval;
+        public RetryIntervalArgument(uint retryInterval) => _retryInterval = retryInterval;
 
         /// <summary>
         /// constructor
         /// </summary>
         /// <param name="retryInterval">Duration between each retry</param>
-        public RetryIntervalArgument(TimeSpan retryInterval) => _retryInterval = (int)retryInterval.TotalMilliseconds;
+        public RetryIntervalArgument(TimeSpan retryInterval) => _retryInterval = (uint)retryInterval.TotalMilliseconds;
 
         /// <summary>
         /// Returns the arguments

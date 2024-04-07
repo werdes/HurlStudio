@@ -2,17 +2,11 @@
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ConnectToSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class ConnectToSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "connect_to";
         private readonly Regex CONNECT_TO_SETTING_REGEX = new Regex("([^:]*):([0-9]*):([^:]*):([0-9]*)", RegexOptions.Compiled);
@@ -22,7 +16,7 @@ namespace HurlStudio.Collections.Settings
         private string? _host2;
         private ushort? _port2;
 
-        public ConnectToSetting() : base()
+        public ConnectToSetting()
         {
 
         }

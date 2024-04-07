@@ -1,16 +1,11 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class CookieSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class CookieSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "cookies";
         private const string VALUE_SEPARATOR = ";";
@@ -18,7 +13,7 @@ namespace HurlStudio.Collections.Settings
         private string? _cookieReadFile;
         private string? _cookieWriteFile;
 
-        public CookieSetting() : base()
+        public CookieSetting()
         {
 
         }

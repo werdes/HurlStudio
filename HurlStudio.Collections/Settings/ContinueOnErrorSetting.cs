@@ -1,21 +1,16 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ContinueOnErrorSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class ContinueOnErrorSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "continue_on_error";
 
         private bool? _continueOnError;
 
-        public ContinueOnErrorSetting() : base()
+        public ContinueOnErrorSetting()
         {
             
         }

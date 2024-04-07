@@ -1,17 +1,11 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ClientCertificateSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class ClientCertificateSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "client_certificate";
         private const string VALUE_SEPARATOR = "|";
@@ -20,7 +14,7 @@ namespace HurlStudio.Collections.Settings
         private string? _password;
         private string? _keyFile;
 
-        public ClientCertificateSetting() : base()
+        public ClientCertificateSetting()
         {
             
         }

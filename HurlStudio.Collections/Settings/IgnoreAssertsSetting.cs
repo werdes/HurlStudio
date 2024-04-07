@@ -1,21 +1,16 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class IgnoreAssertsSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class IgnoreAssertsSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "ignore_asserts";
 
         private bool? _ignoreAsserts;
 
-        public IgnoreAssertsSetting() : base()
+        public IgnoreAssertsSetting()
         {
             
         }

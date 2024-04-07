@@ -1,23 +1,17 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class AllowInsecureSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class AllowInsecureSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "allow_insecure";
+        private const string CONFIGURATION_NAME = "allow_insecure";
 
         private bool? _allowInsecure;
 
-        public AllowInsecureSetting() : base()
+        public AllowInsecureSetting()
         {
-            
         }
 
         public bool? AllowInsecure
@@ -37,13 +31,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            bool outVal = false;
-            if (bool.TryParse(value, out outVal))
-            {
-                this.AllowInsecure = outVal;
-                return this;
-            }
-            return null;
+            if (!bool.TryParse(value, out bool allowInsecure)) return null;
+
+            this.AllowInsecure = allowInsecure;
+            return this;
         }
 
         /// <summary>
@@ -54,7 +45,7 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if(_allowInsecure.HasValue && _allowInsecure.Value)
+            if (_allowInsecure.HasValue && _allowInsecure.Value)
             {
                 arguments.Add(new InsecureArgument());
             }

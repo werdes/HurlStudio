@@ -2,27 +2,21 @@
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class VariableSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class VariableSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "variable";
+        private const string CONFIGURATION_NAME = "variable";
         private const string KEY_VALUE_SEPARATOR = ":";
 
-        private readonly Regex VARIABLE_SETTING_REGEX = new Regex("([A-Za-z0-9_\\-]+)(?:\\:)(.*)", RegexOptions.Compiled);
+        private static readonly Regex VARIABLE_SETTING_REGEX = new Regex(@"([A-Za-z0-9_\-]+)(?:\:)(.*)", RegexOptions.Compiled);
 
         private string? _key;
         private string? _value;
 
-        public VariableSetting() : base()
+        public VariableSetting()
         {
             
         }

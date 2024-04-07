@@ -65,6 +65,8 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            if (_viewModel == null) return;
+            
             try
             {
                 _viewModel.Layout = _layoutFactory.CreateLayout();
@@ -93,7 +95,7 @@ namespace HurlStudio.UI.Views
         private void On_LayoutFactory_DockableClosed(object? sender, global::Dock.Model.Core.Events.DockableClosedEventArgs e)
         {
             // tell the editor service to close the file
-            if (e.Dockable != null && e.Dockable is FileDocumentViewModel fileDocumentViewModel)
+            if (e.Dockable is FileDocumentViewModel fileDocumentViewModel)
             {
                 _editorService.CloseFileDocument(fileDocumentViewModel);
             }
@@ -108,8 +110,9 @@ namespace HurlStudio.UI.Views
         private void On_LayoutFactory_ActiveDockableChanged(object? sender, global::Dock.Model.Core.Events.ActiveDockableChangedEventArgs e)
         {
             _log.LogDebug($"[ActiveDockableChanged] Title='{e.Dockable?.Title}'");
-
-            if (e.Dockable != null && e.Dockable is FileDocumentViewModel document)
+            if(_viewModel == null) return;
+            
+            if (e.Dockable is FileDocumentViewModel document)
             {
                 if (document.Document != null)
                 {
@@ -222,18 +225,12 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private void On_ButtonUndo_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_viewModel != null &&
-               _viewModel.DocumentDock != null &&
-               _viewModel.DocumentDock.ActiveDockable != null &&
-               _viewModel.DocumentDock.ActiveDockable is FileDocumentViewModel file)
-            {
-                if (file.Document != null && file.Document.UndoStack.CanUndo)
-                {
-                    file.Document.UndoStack.Undo();
-                    _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
-                    _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
-                }
-            }
+            if (_viewModel?.DocumentDock?.ActiveDockable is not FileDocumentViewModel file) return;
+            if (file.Document == null || !file.Document.UndoStack.CanUndo) return;
+            
+            file.Document.UndoStack.Undo();
+            _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
+            _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
         }
 
         /// <summary>
@@ -243,18 +240,12 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private void On_ButtonRedo_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_viewModel != null &&
-               _viewModel.DocumentDock != null &&
-               _viewModel.DocumentDock.ActiveDockable != null &&
-               _viewModel.DocumentDock.ActiveDockable is FileDocumentViewModel file)
-            {
-                if (file.Document != null && file.Document.UndoStack.CanRedo)
-                {
-                    file.Document.UndoStack.Redo();
-                    _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
-                    _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
-                }
-            }
+            if (_viewModel?.DocumentDock?.ActiveDockable is not FileDocumentViewModel file) return;
+            if (file.Document == null || !file.Document.UndoStack.CanRedo) return;
+            
+            file.Document.UndoStack.Redo();
+            _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
+            _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
         }
 
         protected override void SetViewModelInstance(EditorViewViewModel viewModel)

@@ -1,22 +1,16 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class CaCertSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class CaCertSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "ca_cert";
 
         private string? _file;
 
-        public CaCertSetting() : base()
+        public CaCertSetting()
         {
             
         }

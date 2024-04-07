@@ -1,23 +1,17 @@
 ﻿using HurlStudio.Collections.Enums;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.WebRequestMethods;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class HttpVersionSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class HttpVersionSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "http_version";
 
         private HttpVersion? _version;
 
-        public HttpVersionSetting() : base()
+        public HttpVersionSetting()
         {
 
         }

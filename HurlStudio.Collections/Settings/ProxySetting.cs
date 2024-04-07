@@ -1,16 +1,11 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class ProxySetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class ProxySetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "proxy";
         private const string SUBCONFIGURATION_KEY_PROTOCOL = "protocol";
@@ -27,7 +22,7 @@ namespace HurlStudio.Collections.Settings
         private string? _password;
         private ProxyProtocol? _protocol;
 
-        public ProxySetting() : base()
+        public ProxySetting()
         {
 
         }
@@ -97,7 +92,7 @@ namespace HurlStudio.Collections.Settings
             {
                 string[] keyValuePair = part.Split(SUBCONFIGURATION_KEY_VALUE_SEPARATOR);
                 string subConfigKey = keyValuePair[0];
-                string? subConfigValue = keyValuePair[1]?.UrlDecode();
+                string? subConfigValue = keyValuePair[1]?.DecodeUrl();
 
                 switch (subConfigKey)
                 {

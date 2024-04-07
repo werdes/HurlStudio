@@ -78,6 +78,17 @@
       "scope": [
         "notation.url"
       ]
+    },
+    {
+      "name": "Assertions & Filters",
+      "scope": [
+        "keyword.assertion.query",
+        "keyword.assertion.predicate",
+        "keyword.filter"
+      ],
+      "settings": {
+        "foreground": "#224088"
+      }
     }
   ]
 }

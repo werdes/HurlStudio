@@ -6,16 +6,12 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.HurlLib.HurlArgument
 {
-    public class ToEntryArgument : IHurlArgument
+    public class UnixSocketArgument : IHurlArgument
     {
-        private const string NAME_ARGUMENT = "--to-entry";
-        private readonly uint _entryNumber;
+        private const string NAME_ARGUMENT = "--unix-socket";
+        private readonly string _path;
 
-        /// <summary>
-        /// constructor
-        /// </summary>
-        /// <param name="entryNumber">execute file up to this request, ignore the remaining requests</param>
-        public ToEntryArgument(uint entryNumber) => _entryNumber = entryNumber;
+        public UnixSocketArgument(string path) => _path = path;
 
         /// <summary>
         /// Returns the arguments
@@ -26,7 +22,7 @@ namespace HurlStudio.HurlLib.HurlArgument
             return new string[]
             {
                 NAME_ARGUMENT,
-                _entryNumber.ToString()
+                _path
             };
         }
     }

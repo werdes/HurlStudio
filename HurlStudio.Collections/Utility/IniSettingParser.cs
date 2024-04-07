@@ -17,8 +17,7 @@ namespace HurlStudio.Collections.Utility
 
         public IniSettingParser()
         {
-            _possibleSettingTypesLazy = new Lazy<Dictionary<string, Type>>(() => this.RegisterSettingTypes());
-
+            _possibleSettingTypesLazy = new Lazy<Dictionary<string, Type>>(this.RegisterSettingTypes);
         }
 
         /// <summary>

@@ -1,26 +1,38 @@
-﻿using HurlStudio.Common.Enums;
+using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class DelaySetting : BaseSetting, IHurlSetting
+    public class RetrySetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "delay";
+        private const string CONFIGURATION_NAME = "retry";
+        private const char VALUE_SEPARATOR = ':';
 
-        private uint? _delay;
+        private uint? _retryCount;
+        private uint? _retryInterval;
 
-        public DelaySetting()
+        public RetrySetting()
         {
-
+            
         }
 
-        public uint? Delay
+        public uint? RetryCount
         {
-            get => _delay;
+            get => _retryCount;
             set
             {
-                _delay = value;
+                _retryCount = value;
+                this.Notify();
+            }
+        }
+
+        public uint? RetryInterval
+        {
+            get => _retryInterval;
+            set
+            {
+                _retryInterval = value;
                 this.Notify();
             }
         }
@@ -32,13 +44,18 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint outVal;
-            if (uint.TryParse(value, out outVal))
-            {
-                this.Delay = outVal;
-                return this;
-            }
-            return null;
+            if (string.IsNullOrWhiteSpace(value)) return null;
+
+            string[] parts = value.Split(VALUE_SEPARATOR);
+            if (parts.Length != 2) return null;
+
+            if (!uint.TryParse(parts.Get(0), out uint retryCount)) return null;
+            if (!uint.TryParse(parts.Get(1), out uint retryInterval)) return null;
+
+            this.RetryCount = retryCount;
+            this.RetryInterval = retryInterval;
+
+            return this;
         }
 
         /// <summary>
@@ -49,10 +66,15 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if (_delay.HasValue)
+            if(_retryCount.HasValue)
             {
-                arguments.Add(new DelayArgument(_delay.Value));
+                arguments.Add(new RetryArgument(_retryCount.Value));
             }
+
+            if (_retryInterval.HasValue)
+            {
+                arguments.Add(new RetryIntervalArgument(_retryInterval.Value));
+            }   
 
             return arguments.ToArray();
         }
@@ -67,7 +89,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (delay)
+        /// Returns the configuration name (retry)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -76,12 +98,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "0", if null
+        /// Returns the serialized value
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _delay?.ToString() ?? 0.ToString();
+            return $"{this.RetryCount}{VALUE_SEPARATOR}{this.RetryInterval}";
         }
 
         /// <summary>
@@ -90,7 +112,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.GetConfigurationValue();
+            return string.Empty;
         }
 
         /// <summary>

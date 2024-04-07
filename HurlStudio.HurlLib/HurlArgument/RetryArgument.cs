@@ -9,9 +9,9 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class RetryArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--retry";
-        private int _maxRetries;
+        private readonly uint _maxRetries;
 
-        public RetryArgument(int maxRetries) => _maxRetries = maxRetries;
+        public RetryArgument(uint maxRetries) => _maxRetries = maxRetries;
 
         /// <summary>
         /// Returns the arguments

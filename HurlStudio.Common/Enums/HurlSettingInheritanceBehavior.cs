@@ -10,6 +10,7 @@ namespace HurlStudio.Common.Enums
     {
         Overwrite,
         UniqueKey,
-        Append
+        Append,
+        Merge
     }
 }

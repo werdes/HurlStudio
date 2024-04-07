@@ -4,23 +4,23 @@ using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class DelaySetting : BaseSetting, IHurlSetting
+    public class SslNoRevokeSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "delay";
+        private const string CONFIGURATION_NAME = "ssl_no_revoke";
 
-        private uint? _delay;
+        private bool? _sslNoRevoke;
 
-        public DelaySetting()
+        public SslNoRevokeSetting()
         {
-
+            
         }
 
-        public uint? Delay
+        public bool? SslNoRevoke
         {
-            get => _delay;
+            get => _sslNoRevoke;
             set
             {
-                _delay = value;
+                _sslNoRevoke = value;
                 this.Notify();
             }
         }
@@ -32,13 +32,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint outVal;
-            if (uint.TryParse(value, out outVal))
-            {
-                this.Delay = outVal;
-                return this;
-            }
-            return null;
+            if (!bool.TryParse(value, out bool sslNoRevoke)) return null;
+            
+            this.SslNoRevoke = sslNoRevoke;
+            return this;
         }
 
         /// <summary>
@@ -49,9 +46,9 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if (_delay.HasValue)
+            if(_sslNoRevoke.HasValue && _sslNoRevoke.Value)
             {
-                arguments.Add(new DelayArgument(_delay.Value));
+                arguments.Add(new SslNoRevokeArgument());
             }
 
             return arguments.ToArray();
@@ -67,7 +64,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (delay)
+        /// Returns the configuration name (ssl_no_revoke)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -76,12 +73,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "0", if null
+        /// Returns the serialized value or "false", if null
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _delay?.ToString() ?? 0.ToString();
+            return _sslNoRevoke?.ToString() ?? false.ToString();
         }
 
         /// <summary>
@@ -90,7 +87,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.GetConfigurationValue();
+            return string.Empty;
         }
 
         /// <summary>

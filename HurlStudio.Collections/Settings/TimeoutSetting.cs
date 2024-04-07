@@ -1,27 +1,21 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class TimeoutSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class TimeoutSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "timeout";
-        public const char VALUE_SEPARATOR = '|';
+        public const char VALUE_SEPARATOR = ':';
         private const uint DEFAULT_VALUE = 30;
 
         private uint? _connectTimeoutSeconds;
         private uint? _maxTimeSeconds;
 
-        public TimeoutSetting() : base()
+        public TimeoutSetting()
         {
-
         }
 
         public uint? ConnectTimeoutSeconds
@@ -51,11 +45,8 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint connectTimeoutSeconds = DEFAULT_VALUE;
-            uint maxTimeSeconds = DEFAULT_VALUE;
-
-            if (uint.TryParse(value.Split(VALUE_SEPARATOR).Get(0), out connectTimeoutSeconds) &&
-                uint.TryParse(value.Split(VALUE_SEPARATOR).Get(1), out maxTimeSeconds))
+            if (uint.TryParse(value.Split(VALUE_SEPARATOR).Get(0), out uint connectTimeoutSeconds) &&
+                uint.TryParse(value.Split(VALUE_SEPARATOR).Get(1), out uint maxTimeSeconds))
             {
                 _connectTimeoutSeconds = connectTimeoutSeconds;
                 _maxTimeSeconds = maxTimeSeconds;

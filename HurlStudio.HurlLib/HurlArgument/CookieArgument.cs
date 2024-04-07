@@ -9,7 +9,7 @@ namespace HurlStudio.HurlLib.HurlArgument
     public class CookieArgument : IHurlArgument
     {
         private const string NAME_ARGUMENT = "--cookie";
-        private string _file;
+        private readonly string _file;
 
         public CookieArgument(string file) => _file = file;
 

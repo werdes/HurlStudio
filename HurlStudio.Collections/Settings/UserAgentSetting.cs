@@ -1,26 +1,25 @@
-﻿using HurlStudio.Common.Enums;
+using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class DelaySetting : BaseSetting, IHurlSetting
+    public class UserAgentSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "delay";
+        public const string CONFIGURATION_NAME = "user_agent";
 
-        private uint? _delay;
+        private string? _userAgent;
 
-        public DelaySetting()
+        public UserAgentSetting()
         {
-
+            
         }
 
-        public uint? Delay
+        public string? UserAgent
         {
-            get => _delay;
+            get => _userAgent;
             set
             {
-                _delay = value;
+                _userAgent = value;
                 this.Notify();
             }
         }
@@ -32,13 +31,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            uint outVal;
-            if (uint.TryParse(value, out outVal))
-            {
-                this.Delay = outVal;
-                return this;
-            }
-            return null;
+            if (string.IsNullOrWhiteSpace(value)) return null;
+            
+            this.UserAgent = value;
+            return this;
         }
 
         /// <summary>
@@ -47,14 +43,10 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            List<IHurlArgument> arguments = new List<IHurlArgument>();
-
-            if (_delay.HasValue)
+            return new IHurlArgument[]
             {
-                arguments.Add(new DelayArgument(_delay.Value));
-            }
-
-            return arguments.ToArray();
+                new CaCertArgument(this.UserAgent ?? string.Empty)
+            };
         }
 
         /// <summary>
@@ -67,7 +59,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (delay)
+        /// Returns the configuration name (user_agent)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -76,12 +68,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "0", if null
+        /// Returns the serialized value of this setting (e.g. the cert file path)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return _delay?.ToString() ?? 0.ToString();
+            return this.UserAgent ?? string.Empty;
         }
 
         /// <summary>
@@ -90,7 +82,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.GetConfigurationValue();
+            return Path.GetFileName(this.UserAgent) ?? string.Empty;
         }
 
         /// <summary>

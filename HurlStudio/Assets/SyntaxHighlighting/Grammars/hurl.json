@@ -111,9 +111,6 @@
               "match": "\\\\(x[0-9a-fA-F]{1,4}|U[0-9a-fA-F]{8}|u[0-9a-fA-F]{4}|.)"
             },
             {
-              "include": "#keywords"
-            },
-            {
               "include": "#notation"
             }
           ]
@@ -156,6 +153,18 @@
         {
           "name": "keyword.method",
           "match": "\\b(GET|HEAD|POST|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH)\\b"
+        },
+        {
+          "name": "keyword.assertion.query",
+          "match": "\\b(status|header|url|cookie|body|bytes|xpath|jsonpath|regex|sha256|md5|variable|duration|certificate)\\b"
+        },
+        {
+          "name": "keyword.assertion.predicate",
+          "match": "\\b(startsWith|endsWith|contains|includes|matches|exists|isBoolean|isCollection|isDate|isEmpty|isFloat|isInteger|isString)\\b"
+        },
+        {
+          "name": "keyword.filter",
+          "match": "\\b(count|daysAfterNow|daysBeforeNow|decode|format|htmlEscape|htmlUnescape|jsonpath|nth|regex|replace|split|toDate|toInt|urlDecode|urlEncode|xpath)\\b"
         },
         {
           "name": "response",

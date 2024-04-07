@@ -1,25 +1,20 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class AllowRedirectionsSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class RedirectionsSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "allow_redirections";
-        private const char VALUE_SEPARATOR = ';';
+        private const string CONFIGURATION_NAME = "redirections";
+        private const char VALUE_SEPARATOR = ':';
 
         private bool? _allowRedirections;
         private bool? _redirectionsTrusted;
         private uint? _maxRedirections;
 
-        public AllowRedirectionsSetting() : base()
+        public RedirectionsSetting()
         {
             
         }

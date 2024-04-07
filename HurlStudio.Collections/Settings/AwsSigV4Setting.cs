@@ -1,17 +1,12 @@
 ﻿using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class AwsSigV4Setting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class AwsSigV4Setting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "aws_sig_v4";
         private const string VALUE_SEPARATOR = ":";
@@ -22,7 +17,7 @@ namespace HurlStudio.Collections.Settings
         private string? _region;
         private string? _service;
 
-        public AwsSigV4Setting() : base()
+        public AwsSigV4Setting()
         {
             
         }

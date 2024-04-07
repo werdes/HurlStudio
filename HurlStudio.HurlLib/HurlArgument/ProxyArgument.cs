@@ -18,7 +18,7 @@ namespace HurlStudio.HurlLib.HurlArgument
         public ProxyArgument(ProxyProtocol? protocol, string? host, ushort? port) =>
             _proxyString = $"{protocol?.ToString().ToLower()}://{host}:{port}";
         public ProxyArgument(ProxyProtocol? protocol, string? host, ushort? port, string? user, string? password) =>
-                    _proxyString = $"{protocol?.ToString().ToLower()}://{user?.UrlEncode()}:{password?.UrlEncode()}@{host}:{port}";
+                    _proxyString = $"{protocol?.ToString().ToLower()}://{user?.EncodeUrl()}:{password?.EncodeUrl()}@{host}:{port}";
 
 
         /// <summary>

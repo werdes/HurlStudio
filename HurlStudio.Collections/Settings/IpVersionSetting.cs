@@ -1,22 +1,16 @@
 ﻿using HurlStudio.Collections.Enums;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class IpVersionSetting : BaseSetting, IHurlSetting, INotifyPropertyChanged
+    public class IpVersionSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "ip_version";
 
         private IpVersion? _ipVersion;
 
-        public IpVersionSetting() : base()
+        public IpVersionSetting()
         {
             
         }

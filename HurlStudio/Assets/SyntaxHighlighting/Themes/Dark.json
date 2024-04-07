@@ -58,7 +58,7 @@
         "notation.parentheses.close",
         "notation.brackets.open",
         "notation.brackets.close",
-        "notation.quotes.single",
+        "notation.quotes.single"
       ],
       "settings": {
         "foreground": "#e8618b"
@@ -79,6 +79,17 @@
       "scope": [
         "notation.url"
       ]
+    },
+    {
+      "name": "Assertions & Filters",
+      "scope": [
+        "keyword.assertion.query",
+        "keyword.assertion.predicate",
+        "keyword.filter"
+      ],
+      "settings": {
+        "foreground": "#3665d5"
+      }
     }
   ]
 }
