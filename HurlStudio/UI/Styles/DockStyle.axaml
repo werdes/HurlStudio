@@ -1,14 +1,29 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+        xmlns:idc="using:Dock.Avalonia.Controls"
+        xmlns:core="using:Dock.Model.Core"
+        xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+        xmlns:vmd="clr-namespace:HurlStudio.UI.ViewModels.Documents;assembly=HurlStudio"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <Design.PreviewWith>
     <Border Padding="20">
       <DocumentTabStripItem></DocumentTabStripItem>
     </Border>
   </Design.PreviewWith>
-
-  <!-- Add Styles Here -->
-  <Style Selector="DocumentTabStripItem /template/ Border">
-    
+  <Styles.Resources>
+    <converters:IDockableTypeToIconConverter x:Key="IDockableTypeToIconConverter" />
+  </Styles.Resources>
+  
+  <Style Selector="idc|DocumentControl">
+    <Setter Property="HeaderTemplate">
+      <DataTemplate DataType="core:IDockable">
+        <StackPanel Orientation="Horizontal">
+          <c:Icon Type="{Binding ., Converter={StaticResource IDockableTypeToIconConverter}}" />
+          <TextBlock Text="{Binding Title}"
+                     VerticalAlignment="Center"
+                     Padding="4,0,0,0" />
+        </StackPanel>
+      </DataTemplate>
+    </Setter>
   </Style>
-
 </Styles>

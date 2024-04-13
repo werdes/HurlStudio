@@ -21,7 +21,11 @@ namespace HurlStudio.UI.Windows
         private IUiStateService _uiStateService;
         private MainWindowViewModel? _viewModel;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
-
+        
+        /// <summary>
+        /// Design time constructor
+        /// </summary>
+        /// <exception cref="AccessViolationException"></exception>
         public MainWindow()
         {
             if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainWindow)} initialized from design time constructor");
@@ -31,6 +35,8 @@ namespace HurlStudio.UI.Windows
             _userSettingsService = App.Services.GetRequiredService<IUserSettingsService>();
             _uiStateService = App.Services.GetRequiredService<IUiStateService>();
             _viewModel = App.Services.GetRequiredService<MainWindowViewModel>();
+            _controlBuilder = App.Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
+            
             this.InitializeComponent();
         }
 
@@ -42,6 +48,8 @@ namespace HurlStudio.UI.Windows
             _uiStateService = uiStateService;
             _viewModel = mainWindowViewModel;
             _controlBuilder = controlBuilder;
+
+            this.DataContext = _viewModel;
 
             this.InitializeComponent();
         }

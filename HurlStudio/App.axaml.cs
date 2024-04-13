@@ -49,6 +49,9 @@ using HurlStudio.Model.Notifications;
 using HurlStudio.UI.Controls.HurlSettings;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.UI.ViewModels.Controls;
+using System.Reflection;
+using HurlStudio.Common.Extensions;
+using NLog;
 
 namespace HurlStudio
 {
@@ -184,13 +187,18 @@ namespace HurlStudio
 
             // HurlSettings
             controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
+            
+            controlBuilder.RegisterProviderAssociated<AllowInsecureSetting, Collections.Settings.AllowInsecureSetting>(() => Services.GetRequiredService<AllowInsecureSetting>());
+            controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
+            controlBuilder.RegisterProviderAssociated<BasicUserSetting, Collections.Settings.BasicUserSetting>(() => Services.GetRequiredService<BasicUserSetting>());
+            controlBuilder.RegisterProviderAssociated<ConnectToSetting, Collections.Settings.ConnectToSetting>(() => Services.GetRequiredService<ConnectToSetting>());
+            controlBuilder.RegisterProviderAssociated<ContinueOnErrorSetting, Collections.Settings.ContinueOnErrorSetting>(() => Services.GetRequiredService<ContinueOnErrorSetting>());
+            controlBuilder.RegisterProviderAssociated<CookieSetting, Collections.Settings.CookieSetting>(() => Services.GetRequiredService<CookieSetting>());
+            controlBuilder.RegisterProviderAssociated<DelaySetting, Collections.Settings.DelaySetting>(() => Services.GetRequiredService<DelaySetting>());
             controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
             controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
-            controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
             controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
             controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
-
-
 
             // Tools
             toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
@@ -231,8 +239,9 @@ namespace HurlStudio
             services.AddLogging(loggingBuilder =>
             {
                 loggingBuilder.ClearProviders();
-                loggingBuilder.SetMinimumLevel(LogLevel.Trace);
-                loggingBuilder.AddNLog(InitializeLogging(baseDir));
+                loggingBuilder.SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+
+                loggingBuilder.AddNLog(ConfigureLogging(baseDir));
             });
             services.AddDataProtection();
             
@@ -328,11 +337,18 @@ namespace HurlStudio
 
             // Hurl Settings
             services.AddTransient<SettingContainer>();
-            services.AddTransient<ProxySetting>();
-            services.AddTransient<VariableSetting>();
+
+            services.AddTransient<AllowInsecureSetting>();
             services.AddTransient<AwsSigV4Setting>();
+            services.AddTransient<BasicUserSetting>();
             services.AddTransient<CaCertSetting>();
             services.AddTransient<ClientCertificateSetting>();
+            services.AddTransient<ConnectToSetting>();
+            services.AddTransient<ContinueOnErrorSetting>();
+            services.AddTransient<CookieSetting>();
+            services.AddTransient<DelaySetting>();
+            services.AddTransient<ProxySetting>();
+            services.AddTransient<VariableSetting>();
         }
 
         /// <summary>
@@ -362,19 +378,37 @@ namespace HurlStudio
         /// Initializes the NLog _log configuration
         /// -> Avalonia previewer starts at the solution directory, which doesn't contain a logging configuration file
         /// </summary>
-        private static LoggingConfiguration InitializeLogging(string baseDir)
+        private static LoggingConfiguration ConfigureLogging(string baseDir)
         {
             LoggingConfiguration config = new LoggingConfiguration();
+
+            // TODO: 
+            // Keep for possible upcoming changes in NLog 5.3
+            // see PR https://github.com/NLog/NLog/pull/5490
+            // Possibly change from dedicated assembly Common.Extensions.Logging to type based exclusion via AddCallSiteHiddenClassType
+
+            //config.LogFactory.Setup(setupBuilder =>
+            //{
+            //    setupBuilder.SetupLogFactory(logfactoryBuilder =>
+            //    {
+            //        logfactoryBuilder.AddCallSiteHiddenAssembly(Assembly.GetAssembly(typeof(Common.Extensions.Logging.ILoggerExtensions)));
+            //        //logfactoryBuilder.AddCallSiteHiddenClassType(typeof(Common.Extensions.Logging.ILoggerExtensions));
+            //    });
+            //});
+
+            NLog.LogManager.AddHiddenAssembly(Assembly.GetAssembly(typeof(Common.Logging.Extensions.ILoggerExtensions)));
+
             NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
             {
                 Name = "LogTarget",
                 FileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.log"),
                 Encoding = Encoding.UTF8,
-                MaxArchiveFiles = 3,
-                ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.Sequence,
+                MaxArchiveFiles = 20,
+                ArchiveOldFileOnStartup = true,
+                ArchiveNumbering = NLog.Targets.ArchiveNumberingMode.DateAndSequence,
                 ArchiveAboveSize = 10485760,
-                ArchiveFileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.{#######}.a"),
-                Layout = @"${longdate}| ${level:upperCase=true:padding=5}| ${callsite:includSourcePath=true:padding=100}| ${message} ${exception:format=ToString}"
+                ArchiveFileName = Path.Combine(baseDir, GlobalConstants.LOG_DIRECTORY_NAME, "hurlstudio.{#######}.a.log"),
+                Layout = @"${longdate}| ${level:upperCase=true:padding=5}| ${callsite:includSourcePath=true}| ${message} ${exception:format=ToString}"
                 //Layout = @"${longdate}|${level}|${message} |${all-event-properties} ${exception:format=tostring}"
             };
 

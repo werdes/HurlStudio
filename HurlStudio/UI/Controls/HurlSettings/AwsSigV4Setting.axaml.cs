@@ -1,21 +1,17 @@
 using Avalonia.Controls;
 using HurlStudio.Collections.Settings;
+using HurlStudio.Services.Notifications;
+using HurlStudio.UI.Windows;
+using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.UI.Controls.HurlSettings
 {
-    public partial class AwsSigV4Setting : ViewModelBasedControl<Collections.Settings.AwsSigV4Setting>
+    public partial class AwsSigV4Setting : BaseSettingControl<Collections.Settings.AwsSigV4Setting>
     {
-        private Collections.Settings.AwsSigV4Setting? _awsSigV4Setting;
-
-        public AwsSigV4Setting()
+        public AwsSigV4Setting(MainWindow mainWindow, ILogger<AwsSigV4Setting> logger,
+            INotificationService notificationService) : base(mainWindow, logger, notificationService)
         {
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(Collections.Settings.AwsSigV4Setting viewModel)
-        {
-            _awsSigV4Setting = viewModel;
-            this.DataContext = viewModel;
         }
     }
 }

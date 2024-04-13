@@ -1,0 +1,77 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:ConnectToSetting"             
+             x:Class="HurlStudio.UI.Controls.HurlSettings.ConnectToSetting">
+  <Grid Margin="3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="10" />
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    
+    <!--Host1/Port1-->
+    <Label VerticalAlignment="Center"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ConnectToSetting_HostAndPort1_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Margin="0,0,5,0"
+             Text="{Binding Host1}"
+             VerticalAlignment="Center" />
+
+    <TextBlock Text=":"
+               Grid.Column="2"
+               VerticalAlignment="Center"/>
+    <GridSplitter Grid.Column="2"
+                  Background="Transparent" />
+
+    <TextBox Classes="framelessTextBox"
+             Text="{Binding Port1}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"
+             Grid.Column="3"/>
+
+    <!--Host1/Port1-->
+    <Label VerticalAlignment="Center"
+           Grid.Row="1"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_ConnectToSetting_HostAndPort2_Label}" />
+
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="1"
+             Margin="0,0,5,0"
+             Text="{Binding Host2}"
+             VerticalAlignment="Center" />
+
+    <TextBlock Text=":"
+               Grid.Row="1"
+               Grid.Column="2"
+               VerticalAlignment="Center"/>
+    <GridSplitter Grid.Column="2"
+                  Background="Transparent" />
+
+    <TextBox Classes="framelessTextBox"
+             Text="{Binding Port2}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"
+             Grid.Row="1"
+             Grid.Column="3"/>
+
+  </Grid>
+</UserControl>

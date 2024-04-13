@@ -1,9 +1,11 @@
 ﻿using ActiproSoftware.Logging;
+using AvaloniaEdit.Highlighting;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
+using HurlStudio.Common.Logging.Extensions;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.UiState;
 using HurlStudio.Services.UiState;
@@ -52,6 +54,10 @@ namespace HurlStudio.Services.Editor
             ObservableCollection<CollectionContainer> collectionContainers = new ObservableCollection<CollectionContainer>();
             Model.UiState.UiState? uiState = await _uiStateService.GetUiStateAsync(true);
             IEnumerable<HurlCollection> collections = await this.GetCollectionsAsync();
+
+
+            // Trace Collections
+            _log.LogObject(collections);
 
             foreach (HurlCollection collection in collections)
             {
@@ -147,6 +153,7 @@ namespace HurlStudio.Services.Editor
             {
                 // Get path of the file relative to the location of the collection file
                 string relativeFilePathToCollectionRoot = Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, hurlFile));
+                _log.LogDebug($"Searching settings for [{hurlFile}] with relative path [{relativeDirectoryPathToCollectionRoot}]");
 
                 // As HurlSettings are saved in the collection file under a file location,
                 // try to find a setting with a matching file location

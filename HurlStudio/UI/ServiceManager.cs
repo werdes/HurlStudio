@@ -11,6 +11,7 @@ namespace HurlStudio.UI
         private readonly Dictionary<Type, T> _instances = new Dictionary<Type, T>();
         private readonly Dictionary<Type, Func<T>> _providers = new Dictionary<Type, Func<T>>();
         private readonly Dictionary<Type, Type> _associations = new Dictionary<Type, Type>();
+        
 
         public ServiceManager() { }
 
@@ -137,7 +138,9 @@ namespace HurlStudio.UI
             if (_providers.ContainsKey(serviceType))
             {
                 Func<T> provider = _providers[serviceType];
-                return provider();
+                T instance = provider();
+
+                return instance;
             }
 
             throw new ArgumentException($"No service of type {serviceType} was registered");
@@ -153,7 +156,9 @@ namespace HurlStudio.UI
         {
             if(_associations.ContainsKey(associatedType))
             {
-                return this.Get(_associations[associatedType]);
+                T instance = this.Get(_associations[associatedType]);
+
+                return instance;
             }
 
             throw new ArgumentException($"No service associated to type {associatedType} was registered");

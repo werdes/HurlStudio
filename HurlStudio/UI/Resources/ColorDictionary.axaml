@@ -1,6 +1,10 @@
 <ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:v="clr-namespace:HurlStudio.UI.Views;assembly=HurlStudio"
+                    xmlns:w="clr-namespace:HurlStudio.UI.Windows;assembly=HurlStudio"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-
+  <Design.PreviewWith>
+    <v:MainView />
+  </Design.PreviewWith>
 
   <!-- Theme agnostic colors -->
   <Color x:Key="HighlightColor">#57794B</Color>
@@ -15,8 +19,9 @@
       <Color x:Key="WindowChromeBackgroundColor">#dddddd</Color>
       <Color x:Key="WindowChromeTitleColor">#222222</Color>
 
-      <Color x:Key="NeutralControlBackground2Color">#c8c8c8</Color>
       <Color x:Key="NeutralControlBackgroundColor">#dddddd</Color>
+      <Color x:Key="NeutralControlBackground2Color">#c8c8c8</Color>
+      <Color x:Key="NeutralControlHighlightedBackgroundColor">#f5f5f5</Color>
       <Color x:Key="NeutralControlHoverColor">#d4d4d4</Color>
       <Color x:Key="NeutralControlPressedColor">#b4b4b4</Color>
       <Color x:Key="NeutralControlBorderColor">#d4d4d4</Color>
@@ -42,8 +47,9 @@
       <Color x:Key="WindowChromeBackgroundColor">#333333</Color>
       <Color x:Key="WindowChromeTitleColor">#a1a1a1</Color>
 
-      <Color x:Key="NeutralControlBackground2Color">#383838</Color>
       <Color x:Key="NeutralControlBackgroundColor">#333333</Color>
+      <Color x:Key="NeutralControlBackground2Color">#383838</Color>
+      <Color x:Key="NeutralControlHighlightedBackgroundColor">#505050</Color>
       <Color x:Key="NeutralControlHoverColor">#444444</Color>
       <Color x:Key="NeutralControlPressedColor">#555555</Color>
       <Color x:Key="NeutralControlBorderColor">#555555</Color>

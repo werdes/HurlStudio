@@ -1,0 +1,57 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="35"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.CookieSetting"
+             x:DataType="setting:CookieSetting">
+  <Grid Margin="3">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="20" />
+    </Grid.ColumnDefinitions>
+
+
+    <Label VerticalAlignment="Center"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_CookieSetting_OpenReadFile_Label}" />
+    <TextBox Classes="framelessTextBox"
+             Margin="0,0,5,0"
+             Grid.Column="1"
+             Text="{Binding CookieReadFile}"
+             VerticalAlignment="Center" />
+    <Button Classes="framelessButton"
+            Grid.Column="2"
+            ToolTip.Tip="{x:Static localization:Localization.Setting_CookieSetting_OpenReadFile_FilePicker_Tooltip}"
+            Click="On_ButtonOpenReadFile_Click">
+      <c:Icon Type="OpenNeutral" />
+    </Button>
+
+    <Label VerticalAlignment="Center"
+           Grid.Row="1"
+           Foreground="{DynamicResource NeutralControlForegroundColor}"
+           Content="{x:Static localization:Localization.Setting_CookieSetting_OpenWriteFile_Label}" />
+    <TextBox Classes="framelessTextBox"
+             Margin="0,0,5,0"
+             Grid.Column="1"
+             Grid.Row="1"
+             Text="{Binding CookieWriteFile}"
+             VerticalAlignment="Center" />
+    <Button Classes="framelessButton"
+            Grid.Column="2"
+            Grid.Row="1"
+            ToolTip.Tip="{x:Static localization:Localization.Setting_CookieSetting_OpenWriteFile_FilePicker_Tooltip}"
+            Click="On_ButtonOpenWriteFile_Click">
+      <c:Icon Type="OpenNeutral" />
+    </Button>
+  </Grid>
+</UserControl>

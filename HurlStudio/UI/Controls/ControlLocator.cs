@@ -39,9 +39,12 @@ namespace HurlStudio.UI.Controls
                 try
                 {
                     ViewModelBasedControl? control = _controlBuilder.GetAssociated(data.GetType());
+
                     if (control != null)
                     {
                         control.SetViewModel(data);
+
+                        //_log.LogDebug($"Built {control.GetType().Name} control: {control.GetHashCode()}");
                         return (Control)control;
                     }
                 }

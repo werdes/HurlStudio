@@ -107,6 +107,10 @@ namespace HurlStudio.Model.Enums
         MoveDown,
         [Icon("question_32.png")]
         Question32,
+        [Icon("add_setting.png")]
+        AddSetting,
+        [Icon("home.png")]
+        Home
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

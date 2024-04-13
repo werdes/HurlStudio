@@ -18,9 +18,5 @@
         
         Initialized="On_MainWindow_Initialized"
         Closed="On_MainWindow_Closed"
-        Closing="On_MainWindow_Closing"
-        >
-  <Design.DataContext>
-    <vm:MainWindowViewModel />
-  </Design.DataContext>
+        Closing="On_MainWindow_Closing">
 </Window>

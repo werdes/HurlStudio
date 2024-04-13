@@ -1,6 +1,7 @@
 ﻿using Avalonia.Data.Converters;
+using Dock.Model.Core;
 using HurlStudio.Model.Enums;
-using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.ViewModels.Documents;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -10,18 +11,17 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Converters
 {
-    public class ViewModelBaseToVisibilityConverter : IValueConverter
+    public class IDockableTypeToIconConverter : IValueConverter
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if (value != null && value is ViewModelBase viewModel)
+            if(value is IDockable dockable)
             {
-                if (viewModel is EditorViewViewModel) return true;
-                if (viewModel is LoadingViewViewModel) return true;
-
+                if (dockable is FileDocumentViewModel) return Icon.File;
+                if (dockable is WelcomeDocumentViewModel) return Icon.Home;
             }
 
-            return false;
+            return Icon.Blank;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

@@ -7,13 +7,11 @@ namespace HurlStudio.Tests
     public class SettingsTests
     {
         private ISettingParser? _parser;
-        private ICollectionSerializer? _serializer;
 
         [TestInitialize]
         public void Init()
         {
             _parser = new IniSettingParser();
-            _serializer = new IniCollectionSerializer((IniSettingParser)_parser);
         }
 
         [TestMethod]

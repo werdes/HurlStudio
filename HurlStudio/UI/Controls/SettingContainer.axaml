@@ -19,17 +19,20 @@
   </UserControl.Resources>
 
   <Grid>
-    <Grid Margin="3">
+    <Grid>
       <Grid.RowDefinitions>
-        <RowDefinition Height="20" />
+        <RowDefinition Height="23" />
         <RowDefinition Height="*" />
       </Grid.RowDefinitions>
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="20" />
         <ColumnDefinition Width="*" />
-        <ColumnDefinition Width="20" />
-        <ColumnDefinition Width="20" />
+        <ColumnDefinition Width="40" />
       </Grid.ColumnDefinitions>
+
+      <Border Background="{DynamicResource NeutralControlBackgroundColor}" 
+              Grid.Row="0" 
+              Grid.ColumnSpan="3" />
 
       <Button Classes="framelessButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
         <StackPanel>
@@ -66,12 +69,18 @@
                    Text="{Binding Setting.DisplayString}"/>
       </StackPanel>
 
-      <Button Classes="framelessButton" Grid.Column="2" Click="On_ButtonMoveUp_Click">
+      <StackPanel Orientation="Horizontal"
+                  Background="{DynamicResource NeutralControlBackgroundColor}"
+                  Grid.Column="2">
+        <Button Classes="framelessButton"
+                Click="On_ButtonMoveUp_Click">
           <controls:Icon Type="MoveUp" />
-      </Button>
-      <Button Classes="framelessButton" Grid.Column="3" Click="On_ButtonMoveDown_Click">
-        <controls:Icon Type="MoveDown" />
-      </Button>
+        </Button>
+        <Button Classes="framelessButton"
+                Click="On_ButtonMoveDown_Click">
+          <controls:Icon Type="MoveDown" />
+        </Button>
+      </StackPanel>
       <StackPanel IsVisible="{Binding !Collapsed}"
                   Opacity="{Binding DisplayOpacity}"
                   Grid.ColumnSpan="4" Grid.Row="1">

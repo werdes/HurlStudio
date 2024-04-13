@@ -4,6 +4,7 @@ using MsBox.Avalonia.Enums;
 using MsBox.Avalonia;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ namespace HurlStudio.UI.Controls
 {
     public abstract class ViewModelBasedControl<T> : ViewModelBasedControl
     {
-        public Type? AttachedViewModelType { get => typeof(T); }
+        public Type? AttachedViewModelType => typeof(T);
 
         public ViewModelBasedControl()
         {
@@ -28,7 +29,7 @@ namespace HurlStudio.UI.Controls
         }
     }
 
-    public abstract class ViewModelBasedControl : UserControl
+    public abstract class ViewModelBasedControl : ControlBase
     {
         internal ViewModelBasedControl() { }
         public abstract Type? GetAttachedViewModelType();

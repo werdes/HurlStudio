@@ -52,8 +52,12 @@ namespace HurlStudio.UI.Views
         /// </summary>
         public MainView()
         {
+            if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
+            
             _log = App.Services.GetRequiredService<ILogger<MainView>>();
             _notificationService = App.Services.GetRequiredService<INotificationService>();
+            /*_viewModel = App.Services.GetRequiredService<MainViewViewModel>();
+            _viewFrameViewModel = App.Services.GetRequiredService<ViewFrameViewModel>();*/
 
             this.InitializeComponent();
         }

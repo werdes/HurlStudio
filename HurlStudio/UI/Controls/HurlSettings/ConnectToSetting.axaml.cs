@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.UI.Controls.HurlSettings
 {
-    public partial class ProxySetting : BaseSettingControl<Collections.Settings.ProxySetting>
+    public partial class ConnectToSetting : BaseSettingControl<Collections.Settings.ConnectToSetting>
     {
-        public ProxySetting(MainWindow mainWindow, ILogger<ProxySetting> logger,
+        public ConnectToSetting(MainWindow mainWindow, ILogger<ConnectToSetting> logger,
             INotificationService notificationService) : base(mainWindow, logger, notificationService)
         {
             this.InitializeComponent();

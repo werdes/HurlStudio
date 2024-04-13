@@ -42,7 +42,7 @@ namespace HurlStudio.UI.ViewModels.Documents
                     _file.PropertyChanged += this.On_File_PropertyChanged;
                 }
 
-                this.ChangeTitle();
+                this.SetTitle();
             }
         }
 
@@ -82,7 +82,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
-        private void ChangeTitle()
+        private void SetTitle()
         {
             if (_file != null)
             {
@@ -100,7 +100,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             if (e.PropertyName == nameof(this.File.Location))
             {
-                this.ChangeTitle();
+                this.SetTitle();
             }
         }
 

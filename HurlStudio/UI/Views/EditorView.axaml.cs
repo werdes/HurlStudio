@@ -38,22 +38,6 @@ namespace HurlStudio.UI.Views
         }
 
         /// <summary>
-        /// Prevent dock collapse by adding a welcome document once the last document is closed
-        /// -> Also tell the editor service to close the file
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void On_LayoutFactory_DockableRemoved(object? sender, global::Dock.Model.Core.Events.DockableRemovedEventArgs e)
-        {
-            if (sender == null || sender is not LayoutFactory layoutFactory) return;
-
-            if (_viewModel?.Documents.Count == 0)
-            {
-                _layoutFactory.AddWelcomeDocument();
-            }
-        }
-
-        /// <summary>
         /// Parameterless constructor for avalonia design
         /// </summary>
         public EditorView() { }
@@ -66,6 +50,7 @@ namespace HurlStudio.UI.Views
         private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_viewModel == null) return;
+            if (_viewModel.Layout != null) return; // Layout has already been created
             
             try
             {
@@ -98,6 +83,22 @@ namespace HurlStudio.UI.Views
             if (e.Dockable is FileDocumentViewModel fileDocumentViewModel)
             {
                 _editorService.CloseFileDocument(fileDocumentViewModel);
+            }
+        }
+
+        /// <summary>
+        /// Prevent dock collapse by adding a welcome document once the last document is closed
+        /// -> Also tell the editor service to close the file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_LayoutFactory_DockableRemoved(object? sender, global::Dock.Model.Core.Events.DockableRemovedEventArgs e)
+        {
+            if (sender == null || sender is not LayoutFactory layoutFactory) return;
+
+            if (_viewModel?.Documents.Count == 0)
+            {
+                _layoutFactory.AddWelcomeDocument();
             }
         }
 

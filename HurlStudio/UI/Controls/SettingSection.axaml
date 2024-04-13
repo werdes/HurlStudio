@@ -10,25 +10,48 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
             
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="200"
              x:Class="HurlStudio.UI.Controls.SettingSection"
              x:DataType="model:HurlSettingSection">
   <UserControl.Resources>
     <converters:HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter x:Key="HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter" />
     <converters:HurlSettingSectionTypeToIconConverter x:Key="HurlSettingSectionTypeToIconConverter" />
   </UserControl.Resources>
-  <StackPanel>
+  <Grid IsVisible="{Binding SettingContainers.Count}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="Auto" />
+    </Grid.ColumnDefinitions>
     <StackPanel Orientation="Horizontal"
-                Background="{DynamicResource NeutralControlBackgroundColor}"
-                IsVisible="{Binding SettingContainers.Count}">
+                Background="{DynamicResource NeutralControlHighlightedBackgroundColor}">
       <c:Icon Type="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToIconConverter}}"
               Margin="3"/>
       <Label Content="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter}}"
              Foreground="{DynamicResource NeutralControlForegroundColor}"/>
       <Label Content="{Binding SectionSubText}"
              Foreground="{DynamicResource NeutralControlForegroundMutedColor}"/>
-
     </StackPanel>
-    <ItemsControl ItemsSource="{Binding SettingContainers}" />
-  </StackPanel>
+    <StackPanel Orientation="Horizontal"
+                Background="{DynamicResource NeutralControlHighlightedBackgroundColor}"
+                Grid.Column="1">
+      <Button Classes="framelessButton"
+              Click="On_ButtonExpandAll_Click"
+              ToolTip.Tip="{x:Static localization:Localization.Dock_Document_File_Settings_Section_ExpandAll_Tooltip}">
+        <c:Icon Type="ExpandAll" />
+      </Button>
+      <Button Classes="framelessButton"
+              Click="On_ButtonCollapseAll_Click"
+              ToolTip.Tip="{x:Static localization:Localization.Dock_Document_File_Settings_Section_CollapseAll_Tooltip}">
+        <c:Icon Type="CollapseAll" />
+      </Button>
+    </StackPanel>
+
+    <ItemsControl ItemsSource="{Binding SettingContainers}"
+                  Grid.ColumnSpan="2"
+                  Grid.Row="1"/>
+  </Grid>
 </UserControl>

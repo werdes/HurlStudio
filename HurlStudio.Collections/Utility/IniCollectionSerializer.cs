@@ -6,6 +6,7 @@ using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using NLog;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace HurlStudio.Collections.Utility
 {
@@ -18,7 +19,7 @@ namespace HurlStudio.Collections.Utility
             _settingParser = settingParser;
         }
 
-
+        private readonly Regex NEWLINE_REGEX = new Regex(@"\r\n?|\n", RegexOptions.Compiled);
         private const string SECTION_GENERAL_HEADER = "[Collection]";
         private const string SECTION_GENERAL_NAME_KEY = "name";
         private const string SECTION_GENERAL_EXCLUDE_ROOT_KEY = "exclude_root_dir";
@@ -38,6 +39,8 @@ namespace HurlStudio.Collections.Utility
         /// <returns></returns>
         public HurlCollection Deserialize(string collectionContent, string? path)
         {
+            collectionContent = NEWLINE_REGEX.Replace(collectionContent, Environment.NewLine);
+
             string[] lines = collectionContent.Split(Environment.NewLine);
             List<HurlCollectionSectionContainer> collectionSections = this.SplitIntoSections(lines);
             HurlCollection collection = new HurlCollection(path);

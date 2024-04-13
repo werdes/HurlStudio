@@ -43,8 +43,8 @@
     <PackageReference Include="Dock.Avalonia" Version="11.0.0.7" />
     <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.7" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.4" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
@@ -59,6 +59,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\HurlStudio.Collections\HurlStudio.Collections.csproj" />
+    <ProjectReference Include="..\HurlStudio.Common.Logging\HurlStudio.Common.Logging.csproj" />
     <ProjectReference Include="..\HurlStudio.Common\HurlStudio.Common.csproj" />
     <ProjectReference Include="..\HurlStudio.HurlLib\HurlStudio.HurlLib.csproj" />
   </ItemGroup>
@@ -76,6 +77,12 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\CookieSetting.axaml.cs">
+      <DependentUpon>CookieSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\ContinueOnErrorSetting.axaml.cs">
+      <DependentUpon>ContinueOnErrorSetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\HurlSettings\AwsSigV4Setting.axaml.cs">
       <DependentUpon>AwsSigV4Setting.axaml</DependentUpon>
     </Compile>
@@ -85,6 +92,12 @@
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\CaCertSetting.axaml.cs">
       <DependentUpon>CaCertSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\ConnectToSetting.axaml.cs">
+      <DependentUpon>ConnectToSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\DelaySetting.axaml.cs">
+      <DependentUpon>DelaySetting.axaml</DependentUpon>
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
       <DependentUpon>VariableSetting.axaml</DependentUpon>
@@ -99,6 +112,14 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>Localization.resx</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\AllowInsecureSetting.axaml.cs">
+      <DependentUpon>AllowInsecureSetting.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\BasicUserSetting.axaml.cs">
+      <DependentUpon>BasicUserSetting.axaml</DependentUpon>
+      <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
 
@@ -128,5 +149,9 @@
     <AvaloniaXaml Update="UI\Controls\HurlSettings\ClientCertificateSetting.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Utility\" />
   </ItemGroup>
 </Project>

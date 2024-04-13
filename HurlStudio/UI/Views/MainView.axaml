@@ -19,9 +19,6 @@
     <converters:StatusBarStatusToBackgroundBrushConverter x:Key="StatusBarStatusToBackgroundBrushConverter" />
     <converters:StatusBarStatusToIconTypeConverter x:Key="StatusBarStatusToIconTypeConverter" />
   </UserControl.Resources>
-  <Design.DataContext>
-    <vm:MainViewViewModel />
-  </Design.DataContext>
 
   <DockPanel>
     <actipro:ChromedTitleBar DockPanel.Dock="Top">

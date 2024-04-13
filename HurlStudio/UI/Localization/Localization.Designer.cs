@@ -268,6 +268,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Add} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Add {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Collection.EmptyList} ähnelt.
         /// </summary>
         public static string Dock_Document_File_Settings_Collection_EmptyList {
@@ -336,6 +345,24 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Document_File_Settings_Folder_Title {
             get {
                 return ResourceManager.GetString("Dock.Document.File.Settings.Folder.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Section.CollapseAll.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Section_CollapseAll_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Section.CollapseAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Section.ExpandAll.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Document_File_Settings_Section_ExpandAll_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Document.File.Settings.Section.ExpandAll.Tooltip", resourceCulture);
             }
         }
         
@@ -646,6 +673,33 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_AllowInsecureSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.AllowInsecureSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_AllowInsecureSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.AllowInsecureSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_AllowInsecureSetting_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.AllowInsecureSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Provider1.Label} ähnelt.
         /// </summary>
         public static string Setting_AwsSigV4Setting_Provider1_Label {
@@ -687,6 +741,42 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_AwsSigV4Setting_Title {
             get {
                 return ResourceManager.GetString("Setting.AwsSigV4Setting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.NoEncryptionHint} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_NoEncryptionHint {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.NoEncryptionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.Password.Label} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_Password_Label {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.Password.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.User.Label} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_User_Label {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.User.Label", resourceCulture);
             }
         }
         
@@ -777,6 +867,141 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ClientCertificateSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.ClientCertificateSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.HostAndPort1.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ConnectToSetting_HostAndPort1_Label {
+            get {
+                return ResourceManager.GetString("Setting.ConnectToSetting.HostAndPort1.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.HostAndPort2.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ConnectToSetting_HostAndPort2_Label {
+            get {
+                return ResourceManager.GetString("Setting.ConnectToSetting.HostAndPort2.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ConnectToSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ConnectToSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ContinueOnErrorSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ContinueOnErrorSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_ContinueOnErrorSetting_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenReadFile.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenReadFile_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenReadFile.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenReadFile.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenReadFile_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenReadFile.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenReadFile.Label} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenReadFile_Label {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenReadFile.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenWriteFile.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenWriteFile_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenWriteFile.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenWriteFile.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenWriteFile_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenWriteFile.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.OpenWriteFile.Label} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_OpenWriteFile_Label {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.OpenWriteFile.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.DelaySetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_DelaySetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.DelaySetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.DelaySetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_DelaySetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.DelaySetting.Title", resourceCulture);
             }
         }
         

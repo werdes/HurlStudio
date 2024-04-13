@@ -477,4 +477,79 @@
   <data name="Window.Main.Title" xml:space="preserve">
     <value>{Window.Main.Title}</value>
   </data>
+  <data name="Setting.AllowInsecureSetting.Label" xml:space="preserve">
+    <value>{Setting.AllowInsecureSetting.Label}</value>
+  </data>
+  <data name="Setting.AllowInsecureSetting.Tooltip" xml:space="preserve">
+    <value>{Setting.AllowInsecureSetting.Tooltip}</value>
+  </data>
+  <data name="Setting.AllowInsecureSetting.Title" xml:space="preserve">
+    <value>{Setting.AllowInsecureSetting.Title}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.Title" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.Title}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.User.Label" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.User.Label}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.Password.Label" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.Password.Label}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.NoEncryptionHint" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.NoEncryptionHint}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Add" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Add}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Section.CollapseAll.Tooltip" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Section.CollapseAll.Tooltip}</value>
+  </data>
+  <data name="Dock.Document.File.Settings.Section.ExpandAll.Tooltip" xml:space="preserve">
+    <value>{Dock.Document.File.Settings.Section.ExpandAll.Tooltip}</value>
+  </data>
+  <data name="Setting.ConnectToSetting.HostAndPort1.Label" xml:space="preserve">
+    <value>{Setting.ConnectToSetting.HostAndPort1.Label}</value>
+  </data>
+  <data name="Setting.ConnectToSetting.HostAndPort2.Label" xml:space="preserve">
+    <value>{Setting.ConnectToSetting.HostAndPort2.Label}</value>
+  </data>
+  <data name="Setting.ConnectToSetting.Title" xml:space="preserve">
+    <value>{Setting.ConnectToSetting.Title}</value>
+  </data>
+  <data name="Setting.ContinueOnErrorSetting.Label" xml:space="preserve">
+    <value>{Setting.ContinueOnErrorSetting.Label}</value>
+  </data>
+  <data name="Setting.ContinueOnErrorSetting.Title" xml:space="preserve">
+    <value>{Setting.ContinueOnErrorSetting.Title}</value>
+  </data>
+  <data name="Setting.ContinueOnErrorSetting.Tooltip" xml:space="preserve">
+    <value>{Setting.ContinueOnErrorSetting.Tooltip}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenReadFile.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenReadFile.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenReadFile.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenReadFile.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenReadFile.Label" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenReadFile.Label}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenWriteFile.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenWriteFile.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenWriteFile.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenWriteFile.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.CookieSetting.OpenWriteFile.Label" xml:space="preserve">
+    <value>{Setting.CookieSetting.OpenWriteFile.Label}</value>
+  </data>
+  <data name="Setting.CookieSetting.Title" xml:space="preserve">
+    <value>{Setting.CookieSetting.Title}</value>
+  </data>
+  <data name="Setting.DelaySetting.Label" xml:space="preserve">
+    <value>{Setting.DelaySetting.Label}</value>
+  </data>
+  <data name="Setting.DelaySetting.Title" xml:space="preserve">
+    <value>{Setting.DelaySetting.Title}</value>
+  </data>
 </root>

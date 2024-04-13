@@ -1,0 +1,63 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:BasicUserSetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.BasicUserSetting">
+    <Grid Margin="3">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!--Username-->
+        <Label VerticalAlignment="Center"
+               Foreground="{DynamicResource NeutralControlForegroundColor}"
+               Content="{x:Static localization:Localization.Setting_BasicUserSetting_User_Label}" />
+
+        <TextBox Classes="framelessTextBox"
+                 Grid.Row="0"
+                 Grid.Column="1"
+                 Margin="0,0,5,0"
+                 Text="{Binding User}"
+                 VerticalAlignment="Center" />
+
+        <!--Password-->
+        <Label VerticalAlignment="Center"
+               Grid.Row="1"
+               Grid.Column="0"
+               Foreground="{DynamicResource NeutralControlForegroundColor}"
+               Content="{x:Static localization:Localization.Setting_BasicUserSetting_Password_Label}" />
+
+        <TextBox Classes="framelessTextBox"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 Margin="0,0,5,0"
+                 Text="{Binding Password}"
+                 PasswordChar="*"
+                 VerticalAlignment="Center" />
+
+        <!--Protocol-->
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    Grid.ColumnSpan="2"
+                    Grid.Column="0"
+                    HorizontalAlignment="Center">
+            <c:Icon Type="NotificationWarning" />
+            <Label VerticalAlignment="Center"
+                   Foreground="{DynamicResource NeutralControlForegroundColor}"
+                   Content="{x:Static localization:Localization.Setting_BasicUserSetting_NoEncryptionHint}" />
+        </StackPanel>
+    </Grid>
+</UserControl>

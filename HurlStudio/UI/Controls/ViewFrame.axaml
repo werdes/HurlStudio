@@ -13,6 +13,7 @@
     <converters:ViewModelBaseToIconConverter x:Key="ViewModelBaseToIconConverter" />
     <converters:ViewModelBaseToVisibilityConverter x:Key="ViewModelBaseToVisibilityConverter" />
     <converters:ViewModelBaseToLocalizedLabelTextConverter x:Key="ViewModelBaseToLocalizedLabelTextConverter" />
+    <converters:BoolFalseTo50PercentOpacityConverter x:Key="BoolFalseTo50PercentOpacityConverter" />
   </UserControl.Resources>
   <Grid>
     <Grid.ColumnDefinitions>
@@ -28,13 +29,14 @@
         <DataTemplate>
           <Grid>
             <Border BorderThickness="2,0,0,0"
+                    Margin="3"
                     BorderBrush="{DynamicResource NeutralControlForegroundColor}"
                     IsVisible="{Binding IsActive}"/>
 
             <Button Classes="framelessButton"
                     IsVisible="{Binding ., Converter={StaticResource ViewModelBaseToVisibilityConverter}}"
-                    Opacity="1"
-                    Margin="0,5,0,5"
+                    Margin="5"
+                    Opacity="{Binding IsActive, Converter={StaticResource BoolFalseTo50PercentOpacityConverter}}"
                     Tag="{Binding}"
                     Click="On_ButtonChangeView_Click">
               <StackPanel Orientation="Vertical">
@@ -53,7 +55,19 @@
 
 
     <!-- View container-->
-    <ContentControl Content="{Binding SelectedViewModel}"
-                    Grid.Column="1" />
+    <ItemsControl Grid.Column="1" ItemsSource="{Binding ViewModels}" >
+      <ItemsControl.ItemsPanel>
+        <ItemsPanelTemplate>
+          <!--This method of displaying views needs a non-infinite container-->
+          <Grid />
+        </ItemsPanelTemplate>
+      </ItemsControl.ItemsPanel>
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <!--Custom content control for toggling the visibility-->
+          <ContentControl Content="{Binding}" IsVisible="{Binding IsActive}" />
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
   </Grid>
 </UserControl>

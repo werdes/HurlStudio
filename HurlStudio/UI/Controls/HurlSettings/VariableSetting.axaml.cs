@@ -1,21 +1,17 @@
 using Avalonia.Controls;
 using HurlStudio.Collections.Settings;
+using HurlStudio.Services.Notifications;
+using HurlStudio.UI.Windows;
+using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.UI.Controls.HurlSettings
 {
-    public partial class VariableSetting : ViewModelBasedControl<Collections.Settings.VariableSetting>
+    public partial class VariableSetting : BaseSettingControl<Collections.Settings.VariableSetting>
     {
-        private Collections.Settings.VariableSetting? _variableSetting;
-
-        public VariableSetting()
+        public VariableSetting(MainWindow mainWindow, ILogger<VariableSetting> logger,
+            INotificationService notificationService) : base(mainWindow, logger, notificationService)
         {
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(Collections.Settings.VariableSetting viewModel)
-        {
-            _variableSetting = viewModel;
-            this.DataContext = viewModel;
         }
     }
 }

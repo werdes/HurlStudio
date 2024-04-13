@@ -6,9 +6,9 @@ using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.UI.Controls.HurlSettings
 {
-    public partial class ProxySetting : BaseSettingControl<Collections.Settings.ProxySetting>
+    public partial class AllowInsecureSetting : BaseSettingControl<Collections.Settings.AllowInsecureSetting>
     {
-        public ProxySetting(MainWindow mainWindow, ILogger<ProxySetting> logger,
+        public AllowInsecureSetting(MainWindow mainWindow, ILogger<AllowInsecureSetting> logger,
             INotificationService notificationService) : base(mainWindow, logger, notificationService)
         {
             this.InitializeComponent();

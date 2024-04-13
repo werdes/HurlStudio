@@ -1,6 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Markup.Xaml;
+using HurlStudio.Common.Extensions;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Controls;
 using HurlStudio.UI.Views;
@@ -32,9 +33,14 @@ namespace HurlStudio.UI.Controls
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
-
         }
 
+        /// <summary>
+        /// Swap view by setting the SelectedViewModel property of the viewmodel to the tagged
+        /// viewmodel of the clicked button 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void On_ButtonChangeView_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_viewModel != null &&
@@ -43,6 +49,9 @@ namespace HurlStudio.UI.Controls
                 control.Tag is ViewModelBase targetViewModel)
             {
                 _viewModel.SelectedViewModel = targetViewModel;
+
+                //_viewModel.ViewModels.ForEach(x => x.IsActive =false);
+                //targetViewModel.IsActive = true;    
             }
         }
     }
