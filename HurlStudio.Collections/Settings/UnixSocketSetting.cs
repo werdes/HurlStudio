@@ -1,3 +1,4 @@
+using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 
@@ -14,6 +15,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         public string? Path
         {
             get => _path;

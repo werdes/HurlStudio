@@ -191,14 +191,19 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<AllowInsecureSetting, Collections.Settings.AllowInsecureSetting>(() => Services.GetRequiredService<AllowInsecureSetting>());
             controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
             controlBuilder.RegisterProviderAssociated<BasicUserSetting, Collections.Settings.BasicUserSetting>(() => Services.GetRequiredService<BasicUserSetting>());
+            controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
+            controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
             controlBuilder.RegisterProviderAssociated<ConnectToSetting, Collections.Settings.ConnectToSetting>(() => Services.GetRequiredService<ConnectToSetting>());
             controlBuilder.RegisterProviderAssociated<ContinueOnErrorSetting, Collections.Settings.ContinueOnErrorSetting>(() => Services.GetRequiredService<ContinueOnErrorSetting>());
             controlBuilder.RegisterProviderAssociated<CookieSetting, Collections.Settings.CookieSetting>(() => Services.GetRequiredService<CookieSetting>());
             controlBuilder.RegisterProviderAssociated<DelaySetting, Collections.Settings.DelaySetting>(() => Services.GetRequiredService<DelaySetting>());
+            controlBuilder.RegisterProviderAssociated<FileRootSetting, Collections.Settings.FileRootSetting>(() => Services.GetRequiredService<FileRootSetting>());
+            controlBuilder.RegisterProviderAssociated<HttpVersionSetting, Collections.Settings.HttpVersionSetting>(() => Services.GetRequiredService<HttpVersionSetting>());
+            controlBuilder.RegisterProviderAssociated<IgnoreAssertsSetting, Collections.Settings.IgnoreAssertsSetting>(() => Services.GetRequiredService<IgnoreAssertsSetting>());
+            controlBuilder.RegisterProviderAssociated<IpVersionSetting, Collections.Settings.IpVersionSetting>(() => Services.GetRequiredService<IpVersionSetting>());
             controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
             controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
-            controlBuilder.RegisterProviderAssociated<CaCertSetting, Collections.Settings.CaCertSetting>(() => Services.GetRequiredService<CaCertSetting>());
-            controlBuilder.RegisterProviderAssociated<ClientCertificateSetting, Collections.Settings.ClientCertificateSetting>(() => Services.GetRequiredService<ClientCertificateSetting>());
+
 
             // Tools
             toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
@@ -347,6 +352,10 @@ namespace HurlStudio
             services.AddTransient<ContinueOnErrorSetting>();
             services.AddTransient<CookieSetting>();
             services.AddTransient<DelaySetting>();
+            services.AddTransient<FileRootSetting>();
+            services.AddTransient<HttpVersionSetting>();
+            services.AddTransient<IgnoreAssertsSetting>();
+            services.AddTransient<IpVersionSetting>();
             services.AddTransient<ProxySetting>();
             services.AddTransient<VariableSetting>();
         }

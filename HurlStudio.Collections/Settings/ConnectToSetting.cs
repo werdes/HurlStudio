@@ -22,6 +22,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         [HurlSettingKey]
+        [HurlSettingDisplayString]
         public string? Host1
         {
             get => _host1;
@@ -33,6 +34,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         [HurlSettingKey]
+        [HurlSettingDisplayString]
         public ushort? Port1
         {
             get => _port1;

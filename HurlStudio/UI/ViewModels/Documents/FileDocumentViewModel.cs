@@ -82,23 +82,29 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
+        /// <summary>
+        /// Build the Title for display in the dock control tab strip
+        /// </summary>
         private void SetTitle()
         {
             if (_file != null)
             {
-                this.Title = Path.GetFileName(_file.Location);
+                this.Title = Path.GetFileName(_file.Location) + 
+                             (_file.HasChanges ? "*" : string.Empty);
             }
             else
             {
                 this.Title = Localization.Localization.Common_Undefined;
             }
 
+            // somehow required?
             this.Notify(nameof(this.Title));
         }
 
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.File.Location))
+            if (e.PropertyName == nameof(this.File.Location) ||
+                e.PropertyName == nameof(this.File.HasChanges))
             {
                 this.SetTitle();
             }

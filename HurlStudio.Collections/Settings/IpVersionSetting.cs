@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Enums;
+﻿using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 
@@ -15,6 +15,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         public IpVersion? IpVersion
         {
             get => _ipVersion;
@@ -33,7 +34,7 @@ namespace HurlStudio.Collections.Settings
         public override IHurlSetting? FillFromString(string value)
         {
             IpVersion ipVersion;
-            if (Enum.TryParse<IpVersion>(value, out ipVersion))
+            if (Enum.TryParse<IpVersion>(value, true, out ipVersion))
             {
                 _ipVersion = ipVersion;
                 return this;
@@ -49,8 +50,8 @@ namespace HurlStudio.Collections.Settings
         {
             switch (_ipVersion)
             {
-                case Enums.IpVersion.IPv4: return new[] { new IPv4Argument() };
-                case Enums.IpVersion.IPv6: return new[] { new IPv6Argument() };
+                case Common.Enums.IpVersion.IPv4: return new[] { new IPv4Argument() };
+                case Common.Enums.IpVersion.IPv6: return new[] { new IPv6Argument() };
             }
 
             // In case "auto" or no value is selected, don't provide an argument and let hurl decide
@@ -92,9 +93,9 @@ namespace HurlStudio.Collections.Settings
         {
             switch (_ipVersion)
             {
-                case Enums.IpVersion.IPv4: return "v4";
-                case Enums.IpVersion.IPv6: return "v6";
-                case Enums.IpVersion.Auto: return "auto";
+                case Common.Enums.IpVersion.IPv4: return "v4";
+                case Common.Enums.IpVersion.IPv6: return "v6";
+                case Common.Enums.IpVersion.Auto: return "auto";
             }
 
             return string.Empty;

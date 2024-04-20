@@ -21,6 +21,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         [HurlSettingKey]
         public string? Key
         {

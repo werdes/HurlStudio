@@ -1,3 +1,4 @@
+using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 
@@ -14,6 +15,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         public string? UserAgent
         {
             get => _userAgent;
@@ -82,7 +84,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return Path.GetFileName(this.UserAgent) ?? string.Empty;
+            return this.GetConfigurationValue();
         }
 
         /// <summary>

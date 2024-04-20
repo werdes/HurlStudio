@@ -332,10 +332,10 @@ namespace HurlStudio.Tests
             }
 
             Assert.AreEqual(4, settings.Count);
-            Assert.AreEqual(settings[0].Version, Collections.Enums.HttpVersion.Http1_0);
-            Assert.AreEqual(settings[1].Version, Collections.Enums.HttpVersion.Http1_1);
-            Assert.AreEqual(settings[2].Version, Collections.Enums.HttpVersion.Http2);
-            Assert.AreEqual(settings[3].Version, Collections.Enums.HttpVersion.Http3);
+            Assert.AreEqual(settings[0].Version, Common.Enums.HttpVersion.Http1_0);
+            Assert.AreEqual(settings[1].Version, Common.Enums.HttpVersion.Http1_1);
+            Assert.AreEqual(settings[2].Version, Common.Enums.HttpVersion.Http2);
+            Assert.AreEqual(settings[3].Version, Common.Enums.HttpVersion.Http3);
         }
 
         [TestMethod]
@@ -364,6 +364,35 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[1].IgnoreAsserts, false);
             Assert.AreEqual(settings[2].IgnoreAsserts, true);
             Assert.AreEqual(settings[3].IgnoreAsserts, false);
+        }
+
+
+        [TestMethod]
+        public void TestValidIpVersionSettings()
+        {
+            List<IpVersionSetting> settings = new List<IpVersionSetting>();
+            string[] testValues =
+            {
+                @"ip_version=IPv4",
+                @"ip_version=IPv6",
+                @"ip_version=IPV4",
+                @"ip_version=IPV6",
+            };
+
+            foreach (string testValue in testValues)
+            {
+                IHurlSetting? hurlSetting = _parser?.Parse(testValue);
+                Assert.IsInstanceOfType(hurlSetting, typeof(IpVersionSetting));
+
+                Assert.IsNotNull(hurlSetting);
+                settings.Add(hurlSetting as IpVersionSetting ?? throw new InvalidOperationException());
+            }
+
+            Assert.AreEqual(4, settings.Count);
+            Assert.AreEqual(settings[0].IpVersion, Common.Enums.IpVersion.IPv4);
+            Assert.AreEqual(settings[1].IpVersion, Common.Enums.IpVersion.IPv6);
+            Assert.AreEqual(settings[2].IpVersion, Common.Enums.IpVersion.IPv4);
+            Assert.AreEqual(settings[3].IpVersion, Common.Enums.IpVersion.IPv6);
         }
 
         [TestMethod]

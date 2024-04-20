@@ -1,0 +1,36 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:HttpVersionSetting"             
+             x:Class="HurlStudio.UI.Controls.HurlSettings.HttpVersionSetting">
+  <UserControl.Resources>
+    <converters:HttpVersionToStringConverter x:Key="HttpVersionToStringConverter" />
+  </UserControl.Resources>
+  <Grid Margin="3">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <TextBlock Text="{x:Static localization:Localization.Setting_HttpVersionSetting_Label}"
+               VerticalAlignment="Center"/>
+    <ComboBox Classes="framelessComboBox"
+              Grid.Column="1"
+              ItemsSource="{x:Static commonenums:HttpVersionExtensions.DisplayValues}"
+              SelectedValue="{Binding Version}"
+              VerticalAlignment="Center" >
+      <ComboBox.ItemTemplate>
+        <DataTemplate>
+          <TextBlock x:DataType="commonenums:HttpVersion" Text="{Binding ., Converter={StaticResource HttpVersionToStringConverter}}" />
+        </DataTemplate>
+      </ComboBox.ItemTemplate>
+    </ComboBox>
+  </Grid>
+</UserControl>

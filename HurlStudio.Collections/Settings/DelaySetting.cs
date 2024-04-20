@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Attributes;
+using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
 
@@ -15,6 +16,7 @@ namespace HurlStudio.Collections.Settings
 
         }
 
+        [HurlSettingDisplayString]
         public uint? Delay
         {
             get => _delay;

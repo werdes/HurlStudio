@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Attributes;
+using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace HurlStudio.Collections.Settings
 
         }
 
+        [HurlSettingDisplayString]
         public string? CookieReadFile
         {
             get => _cookieReadFile;
@@ -28,6 +30,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public string? CookieWriteFile
         {
             get => _cookieWriteFile;

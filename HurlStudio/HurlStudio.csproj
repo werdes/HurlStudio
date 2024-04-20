@@ -77,6 +77,15 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\IpVersionSetting.axaml.cs">
+      <DependentUpon>IpVersionSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\IgnoreAssertsSetting.axaml.cs">
+      <DependentUpon>IgnoreAssertsSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\FileRootSetting.axaml.cs">
+      <DependentUpon>FileRootSetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\HurlSettings\CookieSetting.axaml.cs">
       <DependentUpon>CookieSetting.axaml</DependentUpon>
     </Compile>
@@ -98,6 +107,9 @@
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\DelaySetting.axaml.cs">
       <DependentUpon>DelaySetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\HttpVersionSetting.axaml.cs">
+      <DependentUpon>HttpVersionSetting.axaml</DependentUpon>
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
       <DependentUpon>VariableSetting.axaml</DependentUpon>

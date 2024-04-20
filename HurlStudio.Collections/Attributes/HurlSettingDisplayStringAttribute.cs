@@ -4,13 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Collections.Enums
+namespace HurlStudio.Collections.Attributes
 {
-    public enum HttpVersion
+    public class HurlSettingDisplayStringAttribute : Attribute
     {
-        Http1_0,
-        Http1_1,
-        Http2, 
-        Http3,
     }
 }

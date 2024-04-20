@@ -19,10 +19,12 @@ namespace HurlStudio.Model.CollectionContainer
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private bool _selected;
+        private bool _hasChanges;
 
         public CollectionComponentBase()
         {
             _selected = false;
+            _hasChanges = false;
         }
 
         public bool Selected
@@ -33,6 +35,16 @@ namespace HurlStudio.Model.CollectionContainer
                 this.ControlSelectionChanged?.Invoke(this, new ControlSelectionChangedEventArgs(value));
 
                 _selected = value;
+                this.Notify();
+            }
+        }
+
+        public bool HasChanges
+        {
+            get => _hasChanges;
+            set
+            {
+                _hasChanges = value;
                 this.Notify();
             }
         }

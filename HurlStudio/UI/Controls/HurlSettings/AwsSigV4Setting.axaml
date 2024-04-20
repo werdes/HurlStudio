@@ -11,8 +11,8 @@
              x:Class="HurlStudio.UI.Controls.HurlSettings.AwsSigV4Setting">
   <Grid Margin="3">
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto"/>
       <ColumnDefinition />
-      <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
       <RowDefinition />

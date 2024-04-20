@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Attributes;
+using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
@@ -19,6 +20,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         public string? CertificateFile
         {
             get => _certificateFile;
@@ -29,6 +31,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public string? Password
         {
             get => _password;

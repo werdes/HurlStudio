@@ -28,16 +28,13 @@ namespace HurlStudio.UI.Controls.HurlSettings
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
-
-            _viewModel.PropertyChanged += On_ViewModel_OnPropertyChanged;
         }
 
-        private void On_ViewModel_OnPropertyChanged(object? sender, PropertyChangedEventArgs e)
-        {
-
-        }
-
-        protected async Task<string?> OpenFileSingle(string title, FilePickerFileType[] allowedTypes) => await this.OpenFileSingle(_mainWindow.StorageProvider, title, allowedTypes);
-        protected async Task<IReadOnlyList<IStorageFile>?> OpenFileMulti(string title, FilePickerFileType[] allowedTypes) => await this.OpenFileMulti(_mainWindow.StorageProvider, title, allowedTypes);
+        protected async Task<string?> OpenFileSingle(string title, FilePickerFileType[] allowedTypes) => 
+            await this.OpenFileSingle(_mainWindow.StorageProvider, title, allowedTypes);
+        protected async Task<IReadOnlyList<IStorageFile>?> OpenFileMulti(string title, FilePickerFileType[] allowedTypes) => 
+            await this.OpenFileMulti(_mainWindow.StorageProvider, title, allowedTypes);
+        protected async Task<string?> OpenDirectorySingle(string title) => 
+            await this.OpenDirectorySingle(_mainWindow.StorageProvider, title);
     }
 }

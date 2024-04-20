@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Enums;
+﻿using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
@@ -16,6 +16,7 @@ namespace HurlStudio.Collections.Settings
 
         }
 
+        [HurlSettingDisplayString]
         public HttpVersion? Version
         {
             get => _version;
@@ -56,7 +57,7 @@ namespace HurlStudio.Collections.Settings
                 case HttpVersion.Http3: return new[] { new Http3Argument() };
             }
 
-            return new IHurlArgument[] {};
+            return new IHurlArgument[] { };
         }
 
         /// <summary>
@@ -92,15 +93,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            switch (_version)
-            {
-                case HttpVersion.Http1_0: return "1.0";
-                case HttpVersion.Http1_1: return "1.1";
-                case HttpVersion.Http2: return "2.0";
-                case HttpVersion.Http3: return "3.0";
-            }
-
-            return string.Empty;
+            return _version?.GetLocalizationKey() ?? string.Empty;
         }
 
         /// <summary>

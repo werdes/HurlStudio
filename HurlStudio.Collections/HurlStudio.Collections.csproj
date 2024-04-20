@@ -15,4 +15,8 @@
     <ProjectReference Include="..\HurlStudio.HurlLib\HurlStudio.HurlLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Enums\" />
+  </ItemGroup>
+
 </Project>

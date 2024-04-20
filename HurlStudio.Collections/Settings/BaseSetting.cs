@@ -40,5 +40,13 @@ namespace HurlStudio.Collections.Settings
         {
             get => this.GetDisplayString();
         }
+
+        /// <summary>
+        /// Raises the NotifyPropertyChanged for the display string
+        /// </summary>
+        public void RefreshDisplayString()
+        {
+            this.Notify(nameof(DisplayString));
+        }
     }
 }

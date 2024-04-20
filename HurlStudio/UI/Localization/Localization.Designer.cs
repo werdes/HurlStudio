@@ -1024,6 +1024,168 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.FolderPicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_FolderPicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.FolderPicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.FolderPicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_FolderPicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.FolderPicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.HttpVersionSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.HttpVersionSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {HTTP/1.0} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Version_Http10 {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Version.Http10", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {HTTP/1.1} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Version_Http11 {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Version.Http11", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {HTTP/2} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Version_Http20 {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Version.Http20", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {HTTP/3} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Version_Http30 {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Version.Http30", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_IgnoreAssertsSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.IgnoreAssertsSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_IgnoreAssertsSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.IgnoreAssertsSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_IgnoreAssertsSetting_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.IgnoreAssertsSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IpVersionSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IpVersionSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Auto} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Version_Auto {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Version.Auto", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {IPv4} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Version_IPv4 {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Version.IPv4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {IPv6} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Version_IPv6 {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Version.IPv6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Overwritten.Tooltip} ähnelt.
         /// </summary>
         public static string Setting_Overwritten_Tooltip {

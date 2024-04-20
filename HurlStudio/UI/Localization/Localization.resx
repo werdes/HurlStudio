@@ -552,4 +552,58 @@
   <data name="Setting.DelaySetting.Title" xml:space="preserve">
     <value>{Setting.DelaySetting.Title}</value>
   </data>
+  <data name="Setting.FileRootSetting.FolderPicker.Title" xml:space="preserve">
+    <value>{Setting.FileRootSetting.FolderPicker.Title}</value>
+  </data>
+  <data name="Setting.FileRootSetting.FolderPicker.Tooltip" xml:space="preserve">
+    <value>{Setting.FileRootSetting.FolderPicker.Tooltip}</value>
+  </data>
+  <data name="Setting.FileRootSetting.Label" xml:space="preserve">
+    <value>{Setting.FileRootSetting.Label}</value>
+  </data>
+  <data name="Setting.FileRootSetting.Title" xml:space="preserve">
+    <value>{Setting.FileRootSetting.Title}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Label" xml:space="preserve">
+    <value>{Setting.HttpVersionSetting.Label}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Title" xml:space="preserve">
+    <value>{Setting.HttpVersionSetting.Title}</value>
+  </data>
+  <data name="Setting.IgnoreAssertsSetting.Label" xml:space="preserve">
+    <value>{Setting.IgnoreAssertsSetting.Label}</value>
+  </data>
+  <data name="Setting.IgnoreAssertsSetting.Title" xml:space="preserve">
+    <value>{Setting.IgnoreAssertsSetting.Title}</value>
+  </data>
+  <data name="Setting.IgnoreAssertsSetting.Tooltip" xml:space="preserve">
+    <value>{Setting.IgnoreAssertsSetting.Tooltip}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Version.Http10" xml:space="preserve">
+    <value>{HTTP/1.0}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Version.Http11" xml:space="preserve">
+    <value>{HTTP/1.1}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Version.Http20" xml:space="preserve">
+    <value>{HTTP/2}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Version.Http30" xml:space="preserve">
+    <value>{HTTP/3}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Label" xml:space="preserve">
+    <value>{Setting.IpVersionSetting.Label}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Title" xml:space="preserve">
+    <value>{Setting.IpVersionSetting.Title}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Version.Auto" xml:space="preserve">
+    <value>{Auto}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Version.IPv4" xml:space="preserve">
+    <value>{IPv4}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Version.IPv6" xml:space="preserve">
+    <value>{IPv6}</value>
+  </data>
 </root>

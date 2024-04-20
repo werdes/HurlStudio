@@ -26,6 +26,7 @@ namespace HurlStudio.Model.HurlSettings
         public event EventHandler<SettingOrderChangedEventArgs>? SettingOrderChanged;
         public event EventHandler<SettingKeyChangedEventArgs>? SettingKeyChanged;
         public event EventHandler<SettingCollapsedChangedEventArgs>? SettingCollapsedChanged;
+        public event EventHandler<SettingChangedEventArgs>? SettingChanged;
 
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
@@ -65,7 +66,13 @@ namespace HurlStudio.Model.HurlSettings
                 {
                     this.SettingKeyChanged?.Invoke(this, new SettingKeyChangedEventArgs(this));
                 }
+                if(propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingDisplayStringAttribute)))
+                {
+                    this.Setting.RefreshDisplayString();
+                }
             }
+
+            SettingChanged?.Invoke(this, new SettingChangedEventArgs(_setting));
         }
 
         public bool IsReadOnly

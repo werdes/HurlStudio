@@ -1,3 +1,4 @@
+using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
@@ -17,6 +18,7 @@ namespace HurlStudio.Collections.Settings
         {
         }
 
+        [HurlSettingDisplayString]
         public string? Host
         {
             get => _host;
@@ -27,6 +29,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public ushort? Port
         {
             get => _port;

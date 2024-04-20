@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Attributes;
+using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
@@ -22,6 +23,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
+        [HurlSettingDisplayString]
         public string? Provider1
         {
             get => _provider1;
@@ -32,6 +34,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public string? Provider2
         {
             get => _provider2;
@@ -42,6 +45,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public string? Region
         {
             get => _region;
@@ -52,6 +56,7 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
+        [HurlSettingDisplayString]
         public string? Service
         {
             get => _service;

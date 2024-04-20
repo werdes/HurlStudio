@@ -28,6 +28,7 @@ using HurlStudio.Common.UI;
 using HurlStudio.Services.UiState;
 using HurlStudio.Model.UiState;
 using HurlStudio.UI.Controls;
+using HurlStudio.Collections.Model.Collection;
 
 namespace HurlStudio.Services.Editor
 {
@@ -188,7 +189,7 @@ namespace HurlStudio.Services.Editor
                     .Settings
                         .Where(x => x is BaseSetting)
                         .Select(x => (BaseSetting)x)
-                        .Select(x => 
+                        .Select(x =>
                             new HurlSettingContainer(fileDocument, environmentSection, x, true)
                         )
             );
@@ -256,9 +257,24 @@ namespace HurlStudio.Services.Editor
                 hurlSettingContainer.SettingOrderChanged += this.On_HurlSettingContainer_SettingOrderChanged;
                 hurlSettingContainer.SettingKeyChanged += this.On_HurlSettingContainer_SettingKeyChanged;
                 hurlSettingContainer.SettingCollapsedChanged += this.On_HurlSettingContainer_SettingCollapsedChanged;
+                hurlSettingContainer.SettingChanged += this.On_HurlSettingContainer_SettingChanged;
             }
 
             this.EvaluateInheritances(fileDocument);
+        }
+
+        /// <summary>
+        /// On setting container underlying setting property change
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_HurlSettingContainer_SettingChanged(object? sender, Model.EventArgs.SettingChangedEventArgs e)
+        {
+            if (sender is HurlSettingContainer container &&
+                container.Section.CollectionComponent is CollectionFile file)
+            {
+                file.HasChanges = true;
+            }
         }
 
         /// <summary>
