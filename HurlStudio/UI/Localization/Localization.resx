@@ -606,4 +606,34 @@
   <data name="Setting.IpVersionSetting.Version.IPv6" xml:space="preserve">
     <value>{IPv6}</value>
   </data>
+  <data name="Setting.NoProxySetting.Add.Tooltip" xml:space="preserve">
+    <value>{Setting.NoProxySetting.Add.Tooltip}</value>
+  </data>
+  <data name="Setting.NoProxySetting.EmptyList" xml:space="preserve">
+    <value>{Setting.NoProxySetting.EmptyList}</value>
+  </data>
+  <data name="Setting.NoProxySetting.Remove.Tooltip" xml:space="preserve">
+    <value>{Setting.NoProxySetting.Remove.Tooltip}</value>
+  </data>
+  <data name="Setting.NoProxySetting.Title" xml:space="preserve">
+    <value>{Setting.NoProxySetting.Title}</value>
+  </data>
+  <data name="MessageBox.Button.Cancel" xml:space="preserve">
+    <value>{MessageBox.Button.Cancel}</value>
+  </data>
+  <data name="MessageBox.Button.Discard" xml:space="preserve">
+    <value>{MessageBox.Button.Discard}</value>
+  </data>
+  <data name="MessageBox.Button.Save" xml:space="preserve">
+    <value>{MessageBox.Button.Save}</value>
+  </data>
+  <data name="View.Editor.MessageBox.UnsavedChanges.Text" xml:space="preserve">
+    <value>{View.Editor.MessageBox.UnsavedChanges.Text}</value>
+  </data>
+  <data name="View.Editor.MessageBox.UnsavedChanges.Title" xml:space="preserve">
+    <value>{View.Editor.MessageBox.UnsavedChanges.Title}</value>
+  </data>
+  <data name="MessageBox.Button.OK" xml:space="preserve">
+    <value>{MessageBox.Button.OK}</value>
+  </data>
 </root>

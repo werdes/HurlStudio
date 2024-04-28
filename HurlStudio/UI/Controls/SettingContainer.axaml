@@ -71,7 +71,8 @@
 
       <StackPanel Orientation="Horizontal"
                   Background="{DynamicResource NeutralControlBackgroundColor}"
-                  Grid.Column="2">
+                  Grid.Column="2"
+                IsVisible="{Binding CanMove}">
         <Button Classes="framelessButton"
                 Click="On_ButtonMoveUp_Click">
           <controls:Icon Type="MoveUp" />
@@ -83,7 +84,8 @@
       </StackPanel>
       <StackPanel IsVisible="{Binding !Collapsed}"
                   Opacity="{Binding DisplayOpacity}"
-                  Grid.ColumnSpan="4" Grid.Row="1">
+                  Grid.ColumnSpan="3"
+                  Grid.Row="1">
         <ContentControl Content="{Binding Setting}"
                         IsEnabled="{Binding !IsReadOnly}" />
       </StackPanel>

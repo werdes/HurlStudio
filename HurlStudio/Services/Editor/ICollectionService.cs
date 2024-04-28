@@ -12,7 +12,9 @@ namespace HurlStudio.Services.Editor
 {
     public interface ICollectionService
     {
+        Task<HurlCollection> GetCollectionAsync(string collectionLocation);
         Task<IEnumerable<HurlCollection>> GetCollectionsAsync();
+        Task<CollectionContainer> GetCollectionContainerAsync(HurlCollection collection);
         Task<ObservableCollection<CollectionContainer>> GetCollectionContainersAsync();
 
     }

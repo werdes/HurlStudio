@@ -29,6 +29,14 @@ using HurlStudio.Services.UiState;
 using HurlStudio.Model.UiState;
 using HurlStudio.UI.Controls;
 using HurlStudio.Collections.Model.Collection;
+using MsBox.Avalonia.Base;
+using MsBox.Avalonia.Enums;
+using MsBox.Avalonia;
+using HurlStudio.UI.Localization;
+using MsBox.Avalonia.Models;
+using System.Threading;
+using Avalonia.Controls;
+using HurlStudio.Collections.Utility;
 
 namespace HurlStudio.Services.Editor
 {
@@ -43,10 +51,11 @@ namespace HurlStudio.Services.Editor
         private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
         private IConfiguration _configuration;
+        private ICollectionService _collectionService;
 
         private int _fileHistoryLength = 0;
 
-        public EditorService(ILogger<EditorService> logger, ServiceManager<Document> documentControlBuilder, EditorViewViewModel editorViewViewModel, MainViewViewModel mainViewViewModel, LayoutFactory layoutFactory, IUserSettingsService userSettingsService, INotificationService notificationService, IConfiguration configuration, IUiStateService uiStateService)
+        public EditorService(ILogger<EditorService> logger, ServiceManager<Document> documentControlBuilder, EditorViewViewModel editorViewViewModel, MainViewViewModel mainViewViewModel, LayoutFactory layoutFactory, IUserSettingsService userSettingsService, INotificationService notificationService, IConfiguration configuration, IUiStateService uiStateService, ICollectionService collectionService)
         {
             _editorViewViewModel = editorViewViewModel;
             _mainViewViewModel = mainViewViewModel;
@@ -58,6 +67,7 @@ namespace HurlStudio.Services.Editor
             _userSettingsService = userSettingsService;
             _notificationService = notificationService;
             _configuration = configuration;
+            _collectionService = collectionService;
 
             _fileHistoryLength = Math.Max(_configuration.GetValue<int>("fileHistoryLength"), GlobalConstants.DEFAULT_FILE_HISTORY_LENGTH);
         }
@@ -116,14 +126,29 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="file"></param>
         /// <returns></returns>
-        public async Task OpenFile(CollectionFile file)
+        public async Task OpenFile(string fileLocation, string collectionLocation)
         {
             if (_editorViewViewModel.Layout == null) throw new ArgumentNullException(nameof(_editorViewViewModel.Layout));
 
+
             try
             {
+                // Get user settings
+                Model.UserSettings.UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
+
+                // Open collection 
+                if (!System.IO.File.Exists(fileLocation)) throw new IOException($"{fileLocation} does not exist");
+                if (!System.IO.File.Exists(collectionLocation)) throw new IOException($"{fileLocation} does not exist");
+
+                HurlCollection collection = await _collectionService.GetCollectionAsync(collectionLocation);
+                CollectionContainer collectionContainer = await _collectionService.GetCollectionContainerAsync(collection);
+                CollectionFile? file = this.GetAllFilesFromCollection(collectionContainer).Where(x => x.Location == fileLocation).FirstOrDefault();
+
+                if (file == null) throw new ArgumentNullException(nameof(file));
+
+
                 _mainViewViewModel.StatusBarStatus = Model.Enums.StatusBarStatus.OpeningFile;
-                _mainViewViewModel.StatusBarDetail = file.Location;
+                _mainViewViewModel.StatusBarDetail = fileLocation;
 
                 IDockable? openDocument = this.GetFileDocumentByFile(file);
 
@@ -143,6 +168,15 @@ namespace HurlStudio.Services.Editor
                     _layoutFactory.SetActiveDockable(fileDocument);
                     _layoutFactory.SetFocusedDockable(_editorViewViewModel.Layout, fileDocument);
 
+                    // Close welcome document
+                    if(userSettings.CloseWelcomeDocumentOnFileOpen)
+                    {
+                        IDockable? welcomeDocument = _editorViewViewModel.Documents.FirstOrDefault(x => x is WelcomeDocumentViewModel);
+                        if(welcomeDocument != null)
+                        {
+                            _layoutFactory.CloseDockable(welcomeDocument);
+                        }
+                    }
 
                     // Place fileDocument in history
                     _editorViewViewModel.FileHistoryEntries.RemoveAll(x => x.Location == file.Location);
@@ -160,12 +194,30 @@ namespace HurlStudio.Services.Editor
                 _log.LogCritical(ex, nameof(OpenFile));
                 _notificationService.Notify(ex);
 
-                throw new Exception($"Opening file [{file.Location}] failed", ex);
+                throw new Exception($"Opening file [{fileLocation}] failed", ex);
             }
             finally
             {
                 _mainViewViewModel.StatusBarStatus = Model.Enums.StatusBarStatus.Idle;
                 _mainViewViewModel.StatusBarDetail = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Tries to find a corresponding collection to a file and opens it
+        /// </summary>
+        /// <param name="fileLocation"></param>
+        /// <returns></returns>
+        public async Task OpenFile(string fileLocation)
+        {
+            CollectionFile? collectionFile = _editorViewViewModel.Collections.SelectMany(x => this.GetAllFilesFromCollection(x)).Where(x => x.Location == fileLocation).FirstOrDefault();
+
+            if (collectionFile != null && 
+                collectionFile.Collection != null && 
+                collectionFile.Collection.Collection != null && 
+                collectionFile.Collection.Collection.FileLocation != null)
+            {
+                await this.OpenFile(fileLocation, collectionFile.Collection.Collection.FileLocation);
             }
         }
 
@@ -190,7 +242,7 @@ namespace HurlStudio.Services.Editor
                         .Where(x => x is BaseSetting)
                         .Select(x => (BaseSetting)x)
                         .Select(x =>
-                            new HurlSettingContainer(fileDocument, environmentSection, x, true)
+                            new HurlSettingContainer(fileDocument, environmentSection, x, true, false)
                         )
             );
             fileDocument.SettingSections.Add(environmentSection);
@@ -203,7 +255,7 @@ namespace HurlStudio.Services.Editor
                     .CollectionSettings
                     .Where(x => x is BaseSetting)
                     .Select(x => (BaseSetting)x)
-                    .Select(x => new HurlSettingContainer(fileDocument, collectionSection, x, true)));
+                    .Select(x => new HurlSettingContainer(fileDocument, collectionSection, x, true, false)));
             fileDocument.SettingSections.Add(collectionSection);
 
             // Folder settings
@@ -216,7 +268,7 @@ namespace HurlStudio.Services.Editor
                           .FolderSettings
                           .Where(x => x is BaseSetting)
                           .Select(x => (BaseSetting)x)
-                          .Select(x => new HurlSettingContainer(fileDocument, folderSection, x, true)));
+                          .Select(x => new HurlSettingContainer(fileDocument, folderSection, x, true, false)));
 
                 fileDocument.SettingSections.Add(folderSection);
             }
@@ -228,7 +280,7 @@ namespace HurlStudio.Services.Editor
                     .FileSettings
                     .Where(x => x is BaseSetting)
                     .Select(x => (BaseSetting)x)
-                    .Select(x => new HurlSettingContainer(fileDocument, fileSection, x, false)));
+                    .Select(x => new HurlSettingContainer(fileDocument, fileSection, x, false, true)));
             fileDocument.SettingSections.Add(fileSection);
 
 
@@ -270,10 +322,9 @@ namespace HurlStudio.Services.Editor
         /// <param name="e"></param>
         private void On_HurlSettingContainer_SettingChanged(object? sender, Model.EventArgs.SettingChangedEventArgs e)
         {
-            if (sender is HurlSettingContainer container &&
-                container.Section.CollectionComponent is CollectionFile file)
+            if (sender is HurlSettingContainer container)
             {
-                file.HasChanges = true;
+                container.Document.HasChanges = true;
             }
         }
 
@@ -286,10 +337,7 @@ namespace HurlStudio.Services.Editor
         {
             if (sender != null && sender is HurlSettingContainer container)
             {
-                await Task.Run(() =>
-                {
-                    _uiStateService.SetSettingCollapsedState(container.GetId(), e.Collapsed);
-                });
+                _uiStateService.SetSettingCollapsedState(container.GetId(), e.Collapsed);
             }
         }
 
@@ -338,6 +386,8 @@ namespace HurlStudio.Services.Editor
                 // Move item in observable collection and rebuild the ui state afterwards
                 if (source != null && source.Contains(e.Setting))
                 {
+                    container.Document.HasChanges = true;
+
                     int settingIdx = source.IndexOf(e.Setting);
                     HurlSettingContainer? otherSettingContainer = null;
 
@@ -420,40 +470,24 @@ namespace HurlStudio.Services.Editor
         }
 
         /// <summary>
-        /// Opens a fileDocument from just its path
-        /// </summary>
-        /// <param name="fileLocation"></param>
-        /// <returns></returns>
-        public async Task OpenFile(string fileLocation)
-        {
-            CollectionFile? collectionFile = _editorViewViewModel.Collections.SelectMany(x => this.GetAllFilesFromCollection(x)).Where(x => x.Location == fileLocation).FirstOrDefault();
-
-            if (collectionFile != null)
-            {
-                await this.OpenFile(collectionFile);
-            }
-        }
-
-        /// <summary>
         /// Close a file
         /// -> properly unbind all setting events
         /// </summary>
         /// <param name="fileDocument"></param>
-        /// <returns></returns>
-        public async Task CloseFileDocument(FileDocumentViewModel? fileDocument)
+        /// <returns>true, if the file was closed</returns>
+        public async Task<bool> CloseFileDocument(FileDocumentViewModel? fileDocument)
         {
-            if (fileDocument != null)
-            {
-                List<HurlSettingContainer> allSettingContainers = fileDocument.SettingSections.SelectMany(x => x.SettingContainers).ToList();
+            if (fileDocument == null) return true;
+            List<HurlSettingContainer> allSettingContainers = fileDocument.SettingSections.SelectMany(x => x.SettingContainers).ToList();
 
-                foreach (HurlSettingContainer hurlSettingContainer in allSettingContainers)
-                {
-                    hurlSettingContainer.SettingEnabledChanged -= this.On_HurlSettingContainer_SettingEnabledChanged;
-                    hurlSettingContainer.SettingOrderChanged -= this.On_HurlSettingContainer_SettingOrderChanged;
-                    hurlSettingContainer.SettingKeyChanged -= this.On_HurlSettingContainer_SettingKeyChanged;
-                }
+            foreach (HurlSettingContainer hurlSettingContainer in allSettingContainers)
+            {
+                hurlSettingContainer.SettingEnabledChanged -= this.On_HurlSettingContainer_SettingEnabledChanged;
+                hurlSettingContainer.SettingOrderChanged -= this.On_HurlSettingContainer_SettingOrderChanged;
+                hurlSettingContainer.SettingKeyChanged -= this.On_HurlSettingContainer_SettingKeyChanged;
             }
 
+            return true;
         }
 
         /// <summary>
@@ -530,10 +564,11 @@ namespace HurlStudio.Services.Editor
         {
             FileDocumentViewModel? openDocument = _editorViewViewModel.Documents.Where(x => x is FileDocumentViewModel)
                                                                                 .Select(x => (FileDocumentViewModel)x)
-                                                                                .Where(x => x.File != null && x.File.Equals(file))
+                                                                                .Where(x => x.File != null && x.File.Location.Equals(file.Location))
                                                                                 .FirstOrDefault();
 
             return openDocument;
         }
+
     }
 }

@@ -8,6 +8,7 @@ using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -51,7 +52,7 @@ namespace HurlStudio.UI.Views
         {
             if (_viewModel == null) return;
             if (_viewModel.Layout != null) return; // Layout has already been created
-            
+
             try
             {
                 _viewModel.Layout = _layoutFactory.CreateLayout();
@@ -67,32 +68,33 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _log.LogCritical(ex, nameof(this.On_EditorView_Loaded));
-                await this.ShowErrorMessage(ex);
+                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
         /// <summary>
         /// On Dockable Closed 
-        /// -> tell the editor service to close the file
+        /// -> Also tell the editor service to close the file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_LayoutFactory_DockableClosed(object? sender, global::Dock.Model.Core.Events.DockableClosedEventArgs e)
+        private async void On_LayoutFactory_DockableClosed(object? sender, global::Dock.Model.Core.Events.DockableClosedEventArgs e)
         {
             // tell the editor service to close the file
             if (e.Dockable is FileDocumentViewModel fileDocumentViewModel)
             {
-                _editorService.CloseFileDocument(fileDocumentViewModel);
+                if (await _editorService.CloseFileDocument(fileDocumentViewModel))
+                {
+                }
             }
         }
 
         /// <summary>
         /// Prevent dock collapse by adding a welcome document once the last document is closed
-        /// -> Also tell the editor service to close the file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_LayoutFactory_DockableRemoved(object? sender, global::Dock.Model.Core.Events.DockableRemovedEventArgs e)
+        private async void On_LayoutFactory_DockableRemoved(object? sender, global::Dock.Model.Core.Events.DockableRemovedEventArgs e)
         {
             if (sender == null || sender is not LayoutFactory layoutFactory) return;
 
@@ -111,8 +113,8 @@ namespace HurlStudio.UI.Views
         private void On_LayoutFactory_ActiveDockableChanged(object? sender, global::Dock.Model.Core.Events.ActiveDockableChangedEventArgs e)
         {
             _log.LogDebug($"[ActiveDockableChanged] Title='{e.Dockable?.Title}'");
-            if(_viewModel == null) return;
-            
+            if (_viewModel == null) return;
+
             if (e.Dockable is FileDocumentViewModel document)
             {
                 if (document.Document != null)
@@ -228,7 +230,7 @@ namespace HurlStudio.UI.Views
         {
             if (_viewModel?.DocumentDock?.ActiveDockable is not FileDocumentViewModel file) return;
             if (file.Document == null || !file.Document.UndoStack.CanUndo) return;
-            
+
             file.Document.UndoStack.Undo();
             _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
             _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
@@ -243,7 +245,7 @@ namespace HurlStudio.UI.Views
         {
             if (_viewModel?.DocumentDock?.ActiveDockable is not FileDocumentViewModel file) return;
             if (file.Document == null || !file.Document.UndoStack.CanRedo) return;
-            
+
             file.Document.UndoStack.Redo();
             _viewModel.CanUndo = file.Document.UndoStack.CanUndo;
             _viewModel.CanRedo = file.Document.UndoStack.CanRedo;

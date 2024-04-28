@@ -70,9 +70,12 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <returns></returns>
         protected override async Task OpenComponentDocument()
         {
+            if (this.CollectionFile.Collection.Collection.FileLocation == null) return;
+
             try
             {
-                await _editorService.OpenFile(this.CollectionFile);
+
+                await _editorService.OpenFile(this.CollectionFile.Location, this.CollectionFile.Collection.Collection.FileLocation);
             }
             catch (Exception ex)
             {

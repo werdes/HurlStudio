@@ -77,6 +77,9 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\NoProxySetting.axaml.cs">
+      <DependentUpon>NoProxySetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\HurlSettings\IpVersionSetting.axaml.cs">
       <DependentUpon>IpVersionSetting.axaml</DependentUpon>
     </Compile>
@@ -161,9 +164,5 @@
     <AvaloniaXaml Update="UI\Controls\HurlSettings\ClientCertificateSetting.axaml">
       <SubType>Designer</SubType>
     </AvaloniaXaml>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Utility\" />
   </ItemGroup>
 </Project>

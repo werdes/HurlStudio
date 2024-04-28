@@ -3,6 +3,7 @@ using Dock.Model.Controls;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
+using HurlStudio.Model.Enums;
 using HurlStudio.UI.Controls;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
@@ -143,5 +144,33 @@ namespace HurlStudio.UI.Dock
                 this.SetFocusedDockable(_rootDock, welcomeDocument);
             }
         }
+
+        public override async void CloseDockable(IDockable dockable)
+        {
+            if (dockable is IExtendedAsyncDockable dockableAsync)
+            {
+                DockableCloseMode closeMode = await dockableAsync.AskAllowClose();
+                switch (closeMode)
+                {
+                    case DockableCloseMode.Cancel: return;
+                    case DockableCloseMode.Discard: 
+                        await dockableAsync.Discard();
+                        base.CloseDockable(dockable);
+                        break;
+                    case DockableCloseMode.Save:
+                        await dockableAsync.Save();
+                        base.CloseDockable(dockable);
+                        break;
+                    case DockableCloseMode.Close:
+                        base.CloseDockable(dockable);
+                        break;
+                }
+            }
+            else
+            {
+                base.CloseDockable(dockable);
+            }
+        }
+
     }
 }

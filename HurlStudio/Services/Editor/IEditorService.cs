@@ -20,9 +20,9 @@ namespace HurlStudio.Services.Editor
         Task<bool> MoveFolderToFolder(CollectionFolder folder, CollectionFolder parentFolder);
         Task<bool> MoveFolderToCollectionRoot(CollectionFolder folder, CollectionContainer collection);
         Task<ObservableCollection<IDockable>> GetOpenDocuments();
-        Task OpenFile(CollectionFile file);
+        Task OpenFile(string fileLocation, string collectionLocation);
         Task OpenFile(string fileLocation);
-        Task CloseFileDocument(FileDocumentViewModel? fileDocument);
+        Task<bool> CloseFileDocument(FileDocumentViewModel? fileDocument);
         Task OpenFolderSettings(CollectionFolder folder);
         Task OpenCollectionSettings(CollectionContainer collection);
     }

@@ -52,6 +52,7 @@ using HurlStudio.UI.ViewModels.Controls;
 using System.Reflection;
 using HurlStudio.Common.Extensions;
 using NLog;
+using HurlStudio.Utility;
 
 namespace HurlStudio
 {
@@ -113,8 +114,7 @@ namespace HurlStudio
             }
             catch (Exception ex)
             {
-                IMsBox<ButtonResult> box = MessageBoxManager.GetMessageBoxStandard("Fatal error occured", ex.Message, ButtonEnum.Ok, MsBox.Avalonia.Enums.Icon.Error);
-                box.ShowWindowAsync();
+                MessageBox.ShowError(ex.Message, "Fatal error occured");
             }
         }
 
@@ -144,7 +144,10 @@ namespace HurlStudio
             if (Current != null && userSettings != null)
             {
                 Current.RequestedThemeVariant = userSettings.Theme.GetThemeVariant();
+                MessageBox.ThemeVariant = Current.RequestedThemeVariant;
             }
+
+
         }
 
         /// <summary>
@@ -201,6 +204,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<HttpVersionSetting, Collections.Settings.HttpVersionSetting>(() => Services.GetRequiredService<HttpVersionSetting>());
             controlBuilder.RegisterProviderAssociated<IgnoreAssertsSetting, Collections.Settings.IgnoreAssertsSetting>(() => Services.GetRequiredService<IgnoreAssertsSetting>());
             controlBuilder.RegisterProviderAssociated<IpVersionSetting, Collections.Settings.IpVersionSetting>(() => Services.GetRequiredService<IpVersionSetting>());
+            controlBuilder.RegisterProviderAssociated<NoProxySetting, Collections.Settings.NoProxySetting>(() => Services.GetRequiredService<NoProxySetting>());
             controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
             controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
 
@@ -356,6 +360,7 @@ namespace HurlStudio
             services.AddTransient<HttpVersionSetting>();
             services.AddTransient<IgnoreAssertsSetting>();
             services.AddTransient<IpVersionSetting>();
+            services.AddTransient<NoProxySetting>();
             services.AddTransient<ProxySetting>();
             services.AddTransient<VariableSetting>();
         }

@@ -1,4 +1,5 @@
-﻿using HurlStudio.Common.Enums;
+﻿using HurlStudio.Collections.Model.EventArgs;
+using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,11 +8,16 @@ namespace HurlStudio.Collections.Settings
 {
     public abstract class BaseSetting : INotifyPropertyChanged, IHurlSetting
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-
-        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         private const string NAME_VALUE_SEPARATOR = "=";
+
+        public event PropertyChangedEventHandler? PropertyChanged;
+        public event EventHandler<SettingPropertyChangedEventArgs>? SettingPropertyChanged;
+
+        protected void Notify([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
+        }
 
         public BaseSetting()
         {
@@ -47,6 +53,34 @@ namespace HurlStudio.Collections.Settings
         public void RefreshDisplayString()
         {
             this.Notify(nameof(DisplayString));
+        }
+
+        /// <summary>
+        /// Propagate a collection change event to notify that something in this setting has changed via SettingPropertyChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void On_CollectionProperty_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
+
+            List<object>? oldNotifiableItems = e.OldItems?.Cast<object>().Where(x => x is INotifyPropertyChanged).ToList();
+            List<object>? newNotifiableItems = e.NewItems?.Cast<object>().Where(x => x is INotifyPropertyChanged).ToList();
+
+            // Unsubscribe from the removed items' PropertyChanged event for propagation to SettingPropertyChanged
+            oldNotifiableItems?.ForEach(x => ((INotifyPropertyChanged)x).PropertyChanged -= On_CollectionProperty_Item_PropertyChanged);
+            // Subscribe to the added items' PropertyChanged event for propagation to SettingPropertyChanged
+            newNotifiableItems?.ForEach(x => ((INotifyPropertyChanged)x).PropertyChanged += On_CollectionProperty_Item_PropertyChanged);
+        }
+
+        /// <summary>
+        /// Propagate a collection items' property change event to notify that something in this setting has changed via SettingPropertyChanged
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_CollectionProperty_Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+        {
+            this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
         }
     }
 }

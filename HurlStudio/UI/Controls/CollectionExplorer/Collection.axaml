@@ -69,7 +69,9 @@
             BorderBrush="{DynamicResource NeutralControlBorderColor}"
             IsVisible="{Binding Selected}"/>
 
-    <Button Classes="framelessButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
+    <Button Classes="framelessButton" 
+            Grid.Column="0" 
+            Click="On_ButtonCollapse_Click">
       <StackPanel>
         <controls:Icon Type="Collapsed" IsVisible="{Binding Collapsed}" />
         <controls:Icon Type="Expanded" IsVisible="{Binding !Collapsed}" />

@@ -1,33 +1,49 @@
-﻿using AvaloniaEdit.Document;
+﻿using Avalonia.Controls;
+using AvaloniaEdit.Document;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Common.UI;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.HurlSettings;
+using MsBox.Avalonia.Models;
+using MsBox.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using HurlStudio.UI.Dock;
+using HurlStudio.Model.Enums;
+using HurlStudio.Services.Editor;
+using MsBox.Avalonia.Base;
+using HurlStudio.UI.Windows;
+using HurlStudio.Utility;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
-    public class FileDocumentViewModel : DocumentBase
+    public class FileDocumentViewModel : DocumentBase, IExtendedAsyncDockable
     {
         private CollectionFile? _file;
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
+        private IEditorService _editorService;
+        private MainWindow _mainWindow;
+        private bool _hasChanges;
 
         private OrderedObservableCollection<HurlSettingSection> _settingSections;
 
-        public FileDocumentViewModel(EditorViewViewModel editorViewViewModel)
+        public FileDocumentViewModel(EditorViewViewModel editorViewViewModel, IEditorService editorService, MainWindow mainWindow)
         {
             this.CanFloat = false;
             this.CanPin = false;
+            this.HasChanges = false;
 
             _editorViewViewModel = editorViewViewModel;
             _settingSections = new OrderedObservableCollection<HurlSettingSection>();
+            _editorService = editorService;
+            _mainWindow = mainWindow;
         }
 
         public CollectionFile? File
@@ -42,7 +58,7 @@ namespace HurlStudio.UI.ViewModels.Documents
                     _file.PropertyChanged += this.On_File_PropertyChanged;
                 }
 
-                this.SetTitle();
+                this.RefreshTitle();
             }
         }
 
@@ -62,7 +78,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             set
             {
                 _document = value;
-                if(_document != null)
+                if (_document != null)
                 {
                     _document.TextChanged -= this.On_Document_TextChanged;
                     _document.TextChanged += this.On_Document_TextChanged;
@@ -82,15 +98,26 @@ namespace HurlStudio.UI.ViewModels.Documents
             }
         }
 
+        public bool HasChanges
+        {
+            get => _hasChanges;
+            set
+            {
+                _hasChanges = value;
+                this.Notify();
+                this.RefreshTitle();
+            }
+        }
+
         /// <summary>
         /// Build the Title for display in the dock control tab strip
         /// </summary>
-        private void SetTitle()
+        private void RefreshTitle()
         {
             if (_file != null)
             {
-                this.Title = Path.GetFileName(_file.Location) + 
-                             (_file.HasChanges ? "*" : string.Empty);
+                this.Title = Path.GetFileName(_file.Location) +
+                             (this.HasChanges ? "*" : string.Empty);
             }
             else
             {
@@ -101,12 +128,16 @@ namespace HurlStudio.UI.ViewModels.Documents
             this.Notify(nameof(this.Title));
         }
 
+        /// <summary>
+        /// Refresh Title on Property change of underlying file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.File.Location) ||
-                e.PropertyName == nameof(this.File.HasChanges))
+            if (e.PropertyName == nameof(this.File.Location))
             {
-                this.SetTitle();
+                this.RefreshTitle();
             }
         }
 
@@ -118,12 +149,46 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="e"></param>
         private void On_Document_TextChanged(object? sender, EventArgs e)
         {
-            if(_editorViewViewModel != null && _document != null)
+            if (_editorViewViewModel != null && _document != null)
             {
                 _editorViewViewModel.CanUndo = _document.UndoStack.CanUndo;
                 _editorViewViewModel.CanRedo = _document.UndoStack.CanRedo;
             }
         }
 
+        /// <summary>
+        /// Ask for an option which way to close this document
+        /// </summary>
+        /// <returns></returns>
+        public async Task<DockableCloseMode> AskAllowClose()
+        {
+            if (!this.HasChanges) return DockableCloseMode.Close;
+
+            MessageBox.ButtonType decisionResult = await MessageBox.Show(
+                    Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text,
+                    Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
+                    [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
+                    Icon.MessageBoxWarning
+                );
+
+            switch (decisionResult)
+            {
+                case MessageBox.ButtonType.Cancel: return DockableCloseMode.Cancel;
+                case MessageBox.ButtonType.Save: return DockableCloseMode.Save;
+                case MessageBox.ButtonType.Discard: return DockableCloseMode.Discard;
+            }
+
+            return DockableCloseMode.Undefined;
+        }
+
+        public async Task Save()
+        {
+            // TODO: Save
+        }
+
+        public async Task Discard()
+        {
+            // TODO: Discard
+        }
     }
 }

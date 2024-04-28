@@ -6,6 +6,7 @@ using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Controls;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Views;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -98,7 +99,7 @@ namespace HurlStudio.UI.Windows
             catch(Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                await this.ShowErrorMessage(ex);
+                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -126,7 +127,7 @@ namespace HurlStudio.UI.Windows
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                this.ShowErrorMessage(ex).Wait();
+                MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -147,7 +148,7 @@ namespace HurlStudio.UI.Windows
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                await this.ShowErrorMessage(ex);
+                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
     }

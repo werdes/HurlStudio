@@ -35,20 +35,35 @@ namespace HurlStudio.Model.HurlSettings
         private bool _collapsed;
         private bool _overwritten;
         private bool _enabled;
+        private bool _canMove;
         private BaseSetting _setting;
         private FileDocumentViewModel _document;
         private HurlSettingSection _section;
 
-        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly)
+        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
             _enabled = true;
+            _canMove = canMove;
             _setting = setting;
             _document = document;
             _section = section;
 
             _setting.PropertyChanged += this.On_Setting_PropertyChanged;
+            _setting.SettingPropertyChanged += this.On_Setting_SettingPropertyChanged;
+        }
+
+        /// <summary>
+        /// Listen for any notified changes on the underlying setting and propagate it to the section
+        /// Compared to the PropertyChanged event of INotifyPropertyChanged, this only indicates that something has changed
+        /// It's also thrown on setting properties of type ObservableCollection having their items updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_Setting_SettingPropertyChanged(object? sender, Collections.Model.EventArgs.SettingPropertyChangedEventArgs e)
+        {
+            SettingChanged?.Invoke(this, new SettingChangedEventArgs(_setting));
         }
 
         /// <summary>
@@ -71,8 +86,6 @@ namespace HurlStudio.Model.HurlSettings
                     this.Setting.RefreshDisplayString();
                 }
             }
-
-            SettingChanged?.Invoke(this, new SettingChangedEventArgs(_setting));
         }
 
         public bool IsReadOnly
@@ -120,6 +133,11 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
+        public bool CanMove
+        {
+            get => _canMove;
+        }
+
         public BaseSetting Setting
         {
             get => _setting;
@@ -160,7 +178,9 @@ namespace HurlStudio.Model.HurlSettings
             if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(this.Section.CollectionComponent));
             if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
-            string id = _section.CollectionComponent.GetId() + "#" + _section.SettingContainers.IndexOf(this);
+            string id = _document.File?.GetId() + "#" +
+                        _section.CollectionComponent.GetId() + "#" + 
+                        _section.SettingContainers.IndexOf(this);
             return id.ToSha256Hash();
         }
     }

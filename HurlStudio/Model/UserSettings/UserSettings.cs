@@ -28,6 +28,7 @@ namespace HurlStudio.Model.UserSettings
         private bool _showEndOfLine;
         private bool _showWhitespace;
         private bool _wordWrap;
+        private bool _closeWelcomeDocumentOnFileOpen;
 
         public UserSettings(CultureInfo defaultUiLanguage, ApplicationTheme defaultTheme)
         {
@@ -122,6 +123,17 @@ namespace HurlStudio.Model.UserSettings
             set
             {
                 _wordWrap = value;
+                this.Notify();
+            }
+        }
+
+        [JsonPropertyName("close_welcomedocument_on_file_open")]
+        public bool CloseWelcomeDocumentOnFileOpen
+        {
+            get => _closeWelcomeDocumentOnFileOpen;
+            set
+            {
+                _closeWelcomeDocumentOnFileOpen = value;
                 this.Notify();
             }
         }

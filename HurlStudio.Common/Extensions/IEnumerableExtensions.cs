@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,6 +15,14 @@ namespace HurlStudio.Common.Extensions
         }
 
         public static void ForEach<T>(this IEnumerable<T> source, Action<T> action)
+        {
+            foreach (T element in source)
+            {
+                action(element);
+            }
+        }
+
+        public static void ForEach<T>(this IList<T> source, Action<T> action)
         {
             foreach (T element in source)
             {

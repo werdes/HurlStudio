@@ -42,16 +42,8 @@ namespace HurlStudio.UI.Controls
         private void On_Icon_Initialized(object? sender, EventArgs e)
         {
             ThemeVariant currentThemeVariant = this.ActualThemeVariant;
-            string? fileName = this.Type.GetFileName();
-            string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
-
-            if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(assemblyName))
-            {
-                Uri path = new Uri($"avares://{assemblyName}/Assets/Icons/{currentThemeVariant}/{fileName}");
-
-                Bitmap bitmap = new Bitmap(AssetLoader.Open(path));
-                this.Source = bitmap;
-            }
+            
+            this.Source = this.Type.GetBitmap(currentThemeVariant);
         }
     }
 }

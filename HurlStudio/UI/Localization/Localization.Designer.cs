@@ -664,6 +664,42 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Cancel} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_Cancel {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Discard} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_Discard {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.Discard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.OK} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_OK {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.OK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Save} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_Save {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.ErrorTitle} ähnelt.
         /// </summary>
         public static string MessageBox_ErrorTitle {
@@ -1186,6 +1222,42 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Add.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.Add.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.EmptyList} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_EmptyList {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Remove.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_Remove_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.Remove.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Overwritten.Tooltip} ähnelt.
         /// </summary>
         public static string Setting_Overwritten_Tooltip {
@@ -1272,6 +1344,24 @@ namespace HurlStudio.UI.Localization {
         public static string View_Editor_Label {
             get {
                 return ResourceManager.GetString("View.Editor.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.MessageBox.UnsavedChanges.Text} ähnelt.
+        /// </summary>
+        public static string View_Editor_MessageBox_UnsavedChanges_Text {
+            get {
+                return ResourceManager.GetString("View.Editor.MessageBox.UnsavedChanges.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.MessageBox.UnsavedChanges.Title} ähnelt.
+        /// </summary>
+        public static string View_Editor_MessageBox_UnsavedChanges_Title {
+            get {
+                return ResourceManager.GetString("View.Editor.MessageBox.UnsavedChanges.Title", resourceCulture);
             }
         }
         

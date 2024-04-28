@@ -1,4 +1,7 @@
-﻿using HurlStudio.UI.Localization;
+﻿using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using Avalonia.Styling;
+using HurlStudio.UI.Localization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +113,13 @@ namespace HurlStudio.Model.Enums
         [Icon("add_setting.png")]
         AddSetting,
         [Icon("home.png")]
-        Home
+        Home,
+        [Icon("messagebox_info_50.png")]
+        MessageBoxInfo,
+        [Icon("messagebox_warning_50.png")]
+        MessageBoxWarning,
+        [Icon("messagebox_error_50.png")]
+        MessageBoxError,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
@@ -131,7 +140,7 @@ namespace HurlStudio.Model.Enums
         public static string? GetFileName(this Icon icon)
         {
             MemberInfo? iconField = typeof(Icon).GetMember(icon.ToString()).FirstOrDefault(x => x.DeclaringType == typeof(Icon));
-            if(iconField != null)
+            if (iconField != null)
             {
                 IconAttribute? attribute = iconField.GetCustomAttributes<IconAttribute>(false).FirstOrDefault();
                 if (attribute != null)
@@ -141,6 +150,21 @@ namespace HurlStudio.Model.Enums
             }
 
             return string.Empty;
+        }
+
+        public static Bitmap? GetBitmap(this Icon icon, ThemeVariant themeVariant)
+        {
+            string? fileName = icon.GetFileName();
+            string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
+
+            if (!string.IsNullOrEmpty(fileName) && !string.IsNullOrEmpty(assemblyName))
+            {
+                Uri path = new Uri($"avares://{assemblyName}/Assets/Icons/{themeVariant}/{fileName}");
+
+                Bitmap bitmap = new Bitmap(AssetLoader.Open(path));
+                return bitmap;
+            }
+            return null;
         }
     }
 }
