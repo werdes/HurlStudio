@@ -636,4 +636,151 @@
   <data name="MessageBox.Button.OK" xml:space="preserve">
     <value>{MessageBox.Button.OK}</value>
   </data>
+  <data name="Setting.PathAsIsSetting.Label" xml:space="preserve">
+    <value>{Setting.PathAsIsSetting.Label}</value>
+  </data>
+  <data name="Setting.PathAsIsSetting.Title" xml:space="preserve">
+    <value>{Setting.PathAsIsSetting.Title}</value>
+  </data>
+  <data name="Setting.PathAsIsSetting.Tooltip" xml:space="preserve">
+    <value>{Setting.PathAsIsSetting.Tooltip}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.AllowRedirections.Label" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.AllowRedirections.Label}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.AllowRedirections.Tooltip" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.AllowRedirections.Tooltip}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.MaxRedirections.Label" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.MaxRedirections.Label}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.MaxRedirections.Tooltip" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.MaxRedirections.Tooltip}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.RedirectionsTrusted.Label" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.RedirectionsTrusted.Label}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.RedirectionsTrusted.Tooltip" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.RedirectionsTrusted.Tooltip}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.Title" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.Title}</value>
+  </data>
+  <data name="Setting.ResolveSetting.Address.Label" xml:space="preserve">
+    <value>{Setting.ResolveSetting.Address.Label}</value>
+  </data>
+  <data name="Setting.ResolveSetting.Address.Tooltip" xml:space="preserve">
+    <value>{Setting.ResolveSetting.Address.Tooltip}</value>
+  </data>
+  <data name="Setting.ResolveSetting.HostAndPort.Label" xml:space="preserve">
+    <value>{Setting.ResolveSetting.HostAndPort.Label}</value>
+  </data>
+  <data name="Setting.ResolveSetting.HostAndPort.Tooltip" xml:space="preserve">
+    <value>{Setting.ResolveSetting.HostAndPort.Tooltip}</value>
+  </data>
+  <data name="Setting.ResolveSetting.Title" xml:space="preserve">
+    <value>{Setting.ResolveSetting.Title}</value>
+  </data>
+  <data name="Setting.RetrySetting.RetryCount.Label" xml:space="preserve">
+    <value>{Setting.RetrySetting.RetryCount.Label}</value>
+  </data>
+  <data name="Setting.RetrySetting.RetryCount.Tooltip" xml:space="preserve">
+    <value>{Setting.RetrySetting.RetryCount.Tooltip}</value>
+  </data>
+  <data name="Setting.RetrySetting.RetryInterval.Label" xml:space="preserve">
+    <value>{Setting.RetrySetting.RetryInterval.Label}</value>
+  </data>
+  <data name="Setting.RetrySetting.RetryInterval.Tooltip" xml:space="preserve">
+    <value>{Setting.RetrySetting.RetryInterval.Tooltip}</value>
+  </data>
+  <data name="Setting.RetrySetting.Title" xml:space="preserve">
+    <value>{Setting.RetrySetting.Title}</value>
+  </data>
+  <data name="Setting.CaCertSetting.File.Label" xml:space="preserve">
+    <value>{Setting.CaCertSetting.File.Label}</value>
+  </data>
+  <data name="Setting.CaCertSetting.File.Tooltip" xml:space="preserve">
+    <value>{Setting.CaCertSetting.File.Tooltip}</value>
+  </data>
+  <data name="Setting.MaxFilesizeSetting.Label" xml:space="preserve">
+    <value>{Setting.MaxFilesizeSetting.Label}</value>
+  </data>
+  <data name="Setting.MaxFilesizeSetting.Title" xml:space="preserve">
+    <value>{Setting.MaxFilesizeSetting.Title}</value>
+  </data>
+  <data name="Setting.NetrcSetting.File.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.NetrcSetting.File.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.NetrcSetting.File.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.NetrcSetting.File.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.NetrcSetting.File.Label" xml:space="preserve">
+    <value>{Setting.NetrcSetting.File.Label}</value>
+  </data>
+  <data name="Setting.NetrcSetting.File.Tooltip" xml:space="preserve">
+    <value>{Setting.NetrcSetting.File.Tooltip}</value>
+  </data>
+  <data name="Setting.NetrcSetting.IsAutomatic.Label" xml:space="preserve">
+    <value>{Setting.NetrcSetting.IsAutomatic.Label}</value>
+  </data>
+  <data name="Setting.NetrcSetting.IsAutomatic.Tooltip" xml:space="preserve">
+    <value>{Setting.NetrcSetting.IsAutomatic.Tooltip}</value>
+  </data>
+  <data name="Setting.NetrcSetting.IsOptional.Label" xml:space="preserve">
+    <value>{Setting.NetrcSetting.IsOptional.Label}</value>
+  </data>
+  <data name="Setting.NetrcSetting.IsOptional.Tooltip" xml:space="preserve">
+    <value>{Setting.NetrcSetting.IsOptional.Tooltip}</value>
+  </data>
+  <data name="Setting.NetrcSetting.Title" xml:space="preserve">
+    <value>{Setting.NetrcSetting.Title}</value>
+  </data>
+  <data name="Setting.SslNoRevokeSetting.Label" xml:space="preserve">
+    <value>{Setting.SslNoRevokeSetting.Label}</value>
+  </data>
+  <data name="Setting.SslNoRevokeSetting.Title" xml:space="preserve">
+    <value>{Setting.SslNoRevokeSetting.Title}</value>
+  </data>
+  <data name="Setting.SslNoRevokeSetting.Tooltip" xml:space="preserve">
+    <value>{Setting.SslNoRevokeSetting.Tooltip}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.ConnectTimeoutSeconds.Label" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.ConnectTimeoutSeconds.Label}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.ConnectTimeoutSeconds.Tooltip" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.ConnectTimeoutSeconds.Tooltip}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.MaxTimeSeconds.Label" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.MaxTimeSeconds.Label}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.MaxTimeSeconds.Tooltip" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.MaxTimeSeconds.Tooltip}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.Title" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.Title}</value>
+  </data>
+  <data name="Setting.ToEntrySetting.Title" xml:space="preserve">
+    <value>{Setting.ToEntrySetting.Title}</value>
+  </data>
+  <data name="Setting.ToEntrySetting.ToEntry.Label" xml:space="preserve">
+    <value>{Setting.ToEntrySetting.ToEntry.Label}</value>
+  </data>
+  <data name="Setting.ToEntrySetting.ToEntry.Tooltip" xml:space="preserve">
+    <value>{Setting.ToEntrySetting.ToEntry.Tooltip}</value>
+  </data>
+  <data name="Setting.UnixSocketSetting.Path.Label" xml:space="preserve">
+    <value>{Setting.UnixSocketSetting.Path.Label}</value>
+  </data>
+  <data name="Setting.UnixSocketSetting.Path.Tooltip" xml:space="preserve">
+    <value>{Setting.UnixSocketSetting.Path.Tooltip}</value>
+  </data>
+  <data name="Setting.UnixSocketSetting.Title" xml:space="preserve">
+    <value>{Setting.UnixSocketSetting.Title}</value>
+  </data>
+  <data name="Setting.UserAgentSetting.Title" xml:space="preserve">
+    <value>{Setting.UserAgentSetting.Title}</value>
+  </data>
+  <data name="Setting.UserAgentSetting.UserAgent.Tooltip" xml:space="preserve">
+    <value>{Setting.UserAgentSetting.UserAgent.Tooltip}</value>
+  </data>
 </root>

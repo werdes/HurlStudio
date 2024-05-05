@@ -817,6 +817,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.File.Label} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_File_Label {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.File.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.File.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_File_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.File.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.FilePicker.Pattern.Title} ähnelt.
         /// </summary>
         public static string Setting_CaCertSetting_FilePicker_Pattern_Title {
@@ -1222,6 +1240,105 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_MaxFilesizeSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.MaxFilesizeSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_MaxFilesizeSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.MaxFilesizeSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.File.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_File_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.File.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.File.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_File_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.File.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.File.Label} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_File_Label {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.File.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.File.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_File_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.File.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.IsAutomatic.Label} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_IsAutomatic_Label {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.IsAutomatic.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.IsAutomatic.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_IsAutomatic_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.IsAutomatic.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.IsOptional.Label} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_IsOptional_Label {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.IsOptional.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.IsOptional.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_IsOptional_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.IsOptional.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Add.Tooltip} ähnelt.
         /// </summary>
         public static string Setting_NoProxySetting_Add_Tooltip {
@@ -1263,6 +1380,33 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_Overwritten_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.Overwritten.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_PathAsIsSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.PathAsIsSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_PathAsIsSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.PathAsIsSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_PathAsIsSetting_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.PathAsIsSetting.Tooltip", resourceCulture);
             }
         }
         
@@ -1317,6 +1461,303 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ProxySetting_User_Label {
             get {
                 return ResourceManager.GetString("Setting.ProxySetting.User.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.AllowRedirections.Label} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_AllowRedirections_Label {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.AllowRedirections.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.AllowRedirections.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_AllowRedirections_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.AllowRedirections.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.MaxRedirections.Label} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_MaxRedirections_Label {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.MaxRedirections.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.MaxRedirections.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_MaxRedirections_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.MaxRedirections.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.RedirectionsTrusted.Label} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_RedirectionsTrusted_Label {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.RedirectionsTrusted.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.RedirectionsTrusted.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_RedirectionsTrusted_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.RedirectionsTrusted.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.Address.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_Address_Label {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.Address.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.Address.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_Address_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.Address.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.HostAndPort.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_HostAndPort_Label {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.HostAndPort.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.HostAndPort.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_HostAndPort_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.HostAndPort.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.RetryCount.Label} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_RetryCount_Label {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.RetryCount.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.RetryCount.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_RetryCount_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.RetryCount.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.RetryInterval.Label} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_RetryInterval_Label {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.RetryInterval.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.RetryInterval.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_RetryInterval_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.RetryInterval.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.Label} ähnelt.
+        /// </summary>
+        public static string Setting_SslNoRevokeSetting_Label {
+            get {
+                return ResourceManager.GetString("Setting.SslNoRevokeSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_SslNoRevokeSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.SslNoRevokeSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_SslNoRevokeSetting_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.SslNoRevokeSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.ConnectTimeoutSeconds.Label} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_ConnectTimeoutSeconds_Label {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.ConnectTimeoutSeconds.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.ConnectTimeoutSeconds.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_ConnectTimeoutSeconds_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.ConnectTimeoutSeconds.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.MaxTimeSeconds.Label} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_MaxTimeSeconds_Label {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.MaxTimeSeconds.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.MaxTimeSeconds.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_MaxTimeSeconds_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.MaxTimeSeconds.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ToEntrySetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_ToEntrySetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.ToEntrySetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ToEntrySetting.ToEntry.Label} ähnelt.
+        /// </summary>
+        public static string Setting_ToEntrySetting_ToEntry_Label {
+            get {
+                return ResourceManager.GetString("Setting.ToEntrySetting.ToEntry.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ToEntrySetting.ToEntry.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_ToEntrySetting_ToEntry_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.ToEntrySetting.ToEntry.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Path.Label} ähnelt.
+        /// </summary>
+        public static string Setting_UnixSocketSetting_Path_Label {
+            get {
+                return ResourceManager.GetString("Setting.UnixSocketSetting.Path.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Path.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_UnixSocketSetting_Path_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.UnixSocketSetting.Path.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_UnixSocketSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.UnixSocketSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UserAgentSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_UserAgentSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.UserAgentSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UserAgentSetting.UserAgent.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_UserAgentSetting_UserAgent_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.UserAgentSetting.UserAgent.Tooltip", resourceCulture);
             }
         }
         

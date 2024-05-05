@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:RetrySetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.RetrySetting">
+  <Grid Margin="3">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <!--Count-->
+    <TextBlock Text="{x:Static localization:Localization.Setting_RetrySetting_RetryCount_Label}"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Text="{Binding RetryCount}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_RetrySetting_RetryCount_Tooltip}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"/>
+    
+    <!--Interval-->
+    <TextBlock Grid.Row="1"
+               Text="{x:Static localization:Localization.Setting_RetrySetting_RetryInterval_Label}"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="1"
+             Text="{Binding RetryInterval}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_RetrySetting_RetryInterval_Tooltip}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"/>
+  </Grid>
+</UserControl>

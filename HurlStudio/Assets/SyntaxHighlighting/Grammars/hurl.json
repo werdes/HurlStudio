@@ -99,7 +99,7 @@
           "end": "(\")|((?:[^\\\\\\n])$)",
           "endCaptures": {
             "1": {
-              "name": "notation.quotes.double.end.cs"
+              "name": "notation.quotes.double.end"
             },
             "2": {
               "name": "invalid.illegal.newline"
@@ -129,7 +129,7 @@
         },
         {
           "name": "notation.keyvalue.key",
-          "match": "^(.*)\\:"
+          "match": "^([^:]*)\\:"
         },
         {
           "include": "#url"
@@ -160,7 +160,7 @@
         },
         {
           "name": "keyword.assertion.predicate",
-          "match": "\\b(startsWith|endsWith|contains|includes|matches|exists|isBoolean|isCollection|isDate|isEmpty|isFloat|isInteger|isString)\\b"
+          "match": "\\b(startsWith|endsWith|contains|includes|matches|exists|isBoolean|isCollection|isDate|isEmpty|isFloat|isInteger|isString|isNumber|isIsoDate)\\b"
         },
         {
           "name": "keyword.filter",

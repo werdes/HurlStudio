@@ -7,8 +7,8 @@
              xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
              
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
-             x:DataType="setting:ProxySetting"             
-             x:Class="HurlStudio.UI.Controls.HurlSettings.ProxySetting">
+             x:DataType="setting:ResolveSetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.ResolveSetting">
   <Grid Margin="3">
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="Auto" />
@@ -19,19 +19,18 @@
     <Grid.RowDefinitions>
       <RowDefinition />
       <RowDefinition />
-      <RowDefinition />
-      <RowDefinition />
     </Grid.RowDefinitions>
-    
+
     <!--Host/Port-->
     <Label VerticalAlignment="Center"
            Foreground="{DynamicResource NeutralControlForegroundColor}"
-           Content="{x:Static localization:Localization.Setting_ProxySetting_HostAndPort_Label}" />
+           Content="{x:Static localization:Localization.Setting_ResolveSetting_HostAndPort_Label}" />
 
     <TextBox Classes="framelessTextBox"
              Grid.Column="1"
              Margin="0,0,5,0"
              Text="{Binding Host}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_ResolveSetting_HostAndPort_Tooltip}"
              VerticalAlignment="Center" />
 
     <TextBlock Text=":"
@@ -41,55 +40,25 @@
                   Background="Transparent" />
 
     <TextBox Classes="framelessTextBox"
-             Text="{Binding Port}"
+             Grid.Column="3"
              Margin="0,0,5,0"
+             Text="{Binding Port}"
              VerticalAlignment="Center"
-             Grid.Column="3"/>
-    
-    <!--Username-->
+             ToolTip.Tip="{x:Static localization:Localization.Setting_ResolveSetting_HostAndPort_Tooltip}"/>
+
+    <!--Address-->
     <Label VerticalAlignment="Center"
            Grid.Row="1"
            Foreground="{DynamicResource NeutralControlForegroundColor}"
-           Content="{x:Static localization:Localization.Setting_ProxySetting_User_Label}" />
+           Content="{x:Static localization:Localization.Setting_ResolveSetting_Address_Label}" />
 
     <TextBox Classes="framelessTextBox"
              Grid.Column="1"
              Grid.ColumnSpan="3"
              Grid.Row="1"
              Margin="0,0,5,0"
-             Text="{Binding User}"
+             Text="{Binding Address}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_ResolveSetting_Address_Tooltip}"
              VerticalAlignment="Center" />
-
-
-    <!--Password-->
-    <Label VerticalAlignment="Center"
-           Grid.Row="2"
-           Foreground="{DynamicResource NeutralControlForegroundColor}"
-           Content="{x:Static localization:Localization.Setting_ProxySetting_Password_Label}" />
-
-    <TextBox Classes="framelessTextBox"
-             Grid.Column="1"
-             Grid.ColumnSpan="3"
-             Grid.Row="2"
-             Margin="0,0,5,0"
-             Text="{Binding Password}"
-             PasswordChar="*"
-             VerticalAlignment="Center" />
-    
-    <!--Protocol-->
-    <Label VerticalAlignment="Center"
-           Grid.Row="3"
-           Foreground="{DynamicResource NeutralControlForegroundColor}"
-           Content="{x:Static localization:Localization.Setting_ProxySetting_Protocol_Label}" />
-
-    <ComboBox Classes="framelessComboBox"
-              Grid.Column="1"
-              Grid.ColumnSpan="3"
-              ItemsSource="{x:Static commonenums:ProxyProtocolExtensions.DisplayValues}"
-              SelectedValue="{Binding Protocol}"
-              Grid.Row="3"
-              Margin="0,0,5,0"
-              VerticalAlignment="Center" />
-
   </Grid>
 </UserControl>

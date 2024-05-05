@@ -24,6 +24,11 @@ namespace HurlStudio.Common.UI
         {
         }
 
+        /// <summary>
+        /// Move an item one position up within the collection
+        /// </summary>
+        /// <param name="item">item to be moved</param>
+        /// <exception cref="ArgumentNullException">if the given item is null</exception>
         public void MoveItemUp(T item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));
@@ -37,6 +42,11 @@ namespace HurlStudio.Common.UI
             }
         }
 
+        /// <summary>
+        /// Move an item one position down within the collection
+        /// </summary>
+        /// <param name="item">item to be moved</param>
+        /// <exception cref="ArgumentNullException">if the given item is null</exception>
         public void MoveItemDown(T item)
         {
             if (item == null) throw new ArgumentNullException(nameof(item));

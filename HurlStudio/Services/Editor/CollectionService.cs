@@ -32,6 +32,7 @@ namespace HurlStudio.Services.Editor
         private IUiStateService _uiStateService = null;
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
+        private string[] _collectionExplorerIgnoredDirectories = [];
 
         public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService)
         {
@@ -43,6 +44,7 @@ namespace HurlStudio.Services.Editor
             _uiStateService = uiStateService;
 
             _collectionLoaderMaxDirectoryDepth = Math.Max(1, _configuration.GetValue<int>("collectionLoaderMaxDirectoryDepth"));
+            _collectionExplorerIgnoredDirectories = _configuration.GetSection("collectionExplorerIgnoredDirectories").Get<string[]>() ?? [];
         }
 
         /// <summary>
@@ -137,8 +139,9 @@ namespace HurlStudio.Services.Editor
         /// <returns>A Folder file</returns>
         private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, CollectionFolder? parent, string location, string collectionRoot, Model.UiState.UiState? uiState)
         {
-
             if (depth > _collectionLoaderMaxDirectoryDepth) return null;
+            if (_collectionExplorerIgnoredDirectories.Contains(new DirectoryInfo(location).Name)) return null;  
+
             CollectionFolder collectionFolder = new CollectionFolder(collectionContainer, parent, location);
             bool folderCollapsed = false;
             if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(), out folderCollapsed) ?? false)

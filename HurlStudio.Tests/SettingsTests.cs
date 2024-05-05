@@ -395,6 +395,63 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[3].IpVersion, Common.Enums.IpVersion.IPv6);
         }
 
+
+        [TestMethod]
+        public void TestValidMaxFilesizeSettings()
+        {
+            List<MaxFilesizeSetting> settings = new List<MaxFilesizeSetting>();
+            string[] testValues =
+            {
+                @"max_filesize=1024",
+                @"max_filesize=4096"
+            };
+
+            foreach (string testValue in testValues)
+            {
+                IHurlSetting? hurlSetting = _parser?.Parse(testValue);
+                Assert.IsNotNull(hurlSetting);
+                Assert.IsInstanceOfType(hurlSetting, typeof(MaxFilesizeSetting));
+
+                settings.Add(hurlSetting as MaxFilesizeSetting ?? throw new InvalidOperationException());
+            }
+
+            Assert.AreEqual(testValues.Length, settings.Count);
+            Assert.AreEqual(settings[0].MaxFilesize, 1024u);
+            Assert.AreEqual(settings[1].MaxFilesize, 4096u);
+        }
+
+        [TestMethod]
+        public void TestValidNetrcSettings()
+        {
+            List<NetrcSetting> settings = new List<NetrcSetting>();
+            string[] testValues =
+            {
+                @"netrc=true|true|",
+                @"netrc=true|false|/home/test/.netrc",
+                @"netrc=false|false|/home/test/.netrc",
+            };
+
+            foreach (string testValue in testValues)
+            {
+                IHurlSetting? hurlSetting = _parser?.Parse(testValue);
+                Assert.IsNotNull(hurlSetting);
+                Assert.IsInstanceOfType(hurlSetting, typeof(NetrcSetting));
+
+                settings.Add(hurlSetting as NetrcSetting ?? throw new InvalidOperationException());
+            }
+
+            Assert.AreEqual(testValues.Length, settings.Count);
+            Assert.AreEqual(settings[0].IsOptional, true);
+            Assert.AreEqual(settings[0].IsAutomatic, true);
+            Assert.AreEqual(settings[0].File, null);
+            Assert.AreEqual(settings[1].IsOptional, true);
+            Assert.AreEqual(settings[1].IsAutomatic, false);
+            Assert.AreEqual(settings[1].File, "/home/test/.netrc");
+            Assert.AreEqual(settings[2].IsOptional, false);
+            Assert.AreEqual(settings[2].IsAutomatic, false);
+            Assert.AreEqual(settings[2].File, "/home/test/.netrc");
+        }
+
         [TestMethod]
         public void TestValidNoProxySettings()
         {
@@ -416,12 +473,12 @@ namespace HurlStudio.Tests
 
             Assert.AreEqual(testValues.Length, settings.Count);
             Assert.AreEqual(settings[0].NoProxyHosts.Count, 3);
-            Assert.AreEqual(settings[0].NoProxyHosts[0], "google.com");
-            Assert.AreEqual(settings[0].NoProxyHosts[1], "cloudflare.com");
-            Assert.AreEqual(settings[0].NoProxyHosts[2], "amazon.com");
+            Assert.AreEqual(settings[0].NoProxyHosts[0].Host, "google.com");
+            Assert.AreEqual(settings[0].NoProxyHosts[1].Host, "cloudflare.com");
+            Assert.AreEqual(settings[0].NoProxyHosts[2].Host, "amazon.com");
 
             Assert.AreEqual(settings[1].NoProxyHosts.Count, 1);
-            Assert.AreEqual(settings[1].NoProxyHosts[0], "google.com");
+            Assert.AreEqual(settings[1].NoProxyHosts[0].Host, "google.com");
         }
 
         [TestMethod]

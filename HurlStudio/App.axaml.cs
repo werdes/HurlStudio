@@ -58,7 +58,7 @@ namespace HurlStudio
 {
     public partial class App : Application
     {
-        public static IServiceProvider Services { get; private set; }
+        public static IServiceProvider? Services { get; private set; }
         public static IConfiguration? Config { get; private set; }
 
         /// <summary>
@@ -114,7 +114,9 @@ namespace HurlStudio
             }
             catch (Exception ex)
             {
+#pragma warning disable CS4014
                 MessageBox.ShowError(ex.Message, "Fatal error occured");
+#pragma warning restore CS4014
             }
         }
 
@@ -124,6 +126,8 @@ namespace HurlStudio
         /// </summary>
         private void SetUiCulture()
         {
+            if (Services == null) throw new ArgumentNullException(nameof(Services));
+
             IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
             UserSettings? userSettings = userSettingsService.GetUserSettings(false);
 
@@ -138,6 +142,8 @@ namespace HurlStudio
         /// </summary>
         private void SetTheme()
         {
+            if (Services == null) throw new ArgumentNullException(nameof(Services));
+
             IUserSettingsService userSettingsService = Services.GetRequiredService<IUserSettingsService>();
             UserSettings? userSettings = userSettingsService.GetUserSettings(false);
 
@@ -165,6 +171,8 @@ namespace HurlStudio
         /// </summary>
         private static void RegisterControls()
         {
+            if (Services == null) throw new ArgumentNullException(nameof(Services));
+
             ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
             ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
             ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
@@ -204,8 +212,19 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<HttpVersionSetting, Collections.Settings.HttpVersionSetting>(() => Services.GetRequiredService<HttpVersionSetting>());
             controlBuilder.RegisterProviderAssociated<IgnoreAssertsSetting, Collections.Settings.IgnoreAssertsSetting>(() => Services.GetRequiredService<IgnoreAssertsSetting>());
             controlBuilder.RegisterProviderAssociated<IpVersionSetting, Collections.Settings.IpVersionSetting>(() => Services.GetRequiredService<IpVersionSetting>());
+            controlBuilder.RegisterProviderAssociated<MaxFilesizeSetting, Collections.Settings.MaxFilesizeSetting>(() => Services.GetRequiredService<MaxFilesizeSetting>());
+            controlBuilder.RegisterProviderAssociated<NetrcSetting, Collections.Settings.NetrcSetting>(() => Services.GetRequiredService<NetrcSetting>());
             controlBuilder.RegisterProviderAssociated<NoProxySetting, Collections.Settings.NoProxySetting>(() => Services.GetRequiredService<NoProxySetting>());
+            controlBuilder.RegisterProviderAssociated<PathAsIsSetting, Collections.Settings.PathAsIsSetting>(() => Services.GetRequiredService<PathAsIsSetting>());
             controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
+            controlBuilder.RegisterProviderAssociated<RedirectionsSetting, Collections.Settings.RedirectionsSetting>(() => Services.GetRequiredService<RedirectionsSetting>()); 
+            controlBuilder.RegisterProviderAssociated<ResolveSetting, Collections.Settings.ResolveSetting>(() => Services.GetRequiredService<ResolveSetting>());
+            controlBuilder.RegisterProviderAssociated<RetrySetting, Collections.Settings.RetrySetting>(() => Services.GetRequiredService<RetrySetting>());
+            controlBuilder.RegisterProviderAssociated<SslNoRevokeSetting, Collections.Settings.SslNoRevokeSetting>(() => Services.GetRequiredService<SslNoRevokeSetting>());
+            controlBuilder.RegisterProviderAssociated<TimeoutSetting, Collections.Settings.TimeoutSetting>(() => Services.GetRequiredService<TimeoutSetting>());
+            controlBuilder.RegisterProviderAssociated<ToEntrySetting, Collections.Settings.ToEntrySetting>(() => Services.GetRequiredService<ToEntrySetting>());
+            controlBuilder.RegisterProviderAssociated<UnixSocketSetting, Collections.Settings.UnixSocketSetting>(() => Services.GetRequiredService<UnixSocketSetting>());
+            controlBuilder.RegisterProviderAssociated<UserAgentSetting, Collections.Settings.UserAgentSetting>(() => Services.GetRequiredService<UserAgentSetting>());
             controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
 
 
@@ -224,6 +243,8 @@ namespace HurlStudio
         /// </summary>
         private static void RegisterViewModelHierarchy()
         {
+            if (Services == null) throw new ArgumentNullException(nameof(Services));
+
             MainViewViewModel mainViewViewModel = Services.GetRequiredService<MainViewViewModel>();
             mainViewViewModel.ViewFrameViewModel = Services.GetRequiredService<ViewFrameViewModel>();
 
@@ -360,9 +381,21 @@ namespace HurlStudio
             services.AddTransient<HttpVersionSetting>();
             services.AddTransient<IgnoreAssertsSetting>();
             services.AddTransient<IpVersionSetting>();
+            services.AddTransient<MaxFilesizeSetting>();
+            services.AddTransient<NetrcSetting>();
             services.AddTransient<NoProxySetting>();
+            services.AddTransient<PathAsIsSetting>();
             services.AddTransient<ProxySetting>();
+            services.AddTransient<RedirectionsSetting>();
+            services.AddTransient<ResolveSetting>();
+            services.AddTransient<RetrySetting>();
+            services.AddTransient<SslNoRevokeSetting>();
+            services.AddTransient<TimeoutSetting>();
+            services.AddTransient<ToEntrySetting>();
+            services.AddTransient<UnixSocketSetting>();
+            services.AddTransient<UserAgentSetting>();
             services.AddTransient<VariableSetting>();
+            
         }
 
         /// <summary>

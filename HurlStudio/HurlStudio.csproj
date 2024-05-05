@@ -77,6 +77,39 @@
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\HurlSettings\MaxFilesizeSetting.axaml.cs">
+      <DependentUpon>MaxFilesizeSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\NetrcSetting.axaml.cs">
+      <DependentUpon>NetrcSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\UserAgentSetting.axaml.cs">
+      <DependentUpon>UserAgentSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\UnixSocketSetting.axaml.cs">
+      <DependentUpon>UnixSocketSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\ToEntrySetting.axaml.cs">
+      <DependentUpon>ToEntrySetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\TimeoutSetting.axaml.cs">
+      <DependentUpon>TimeoutSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\SslNoRevokeSetting.axaml.cs">
+      <DependentUpon>SslNoRevokeSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\RetrySetting.axaml.cs">
+      <DependentUpon>RetrySetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\ResolveSetting.axaml.cs">
+      <DependentUpon>ResolveSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\RedirectionsSetting.axaml.cs">
+      <DependentUpon>RedirectionsSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\HurlSettings\PathAsIsSetting.axaml.cs">
+      <DependentUpon>PathAsIsSetting.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\HurlSettings\NoProxySetting.axaml.cs">
       <DependentUpon>NoProxySetting.axaml</DependentUpon>
     </Compile>

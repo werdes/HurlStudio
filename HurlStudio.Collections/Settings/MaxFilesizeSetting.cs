@@ -1,27 +1,28 @@
-using HurlStudio.Collections.Attributes;
+﻿using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
+using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class UserAgentSetting : BaseSetting, IHurlSetting
+    public class MaxFilesizeSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "user_agent";
+        public const string CONFIGURATION_NAME = "max_filesize";
 
-        private string? _userAgent;
+        private uint? _maxFilesize;
 
-        public UserAgentSetting()
+        public MaxFilesizeSetting()
         {
-            
+
         }
 
         [HurlSettingDisplayString]
-        public string? UserAgent
+        public uint? MaxFilesize
         {
-            get => _userAgent;
+            get => _maxFilesize;
             set
             {
-                _userAgent = value;
+                _maxFilesize = value;
                 this.Notify();
             }
         }
@@ -33,10 +34,13 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-            
-            this.UserAgent = value;
-            return this;
+            uint maxFilesize;
+            if (uint.TryParse(value, out maxFilesize))
+            {
+                this.MaxFilesize = maxFilesize;
+                return this;
+            }
+            return null;
         }
 
         /// <summary>
@@ -45,12 +49,14 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            if (string.IsNullOrWhiteSpace(this.UserAgent)) return [];
+            List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            return new IHurlArgument[]
+            if (_maxFilesize.HasValue)
             {
-                new CaCertArgument(this.UserAgent ?? string.Empty)
-            };
+                arguments.Add(new DelayArgument(_maxFilesize.Value));
+            }
+
+            return arguments.ToArray();
         }
 
         /// <summary>
@@ -63,7 +69,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (user_agent)
+        /// Returns the configuration name (max_filesize)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -72,12 +78,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value of this setting (e.g. the cert file path)
+        /// Returns the serialized value or "0", if null
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return this.UserAgent ?? string.Empty;
+            return _maxFilesize?.ToString() ?? 0.ToString();
         }
 
         /// <summary>

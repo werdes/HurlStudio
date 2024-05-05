@@ -17,7 +17,7 @@ namespace HurlStudio.UI.Converters
             if (value != null && value is ViewModelBase viewModel)
             {
                 if (viewModel is EditorViewViewModel) return true;
-                if (viewModel is LoadingViewViewModel) return true;
+                if (viewModel is LoadingViewViewModel) return false;
 
             }
 

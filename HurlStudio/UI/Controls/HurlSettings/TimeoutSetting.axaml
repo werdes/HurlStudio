@@ -1,0 +1,44 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:TimeoutSetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.TimeoutSetting">
+  <Grid Margin="3">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+
+    <!--ConnectTimeoutSeconds-->
+    <TextBlock Text="{x:Static localization:Localization.Setting_TimeoutSetting_ConnectTimeoutSeconds_Label}"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Text="{Binding ConnectTimeoutSeconds}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_TimeoutSetting_ConnectTimeoutSeconds_Tooltip}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"/>
+    
+    <!--MaxTimeSeconds-->
+    <TextBlock Grid.Row="1"
+               Text="{x:Static localization:Localization.Setting_TimeoutSetting_MaxTimeSeconds_Label}"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="1"
+             Text="{Binding MaxTimeSeconds}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_TimeoutSetting_MaxTimeSeconds_Tooltip}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"/>
+  </Grid>
+</UserControl>

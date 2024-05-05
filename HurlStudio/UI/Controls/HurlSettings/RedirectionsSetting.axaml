@@ -1,0 +1,47 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:RedirectionsSetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.RedirectionsSetting">
+  <Grid Margin="3">
+    <Grid.RowDefinitions>
+      <RowDefinition />
+      <RowDefinition />
+      <RowDefinition />
+    </Grid.RowDefinitions>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" />
+      <ColumnDefinition />
+    </Grid.ColumnDefinitions>
+    
+    <CheckBox Classes="framelessCheckBox"
+              Grid.ColumnSpan="2"
+              IsChecked="{Binding AllowRedirections}"
+              ToolTip.Tip="{x:Static localization:Localization.Setting_RedirectionsSetting_AllowRedirections_Tooltip}"
+              Content="{x:Static localization:Localization.Setting_RedirectionsSetting_AllowRedirections_Label}"/>
+    
+    <CheckBox Classes="framelessCheckBox"
+              Grid.Row="1"
+              Grid.ColumnSpan="2"
+              IsChecked="{Binding RedirectionsTrusted}"
+              ToolTip.Tip="{x:Static localization:Localization.Setting_RedirectionsSetting_RedirectionsTrusted_Tooltip}"
+              Content="{x:Static localization:Localization.Setting_RedirectionsSetting_RedirectionsTrusted_Label}"/>
+
+    <TextBlock Grid.Row="2"
+               Text="{x:Static localization:Localization.Setting_RedirectionsSetting_MaxRedirections_Label}"
+               VerticalAlignment="Center"/>
+    <TextBox Classes="framelessTextBox"
+             Grid.Column="1"
+             Grid.Row="2"
+             Text="{Binding MaxRedirections}"
+             ToolTip.Tip="{x:Static localization:Localization.Setting_RedirectionsSetting_MaxRedirections_Tooltip}"
+             Margin="0,0,5,0"
+             VerticalAlignment="Center"/>
+  </Grid>
+</UserControl>
