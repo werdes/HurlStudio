@@ -7,7 +7,7 @@ using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Common.Logging.Extensions
+namespace HurlStudio.Common.Extensions
 {
     public static class ILoggerExtensions
     {

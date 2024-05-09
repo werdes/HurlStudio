@@ -267,6 +267,7 @@ namespace HurlStudio.Collections.Utility
             // General section
             builder.AppendLine(SECTION_GENERAL_HEADER);
             builder.AppendLine($"{SECTION_GENERAL_NAME_KEY}={collection.Name.EncodeUrl()}");
+            builder.AppendLine($"{SECTION_GENERAL_EXCLUDE_ROOT_KEY}={collection.ExcludeRootDirectory}");
             builder.AppendLine();
 
             // AdditionalLocations section
@@ -285,18 +286,6 @@ namespace HurlStudio.Collections.Utility
             }
             builder.AppendLine();
 
-            // File settings section
-            foreach (HurlFile hurlFile in collection.FileSettings)
-            {
-                builder.AppendLine(SECTION_FILE_SETTINGS_HEADER);
-                builder.AppendLine($"{SECTION_FILE_SETTINGS_LOCATION_KEY}={hurlFile.FileLocation}");
-                foreach (IHurlSetting fileSetting in hurlFile.FileSettings)
-                {
-                    builder.AppendLine(fileSetting.GetConfigurationString());
-                }
-                builder.AppendLine();
-            }
-
             // Folder settings section
             foreach (HurlFolder hurlFolder in collection.FolderSettings)
             {
@@ -305,6 +294,18 @@ namespace HurlStudio.Collections.Utility
                 foreach (IHurlSetting folderSetting in hurlFolder.FolderSettings)
                 {
                     builder.AppendLine(folderSetting.GetConfigurationString());
+                }
+                builder.AppendLine();
+            }
+
+            // File settings section
+            foreach (HurlFile hurlFile in collection.FileSettings)
+            {
+                builder.AppendLine(SECTION_FILE_SETTINGS_HEADER);
+                builder.AppendLine($"{SECTION_FILE_SETTINGS_LOCATION_KEY}={hurlFile.FileLocation}");
+                foreach (IHurlSetting fileSetting in hurlFile.FileSettings)
+                {
+                    builder.AppendLine(fileSetting.GetConfigurationString());
                 }
                 builder.AppendLine();
             }

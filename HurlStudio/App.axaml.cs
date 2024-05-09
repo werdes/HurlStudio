@@ -226,6 +226,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<UnixSocketSetting, Collections.Settings.UnixSocketSetting>(() => Services.GetRequiredService<UnixSocketSetting>());
             controlBuilder.RegisterProviderAssociated<UserAgentSetting, Collections.Settings.UserAgentSetting>(() => Services.GetRequiredService<UserAgentSetting>());
             controlBuilder.RegisterProviderAssociated<VariableSetting, Collections.Settings.VariableSetting>(() => Services.GetRequiredService<VariableSetting>());
+            controlBuilder.RegisterProviderAssociated<VariablesFileSetting, Collections.Settings.VariablesFileSetting>(() => Services.GetRequiredService<VariablesFileSetting>());
 
 
             // Tools
@@ -395,7 +396,8 @@ namespace HurlStudio
             services.AddTransient<UnixSocketSetting>();
             services.AddTransient<UserAgentSetting>();
             services.AddTransient<VariableSetting>();
-            
+            services.AddTransient<VariablesFileSetting>();
+
         }
 
         /// <summary>
@@ -429,22 +431,15 @@ namespace HurlStudio
         {
             LoggingConfiguration config = new LoggingConfiguration();
 
-            // TODO: 
-            // Keep for possible upcoming changes in NLog 5.3
-            // see PR https://github.com/NLog/NLog/pull/5490
-            // Possibly change from dedicated assembly Common.Extensions.Logging to type based exclusion via AddCallSiteHiddenClassType
-
-            //config.LogFactory.Setup(setupBuilder =>
-            //{
-            //    setupBuilder.SetupLogFactory(logfactoryBuilder =>
-            //    {
-            //        logfactoryBuilder.AddCallSiteHiddenAssembly(Assembly.GetAssembly(typeof(Common.Extensions.Logging.ILoggerExtensions)));
-            //        //logfactoryBuilder.AddCallSiteHiddenClassType(typeof(Common.Extensions.Logging.ILoggerExtensions));
-            //    });
-            //});
-
-            NLog.LogManager.AddHiddenAssembly(Assembly.GetAssembly(typeof(Common.Logging.Extensions.ILoggerExtensions)));
-
+            config.LogFactory.Setup(setupBuilder =>
+            {
+                setupBuilder.SetupLogFactory(logfactoryBuilder =>
+                {
+                    //logfactoryBuilder.AddCallSiteHiddenAssembly(Assembly.GetAssembly(typeof(Common.Logging.Extensions.ILoggerExtensions)));
+                    logfactoryBuilder.AddCallSiteHiddenClassType(typeof(Common.Extensions.ILoggerExtensions));
+                });
+            });
+            
             NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
             {
                 Name = "LogTarget",

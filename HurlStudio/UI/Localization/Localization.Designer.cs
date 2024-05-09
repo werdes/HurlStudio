@@ -1060,24 +1060,6 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Disabled.Tooltip} ähnelt.
-        /// </summary>
-        public static string Setting_Disabled_Tooltip {
-            get {
-                return ResourceManager.GetString("Setting.Disabled.Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Enabled.Tooltip} ähnelt.
-        /// </summary>
-        public static string Setting_Enabled_Tooltip {
-            get {
-                return ResourceManager.GetString("Setting.Enabled.Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.FolderPicker.Title} ähnelt.
         /// </summary>
         public static string Setting_FileRootSetting_FolderPicker_Title {
@@ -1371,15 +1353,6 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_NoProxySetting_Title {
             get {
                 return ResourceManager.GetString("Setting.NoProxySetting.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.Overwritten.Tooltip} ähnelt.
-        /// </summary>
-        public static string Setting_Overwritten_Tooltip {
-            get {
-                return ResourceManager.GetString("Setting.Overwritten.Tooltip", resourceCulture);
             }
         }
         
@@ -1780,11 +1753,119 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.File.Label} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_File_Label {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.File.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.File.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_File_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.File.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.FilePicker.Title} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.FilePicker.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_FilePicker_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.DeleteSetting} ähnelt.
+        /// </summary>
+        public static string SettingContainer_ContextMenu_DeleteSetting {
+            get {
+                return ResourceManager.GetString("SettingContainer.ContextMenu.DeleteSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.MoveToBottom} ähnelt.
+        /// </summary>
+        public static string SettingContainer_ContextMenu_MoveToBottom {
+            get {
+                return ResourceManager.GetString("SettingContainer.ContextMenu.MoveToBottom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.MoveToTop} ähnelt.
+        /// </summary>
+        public static string SettingContainer_ContextMenu_MoveToTop {
+            get {
+                return ResourceManager.GetString("SettingContainer.ContextMenu.MoveToTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.Disabled.Tooltip} ähnelt.
+        /// </summary>
+        public static string SettingContainer_Disabled_Tooltip {
+            get {
+                return ResourceManager.GetString("SettingContainer.Disabled.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.Enabled.Tooltip} ähnelt.
+        /// </summary>
+        public static string SettingContainer_Enabled_Tooltip {
+            get {
+                return ResourceManager.GetString("SettingContainer.Enabled.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.Overwritten.Tooltip} ähnelt.
+        /// </summary>
+        public static string SettingContainer_Overwritten_Tooltip {
+            get {
+                return ResourceManager.GetString("SettingContainer.Overwritten.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Label} ähnelt.
         /// </summary>
         public static string View_Editor_Label {
             get {
                 return ResourceManager.GetString("View.Editor.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Message.Save.Error} ähnelt.
+        /// </summary>
+        public static string View_Editor_Message_Save_Error {
+            get {
+                return ResourceManager.GetString("View.Editor.Message.Save.Error", resourceCulture);
             }
         }
         
@@ -2046,6 +2127,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Main_StatusBar_Status_OpeningFile_Text {
             get {
                 return ResourceManager.GetString("View.Main.StatusBar.Status.OpeningFile.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.SavingFile.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_SavingFile_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.SavingFile.Text", resourceCulture);
             }
         }
         

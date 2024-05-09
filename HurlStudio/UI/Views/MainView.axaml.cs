@@ -53,7 +53,7 @@ namespace HurlStudio.UI.Views
         public MainView()
         {
             if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
-            
+
             _log = App.Services.GetRequiredService<ILogger<MainView>>();
             _notificationService = App.Services.GetRequiredService<INotificationService>();
             /*_viewModel = App.Services.GetRequiredService<MainViewViewModel>();
@@ -147,7 +147,7 @@ namespace HurlStudio.UI.Views
         {
             try
             {
-                if(_viewModel == null) throw new ArgumentNullException(nameof(_viewModel));
+                if (_viewModel == null) throw new ArgumentNullException(nameof(_viewModel));
                 _viewModel.NotificationsExpanded = true;
             }
             catch (Exception ex)
@@ -179,6 +179,28 @@ namespace HurlStudio.UI.Views
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
+        }
+
+        /// <summary>
+        /// On MenuItem "Save" Click -> Call editor service to save the current file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItemSave_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            try
+            {
+                bool saveResult = await _editorService.SaveCurrentFile();
+                if (!saveResult)
+                {
+                    _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, nameof(On_MenuItemSave_Click));
+                _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+            }
         }
     }
 }

@@ -357,14 +357,14 @@
   <data name="Setting.ClientCertificateSetting.Title" xml:space="preserve">
     <value>{Setting.ClientCertificateSetting.Title}</value>
   </data>
-  <data name="Setting.Disabled.Tooltip" xml:space="preserve">
-    <value>{Setting.Disabled.Tooltip}</value>
+  <data name="SettingContainer.Disabled.Tooltip" xml:space="preserve">
+    <value>{SettingContainer.Disabled.Tooltip}</value>
   </data>
-  <data name="Setting.Enabled.Tooltip" xml:space="preserve">
-    <value>{Setting.Enabled.Tooltip}</value>
+  <data name="SettingContainer.Enabled.Tooltip" xml:space="preserve">
+    <value>{SettingContainer.Enabled.Tooltip}</value>
   </data>
-  <data name="Setting.Overwritten.Tooltip" xml:space="preserve">
-    <value>{Setting.Overwritten.Tooltip}</value>
+  <data name="SettingContainer.Overwritten.Tooltip" xml:space="preserve">
+    <value>{SettingContainer.Overwritten.Tooltip}</value>
   </data>
   <data name="Setting.ProxySetting.Description" xml:space="preserve">
     <value>{Setting.ProxySetting.Description}</value>
@@ -782,5 +782,35 @@
   </data>
   <data name="Setting.UserAgentSetting.UserAgent.Tooltip" xml:space="preserve">
     <value>{Setting.UserAgentSetting.UserAgent.Tooltip}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.File.Label" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.File.Label}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.File.Tooltip" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.File.Tooltip}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.FilePicker.Title" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.FilePicker.Title}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.FilePicker.Tooltip" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.FilePicker.Tooltip}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.Title" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.Title}</value>
+  </data>
+  <data name="View.Editor.Message.Save.Error" xml:space="preserve">
+    <value>{View.Editor.Message.Save.Error}</value>
+  </data>
+  <data name="SettingContainer.ContextMenu.DeleteSetting" xml:space="preserve">
+    <value>{SettingContainer.ContextMenu.DeleteSetting}</value>
+  </data>
+  <data name="SettingContainer.ContextMenu.MoveToBottom" xml:space="preserve">
+    <value>{SettingContainer.ContextMenu.MoveToBottom}</value>
+  </data>
+  <data name="SettingContainer.ContextMenu.MoveToTop" xml:space="preserve">
+    <value>{SettingContainer.ContextMenu.MoveToTop}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.SavingFile.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.SavingFile.Text}</value>
   </data>
 </root>

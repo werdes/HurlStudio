@@ -29,7 +29,6 @@ namespace HurlStudio.UI.Controls
             this.DataContext = viewModel;
         }
 
-
         /// <summary>
         /// Button click that expands all settings in this section
         /// </summary>
@@ -78,6 +77,26 @@ namespace HurlStudio.UI.Controls
             foreach (HurlSettingContainer settingContainer in _settingSection.SettingContainers)
             {
                 settingContainer.Collapsed = isCollapsed;
+            }
+        }
+
+        /// <summary>
+        /// Toggles the collapsed state of the whole setting section
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingSection == null) return;
+
+            try
+            {
+                _settingSection.Collapsed = !_settingSection.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(this.On_ButtonCollapseAll_Click));
+                _notificationService.Notify(ex);
             }
         }
     }

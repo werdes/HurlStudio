@@ -43,19 +43,39 @@
       <StackPanel Grid.Column="1"
                   Opacity="{Binding DisplayOpacity}"
                   Orientation="Horizontal">
+        <StackPanel.ContextMenu>
+          <ContextMenu>
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToTop}">
+              <MenuItem.Icon>
+                <controls:Icon Type="MoveTop" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToBottom}">
+              <MenuItem.Icon>
+                <controls:Icon Type="MoveBottom" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <Separator />
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_DeleteSetting}">
+              <MenuItem.Icon>
+                <controls:Icon Type="Trash" />
+              </MenuItem.Icon>
+            </MenuItem>
+          </ContextMenu>
+        </StackPanel.ContextMenu>
         <Button Classes="framelessButton" Click="On_ButtonEnable_Click">
           <StackPanel>
             <controls:Icon Type="CheckedBox"
                            IsVisible="{Binding Enabled}"
-                           ToolTip.Tip="{x:Static localization:Localization.Setting_Enabled_Tooltip}"/>
+                           ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Enabled_Tooltip}"/>
             <controls:Icon Type="UncheckedBox"
                            IsVisible="{Binding !Enabled}"
-                           ToolTip.Tip="{x:Static localization:Localization.Setting_Disabled_Tooltip}"/>
+                           ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Disabled_Tooltip}"/>
           </StackPanel>
         </Button>
         <controls:Icon Type="Overwritten"
                        IsVisible="{Binding Overwritten}"
-                       ToolTip.Tip="{x:Static localization:Localization.Setting_Overwritten_Tooltip}"/>
+                       ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Overwritten_Tooltip}"/>
         <TextBlock Margin="4,0,0,0"
                    VerticalAlignment="Center"
                    TextDecorations="{Binding DisplayTextDecoration}"

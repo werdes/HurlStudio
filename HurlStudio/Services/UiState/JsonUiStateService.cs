@@ -269,5 +269,22 @@ namespace HurlStudio.Services.UiState
             }
             _uiState.SettingEnabledStates[id] = visible;
         }
+
+        /// <summary>
+        /// Sets the collapsed state of a setting section
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="visible"></param>
+        public void SetSettingSectionCollapsedState(string id, bool visible)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (!_uiState.SettingSectionCollapsedStates.ContainsKey(id))
+            {
+                _uiState.SettingSectionCollapsedStates.Add(id, false);
+            }
+            _uiState.SettingSectionCollapsedStates[id] = visible;
+        }
     }
 }

@@ -159,13 +159,13 @@ namespace HurlStudio.Collections.Settings
         {
             string configValue = string.Empty;
             configValue += $"{SUBCONFIGURATION_KEY_PROTOCOL}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Protocol}";
-            configValue += $"{SUBCONFIGURATION_KEY_HOST}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Host}";
-            configValue += $"{SUBCONFIGURATION_KEY_PORT}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Port}";
+            configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_HOST}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Host}";
+            configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PORT}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Port}";
 
             if (!string.IsNullOrEmpty(this.User))
             {
-                configValue += $"{SUBCONFIGURATION_KEY_USER}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.User}";
-                configValue += $"{SUBCONFIGURATION_KEY_PASSWORD}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Password}";
+                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_USER}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.User}";
+                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PASSWORD}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Password}";
             }
 
             return configValue;

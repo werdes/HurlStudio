@@ -23,11 +23,22 @@
       <RowDefinition />
     </Grid.RowDefinitions>
     <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="20" />
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="Auto" />
     </Grid.ColumnDefinitions>
+    <Border Background="{DynamicResource NeutralControlHighlightedBackgroundColor}"
+            Grid.ColumnSpan="3" />
+
+    <Button Classes="framelessButton" Grid.Column="0" Click="On_ButtonCollapse_Click">
+      <StackPanel>
+        <c:Icon Type="Collapsed" IsVisible="{Binding Collapsed}" />
+        <c:Icon Type="Expanded" IsVisible="{Binding !Collapsed}" />
+      </StackPanel>
+    </Button>
+    
     <StackPanel Orientation="Horizontal"
-                Background="{DynamicResource NeutralControlHighlightedBackgroundColor}">
+                Grid.Column="1">
       <c:Icon Type="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToIconConverter}}"
               Margin="3"/>
       <Label Content="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter}}"
@@ -36,8 +47,9 @@
              Foreground="{DynamicResource NeutralControlForegroundMutedColor}"/>
     </StackPanel>
     <StackPanel Orientation="Horizontal"
+                IsVisible="{Binding !Collapsed}"
                 Background="{DynamicResource NeutralControlHighlightedBackgroundColor}"
-                Grid.Column="1">
+                Grid.Column="2">
       <Button Classes="framelessButton"
               Click="On_ButtonExpandAll_Click"
               ToolTip.Tip="{x:Static localization:Localization.Dock_Document_File_Settings_Section_ExpandAll_Tooltip}">
@@ -51,7 +63,8 @@
     </StackPanel>
 
     <ItemsControl ItemsSource="{Binding SettingContainers}"
-                  Grid.ColumnSpan="2"
+                  IsVisible="{Binding !Collapsed}"
+                  Grid.ColumnSpan="3"
                   Grid.Row="1"/>
   </Grid>
 </UserControl>

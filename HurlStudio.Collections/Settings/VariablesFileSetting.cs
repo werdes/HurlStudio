@@ -1,41 +1,27 @@
 ﻿using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
-using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
 
 namespace HurlStudio.Collections.Settings
 {
-    public class TimeoutSetting : BaseSetting, IHurlSetting
+    public class VariablesFileSetting : BaseSetting, IHurlSetting
     {
-        public const string CONFIGURATION_NAME = "timeout";
-        public const char VALUE_SEPARATOR = ':';
-        private const uint DEFAULT_VALUE = 30;
+        public const string CONFIGURATION_NAME = "variables_file";
 
-        private uint? _connectTimeoutSeconds;
-        private uint? _maxTimeSeconds;
+        private string? _file;
 
-        public TimeoutSetting()
+        public VariablesFileSetting()
         {
         }
 
         [HurlSettingDisplayString]
-        public uint? ConnectTimeoutSeconds
+        public string? File
         {
-            get => _connectTimeoutSeconds;
+            get => _file;
             set
             {
-                _connectTimeoutSeconds = value;
-                this.Notify();
-            }
-        }
-
-        public uint? MaxTimeSeconds
-        {
-            get => _maxTimeSeconds;
-            set
-            {
-                _maxTimeSeconds = value;
+                _file = value;
                 this.Notify();
             }
         }
@@ -47,14 +33,11 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            if (uint.TryParse(value.Split(VALUE_SEPARATOR).Get(0), out uint connectTimeoutSeconds) &&
-                uint.TryParse(value.Split(VALUE_SEPARATOR).Get(1), out uint maxTimeSeconds))
+            if(!string.IsNullOrWhiteSpace(value))
             {
-                _connectTimeoutSeconds = connectTimeoutSeconds;
-                _maxTimeSeconds = maxTimeSeconds;
+                this.File = value;
                 return this;
             }
-
             return null;
         }
 
@@ -64,10 +47,9 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlArgument[] GetArguments()
         {
-            return new IHurlArgument[]
+            return new[]
             {
-                new ConnectTimeoutArgument(_connectTimeoutSeconds ?? DEFAULT_VALUE),
-                new MaxTimeArgument(_maxTimeSeconds ?? DEFAULT_VALUE)
+                new VariablesFileArgument(this.File ?? string.Empty)
             };
         }
 
@@ -81,7 +63,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration name (connect_timeout)
+        /// Returns the configuration name (variables_file)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationName()
@@ -90,12 +72,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value
+        /// Returns the serialized value of this setting (e.g. the cert file path)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return $"{_connectTimeoutSeconds}{VALUE_SEPARATOR}{_maxTimeSeconds}";
+            return this.File ?? string.Empty;
         }
 
         /// <summary>
@@ -104,7 +86,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.GetConfigurationValue();
+            return Path.GetFileName(this.File) ?? string.Empty;
         }
 
         /// <summary>

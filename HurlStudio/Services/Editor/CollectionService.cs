@@ -5,7 +5,6 @@ using HurlStudio.Collections.Model.Environment;
 using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
-using HurlStudio.Common.Logging.Extensions;
 using HurlStudio.Model.CollectionContainer;
 using HurlStudio.Model.UiState;
 using HurlStudio.Services.UiState;
@@ -24,12 +23,12 @@ namespace HurlStudio.Services.Editor
 {
     public class CollectionService : ICollectionService
     {
-        private ILogger _log = null;
-        private IConfiguration _configuration = null;
-        private ICollectionSerializer _collectionSerializer = null;
-        private IEnvironmentSerializer _environmentSerializer = null;
-        private IUserSettingsService _userSettingsService = null;
-        private IUiStateService _uiStateService = null;
+        private ILogger _log;
+        private IConfiguration _configuration;
+        private ICollectionSerializer _collectionSerializer;
+        private IEnvironmentSerializer _environmentSerializer;
+        private IUserSettingsService _userSettingsService;
+        private IUiStateService _uiStateService;
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
         private string[] _collectionExplorerIgnoredDirectories = [];
@@ -211,6 +210,17 @@ namespace HurlStudio.Services.Editor
         public async Task<HurlCollection> GetCollectionAsync(string collectionLocation)
         {
             return await _collectionSerializer.DeserializeFileAsync(collectionLocation, Encoding.UTF8);
+        }
+
+        /// <summary>
+        /// Serializes a collection and stores it at the given location
+        /// </summary>
+        /// <param name="collection">the collection to be stored</param>
+        /// <param name="collectionLocation">the location</param>
+        /// <returns></returns>
+        public async Task StoreCollectionAsync(HurlCollection collection, string collectionLocation)
+        {
+            await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
         }
     }
 }

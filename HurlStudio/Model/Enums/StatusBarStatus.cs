@@ -13,24 +13,20 @@ namespace HurlStudio.Model.Enums
     public enum StatusBarStatus
     {
         Idle,
-        OpeningFile
+        OpeningFile,
+        SavingFile
     }
 
     public static class StatusBarStatusExtensions
     {
         public static string GetLocalizedText(this StatusBarStatus status)
         {
-            string propertyName = $"View_Main_StatusBar_Status_{status}_Text";
-            PropertyInfo? localizationProperty = typeof(Localization).GetProperty(propertyName);
-            if (localizationProperty != null)
-            {
-                string? localizedText = (string?)localizationProperty.GetValue(null, null);
-                if (localizedText != null)
-                {
-                    return localizedText;
-                }
-            }
 
+            string? localizedText = Localization.ResourceManager.GetString($"View.Main.StatusBar.Status.{status}.Text");
+            if (localizedText != null)
+            {
+                return localizedText;
+            }
             return string.Empty;
         }
 
@@ -40,6 +36,8 @@ namespace HurlStudio.Model.Enums
             {
                 case StatusBarStatus.OpeningFile:
                     return Icon.OpenNeutral;
+                case StatusBarStatus.SavingFile:
+                    return Icon.SaveNeutral;
                 case StatusBarStatus.Idle:
                 default:
                     return Icon.StatusBarIdle;
@@ -48,7 +46,8 @@ namespace HurlStudio.Model.Enums
 
         public static Brush GetBackgroundBrush(this StatusBarStatus status)
         {
-            switch (status) {
+            switch (status)
+            {
                 case StatusBarStatus.Idle:
                 default:
                     return new SolidColorBrush(Colors.Transparent);

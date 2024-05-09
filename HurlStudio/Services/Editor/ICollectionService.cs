@@ -16,6 +16,7 @@ namespace HurlStudio.Services.Editor
         Task<IEnumerable<HurlCollection>> GetCollectionsAsync();
         Task<CollectionContainer> GetCollectionContainerAsync(HurlCollection collection);
         Task<ObservableCollection<CollectionContainer>> GetCollectionContainersAsync();
+        Task StoreCollectionAsync(HurlCollection collection, string collectionLocation);
 
     }
 }

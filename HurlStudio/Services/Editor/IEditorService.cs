@@ -25,5 +25,7 @@ namespace HurlStudio.Services.Editor
         Task<bool> CloseFileDocument(FileDocumentViewModel? fileDocument);
         Task OpenFolderSettings(CollectionFolder folder);
         Task OpenCollectionSettings(CollectionContainer collection);
+        Task<bool> SaveFile(FileDocumentViewModel fileDocument);
+        Task<bool> SaveCurrentFile();
     }
 }

@@ -37,6 +37,7 @@
         
         <!--Save-->
         <Button Classes="toolbarButton"
+                Click="On_ButtonSave_Click"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Save_Tooltip }">
            <controls:Icon Type="Save" />
         </Button>

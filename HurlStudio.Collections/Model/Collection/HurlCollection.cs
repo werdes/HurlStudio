@@ -14,10 +14,10 @@ namespace HurlStudio.Collections.Model.Collection
         private List<IHurlSetting> _collectionSettings;
         private List<HurlFile> _fileSettings;
         private List<HurlFolder> _folderSettings;
-        private string? _fileLocation;
+        private string _fileLocation;
         private bool _excludeRootDirectory;
 
-        public HurlCollection(string? fileLocation)
+        public HurlCollection(string fileLocation)
         {
             _name = string.Empty;
             _additionalLocations = new List<string>();
@@ -27,7 +27,7 @@ namespace HurlStudio.Collections.Model.Collection
             _fileLocation = fileLocation;
         }
 
-        public string? FileLocation
+        public string FileLocation
         {
             get => _fileLocation;
             set => _fileLocation = value;

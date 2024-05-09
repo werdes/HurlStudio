@@ -251,10 +251,33 @@ namespace HurlStudio.UI.Views
             _viewModel.CanRedo = file.Document.UndoStack.CanRedo;
         }
 
+        /// <summary>
+        /// Saves the currently opened file
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonSave_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            try
+            {
+                bool saveResult = await _editorService.SaveCurrentFile();
+                if (!saveResult)
+                {
+                    _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogError(ex, nameof(On_ButtonSave_Click));
+                _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+            }
+        }
+
         protected override void SetViewModelInstance(EditorViewViewModel viewModel)
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
         }
+
     }
 }

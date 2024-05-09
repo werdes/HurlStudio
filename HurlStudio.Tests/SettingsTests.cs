@@ -776,5 +776,27 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[2].Key, "test2");
             Assert.AreEqual(settings[2].Value, "");
         }
+
+        [TestMethod]
+        public void TestValidVariablesFileSettings()
+        {
+            List<VariablesFileSetting> settings = new List<VariablesFileSetting>();
+            string[] testValues =
+            {
+                @"variables_file=D:/Files/vars.txt"
+            };
+
+            foreach (string testValue in testValues)
+            {
+                IHurlSetting? hurlSetting = _parser?.Parse(testValue);
+                Assert.IsInstanceOfType(hurlSetting, typeof(VariablesFileSetting));
+
+                Assert.IsNotNull(hurlSetting);
+                settings.Add(hurlSetting as VariablesFileSetting ?? throw new InvalidOperationException());
+            }
+
+            Assert.AreEqual(testValues.Length, settings.Count);
+            Assert.AreEqual(settings[0].File, "D:/Files/vars.txt");
+        }
     }
 }

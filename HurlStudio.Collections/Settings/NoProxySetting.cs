@@ -104,7 +104,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return string.Join(VALUE_SEPARATOR, _noProxyHosts);
+            return string.Join(VALUE_SEPARATOR, _noProxyHosts.Select(x => x.Host));
         }
     }
 }

@@ -57,7 +57,8 @@
                   <c:Icon Width="16" Height="16" Type="Open" />
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Save}">
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Save}"
+                        Click="On_MenuItemSave_Click">
                 <MenuItem.Icon>
                   <c:Icon Width="16" Height="16" Type="Save" />
                 </MenuItem.Icon>

@@ -42,6 +42,8 @@ namespace HurlStudio.Model.Enums
         Open,
         [Icon("save.png")]
         Save,
+        [Icon("save_neutral.png")]
+        SaveNeutral,
         [Icon("save_all.png")]
         SaveAll,
         [Icon("expand_all.png")]
@@ -108,6 +110,10 @@ namespace HurlStudio.Model.Enums
         MoveUp,
         [Icon("move_down.png")]
         MoveDown,
+        [Icon("move_top.png")]
+        MoveTop,
+        [Icon("move_bottom.png")]
+        MoveBottom,
         [Icon("question_32.png")]
         Question32,
         [Icon("add_setting.png")]
