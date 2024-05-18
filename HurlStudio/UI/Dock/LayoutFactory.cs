@@ -145,6 +145,10 @@ namespace HurlStudio.UI.Dock
             }
         }
 
+        /// <summary>
+        /// Overwritten dockable closer that asks for a method for closing the dockable
+        /// </summary>
+        /// <param name="dockable"></param>
         public override async void CloseDockable(IDockable dockable)
         {
             if (dockable is IExtendedAsyncDockable dockableAsync)

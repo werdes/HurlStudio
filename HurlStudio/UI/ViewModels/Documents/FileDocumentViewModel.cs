@@ -20,11 +20,15 @@ using HurlStudio.Services.Editor;
 using MsBox.Avalonia.Base;
 using HurlStudio.UI.Windows;
 using HurlStudio.Utility;
+using HurlStudio.Model.EventArgs;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
     public class FileDocumentViewModel : DocumentBase, IExtendedAsyncDockable
     {
+        public event EventHandler<SettingEvaluationChangedEventArgs>? SettingAdded;
+        public event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
+
         private CollectionFile? _file;
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
@@ -183,12 +187,45 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public async Task Save()
         {
-            // TODO: Save
+            await _editorService.SaveFile(this);
         }
 
         public async Task Discard()
         {
             // TODO: Discard
+        }
+
+        /// <summary>
+        /// Adds a setting to the document 
+        /// </summary>
+        /// <param name="settingContainer">The setting to be added</param>
+        /// <exception cref="ArgumentException">If the settings' section isn't part of this document</exception>
+        public void AddSetting(HurlSettingContainer settingContainer)
+        {
+            HurlSettingSection section = settingContainer.Section;
+            if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
+
+            section.SettingContainers.Add(settingContainer);
+            section.Document.HasChanges = true;
+
+            this.SettingAdded?.Invoke(this, new SettingEvaluationChangedEventArgs(settingContainer));
+        }
+
+        /// <summary>
+        /// Removes a setting from the document
+        /// </summary>
+        /// <param name="settingContainer">The setting to be removed</param>
+        /// <exception cref="ArgumentException">If the settings' section isn't part of this document</exception>
+        public void RemoveSetting(HurlSettingContainer settingContainer)
+        {
+            HurlSettingSection section = settingContainer.Section;
+            if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
+            if(!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
+
+            section.SettingContainers.Remove(settingContainer);
+            section.Document.HasChanges = true;
+
+            this.SettingRemoved?.Invoke(this, new SettingEvaluationChangedEventArgs(settingContainer));
         }
     }
 }

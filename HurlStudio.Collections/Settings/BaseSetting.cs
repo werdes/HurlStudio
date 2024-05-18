@@ -3,24 +3,42 @@ using HurlStudio.Common.Enums;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization;
 
 namespace HurlStudio.Collections.Settings
 {
     public abstract class BaseSetting : INotifyPropertyChanged, IHurlSetting
     {
         private const string NAME_VALUE_SEPARATOR = "=";
-
+        
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<SettingPropertyChangedEventArgs>? SettingPropertyChanged;
+
+        private bool _isEnabled;
 
         protected void Notify([CallerMemberName] string propertyName = "")
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
+
+            if(propertyName != nameof(this.DisplayString))
+            {
+                this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
+            }
         }
 
         public BaseSetting()
         {
+        }
+
+        [JsonIgnore]
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                this.Notify();
+            }
         }
 
         public abstract string GetConfigurationName();
@@ -28,13 +46,15 @@ namespace HurlStudio.Collections.Settings
 
         public string GetConfigurationString()
         {
+            string active = this.IsEnabled ? string.Empty : "#";
             string settingName = this.GetConfigurationName();
             string settingValue = this.GetConfigurationValue();
-            return $"{settingName}{NAME_VALUE_SEPARATOR}{settingValue}";
+            return $"{active}{settingName}{NAME_VALUE_SEPARATOR}{settingValue}";
         }
 
         public abstract IHurlArgument[] GetArguments();
         public abstract IHurlSetting? FillFromString(string value);
+        public abstract IHurlSetting? FillDefault();
         public abstract string? GetConfigurationKey();
         public abstract string GetDisplayString();
         public abstract HurlSettingInheritanceBehavior GetInheritanceBehavior();

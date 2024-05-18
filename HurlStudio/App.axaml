@@ -35,6 +35,7 @@
   </Application.Resources>
   <Application.Styles>
     <!-- Common styles -->
+    <StyleInclude Source="/UI/Styles/CustomControlStyles.axaml" />
     <StyleInclude Source="/UI/Styles/DockStyle.axaml" />
     <StyleInclude Source="/UI/Styles/MenuStyle.axaml" />
     <StyleInclude Source="/UI/Styles/ButtonStyle.axaml" />

@@ -13,7 +13,6 @@ namespace HurlStudio.Model.UiState
         private Dictionary<string, bool> _expandedCollectionExplorerComponents;
         private List<FileHistoryEntry> _fileHistoryEntries;
         private Dictionary<string, bool> _settingCollapsedStates;
-        private Dictionary<string, bool> _settingEnabledStates;
         private Dictionary<string, bool> _settingSectionCollapsedStates;
 
         private bool _mainWindowIsMaximized;
@@ -23,7 +22,6 @@ namespace HurlStudio.Model.UiState
         {
             _expandedCollectionExplorerComponents = new Dictionary<string, bool>();
             _settingCollapsedStates = new Dictionary<string, bool>();
-            _settingEnabledStates = new Dictionary<string, bool>();
             _fileHistoryEntries = new List<FileHistoryEntry>();
             _settingSectionCollapsedStates = new Dictionary<string, bool>();
         }
@@ -75,16 +73,6 @@ namespace HurlStudio.Model.UiState
             set
             {
                 _settingCollapsedStates = value;
-            }
-        }
-
-        [JsonPropertyName("setting_enabled_states")]
-        public Dictionary<string, bool> SettingEnabledStates
-        {
-            get => _settingEnabledStates;
-            set
-            {
-                _settingEnabledStates = value;
             }
         }
 

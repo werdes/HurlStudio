@@ -12,12 +12,19 @@ namespace HurlStudio.Collections.Model.Collection
     {
         private List<IHurlSetting> _fileSettings;
         private string _fileLocation;
-        private string _fileTitle;
-
+        private string? _fileTitle;
 
         public HurlFile()
         {
             _fileSettings = new List<IHurlSetting>();
+
+            // Required for deserialization
+            _fileLocation = string.Empty;
+        }
+
+        public HurlFile(string fileLocation) : this()
+        {
+            _fileLocation = fileLocation;
         }
 
         public string FileLocation
@@ -26,7 +33,7 @@ namespace HurlStudio.Collections.Model.Collection
             set => _fileLocation = value;
         }
 
-        public string FileTitle
+        public string? FileTitle
         {
             get => _fileTitle;
             set => _fileTitle = value;

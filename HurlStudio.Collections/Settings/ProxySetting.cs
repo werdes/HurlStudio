@@ -190,5 +190,20 @@ namespace HurlStudio.Collections.Settings
         {
             return HurlSettingInheritanceBehavior.Overwrite;
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.Host = string.Empty;
+            this.Port = 8080;
+            this.User = string.Empty;
+            this.Password = String.Empty;
+            this.Protocol = ProxyProtocol.HTTP;
+
+            return this;
+        }
     }
 }

@@ -14,17 +14,14 @@ namespace HurlStudio.UI.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if(value is IHurlSetting setting)
+            if (value is IHurlSetting setting)
             {
-                string propertyName = $"Setting_{setting.GetType().Name}_Title";
-                PropertyInfo? localizationProperty = typeof(Localization.Localization).GetProperty(propertyName);
-                if (localizationProperty != null)
+                string resourceName = $"Setting.{setting.GetType().Name}.Title";
+                string? localizedText = Localization.Localization.ResourceManager.GetString(resourceName);
+
+                if (localizedText != null)
                 {
-                    string? localizedText = (string?)localizationProperty.GetValue(null, null);
-                    if (localizedText != null)
-                    {
-                        return localizedText;
-                    }
+                    return localizedText;
                 }
             }
             return string.Empty;

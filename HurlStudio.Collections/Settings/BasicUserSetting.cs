@@ -121,5 +121,17 @@ namespace HurlStudio.Collections.Settings
         {
             return $"{this.User}{VALUE_SEPARATOR}{this.Password?.EncodeBase64()}";
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.User = string.Empty;
+            this.Password = string.Empty;
+
+            return this;
+        }
     }
 }

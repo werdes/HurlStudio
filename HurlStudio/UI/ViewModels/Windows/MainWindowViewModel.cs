@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.UI.ViewModels
+namespace HurlStudio.UI.ViewModels.Windows
 {
     public class MainWindowViewModel : ViewModelBase
     {
@@ -25,7 +25,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isWindows = value;
-                this.Notify();
+                Notify();
             }
         }
 
@@ -35,7 +35,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isMac = value;
-                this.Notify();
+                Notify();
             }
         }
 
@@ -45,7 +45,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _isLinux = value;
-                this.Notify();
+                Notify();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HurlStudio.UI.ViewModels
             set
             {
                 _mainViewViewModel = value;
-                this.Notify();
+                Notify();
             }
         }
 

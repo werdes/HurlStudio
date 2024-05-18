@@ -15,13 +15,14 @@ namespace HurlStudio.Model.CollectionContainer
     {
         private CollectionFolder _collectionFolder;
         private CollectionContainer _collectionContainer;
-        private HurlFile? _file;
+        private HurlFile _file;
         private string _location;
 
-        public CollectionFile(CollectionFolder collectionFolder, string location)
+        public CollectionFile(CollectionFolder collectionFolder, HurlFile fileSettings, string location)
         {
             _collectionFolder = collectionFolder;
             _collectionContainer = collectionFolder.CollectionContainer;
+            _file = fileSettings;
             _location = location;
         }
 
@@ -35,7 +36,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public HurlFile? File
+        public HurlFile File
         {
             get => _file;
             set

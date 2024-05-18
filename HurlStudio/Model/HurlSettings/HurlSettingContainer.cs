@@ -24,7 +24,7 @@ namespace HurlStudio.Model.HurlSettings
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<SettingEnabledChangedEventArgs>? SettingEnabledChanged;
         public event EventHandler<SettingOrderChangedEventArgs>? SettingOrderChanged;
-        public event EventHandler<SettingKeyChangedEventArgs>? SettingKeyChanged;
+        public event EventHandler<SettingEvaluationChangedEventArgs>? SettingKeyChanged;
         public event EventHandler<SettingCollapsedChangedEventArgs>? SettingCollapsedChanged;
         public event EventHandler<SettingChangedEventArgs>? SettingChanged;
 
@@ -34,18 +34,18 @@ namespace HurlStudio.Model.HurlSettings
         private bool _isReadOnly;
         private bool _collapsed;
         private bool _overwritten;
-        private bool _enabled;
         private bool _canMove;
+        private bool _canChangeEnabled;
         private BaseSetting _setting;
         private FileDocumentViewModel _document;
         private HurlSettingSection _section;
 
-        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove)
+        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove, bool canChangeEnabled)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
-            _enabled = true;
             _canMove = canMove;
+            _canChangeEnabled = canChangeEnabled;
             _setting = setting;
             _document = document;
             _section = section;
@@ -79,12 +79,18 @@ namespace HurlStudio.Model.HurlSettings
             {
                 if (propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingKeyAttribute)))
                 {
-                    this.SettingKeyChanged?.Invoke(this, new SettingKeyChangedEventArgs(this));
+                    this.SettingKeyChanged?.Invoke(this, new SettingEvaluationChangedEventArgs(this));
                 }
-                if(propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingDisplayStringAttribute)))
+                if (propertyInfo.CustomAttributes.Any(x => x.AttributeType == typeof(HurlSettingDisplayStringAttribute)))
                 {
                     this.Setting.RefreshDisplayString();
                 }
+            }
+
+            // Reevaluate, when IsEnabled setting is changed
+            if (e.PropertyName == nameof(_setting.IsEnabled))
+            {
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_setting.IsEnabled));
             }
         }
 
@@ -121,21 +127,14 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        public bool Enabled
-        {
-            get => _enabled;
-            set
-            {
-                _enabled = value;
-                this.Notify();
-                this.Notify(nameof(this.DisplayOpacity));
-                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_enabled));
-            }
-        }
-
         public bool CanMove
         {
             get => _canMove;
+        }
+
+        public bool CanChangeEnabled
+        {
+            get => _canChangeEnabled;
         }
 
         public BaseSetting Setting
@@ -160,7 +159,7 @@ namespace HurlStudio.Model.HurlSettings
 
         public double DisplayOpacity
         {
-            get => !_enabled || _overwritten ? 0.5D : 1D;
+            get => !_setting.IsEnabled || _overwritten ? 0.5D : 1D;
         }
 
         public TextDecorationCollection? DisplayTextDecoration
@@ -171,6 +170,8 @@ namespace HurlStudio.Model.HurlSettings
 
         public void MoveUp() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Up));
         public void MoveDown() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Down));
+        public void MoveToTop() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.ToTop));
+        public void MoveToBottom() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.ToBottom));
 
         public string GetId()
         {
@@ -179,7 +180,7 @@ namespace HurlStudio.Model.HurlSettings
             if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
             string id = _document.File?.GetId() + "#" +
-                        _section.CollectionComponent.GetId() + "#" + 
+                        _section.CollectionComponent.GetId() + "#" +
                         _section.SettingContainers.IndexOf(this);
             return id.ToSha256Hash();
         }

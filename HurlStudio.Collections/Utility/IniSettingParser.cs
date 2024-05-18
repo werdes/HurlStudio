@@ -10,7 +10,7 @@ namespace HurlStudio.Collections.Utility
 {
     public class IniSettingParser : ISettingParser
     {
-        private const char COMMENT_SEPARATOR = '#';
+        private const char INACTIVE_PREFIX = '#';
 
         private Lazy<Dictionary<string, Type>> _possibleSettingTypesLazy;
         private Dictionary<string, Type> _possibleSettingTypes => _possibleSettingTypesLazy.Value;
@@ -26,11 +26,8 @@ namespace HurlStudio.Collections.Utility
         private Dictionary<string, Type> RegisterSettingTypes()
         {
             Dictionary<string, Type> settingTypes = new Dictionary<string, Type>();
-            Type interfaceType = typeof(IHurlSetting);
-            List<Type> implementingTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes())
-                                                .Where(x => interfaceType.IsAssignableFrom(x))
-                                                .Where(x => !x.IsAbstract)
-                                                .ToList();
+
+            List<Type> implementingTypes = IHurlSetting.GetAvailableTypes().ToList();
 
             foreach (Type settingType in implementingTypes)
             {
@@ -60,14 +57,21 @@ namespace HurlStudio.Collections.Utility
         /// <returns>Hurl Setting</returns>
         public IHurlSetting? Parse(string value)
         {
-            value = value.Split(COMMENT_SEPARATOR).Get(0) ?? string.Empty;
-            string? settingName = value.Split('=').Get(0);
+            bool isActive = true;
+            string settingName = value.Split('=').Get(0) ?? string.Empty;
+            if(settingName.StartsWith(INACTIVE_PREFIX))
+            {
+                settingName = settingName.Substring(1);
+                isActive = false;
+            }
+
             string? settingValue = string.Join('=', value.Split('=').Skip(1));
             if (!string.IsNullOrEmpty(settingName))
             {
                 IHurlSetting? setting = this.GetSetting(settingName);
                 if (setting != null)
                 {
+                    setting.IsEnabled = isActive;    
                     return setting.FillFromString(settingValue);
                 }
             }

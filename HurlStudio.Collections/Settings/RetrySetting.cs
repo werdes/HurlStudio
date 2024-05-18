@@ -9,7 +9,7 @@ namespace HurlStudio.Collections.Settings
         private const string CONFIGURATION_NAME = "retry";
         private const char VALUE_SEPARATOR = ':';
 
-        private uint? _retryCount;
+        private int? _retryCount;
         private uint? _retryInterval;
 
         public RetrySetting()
@@ -17,7 +17,7 @@ namespace HurlStudio.Collections.Settings
             
         }
 
-        public uint? RetryCount
+        public int? RetryCount
         {
             get => _retryCount;
             set
@@ -49,7 +49,7 @@ namespace HurlStudio.Collections.Settings
             string[] parts = value.Split(VALUE_SEPARATOR);
             if (parts.Length != 2) return null;
 
-            if (!uint.TryParse(parts.Get(0), out uint retryCount)) return null;
+            if (!int.TryParse(parts.Get(0), out int retryCount)) return null;
             if (!uint.TryParse(parts.Get(1), out uint retryInterval)) return null;
 
             this.RetryCount = retryCount;
@@ -122,6 +122,18 @@ namespace HurlStudio.Collections.Settings
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
             return HurlSettingInheritanceBehavior.Overwrite;
+        }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.RetryCount = -1;
+            this.RetryInterval = 1000;
+
+            return this;
         }
     }
 }

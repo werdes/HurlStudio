@@ -15,7 +15,7 @@ namespace HurlStudio.UI.Converters
         {
             if(value != null && value is HurlSettingContainer container)
             {
-                if(!container.Enabled || container.Overwritten)
+                if(!container.Setting.IsEnabled || container.Overwritten)
                 {
                     return .5F;
                 }

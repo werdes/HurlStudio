@@ -122,7 +122,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password}";
+            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password}{VALUE_SEPARATOR}{this.KeyFile}";
         }
 
         /// <summary>
@@ -141,6 +141,19 @@ namespace HurlStudio.Collections.Settings
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
             return HurlSettingInheritanceBehavior.Overwrite;
+        }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.KeyFile = string.Empty;
+            this.CertificateFile = string.Empty;
+            this.Password = string.Empty;
+
+            return this;
         }
     }
 }

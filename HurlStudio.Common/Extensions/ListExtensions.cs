@@ -9,7 +9,7 @@ namespace HurlStudio.Common.Extensions
 {
     public static class ListExtensions
     {
-        public static void AddIfNotNull<T>(this List<T> values, T obj)
+        public static void AddIfNotNull<T>(this List<T> values, T? obj)
         {
             if (obj != null)
             {

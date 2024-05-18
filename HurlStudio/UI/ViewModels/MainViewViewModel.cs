@@ -1,6 +1,7 @@
 ﻿using HurlStudio.Model.Enums;
 using HurlStudio.Model.Notifications;
 using HurlStudio.UI.ViewModels.Controls;
+using HurlStudio.UI.ViewModels.Windows;
 using HurlStudio.UI.Views;
 using System;
 using System.Collections.Generic;

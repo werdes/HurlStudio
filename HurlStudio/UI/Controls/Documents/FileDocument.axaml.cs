@@ -3,18 +3,22 @@ using Avalonia.Platform;
 using Avalonia.Styling;
 using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
+using HurlStudio.Collections.Settings;
 using HurlStudio.Common;
 using HurlStudio.Model.Enums;
+using HurlStudio.Model.HurlSettings;
 using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Editor;
 using HurlStudio.UI.ViewModels.Documents;
+using HurlStudio.UI.Windows;
 using Microsoft.Extensions.Logging;
 using SkiaSharp;
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Resources;
 using System.Security.Cryptography.X509Certificates;
@@ -29,19 +33,23 @@ namespace HurlStudio.UI.Controls.Documents
     public partial class FileDocument : ViewModelBasedControl<FileDocumentViewModel>
     {
         private FileDocumentViewModel? _viewModel;
+        private MainWindow _mainWindow;
         private IEditorService _editorService;
         private ILogger _log;
         private INotificationService _notificationService;
         private IUserSettingsService _userSettingsService;
+        private ServiceManager<Windows.WindowBase> _windowBuilder;
         private TextEditor? _textEditor;
+        private bool _initializationCompleted = false;
 
-        public FileDocument(IEditorService editorService, ILogger<FileDocument> logger, INotificationService notificationService, IUserSettingsService userSettingsService)
+        public FileDocument(IEditorService editorService, MainWindow mainWindow, ILogger<FileDocument> logger, INotificationService notificationService, IUserSettingsService userSettingsService, ServiceManager<Windows.WindowBase> windowBuilder)
         {
             _editorService = editorService;
             _notificationService = notificationService;
             _userSettingsService = userSettingsService;
             _log = logger;
-
+            _windowBuilder = windowBuilder;
+            _mainWindow = mainWindow;
 
             this.InitializeComponent();
         }
@@ -95,37 +103,30 @@ namespace HurlStudio.UI.Controls.Documents
         /// <param name="e"></param>
         private async void On_FileDocument_Initialized(object? sender, EventArgs e)
         {
+            if (_viewModel == null) return;
+            if (_viewModel.File == null) return;
+
             try
             {
-                if (_viewModel != null && _viewModel.File != null)
-                {
-                    _textEditor = this.FindControl<TextEditor>("Editor");
+                _textEditor = this.FindControl<TextEditor>("Editor");
+                if (_textEditor == null) return;
+
+                _textEditor.TextArea.RightClickMovesCaret = true;
+                _textEditor.Options.EnableHyperlinks = false;
+                _textEditor.Options.AllowScrollBelowDocument = true;
+                _textEditor.Options.EnableRectangularSelection = true;
+                _textEditor.Options.ShowBoxForControlCharacters = true;
+                _textEditor.WordWrap = _viewModel.EditorViewViewModel.WordWrap;
+                _textEditor.Options.ShowSpaces = _viewModel.EditorViewViewModel.ShowWhitespace;
+                _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
+                _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
 
 
-                    if (_textEditor != null)
-                    {
-                        _textEditor.TextArea.RightClickMovesCaret = true;
-                        _textEditor.Options.EnableHyperlinks = false;
-                        _textEditor.Options.AllowScrollBelowDocument = true;
-                        _textEditor.Options.EnableRectangularSelection = true;
-                        _textEditor.Options.ShowBoxForControlCharacters = true;
-                        _textEditor.WordWrap = _viewModel.EditorViewViewModel.WordWrap;
-                        _textEditor.Options.ShowSpaces = _viewModel.EditorViewViewModel.ShowWhitespace;
-                        _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
-                        _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
-
-
-                        UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
-
-                        LocalResourceGrammarRegistryOptions registryOptions = new LocalResourceGrammarRegistryOptions(userSettings.Theme, _log);
-                        if (registryOptions != null)
-                        {
-                            TextMate.Installation textMateInstallation = _textEditor.InstallTextMate(registryOptions);
-                            textMateInstallation.SetGrammar(GlobalConstants.GRAMMAR_HURL_NAME);
-                        }
-                        else throw new ArgumentNullException(nameof(registryOptions));
-                    }
-                }
+                UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
+                LocalResourceGrammarRegistryOptions registryOptions = new LocalResourceGrammarRegistryOptions(userSettings.Theme, _log);
+                
+                TextMate.Installation textMateInstallation = _textEditor.InstallTextMate(registryOptions);
+                textMateInstallation.SetGrammar(GlobalConstants.GRAMMAR_HURL_NAME);
             }
             catch (Exception ex)
             {
@@ -136,10 +137,47 @@ namespace HurlStudio.UI.Controls.Documents
 
         private void On_FileDocument_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            //if (_textEditor != null && _viewModel != null && _viewModel.File != null)
-            //{
-            //    _textEditor.Document = new AvaloniaEdit.Document.TextDocument(File.ReadAllText(_viewModel.File.Location));
-            //}
+            _initializationCompleted = true;
+        }
+
+        /// <summary>
+        /// Show a dialog to select a new setting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonAddSetting_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_viewModel == null) return;
+
+            try
+            {
+                AddSettingWindow addSettingDialog = _windowBuilder.Get<AddSettingWindow>();
+                BaseSetting? setting = await addSettingDialog.ShowDialog<BaseSetting?>(_mainWindow);
+                if (setting == null) return;
+
+                HurlSettingSection? fileSection = _viewModel.SettingSections.FirstOrDefault(x => x.SectionType == HurlSettingSectionType.File);
+                if (fileSection == null) return;
+
+                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true, true));
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(this.On_FileDocument_Initialized));
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Mark document as changed on input
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_TextEditor_TextChanged(object? sender, System.EventArgs e)
+        {
+            if (!_initializationCompleted) return;
+            if (_viewModel == null) return;
+
+            _viewModel.HasChanges = true;
         }
     }
 }

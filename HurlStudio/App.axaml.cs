@@ -53,6 +53,8 @@ using System.Reflection;
 using HurlStudio.Common.Extensions;
 using NLog;
 using HurlStudio.Utility;
+using HurlStudio.UI.ViewModels.Windows;
+using ActiproSoftware.Properties.Shared;
 
 namespace HurlStudio
 {
@@ -67,11 +69,25 @@ namespace HurlStudio
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            this.SetResourceOverrides();
 
             if (Design.IsDesignMode)
             {
                 this.RequestedThemeVariant = ThemeVariant.Dark;
             }
+        }
+
+        /// <summary>
+        /// Set static resources before first UI reference
+        /// </summary>
+        private void SetResourceOverrides()
+        {
+            SR.SetCustomString(SRName.UICaptionButtonCloseText, Localization.Common_Window_Close);
+            SR.SetCustomString(SRName.UICaptionButtonEnterFullScreenText, Localization.Common_Window_EnterFullScreen);
+            SR.SetCustomString(SRName.UICaptionButtonExitFullScreenText, Localization.Common_Window_ExitFullScreen);
+            SR.SetCustomString(SRName.UICaptionButtonMaximizeText, Localization.Common_Window_Maximize);
+            SR.SetCustomString(SRName.UICaptionButtonMinimizeText, Localization.Common_Window_Minimize);
+            SR.SetCustomString(SRName.UICaptionButtonRestoreText, Localization.Common_Window_Restore);
         }
 
         /// <summary>
@@ -96,11 +112,9 @@ namespace HurlStudio
 
                 if (this.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
                 {
-                    MainWindowViewModel? viewModel = Services?.GetRequiredService<MainWindowViewModel>();
                     MainWindow? mainWindow = Services?.GetRequiredService<MainWindow>();
                     if (mainWindow != null)
                     {
-                        mainWindow.DataContext = viewModel;
                         desktop.MainWindow = mainWindow;
                     }
                 }
@@ -165,7 +179,6 @@ namespace HurlStudio
             Services = services.BuildServiceProvider();
         }
 
-
         /// <summary>
         /// Registers user controls in the ControlBase service manager
         /// </summary>
@@ -174,13 +187,19 @@ namespace HurlStudio
             if (Services == null) throw new ArgumentNullException(nameof(Services));
 
             ServiceManager<ViewModelBasedControl> controlBuilder = Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
+            ServiceManager<UI.Windows.WindowBase> windowBuilder = Services.GetRequiredService<ServiceManager<UI.Windows.WindowBase>>();
             ServiceManager<Tool> toolControlBuilder = Services.GetRequiredService<ServiceManager<Tool>>();
             ServiceManager<Document> documentControlBuilder = Services.GetRequiredService<ServiceManager<Document>>();
+
+            // Windows
+            windowBuilder.RegisterProvider<MainWindow>(() => Services.GetRequiredService<MainWindow>());
+            windowBuilder.RegisterProvider<AddSettingWindow>(() => Services.GetRequiredService<AddSettingWindow>());
 
             // Views
             controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
             controlBuilder.RegisterProviderAssociated<LoadingView, LoadingViewViewModel>(() => Services.GetRequiredService<LoadingView>());
             controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
+            controlBuilder.RegisterProviderAssociated<AddSettingView, AddSettingViewViewModel>(() => Services.GetRequiredService<AddSettingView>());
 
             // Controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
@@ -198,7 +217,8 @@ namespace HurlStudio
 
             // HurlSettings
             controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
-            
+            controlBuilder.RegisterProviderAssociated<SettingTypeContainer, HurlSettingTypeContainer>(() => Services.GetRequiredService<SettingTypeContainer>());
+
             controlBuilder.RegisterProviderAssociated<AllowInsecureSetting, Collections.Settings.AllowInsecureSetting>(() => Services.GetRequiredService<AllowInsecureSetting>());
             controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
             controlBuilder.RegisterProviderAssociated<BasicUserSetting, Collections.Settings.BasicUserSetting>(() => Services.GetRequiredService<BasicUserSetting>());
@@ -217,7 +237,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<NoProxySetting, Collections.Settings.NoProxySetting>(() => Services.GetRequiredService<NoProxySetting>());
             controlBuilder.RegisterProviderAssociated<PathAsIsSetting, Collections.Settings.PathAsIsSetting>(() => Services.GetRequiredService<PathAsIsSetting>());
             controlBuilder.RegisterProviderAssociated<ProxySetting, Collections.Settings.ProxySetting>(() => Services.GetRequiredService<ProxySetting>());
-            controlBuilder.RegisterProviderAssociated<RedirectionsSetting, Collections.Settings.RedirectionsSetting>(() => Services.GetRequiredService<RedirectionsSetting>()); 
+            controlBuilder.RegisterProviderAssociated<RedirectionsSetting, Collections.Settings.RedirectionsSetting>(() => Services.GetRequiredService<RedirectionsSetting>());
             controlBuilder.RegisterProviderAssociated<ResolveSetting, Collections.Settings.ResolveSetting>(() => Services.GetRequiredService<ResolveSetting>());
             controlBuilder.RegisterProviderAssociated<RetrySetting, Collections.Settings.RetrySetting>(() => Services.GetRequiredService<RetrySetting>());
             controlBuilder.RegisterProviderAssociated<SslNoRevokeSetting, Collections.Settings.SslNoRevokeSetting>(() => Services.GetRequiredService<SslNoRevokeSetting>());
@@ -235,8 +255,6 @@ namespace HurlStudio
             // Documents
             documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
             documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
-        
-
         }
 
         /// <summary>
@@ -275,10 +293,8 @@ namespace HurlStudio
                 loggingBuilder.AddNLog(ConfigureLogging(baseDir));
             });
             services.AddDataProtection();
-            
-            
-            services.AddSingleton<LayoutFactory>();
 
+            services.AddSingleton<LayoutFactory>();
             services.AddSingleton<IConfiguration>(Config);
             services.AddSingleton<IUserSettingsService, JsonUserSettingsService>();
             services.AddSingleton<IUiStateService, JsonUiStateService>();
@@ -306,12 +322,16 @@ namespace HurlStudio
         /// <param name="services"></param>
         private static void ConfigureViewModels(IServiceCollection services)
         {
+            // Window view models
             services.AddSingleton<MainWindowViewModel>();
+            services.AddTransient<AddSettingWindowViewModel>();
 
+            // View view models
             services.AddSingleton<LoadingViewViewModel>();
             services.AddSingleton<EditorViewViewModel>();
             services.AddSingleton<MainViewViewModel>();
             services.AddSingleton<ViewFrameViewModel>();
+            services.AddTransient<AddSettingViewViewModel>();
 
             services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
                 .Register(provider.GetRequiredService<MainViewViewModel>()));
@@ -340,16 +360,19 @@ namespace HurlStudio
         /// <param name="services"></param>
         private static void ConfigureControls(IServiceCollection services)
         {
-            // Control Builder
+            // Control Builders
+            services.AddSingleton<ServiceManager<UI.Windows.WindowBase>>(provider => new ServiceManager<UI.Windows.WindowBase>());
             services.AddSingleton<ServiceManager<ViewModelBasedControl>>(provider => new ServiceManager<ViewModelBasedControl>());
 
             // Windows
             services.AddSingleton<MainWindow>();
+            services.AddTransient<AddSettingWindow>();
 
             // Views
             services.AddSingleton<MainView>();
             services.AddSingleton<LoadingView>();
             services.AddSingleton<EditorView>();
+            services.AddTransient<AddSettingView>();
 
             // Controls
             services.AddTransient<CollectionExplorerTool>();
@@ -368,6 +391,7 @@ namespace HurlStudio
 
             // Hurl Settings
             services.AddTransient<SettingContainer>();
+            services.AddTransient<SettingTypeContainer>();
 
             services.AddTransient<AllowInsecureSetting>();
             services.AddTransient<AwsSigV4Setting>();
@@ -435,11 +459,10 @@ namespace HurlStudio
             {
                 setupBuilder.SetupLogFactory(logfactoryBuilder =>
                 {
-                    //logfactoryBuilder.AddCallSiteHiddenAssembly(Assembly.GetAssembly(typeof(Common.Logging.Extensions.ILoggerExtensions)));
                     logfactoryBuilder.AddCallSiteHiddenClassType(typeof(Common.Extensions.ILoggerExtensions));
                 });
             });
-            
+
             NLog.Targets.FileTarget loggingTarget = new NLog.Targets.FileTarget()
             {
                 Name = "LogTarget",

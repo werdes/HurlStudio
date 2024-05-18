@@ -31,6 +31,7 @@ namespace HurlStudio.Model.HurlSettings
         public HurlSettingSection(FileDocumentViewModel document, HurlSettingSectionType sectionType, CollectionComponentBase? collectionComponent)
         {
             _settingContainers = new OrderedObservableCollection<HurlSettingContainer>();
+
             _sectionType = sectionType;
             _collectionComponent = collectionComponent;
             _document = document;
@@ -112,6 +113,11 @@ namespace HurlStudio.Model.HurlSettings
                 this.Notify();
                 this.SettingSectionCollapsedChanged?.Invoke(this, new SettingSectionCollapsedChangedEventArgs(_collapsed));
             }
+        }
+
+        public FileDocumentViewModel Document
+        {
+            get => _document;
         }
 
         /// <summary>

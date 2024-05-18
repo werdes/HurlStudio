@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Model.EventArgs
 {
-    public class SettingKeyChangedEventArgs : System.EventArgs
+    public class SettingEvaluationChangedEventArgs : System.EventArgs
     {
         private readonly HurlSettingContainer _hurlSetting;
 
-        public SettingKeyChangedEventArgs(HurlSettingContainer setting)
+        public SettingEvaluationChangedEventArgs(HurlSettingContainer setting)
         {
             _hurlSetting = setting;
         }

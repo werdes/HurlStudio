@@ -1,0 +1,26 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+	      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Windows"
+        xmlns:views="clr-namespace:HurlStudio.UI.Views"
+        xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
+        xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+       
+        mc:Ignorable="d"
+        d:DesignWidth="800"
+        d:DesignHeight="450"
+        
+        Width="800"
+        Height="500"
+        WindowStartupLocation="CenterOwner"        
+        Background="{DynamicResource WindowBackgroundColor}"
+        Icon="/Assets/Icons/icon.ico"
+        Title="{x:Static localization:Localization.Window_AddSetting_Title}"
+        x:Class="HurlStudio.UI.Windows.AddSettingWindow"
+        x:Name="addSettingWindow"
+        x:DataType="vm:AddSettingWindowViewModel"
+        
+        Initialized="On_AddSettingWindow_Initialized"
+        KeyDown="On_AddSettingWindow_KeyDown">
+</Window>

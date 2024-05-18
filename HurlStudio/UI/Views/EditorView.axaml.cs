@@ -278,6 +278,5 @@ namespace HurlStudio.UI.Views
             _viewModel = viewModel;
             this.DataContext = _viewModel;
         }
-
     }
 }

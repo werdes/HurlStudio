@@ -106,5 +106,16 @@ namespace HurlStudio.Collections.Settings
         {
             return string.Join(VALUE_SEPARATOR, _noProxyHosts.Select(x => x.Host));
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.NoProxyHosts.Add(new NoProxyHost(string.Empty));
+
+            return this;
+        }
     }
 }

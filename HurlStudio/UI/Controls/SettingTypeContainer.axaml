@@ -1,0 +1,58 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:vm="clr-namespace:HurlStudio.Model.HurlSettings;assembly=HurlStudio"
+             
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             
+             Cursor="Hand"
+             IsVisible="{Binding IsVisible}"
+             Background="Transparent"
+             
+             PointerPressed="On_SettingTypeContainer_PointerPressed"
+             
+             x:DataType="vm:HurlSettingTypeContainer"
+             x:Class="HurlStudio.UI.Controls.SettingTypeContainer">
+  <UserControl.Resources>
+    <converters:IHurlSettingToLocalizedTitleConverter x:Key="IHurlSettingToLocalizedTitleConverter" />
+    <converters:IHurlSettingToIconConverter x:Key="IHurlSettingToIconConverter" />
+  </UserControl.Resources>
+
+  <Grid Margin="1,0,1,0">
+
+    <Border BorderBrush="{DynamicResource NeutralControlBorderColor}"
+            BorderThickness="0,0,0,1"
+            Margin="0"/>
+
+    <Grid Margin="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="20" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <controls:Icon Type="{Binding SettingInstance, Converter={StaticResource IHurlSettingToIconConverter}}" />
+
+      <TextBlock Margin="4,0,0,0"
+                 Grid.Column="1"
+                 FontWeight="Bold"
+                 VerticalAlignment="Center"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Text="{Binding Path=SettingInstance, Converter={StaticResource IHurlSettingToLocalizedTitleConverter}}"/>
+
+      <TextBlock Margin="4,0,0,4"
+                 Grid.Column="1"
+                 Grid.Row="1"
+                 VerticalAlignment="Center"
+                 Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                 Text="{Binding SettingDocumentation.LocalizedShortDescription}"/>
+    </Grid>
+  </Grid>
+</UserControl>

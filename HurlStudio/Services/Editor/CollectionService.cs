@@ -171,9 +171,14 @@ namespace HurlStudio.Services.Editor
 
                 // As HurlSettings are saved in the collection file under a file location,
                 // try to find a setting with a matching file location
+                // -> If no setting block is found, create an empty one
                 HurlFile? fileSettings = collectionContainer.Collection.FileSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FileLocation.ConvertDirectorySeparator()) == relativeFilePathToCollectionRoot).FirstOrDefault();
+                if(fileSettings == null)
+                {
+                    fileSettings = new HurlFile(relativeFilePathToCollectionRoot);
+                }
 
-                CollectionFile collectionFile = new CollectionFile(collectionFolder, hurlFile);
+                CollectionFile collectionFile = new CollectionFile(collectionFolder, fileSettings, hurlFile);
                 collectionFile.File = fileSettings;
 
                 collectionFolder.Files.Add(collectionFile);
@@ -220,6 +225,7 @@ namespace HurlStudio.Services.Editor
         /// <returns></returns>
         public async Task StoreCollectionAsync(HurlCollection collection, string collectionLocation)
         {
+            _log.LogDebug($"Storing collection [{collection.Name}] to [{collectionLocation}]");
             await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
         }
     }

@@ -130,5 +130,18 @@ namespace HurlStudio.Collections.Settings
         {
             return $"{this.Host}{VALUE_SEPARATOR}{this.Port}{VALUE_SEPARATOR}{this.Address}";
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.Host = string.Empty;
+            this.Port = 80;
+            this.Address = string.Empty;
+
+            return this;
+        }
     }
 }

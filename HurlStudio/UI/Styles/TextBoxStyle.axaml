@@ -12,6 +12,21 @@
     </Border>
   </Design.PreviewWith>
 
+  <Style Selector="TextBox.transparentTextBox">
+    <Setter Property="Opacity" Value="0.5" />
+    <Setter Property="Padding" Value="2" />
+    <Setter Property="BorderThickness" Value="0,0,0,0" />
+    <Setter Property="Background" Value="Transparent" />
+    <Setter Property="Cursor" Value="Hand" />
+
+    <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
+      <Setter Property="Background" Value="Transparent" />
+    </Style>
+    <Style Selector="^:focus">
+      <Setter Property="Opacity" Value="1" />
+    </Style>
+  </Style>
+
   <Style Selector="TextBox.framelessTextBox">
     <Setter Property="Opacity" Value="0.5" />
     <Setter Property="Padding" Value="2" />

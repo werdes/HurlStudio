@@ -120,5 +120,17 @@ namespace HurlStudio.Collections.Settings
         {
             return HurlSettingInheritanceBehavior.UniqueKey;
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.Key = string.Empty;
+            this.Value = string.Empty;
+
+            return this;
+        }
     }
 }

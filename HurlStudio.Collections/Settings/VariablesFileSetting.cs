@@ -72,7 +72,7 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value of this setting (e.g. the cert file path)
+        /// Returns the serialized value of this setting (e.g. the variable file path)
         /// </summary>
         /// <returns></returns>
         public override string GetConfigurationValue()
@@ -96,6 +96,17 @@ namespace HurlStudio.Collections.Settings
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
             return HurlSettingInheritanceBehavior.Overwrite;
+        }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.File = string.Empty;
+
+            return this;
         }
     }
 }

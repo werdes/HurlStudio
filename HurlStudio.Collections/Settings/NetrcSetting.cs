@@ -156,5 +156,18 @@ namespace HurlStudio.Collections.Settings
         {
             return HurlSettingInheritanceBehavior.Overwrite;
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.File = string.Empty;
+            this.IsOptional = false;
+            this.IsAutomatic = true;
+
+            return this;
+        }
     }
 }

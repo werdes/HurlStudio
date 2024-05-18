@@ -5,6 +5,7 @@ using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Controls;
 using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.ViewModels.Windows;
 using HurlStudio.UI.Views;
 using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
@@ -67,7 +68,7 @@ namespace HurlStudio.UI.Windows
             {
                 if (_controlBuilder == null) throw new ArgumentNullException($"No control locator was supplied to {nameof(MainWindow)}");
 
-                ViewBase<MainViewViewModel>? view = _controlBuilder?.Get<MainView>();
+                ViewBase<MainViewViewModel>? view = _controlBuilder.Get<MainView>();
                 if (view != null)
                 {
                     // Bind the window offScreenMargin to the view margin

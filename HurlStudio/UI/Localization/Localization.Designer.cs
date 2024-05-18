@@ -223,6 +223,60 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.Close} ähnelt.
+        /// </summary>
+        public static string Common_Window_Close {
+            get {
+                return ResourceManager.GetString("Common.Window.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.EnterFullScreen} ähnelt.
+        /// </summary>
+        public static string Common_Window_EnterFullScreen {
+            get {
+                return ResourceManager.GetString("Common.Window.EnterFullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.ExitFullScreen} ähnelt.
+        /// </summary>
+        public static string Common_Window_ExitFullScreen {
+            get {
+                return ResourceManager.GetString("Common.Window.ExitFullScreen", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.Maximize} ähnelt.
+        /// </summary>
+        public static string Common_Window_Maximize {
+            get {
+                return ResourceManager.GetString("Common.Window.Maximize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.Minimize} ähnelt.
+        /// </summary>
+        public static string Common_Window_Minimize {
+            get {
+                return ResourceManager.GetString("Common.Window.Minimize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Common.Window.Restore} ähnelt.
+        /// </summary>
+        public static string Common_Window_Restore {
+            get {
+                return ResourceManager.GetString("Common.Window.Restore", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.Close} ähnelt.
         /// </summary>
         public static string Dock_Document_ContextMenu_Close {
@@ -709,11 +763,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_AllowInsecureSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.AllowInsecureSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_AllowInsecureSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.AllowInsecureSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AllowInsecureSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_AllowInsecureSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.AllowInsecureSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -732,6 +804,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_AllowInsecureSetting_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.AllowInsecureSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_Description {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.Description", resourceCulture);
             }
         }
         
@@ -772,11 +853,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_AwsSigV4Setting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.AwsSigV4Setting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.AwsSigV4Setting.Title} ähnelt.
         /// </summary>
         public static string Setting_AwsSigV4Setting_Title {
             get {
                 return ResourceManager.GetString("Setting.AwsSigV4Setting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.Description", resourceCulture);
             }
         }
         
@@ -799,6 +898,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_BasicUserSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.BasicUserSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.BasicUserSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_BasicUserSetting_Title {
@@ -813,6 +921,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_BasicUserSetting_User_Label {
             get {
                 return ResourceManager.GetString("Setting.BasicUserSetting.User.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.Description", resourceCulture);
             }
         }
         
@@ -862,6 +979,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.NoEncryptionHint} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_NoEncryptionHint {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.NoEncryptionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_CaCertSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.CaCertSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_CaCertSetting_Title {
@@ -876,6 +1011,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ClientCertificateSetting_CertificateFile_Label {
             get {
                 return ResourceManager.GetString("Setting.ClientCertificateSetting.CertificateFile.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.Description", resourceCulture);
             }
         }
         
@@ -916,11 +1060,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_ClientCertificateSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.ClientCertificateSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ConnectToSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ConnectToSetting.Description", resourceCulture);
             }
         }
         
@@ -943,6 +1105,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ConnectToSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ConnectToSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ConnectToSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_ConnectToSetting_Title {
@@ -952,11 +1123,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ContinueOnErrorSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_ContinueOnErrorSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ContinueOnErrorSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ContinueOnErrorSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ContinueOnErrorSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -975,6 +1164,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ContinueOnErrorSetting_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.ContinueOnErrorSetting.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.Description", resourceCulture);
             }
         }
         
@@ -1033,11 +1231,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_CookieSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.CookieSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CookieSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_CookieSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.CookieSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.DelaySetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_DelaySetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.DelaySetting.Description", resourceCulture);
             }
         }
         
@@ -1051,11 +1267,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.DelaySetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_DelaySetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.DelaySetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.DelaySetting.Title} ähnelt.
         /// </summary>
         public static string Setting_DelaySetting_Title {
             get {
                 return ResourceManager.GetString("Setting.DelaySetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.Description", resourceCulture);
             }
         }
         
@@ -1087,6 +1321,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_FileRootSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.FileRootSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.FileRootSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_FileRootSetting_Title {
@@ -1096,11 +1339,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.HttpVersionSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.HttpVersionSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_HttpVersionSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.HttpVersionSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.HttpVersionSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_HttpVersionSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.HttpVersionSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1150,11 +1411,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_IgnoreAssertsSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.IgnoreAssertsSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_IgnoreAssertsSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.IgnoreAssertsSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IgnoreAssertsSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_IgnoreAssertsSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.IgnoreAssertsSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1177,11 +1456,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IpVersionSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IpVersionSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_IpVersionSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.IpVersionSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.IpVersionSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_IpVersionSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.IpVersionSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1222,6 +1519,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_MaxFilesizeSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.MaxFilesizeSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_MaxFilesizeSetting_Label {
@@ -1231,11 +1537,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_MaxFilesizeSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.MaxFilesizeSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.MaxFilesizeSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_MaxFilesizeSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.MaxFilesizeSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.Description", resourceCulture);
             }
         }
         
@@ -1312,6 +1636,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_NetrcSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.NetrcSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NetrcSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_NetrcSetting_Title {
@@ -1326,6 +1659,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_NoProxySetting_Add_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.NoProxySetting.Add.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.Description", resourceCulture);
             }
         }
         
@@ -1348,6 +1690,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_NoProxySetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.NoProxySetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.NoProxySetting.Title} ähnelt.
         /// </summary>
         public static string Setting_NoProxySetting_Title {
@@ -1357,11 +1708,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_PathAsIsSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.PathAsIsSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_PathAsIsSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.PathAsIsSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.PathAsIsSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_PathAsIsSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.PathAsIsSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1420,6 +1789,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.Title} ähnelt.
         /// </summary>
         public static string Setting_ProxySetting_Title {
@@ -1452,6 +1830,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_RedirectionsSetting_AllowRedirections_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.RedirectionsSetting.AllowRedirections.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.Description", resourceCulture);
             }
         }
         
@@ -1492,6 +1879,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_RedirectionsSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.RedirectionsSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RedirectionsSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_RedirectionsSetting_Title {
@@ -1519,6 +1915,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.HostAndPort.Label} ähnelt.
         /// </summary>
         public static string Setting_ResolveSetting_HostAndPort_Label {
@@ -1537,11 +1942,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ResolveSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ResolveSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ResolveSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_ResolveSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.ResolveSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.Description", resourceCulture);
             }
         }
         
@@ -1582,6 +2005,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_RetrySetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.RetrySetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.RetrySetting.Title} ähnelt.
         /// </summary>
         public static string Setting_RetrySetting_Title {
@@ -1591,11 +2023,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_SslNoRevokeSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.SslNoRevokeSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.Label} ähnelt.
         /// </summary>
         public static string Setting_SslNoRevokeSetting_Label {
             get {
                 return ResourceManager.GetString("Setting.SslNoRevokeSetting.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.SslNoRevokeSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_SslNoRevokeSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.SslNoRevokeSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1636,6 +2086,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.MaxTimeSeconds.Label} ähnelt.
         /// </summary>
         public static string Setting_TimeoutSetting_MaxTimeSeconds_Label {
@@ -1654,11 +2113,38 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_TimeoutSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.TimeoutSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.TimeoutSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_TimeoutSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.TimeoutSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ToEntrySetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_ToEntrySetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.ToEntrySetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ToEntrySetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_ToEntrySetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.ToEntrySetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1690,6 +2176,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_UnixSocketSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.UnixSocketSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Path.Label} ähnelt.
         /// </summary>
         public static string Setting_UnixSocketSetting_Path_Label {
@@ -1708,11 +2203,38 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_UnixSocketSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.UnixSocketSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UnixSocketSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_UnixSocketSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.UnixSocketSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UserAgentSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_UserAgentSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.UserAgentSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.UserAgentSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_UserAgentSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.UserAgentSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1744,11 +2266,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariableSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_VariableSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.VariableSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariableSetting.Title} ähnelt.
         /// </summary>
         public static string Setting_VariableSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.VariableSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.Description", resourceCulture);
             }
         }
         
@@ -1785,6 +2325,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_VariablesFileSetting_FilePicker_Tooltip {
             get {
                 return ResourceManager.GetString("Setting.VariablesFileSetting.FilePicker.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.VariablesFileSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_VariablesFileSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.VariablesFileSetting.ShortDescription", resourceCulture);
             }
         }
         
@@ -1848,6 +2397,42 @@ namespace HurlStudio.UI.Localization {
         public static string SettingContainer_Overwritten_Tooltip {
             get {
                 return ResourceManager.GetString("SettingContainer.Overwritten.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddSettingView.SettingInstance.Add} ähnelt.
+        /// </summary>
+        public static string View_AddSettingView_SettingInstance_Add {
+            get {
+                return ResourceManager.GetString("View.AddSettingView.SettingInstance.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddSettingView.SettingInstance.Header} ähnelt.
+        /// </summary>
+        public static string View_AddSettingView_SettingInstance_Header {
+            get {
+                return ResourceManager.GetString("View.AddSettingView.SettingInstance.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddSettingView.SettingInstance.NoSelectionHint} ähnelt.
+        /// </summary>
+        public static string View_AddSettingView_SettingInstance_NoSelectionHint {
+            get {
+                return ResourceManager.GetString("View.AddSettingView.SettingInstance.NoSelectionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddSettingView.Urls.Header} ähnelt.
+        /// </summary>
+        public static string View_AddSettingView_Urls_Header {
+            get {
+                return ResourceManager.GetString("View.AddSettingView.Urls.Header", resourceCulture);
             }
         }
         
@@ -2136,6 +2721,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Main_StatusBar_Status_SavingFile_Text {
             get {
                 return ResourceManager.GetString("View.Main.StatusBar.Status.SavingFile.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Window.AddSetting.Title} ähnelt.
+        /// </summary>
+        public static string Window_AddSetting_Title {
+            get {
+                return ResourceManager.GetString("Window.AddSetting.Title", resourceCulture);
             }
         }
         

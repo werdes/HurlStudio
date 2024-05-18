@@ -13,7 +13,7 @@ namespace HurlStudio.Collections.Settings
 
         public CaCertSetting()
         {
-            
+
         }
 
         [HurlSettingDisplayString]
@@ -34,12 +34,8 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override IHurlSetting? FillFromString(string value)
         {
-            if(!string.IsNullOrWhiteSpace(value))
-            {
-                this.File = value;
-                return this;
-            }
-            return null;
+            this.File = value;
+            return this;
         }
 
         /// <summary>
@@ -97,6 +93,17 @@ namespace HurlStudio.Collections.Settings
         public override HurlSettingInheritanceBehavior GetInheritanceBehavior()
         {
             return HurlSettingInheritanceBehavior.Overwrite;
+        }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.File = string.Empty;
+
+            return this;
         }
     }
 }

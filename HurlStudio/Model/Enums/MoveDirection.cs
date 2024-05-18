@@ -9,6 +9,8 @@ namespace HurlStudio.Model.Enums
     public enum MoveDirection
     {
         Up, 
-        Down
+        Down,
+        ToTop,
+        ToBottom
     }
 }

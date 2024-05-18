@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Encodings;
+using System.Text.RegularExpressions;
 using System.Text.Unicode;
 using System.Threading.Tasks;
 using System.Web;
@@ -12,6 +13,8 @@ namespace HurlStudio.Common.Extensions
 {
     public static class StringExtensions
     {
+        private static readonly Regex NORMALIZE_REGEX = new Regex("[^A-Za-z0-9 ]", RegexOptions.Compiled);
+
         public static string EncodeUrl(this string value)
         {
             return HttpUtility.UrlEncode(value);
@@ -37,7 +40,7 @@ namespace HurlStudio.Common.Extensions
                 case '/': replacableChar = '\\'; break;
             }
 
-            if(replacableChar.HasValue)
+            if (replacableChar.HasValue)
             {
                 return directory.Replace(replacableChar.Value, platformSpecificSeparatorChar);
             }
@@ -90,7 +93,7 @@ namespace HurlStudio.Common.Extensions
             byte[] bytes = Encoding.UTF8.GetBytes(text);
             return Convert.ToBase64String(bytes);
         }
-        
+
         /// <summary>
         /// Decodes a string from Base64
         /// </summary>
@@ -100,6 +103,31 @@ namespace HurlStudio.Common.Extensions
         {
             byte[] bytes = Convert.FromBase64String(base64Text);
             return Encoding.UTF8.GetString(bytes);
+        }
+
+        /// <summary>
+        /// Normalizes a string
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string ToNormalized(this string text)
+        {
+            return NORMALIZE_REGEX.Replace(text, string.Empty).ToLower();
+        }
+
+        /// <summary>
+        /// Returns true, if a given string is included in the list of params
+        /// </summary>
+        /// <param name="query"></param>
+        /// <param name="includes"></param>
+        /// <returns></returns>
+        public static bool IsContainedInAnyNormalized(this string query, params string?[] includes)
+        {
+            string queryNormalized = query.ToNormalized();
+            List<string> normalizedParams = includes.Where(x => !string.IsNullOrWhiteSpace(x))
+                                                    .Select(x => x.ToNormalized()).ToList();
+            bool isContained = normalizedParams.Any(x => x.Contains(queryNormalized));
+            return isContained;  
         }
     }
 }

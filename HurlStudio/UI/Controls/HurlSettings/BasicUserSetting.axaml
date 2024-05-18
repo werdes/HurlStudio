@@ -48,7 +48,7 @@
                  PasswordChar="*"
                  VerticalAlignment="Center" />
 
-        <!--Protocol-->
+        <!--Encryption warning-->
         <StackPanel Orientation="Horizontal"
                     Grid.Row="2"
                     Grid.ColumnSpan="2"

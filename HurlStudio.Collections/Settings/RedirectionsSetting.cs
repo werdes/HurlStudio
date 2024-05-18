@@ -151,5 +151,18 @@ namespace HurlStudio.Collections.Settings
         {
             return HurlSettingInheritanceBehavior.Overwrite;
         }
+
+        /// <summary>
+        /// Fills the setting with default values for ui based creation
+        /// </summary>
+        /// <returns></returns>
+        public override IHurlSetting? FillDefault()
+        {
+            this.AllowRedirections = true;
+            this.MaxRedirections = 1000;
+            this.RedirectionsTrusted = true;
+
+            return this;
+        }
     }
 }

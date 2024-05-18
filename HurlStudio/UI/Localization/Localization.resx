@@ -813,4 +813,202 @@
   <data name="View.Main.StatusBar.Status.SavingFile.Text" xml:space="preserve">
     <value>{View.Main.StatusBar.Status.SavingFile.Text}</value>
   </data>
+  <data name="Common.Window.Close" xml:space="preserve">
+    <value>{Common.Window.Close}</value>
+  </data>
+  <data name="Common.Window.EnterFullScreen" xml:space="preserve">
+    <value>{Common.Window.EnterFullScreen}</value>
+  </data>
+  <data name="Common.Window.ExitFullScreen" xml:space="preserve">
+    <value>{Common.Window.ExitFullScreen}</value>
+  </data>
+  <data name="Common.Window.Maximize" xml:space="preserve">
+    <value>{Common.Window.Maximize}</value>
+  </data>
+  <data name="Common.Window.Minimize" xml:space="preserve">
+    <value>{Common.Window.Minimize}</value>
+  </data>
+  <data name="Common.Window.Restore" xml:space="preserve">
+    <value>{Common.Window.Restore}</value>
+  </data>
+  <data name="Window.AddSetting.Title" xml:space="preserve">
+    <value>{Window.AddSetting.Title}</value>
+  </data>
+  <data name="View.AddSettingView.Urls.Header" xml:space="preserve">
+    <value>{View.AddSettingView.Urls.Header}</value>
+  </data>
+  <data name="View.AddSettingView.SettingInstance.Header" xml:space="preserve">
+    <value>{View.AddSettingView.SettingInstance.Header}</value>
+  </data>
+  <data name="Setting.AllowInsecureSetting.Description" xml:space="preserve">
+    <value>{Setting.AllowInsecureSetting.Description}</value>
+  </data>
+  <data name="Setting.AllowInsecureSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.AllowInsecureSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.Description" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.Description}</value>
+  </data>
+  <data name="Setting.AwsSigV4Setting.ShortDescription" xml:space="preserve">
+    <value>{Setting.AwsSigV4Setting.ShortDescription}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.Description" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.Description}</value>
+  </data>
+  <data name="Setting.BasicUserSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.BasicUserSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.CaCertSetting.Description" xml:space="preserve">
+    <value>{Setting.CaCertSetting.Description}</value>
+  </data>
+  <data name="Setting.CaCertSetting.NoEncryptionHint" xml:space="preserve">
+    <value>{Setting.CaCertSetting.NoEncryptionHint}</value>
+  </data>
+  <data name="Setting.CaCertSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.CaCertSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.Description" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.Description}</value>
+  </data>
+  <data name="Setting.ClientCertificateSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ConnectToSetting.Description" xml:space="preserve">
+    <value>{Setting.ConnectToSetting.Description}</value>
+  </data>
+  <data name="Setting.ConnectToSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ConnectToSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ContinueOnErrorSetting.Description" xml:space="preserve">
+    <value>{Setting.ContinueOnErrorSetting.Description}</value>
+  </data>
+  <data name="Setting.ContinueOnErrorSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ContinueOnErrorSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.CookieSetting.Description" xml:space="preserve">
+    <value>{Setting.CookieSetting.Description}</value>
+  </data>
+  <data name="Setting.CookieSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.CookieSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.DelaySetting.Description" xml:space="preserve">
+    <value>{Setting.DelaySetting.Description}</value>
+  </data>
+  <data name="Setting.DelaySetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.DelaySetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.FileRootSetting.Description" xml:space="preserve">
+    <value>{Setting.FileRootSetting.Description}</value>
+  </data>
+  <data name="Setting.FileRootSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.FileRootSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.Description" xml:space="preserve">
+    <value>{Setting.HttpVersionSetting.Description}</value>
+  </data>
+  <data name="Setting.HttpVersionSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.HttpVersionSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.IgnoreAssertsSetting.Description" xml:space="preserve">
+    <value>{Setting.IgnoreAssertsSetting.Description}</value>
+  </data>
+  <data name="Setting.IgnoreAssertsSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.IgnoreAssertsSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.Description" xml:space="preserve">
+    <value>{Setting.IpVersionSetting.Description}</value>
+  </data>
+  <data name="Setting.IpVersionSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.IpVersionSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.MaxFilesizeSetting.Description" xml:space="preserve">
+    <value>{Setting.MaxFilesizeSetting.Description}</value>
+  </data>
+  <data name="Setting.MaxFilesizeSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.MaxFilesizeSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.NetrcSetting.Description" xml:space="preserve">
+    <value>{Setting.NetrcSetting.Description}</value>
+  </data>
+  <data name="Setting.NetrcSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.NetrcSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.NoProxySetting.Description" xml:space="preserve">
+    <value>{Setting.NoProxySetting.Description}</value>
+  </data>
+  <data name="Setting.NoProxySetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.NoProxySetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.PathAsIsSetting.Description" xml:space="preserve">
+    <value>{Setting.PathAsIsSetting.Description}</value>
+  </data>
+  <data name="Setting.PathAsIsSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.PathAsIsSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ProxySetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ProxySetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.Description" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.Description}</value>
+  </data>
+  <data name="Setting.RedirectionsSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.RedirectionsSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ResolveSetting.Description" xml:space="preserve">
+    <value>{Setting.ResolveSetting.Description}</value>
+  </data>
+  <data name="Setting.ResolveSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ResolveSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.RetrySetting.Description" xml:space="preserve">
+    <value>{Setting.RetrySetting.Description}</value>
+  </data>
+  <data name="Setting.RetrySetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.RetrySetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.SslNoRevokeSetting.Description" xml:space="preserve">
+    <value>{Setting.SslNoRevokeSetting.Description}</value>
+  </data>
+  <data name="Setting.SslNoRevokeSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.SslNoRevokeSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.Description" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.Description}</value>
+  </data>
+  <data name="Setting.TimeoutSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.TimeoutSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.ToEntrySetting.Description" xml:space="preserve">
+    <value>{Setting.ToEntrySetting.Description}</value>
+  </data>
+  <data name="Setting.ToEntrySetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.ToEntrySetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.UnixSocketSetting.Description" xml:space="preserve">
+    <value>{Setting.UnixSocketSetting.Description}</value>
+  </data>
+  <data name="Setting.UnixSocketSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.UnixSocketSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.UserAgentSetting.Description" xml:space="preserve">
+    <value>{Setting.UserAgentSetting.Description}</value>
+  </data>
+  <data name="Setting.UserAgentSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.UserAgentSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.VariableSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.VariableSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.Description" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.Description}</value>
+  </data>
+  <data name="Setting.VariablesFileSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.VariablesFileSetting.ShortDescription}</value>
+  </data>
+  <data name="View.AddSettingView.SettingInstance.Add" xml:space="preserve">
+    <value>{View.AddSettingView.SettingInstance.Add}</value>
+  </data>
+  <data name="View.AddSettingView.SettingInstance.NoSelectionHint" xml:space="preserve">
+    <value>{View.AddSettingView.SettingInstance.NoSelectionHint}</value>
+  </data>
 </root>

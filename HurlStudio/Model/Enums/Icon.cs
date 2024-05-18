@@ -13,8 +13,12 @@ namespace HurlStudio.Model.Enums
 {
     /// <summary>
     /// Icon colors:
-    ///  Light: #333333
-    ///  Dark:  #cccccc
+    ///  Light:   #333333
+    ///  Dark:    #cccccc
+    ///  
+    ///  Success: #03bc0c
+    ///  Info:    #64b1ff
+    ///  Error:   #fa5252
     /// </summary>
     public enum Icon
     {
@@ -116,6 +120,8 @@ namespace HurlStudio.Model.Enums
         MoveBottom,
         [Icon("question_32.png")]
         Question32,
+        [Icon("setting.png")]
+        Setting,
         [Icon("add_setting.png")]
         AddSetting,
         [Icon("home.png")]
@@ -126,6 +132,16 @@ namespace HurlStudio.Model.Enums
         MessageBoxWarning,
         [Icon("messagebox_error_50.png")]
         MessageBoxError,
+        [Icon("proxy.png")]
+        Proxy,
+        [Icon("link_external.png")]
+        LinkExternal,
+        [Icon("cancel.png")]
+        Cancel,
+        [Icon("ok.png")]
+        Ok,
+        [Icon("search.png")]
+        Search
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]
@@ -143,6 +159,8 @@ namespace HurlStudio.Model.Enums
 
     public static class IconExtensions
     {
+        private static Dictionary<Icon, Bitmap> _bitmapCache = new Dictionary<Icon, Bitmap>();
+
         public static string? GetFileName(this Icon icon)
         {
             MemberInfo? iconField = typeof(Icon).GetMember(icon.ToString()).FirstOrDefault(x => x.DeclaringType == typeof(Icon));
@@ -160,6 +178,8 @@ namespace HurlStudio.Model.Enums
 
         public static Bitmap? GetBitmap(this Icon icon, ThemeVariant themeVariant)
         {
+            if(_bitmapCache.ContainsKey(icon)) return _bitmapCache[icon];
+
             string? fileName = icon.GetFileName();
             string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
 
@@ -168,6 +188,10 @@ namespace HurlStudio.Model.Enums
                 Uri path = new Uri($"avares://{assemblyName}/Assets/Icons/{themeVariant}/{fileName}");
 
                 Bitmap bitmap = new Bitmap(AssetLoader.Open(path));
+                if(bitmap != null)
+                {
+                    _bitmapCache[icon] = bitmap;
+                }
                 return bitmap;
             }
             return null;

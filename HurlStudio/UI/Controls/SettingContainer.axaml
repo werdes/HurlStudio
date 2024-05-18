@@ -45,31 +45,36 @@
                   Orientation="Horizontal">
         <StackPanel.ContextMenu>
           <ContextMenu>
-            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToTop}">
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToTop}"
+                      Click="On_MenuItemMoveToTop_Click">
               <MenuItem.Icon>
                 <controls:Icon Type="MoveTop" />
               </MenuItem.Icon>
             </MenuItem>
-            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToBottom}">
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_MoveToBottom}"
+                      Click="On_MenuItemMoveToBottom_Click">
               <MenuItem.Icon>
                 <controls:Icon Type="MoveBottom" />
               </MenuItem.Icon>
             </MenuItem>
             <Separator />
-            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_DeleteSetting}">
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_DeleteSetting}"
+                      Click="On_MenuItemDeleteSetting_Click">
               <MenuItem.Icon>
                 <controls:Icon Type="Trash" />
               </MenuItem.Icon>
             </MenuItem>
           </ContextMenu>
         </StackPanel.ContextMenu>
-        <Button Classes="framelessButton" Click="On_ButtonEnable_Click">
+        <Button Classes="framelessButton" 
+                Click="On_ButtonEnable_Click" 
+                IsVisible="{Binding CanChangeEnabled}">
           <StackPanel>
             <controls:Icon Type="CheckedBox"
-                           IsVisible="{Binding Enabled}"
+                           IsVisible="{Binding Setting.IsEnabled}"
                            ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Enabled_Tooltip}"/>
             <controls:Icon Type="UncheckedBox"
-                           IsVisible="{Binding !Enabled}"
+                           IsVisible="{Binding !Setting.IsEnabled}"
                            ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Disabled_Tooltip}"/>
           </StackPanel>
         </Button>
@@ -92,7 +97,7 @@
       <StackPanel Orientation="Horizontal"
                   Background="{DynamicResource NeutralControlBackgroundColor}"
                   Grid.Column="2"
-                IsVisible="{Binding CanMove}">
+                  IsVisible="{Binding CanMove}">
         <Button Classes="framelessButton"
                 Click="On_ButtonMoveUp_Click">
           <controls:Icon Type="MoveUp" />

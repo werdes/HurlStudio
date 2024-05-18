@@ -78,7 +78,6 @@ namespace HurlStudio.Collections.Utility
         private void DeserializeFolderSettingsSection(List<string> lines, ref HurlCollection collection)
         {
             HurlFolder hurlFolder = new HurlFolder();
-            bool[]? visibilities = null;
 
             foreach (string line in lines)
             {
@@ -108,6 +107,7 @@ namespace HurlStudio.Collections.Utility
         /// </summary>
         /// <param name="lines">plain text lines of a CollectionSectionType.FileSettings section container</param>
         /// <param name="collection">Target collection</param>
+        /// <exception cref="ArgumentNullException">if no location is provided</exception>
         private void DeserializeFileSettingsSection(List<string> lines, ref HurlCollection collection)
         {
             HurlFile hurlFile = new HurlFile();
@@ -137,6 +137,7 @@ namespace HurlStudio.Collections.Utility
                 }
             }
 
+            if(string.IsNullOrEmpty(hurlFile.FileLocation)) throw new ArgumentNullException(nameof(hurlFile.FileLocation)); 
             collection.FileSettings.Add(hurlFile);
         }
 

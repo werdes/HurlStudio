@@ -26,10 +26,9 @@ namespace HurlStudio.UI.Controls
         /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_settingContainer != null)
-            {
-                _settingContainer.Collapsed = !_settingContainer.Collapsed;
-            }
+            if (_settingContainer == null) return;
+
+            _settingContainer.Collapsed = !_settingContainer.Collapsed;
         }
 
         /// <summary>
@@ -39,10 +38,9 @@ namespace HurlStudio.UI.Controls
         /// <param name="e"></param>
         private void On_ButtonEnable_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_settingContainer != null)
-            {
-                _settingContainer.Enabled = !_settingContainer.Enabled;
-            }
+            if (_settingContainer == null) return;
+
+            _settingContainer.Setting.IsEnabled = !_settingContainer.Setting.IsEnabled;
         }
 
         /// <summary>
@@ -52,12 +50,11 @@ namespace HurlStudio.UI.Controls
         /// <param name="e"></param>
         private void On_ButtonMoveUp_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_settingContainer != null)
-            {
-                _settingContainer.MoveUp();
-            }
+            if (_settingContainer == null) return;
+
+            _settingContainer.MoveUp();
         }
-        
+
         /// <summary>
         /// Enabled state
         /// </summary>
@@ -65,10 +62,45 @@ namespace HurlStudio.UI.Controls
         /// <param name="e"></param>
         private void On_ButtonMoveDown_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_settingContainer != null)
-            {
-                _settingContainer.MoveDown();
-            }
+            if (_settingContainer == null) return;
+
+            _settingContainer.MoveDown();
+        }
+
+        /// <summary>
+        /// Move the setting to the top of the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemMoveToTop_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            _settingContainer.MoveToTop();
+        }
+
+        /// <summary>
+        /// Move the setting to the bottom of the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemMoveToBottom_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            _settingContainer.MoveToBottom();
+        }
+
+        /// <summary>
+        /// Remove the setting from the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemDeleteSetting_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            _settingContainer.Document.RemoveSetting(_settingContainer);
         }
     }
 }

@@ -43,8 +43,8 @@
     <PackageReference Include="Dock.Avalonia" Version="11.0.0.7" />
     <PackageReference Include="Dock.Model.Mvvm" Version="11.0.0.7" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.5" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />
@@ -152,6 +152,9 @@
     <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
       <DependentUpon>VariableSetting.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\SettingTypeContainer.axaml.cs">
+      <DependentUpon>SettingTypeContainer.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Tools\CollectionExplorerTool.axaml.cs">
       <DependentUpon>CollectionExplorerTool.axaml</DependentUpon>
     </Compile>
@@ -170,6 +173,12 @@
     <Compile Update="UI\Controls\HurlSettings\BasicUserSetting.axaml.cs">
       <DependentUpon>BasicUserSetting.axaml</DependentUpon>
       <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\AddSettingView.axaml.cs">
+      <DependentUpon>AddSettingView.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Windows\AddSettingWindow.axaml.cs">
+      <DependentUpon>AddSettingWindow.axaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
