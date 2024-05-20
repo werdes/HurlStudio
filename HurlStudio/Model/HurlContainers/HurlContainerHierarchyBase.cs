@@ -9,18 +9,18 @@ using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public abstract class CollectionComponentHierarchyBase : CollectionComponentBase
+    public abstract class HurlContainerHierarchyBase : HurlContainerBase
     {
-        private ObservableCollection<CollectionFile> _files;
-        private ObservableCollection<CollectionFolder> _folders;
+        private ObservableCollection<HurlFileContainer> _files;
+        private ObservableCollection<HurlFolderContainer> _folders;
         private bool _collapsed;
 
-        protected CollectionComponentHierarchyBase() : base()
+        protected HurlContainerHierarchyBase() : base()
         {
-            _folders = new ObservableCollection<CollectionFolder>();
-            _files = new ObservableCollection<CollectionFile>();
+            _folders = new ObservableCollection<HurlFolderContainer>();
+            _files = new ObservableCollection<HurlFileContainer>();
             _collapsed = false;
 
             _folders.CollectionChanged += this.On_CollectionComponent_CollectionChanged;
@@ -33,9 +33,9 @@ namespace HurlStudio.Model.CollectionContainer
             {
                 foreach(object obj in e.NewItems)
                 {
-                    if(obj is CollectionComponentBase)
+                    if(obj is HurlContainerBase)
                     {
-                        CollectionComponentBase component = (CollectionComponentBase)obj;
+                        HurlContainerBase component = (HurlContainerBase)obj;
                         component.ControlSelectionChanged += this.On_CollectionComponentHierarchyBase_ControlUnselected;
                         component.CollectionComponentMoved += this.On_CollectionComponentHierarchyBase_CollectionComponentMoved;
                     }
@@ -44,7 +44,7 @@ namespace HurlStudio.Model.CollectionContainer
         }
 
 
-        public ObservableCollection<CollectionFolder> Folders
+        public ObservableCollection<HurlFolderContainer> Folders
         {
             get => _folders;
             set
@@ -56,7 +56,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public ObservableCollection<CollectionFile> Files
+        public ObservableCollection<HurlFileContainer> Files
         {
             get => _files;
             set
@@ -84,12 +84,12 @@ namespace HurlStudio.Model.CollectionContainer
         public override void Unselect()
         {
 
-            foreach (CollectionFolder folder in _folders)
+            foreach (HurlFolderContainer folder in _folders)
             {
                 folder.Unselect();
             }
 
-            foreach (CollectionFile file in _files)
+            foreach (HurlFileContainer file in _files)
             {
                 file.Unselect();
             }

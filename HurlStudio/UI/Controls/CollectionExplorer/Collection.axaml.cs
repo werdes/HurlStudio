@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Common.Utility;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.ViewModels;
@@ -14,16 +14,16 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Collection : CollectionExplorerControlBase<CollectionContainer>
+    public partial class Collection : CollectionExplorerControlBase<HurlCollectionContainer>
     {
-        private CollectionContainer CollectionContainer
+        private HurlCollectionContainer CollectionContainer
         {
-            get => (CollectionContainer)this.GetValue(CollectionContainerProperty);
+            get => (HurlCollectionContainer)this.GetValue(CollectionContainerProperty);
             set => this.SetValue(CollectionContainerProperty, value);
         }
 
-        public static readonly StyledProperty<CollectionContainer> CollectionContainerProperty =
-            AvaloniaProperty.Register<Collection, CollectionContainer>(nameof(CollectionContainer));
+        public static readonly StyledProperty<HurlCollectionContainer> CollectionContainerProperty =
+            AvaloniaProperty.Register<Collection, HurlCollectionContainer>(nameof(CollectionContainer));
 
         private ILogger _log;
         private IEditorService _editorService;
@@ -43,7 +43,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Sets the view model
         /// </summary>
         /// <param name="viewModel"></param>
-        protected override void SetViewModelInstance(CollectionContainer viewModel)
+        protected override void SetViewModelInstance(HurlCollectionContainer viewModel)
         {
             this.CollectionContainer = viewModel;
         }
@@ -73,7 +73,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Returns the collection container as bound element
         /// </summary>
         /// <returns></returns>
-        protected override CollectionComponentBase GetBoundCollectionComponent()
+        protected override HurlContainerBase GetBoundCollectionComponent()
         {
             return this.CollectionContainer;
         }

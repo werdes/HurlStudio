@@ -38,15 +38,56 @@ namespace HurlStudio.Utility
             { ButtonType.Cancel, Localization.MessageBox_Button_Cancel }
         };
 
-        public static async Task<ButtonType> ShowInfo(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxInfo);
-        public static async Task<ButtonType> ShowWarning(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxWarning);
-        public static async Task<ButtonType> ShowError(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxError);
-
         /// <summary>
         /// Shows a message box
         /// </summary>
         /// <param name="message"></param>
         public static async Task<ButtonType> Show(string message, string title, ButtonType[] buttons, Icon icon)
+        {
+            IMsBox<string> box = SetupMessageBoxInternal(message, title, buttons, icon);
+            string messageBoxResult = await box.ShowAsync();
+            return EvaluateMessageBoxResult(buttons, messageBoxResult);
+        }
+
+        /// <summary>
+        /// Shows a message box as a dialog
+        /// </summary>
+        /// <param name="message"></param>
+        public static async Task<ButtonType> ShowDialog(Window owner, string message, string title, ButtonType[] buttons, Icon icon)
+        {
+            IMsBox<string> box = SetupMessageBoxInternal(message, title, buttons, icon);
+            string messageBoxResult = await box.ShowWindowDialogAsync(owner);
+            return EvaluateMessageBoxResult(buttons, messageBoxResult);
+        }
+
+        /// <summary>
+        /// Returns a message box result based on the button definitions
+        /// </summary>
+        /// <param name="buttons"></param>
+        /// <param name="messageBoxResult"></param>
+        /// <returns></returns>
+        private static ButtonType EvaluateMessageBoxResult(ButtonType[] buttons, string messageBoxResult)
+        {
+            foreach (ButtonType buttonType in buttons)
+            {
+                if (messageBoxResult == _typeLocalization[buttonType])
+                {
+                    return buttonType;
+                }
+            }
+
+            return ButtonType.Undefined;
+        }
+
+        /// <summary>
+        /// Builds a message box
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <returns></returns>
+        private static IMsBox<string> SetupMessageBoxInternal(string message, string title, ButtonType[] buttons, Icon icon)
         {
             List<ButtonDefinition> buttonDefinitions = buttons.Select(x => new ButtonDefinition()
             {
@@ -64,18 +105,14 @@ namespace HurlStudio.Utility
                 ImageIcon = icon.GetBitmap(ThemeVariant ?? ThemeVariant.Default),
                 WindowStartupLocation = WindowStartupLocation.CenterOwner
             });
-
-            string messageBoxResult = await box.ShowAsync();
-
-            foreach(ButtonType buttonType in buttons)
-            {
-                if(messageBoxResult == _typeLocalization[buttonType])
-                {
-                    return buttonType;
-                }
-            }
-
-            return ButtonType.Undefined;
+            return box;
         }
+
+        public static async Task<ButtonType> ShowInfo(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxInfo);
+        public static async Task<ButtonType> ShowWarning(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxWarning);
+        public static async Task<ButtonType> ShowError(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxError);
+        public static async Task<ButtonType> ShowInfoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxInfo);
+        public static async Task<ButtonType> ShowWarningDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxWarning);
+        public static async Task<ButtonType> ShowErrorDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxError);
     }
 }

@@ -63,8 +63,13 @@ namespace HurlStudio.Collections.Settings
             if (parts.Length > 0)
             {
                 this.CertificateFile = parts.Get(0);
-                this.Password = parts.Get(1);
                 this.KeyFile = parts.Get(2);
+
+                string? passwordBase64 = parts.Get(1);
+                if (passwordBase64 != null)
+                {
+                    this.Password = passwordBase64.DecodeBase64();
+                }
 
                 return this;
             }
@@ -122,7 +127,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetConfigurationValue()
         {
-            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password}{VALUE_SEPARATOR}{this.KeyFile}";
+            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password?.EncodeBase64()}{VALUE_SEPARATOR}{this.KeyFile}";
         }
 
         /// <summary>

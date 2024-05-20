@@ -1,6 +1,6 @@
 ﻿using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,8 +14,8 @@ namespace HurlStudio.Services.Editor
     {
         Task<HurlCollection> GetCollectionAsync(string collectionLocation);
         Task<IEnumerable<HurlCollection>> GetCollectionsAsync();
-        Task<CollectionContainer> GetCollectionContainerAsync(HurlCollection collection);
-        Task<ObservableCollection<CollectionContainer>> GetCollectionContainersAsync();
+        Task<HurlCollectionContainer> GetCollectionContainerAsync(HurlCollection collection);
+        Task<ObservableCollection<HurlCollectionContainer>> GetCollectionContainersAsync();
         Task StoreCollectionAsync(HurlCollection collection, string collectionLocation);
 
     }

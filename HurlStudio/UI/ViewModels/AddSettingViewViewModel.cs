@@ -4,7 +4,7 @@ using Dock.Model.Mvvm.Controls;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using HurlStudio.Collections.Settings;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.Model.UiState;
 using HurlStudio.Model.UserSettings;

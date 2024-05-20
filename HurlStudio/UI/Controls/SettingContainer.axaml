@@ -66,15 +66,30 @@
             </MenuItem>
           </ContextMenu>
         </StackPanel.ContextMenu>
+
+        <!--Enable/disable in setting-->
         <Button Classes="framelessButton" 
                 Click="On_ButtonEnable_Click" 
-                IsVisible="{Binding CanChangeEnabled}">
+                IsVisible="{Binding !ChangeEnabledStateInContainer}">
           <StackPanel>
             <controls:Icon Type="CheckedBox"
                            IsVisible="{Binding Setting.IsEnabled}"
                            ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Enabled_Tooltip}"/>
             <controls:Icon Type="UncheckedBox"
                            IsVisible="{Binding !Setting.IsEnabled}"
+                           ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Disabled_Tooltip}"/>
+          </StackPanel>
+        </Button>
+        <!--Enable/disable in container-->
+        <Button Classes="framelessButton"
+                Click="On_ButtonContainerEnable_Click"
+                IsVisible="{Binding ChangeEnabledStateInContainer}">
+          <StackPanel>
+            <controls:Icon Type="CheckedBox"
+                           IsVisible="{Binding IsEnabled}"
+                           ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Enabled_Tooltip}"/>
+            <controls:Icon Type="UncheckedBox"
+                           IsVisible="{Binding !IsEnabled}"
                            ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Disabled_Tooltip}"/>
           </StackPanel>
         </Button>

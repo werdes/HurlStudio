@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Common.Utility;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using Microsoft.Extensions.Logging;
@@ -11,16 +11,16 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class File : CollectionExplorerControlBase<CollectionFile>
+    public partial class File : CollectionExplorerControlBase<HurlFileContainer>
     {
-        private CollectionFile CollectionFile
+        private HurlFileContainer CollectionFile
         {
-            get => (CollectionFile)this.GetValue(CollectionFileProperty);
+            get => (HurlFileContainer)this.GetValue(CollectionFileProperty);
             set => this.SetValue(CollectionFileProperty, value);
         }
 
-        public static readonly StyledProperty<CollectionFile> CollectionFileProperty =
-            AvaloniaProperty.Register<File, CollectionFile>(nameof(CollectionFile));
+        public static readonly StyledProperty<HurlFileContainer> CollectionFileProperty =
+            AvaloniaProperty.Register<File, HurlFileContainer>(nameof(CollectionFile));
 
         private IEditorService _editorService;
         private ILogger _log;
@@ -40,7 +40,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Sets the view model
         /// </summary>
         /// <param name="viewModel"></param>
-        protected override void SetViewModelInstance(CollectionFile viewModel)
+        protected override void SetViewModelInstance(HurlFileContainer viewModel)
         {
             this.CollectionFile = viewModel;
         }
@@ -59,7 +59,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Returns the file as bound element
         /// </summary>
         /// <returns></returns>
-        protected override CollectionComponentBase GetBoundCollectionComponent()
+        protected override HurlContainerBase GetBoundCollectionComponent()
         {
             return this.CollectionFile;
         }

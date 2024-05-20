@@ -3,7 +3,7 @@ using Dock.Model.Core;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.UiState;
 using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.UiState;
@@ -25,8 +25,8 @@ namespace HurlStudio.UI.ViewModels
     {
         private ILogger _log;
 
-        private ObservableCollection<CollectionContainer> _collections;
-        private ObservableCollection<CollectionEnvironment> _environments;
+        private ObservableCollection<HurlCollectionContainer> _collections;
+        private ObservableCollection<HurlEnvironmentContainer> _environments;
         private ObservableCollection<IDockable> _documents;
         private ObservableCollection<FileHistoryEntry> _fileHistoryEntries;
         private DocumentDock? _documentDock;
@@ -37,12 +37,12 @@ namespace HurlStudio.UI.ViewModels
         private bool _wordWrap;
         private bool _canUndo;
         private bool _canRedo;
-        private CollectionEnvironment? _activeEnvironment;
+        private HurlEnvironmentContainer? _activeEnvironment;
 
         public EditorViewViewModel(ILogger<EditorViewViewModel> logger, IUserSettingsService userSettingsService) : base(typeof(EditorView))
         {
-            _collections = new ObservableCollection<CollectionContainer>();
-            _environments = new ObservableCollection<CollectionEnvironment>();
+            _collections = new ObservableCollection<HurlCollectionContainer>();
+            _environments = new ObservableCollection<HurlEnvironmentContainer>();
             _fileHistoryEntries = new ObservableCollection<FileHistoryEntry>();
             _documents = new ObservableCollection<IDockable>();
             _activeDocument = null;
@@ -51,7 +51,7 @@ namespace HurlStudio.UI.ViewModels
         }
 
 
-        public ObservableCollection<CollectionContainer> Collections
+        public ObservableCollection<HurlCollectionContainer> Collections
         {
             get => _collections;
             set
@@ -61,7 +61,7 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public ObservableCollection<CollectionEnvironment> Environments
+        public ObservableCollection<HurlEnvironmentContainer> Environments
         {
             get => _environments;
             set
@@ -171,7 +171,7 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public CollectionEnvironment? ActiveEnvironment
+        public HurlEnvironmentContainer? ActiveEnvironment
         {
             get => _activeEnvironment;
             set

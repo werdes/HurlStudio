@@ -4,11 +4,11 @@
              xmlns:c="clr-namespace:HurlStudio.UI.Controls"
              xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
-             xmlns:model="clr-namespace:HurlStudio.Model.CollectionContainer;assembly=HurlStudio"
+             xmlns:model="clr-namespace:HurlStudio.Model.HurlContainers;assembly=HurlStudio"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ce="clr-namespace:HurlStudio.UI.Controls.CollectionExplorer;assembly=HurlStudio"
              mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="25"
-             x:DataType="model:CollectionContainer"
+             x:DataType="model:HurlCollectionContainer"
              x:Class="HurlStudio.UI.Controls.CollectionExplorer.Collection"
              DragDrop.AllowDrop="True"
              

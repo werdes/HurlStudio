@@ -141,7 +141,9 @@ namespace HurlStudio.Model.Enums
         [Icon("ok.png")]
         Ok,
         [Icon("search.png")]
-        Search
+        Search,
+        [Icon("refresh.png")]
+        Refresh
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

@@ -2,7 +2,7 @@
 using AvaloniaEdit.Document;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Common.UI;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.HurlSettings;
 using MsBox.Avalonia.Models;
 using MsBox.Avalonia;
@@ -29,7 +29,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingAdded;
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
 
-        private CollectionFile? _file;
+        private HurlFileContainer? _file;
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
         private IEditorService _editorService;
@@ -50,7 +50,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             _mainWindow = mainWindow;
         }
 
-        public CollectionFile? File
+        public HurlFileContainer? File
         {
             get => _file;
             set
@@ -168,12 +168,13 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             if (!this.HasChanges) return DockableCloseMode.Close;
 
-            MessageBox.ButtonType decisionResult = await MessageBox.Show(
-                    Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text,
-                    Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
-                    [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
-                    Icon.MessageBoxWarning
-                );
+            MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
+                _mainWindow,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.File?.Location,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
+                [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
+                Icon.MessageBoxWarning
+            );
 
             switch (decisionResult)
             {
@@ -185,6 +186,10 @@ namespace HurlStudio.UI.ViewModels.Documents
             return DockableCloseMode.Undefined;
         }
 
+        /// <summary>
+        /// Tell the editor service to save the file
+        /// </summary>
+        /// <returns></returns>
         public async Task Save()
         {
             await _editorService.SaveFile(this);
@@ -192,7 +197,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public async Task Discard()
         {
-            // TODO: Discard
+            // Nothing to do here
         }
 
         /// <summary>
@@ -220,7 +225,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             HurlSettingSection section = settingContainer.Section;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
-            if(!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
+            if (!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
 
             section.SettingContainers.Remove(settingContainer);
             section.Document.HasChanges = true;

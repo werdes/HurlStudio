@@ -30,25 +30,24 @@ namespace HurlStudio.Model.HurlSettings
 
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-
         private bool _isReadOnly;
         private bool _collapsed;
         private bool _overwritten;
         private bool _canMove;
-        private bool _canChangeEnabled;
+        private bool _isEnabled;
         private BaseSetting _setting;
         private FileDocumentViewModel _document;
         private HurlSettingSection _section;
 
-        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove, bool canChangeEnabled)
+        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
             _canMove = canMove;
-            _canChangeEnabled = canChangeEnabled;
             _setting = setting;
             _document = document;
             _section = section;
+            _isEnabled = true;
 
             _setting.PropertyChanged += this.On_Setting_PropertyChanged;
             _setting.SettingPropertyChanged += this.On_Setting_SettingPropertyChanged;
@@ -90,7 +89,8 @@ namespace HurlStudio.Model.HurlSettings
             // Reevaluate, when IsEnabled setting is changed
             if (e.PropertyName == nameof(_setting.IsEnabled))
             {
-                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_setting.IsEnabled));
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_setting.IsEnabled, _section.SectionType));
+                this.Notify(nameof(this.DisplayOpacity)); 
             }
         }
 
@@ -101,6 +101,18 @@ namespace HurlStudio.Model.HurlSettings
             {
                 _isReadOnly = value;
                 this.Notify();
+            }
+        }
+
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set
+            {
+                _isEnabled = value;
+                this.Notify();
+                this.Notify(nameof(this.DisplayOpacity));
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_isEnabled, _section.SectionType));
             }
         }
 
@@ -132,9 +144,14 @@ namespace HurlStudio.Model.HurlSettings
             get => _canMove;
         }
 
-        public bool CanChangeEnabled
+        public bool ChangeEnabledStateInContainer
         {
-            get => _canChangeEnabled;
+            get => _section.SectionType != Enums.HurlSettingSectionType.File;
+        }
+
+        public bool IsFileSettingSection
+        {
+            get => _section.SectionType == Enums.HurlSettingSectionType.File;
         }
 
         public BaseSetting Setting
@@ -159,7 +176,7 @@ namespace HurlStudio.Model.HurlSettings
 
         public double DisplayOpacity
         {
-            get => !_setting.IsEnabled || _overwritten ? 0.5D : 1D;
+            get => (_section.SectionType != Enums.HurlSettingSectionType.File ? !_isEnabled : !_setting.IsEnabled) || _overwritten ? 0.5D : 1D;
         }
 
         public TextDecorationCollection? DisplayTextDecoration

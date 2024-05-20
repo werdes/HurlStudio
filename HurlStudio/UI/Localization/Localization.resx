@@ -861,8 +861,8 @@
   <data name="Setting.CaCertSetting.Description" xml:space="preserve">
     <value>{Setting.CaCertSetting.Description}</value>
   </data>
-  <data name="Setting.CaCertSetting.NoEncryptionHint" xml:space="preserve">
-    <value>{Setting.CaCertSetting.NoEncryptionHint}</value>
+  <data name="Setting.ClientCertificateSetting.NoEncryptionHint" xml:space="preserve">
+    <value>{Setting.ClientCertificateSetting.NoEncryptionHint}</value>
   </data>
   <data name="Setting.CaCertSetting.ShortDescription" xml:space="preserve">
     <value>{Setting.CaCertSetting.ShortDescription}</value>
@@ -1010,5 +1010,20 @@
   </data>
   <data name="View.AddSettingView.SettingInstance.NoSelectionHint" xml:space="preserve">
     <value>{View.AddSettingView.SettingInstance.NoSelectionHint}</value>
+  </data>
+  <data name="Service.CollectionService.Errors.SettingParserError.Text" xml:space="preserve">
+    <value>{Service.CollectionService.Errors.SettingParserError.Text}</value>
+  </data>
+  <data name="Service.CollectionService.Errors.SettingParserError.Title" xml:space="preserve">
+    <value>{Service.CollectionService.Errors.SettingParserError.Title}</value>
+  </data>
+  <data name="Setting.ProxySetting.NoEncryptionHint" xml:space="preserve">
+    <value>{Setting.ProxySetting.NoEncryptionHint}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Toolbar.Refresh.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Toolbar.Refresh.Tooltip}</value>
+  </data>
+  <data name="View.Loading.ActivityText.OpeningPreviousSessionFiles" xml:space="preserve">
+    <value>{View.Loading.ActivityText.OpeningPreviousSessionFiles}</value>
   </data>
 </root>

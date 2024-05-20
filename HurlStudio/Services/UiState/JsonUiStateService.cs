@@ -1,6 +1,6 @@
 ﻿using Avalonia.Styling;
 using HurlStudio.Common;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.Enums;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Views;
@@ -162,7 +162,7 @@ namespace HurlStudio.Services.UiState
         {
             if (_uiState == null) _uiState = this.GetDefaultUiState();
 
-            foreach (CollectionContainer collectionContainer in editorViewViewModel.Collections)
+            foreach (HurlCollectionContainer collectionContainer in editorViewViewModel.Collections)
             {
                 string collectionId = collectionContainer.GetId();
 
@@ -172,7 +172,7 @@ namespace HurlStudio.Services.UiState
                 }
                 _uiState.ExpandedCollectionExplorerComponents[collectionId] = collectionContainer.Collapsed;
 
-                foreach (CollectionFolder collectionFolder in collectionContainer.Folders)
+                foreach (HurlFolderContainer collectionFolder in collectionContainer.Folders)
                 {
                     this.BuildUiStateFolder(collectionFolder);
                 }
@@ -184,7 +184,7 @@ namespace HurlStudio.Services.UiState
         /// </summary>
         /// <param name="folder"></param>
         /// <exception cref="ArgumentNullException">if the ui state is null</exception>
-        private void BuildUiStateFolder(CollectionFolder folder)
+        private void BuildUiStateFolder(HurlFolderContainer folder)
         {
             if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
 
@@ -195,7 +195,7 @@ namespace HurlStudio.Services.UiState
             }
             _uiState.ExpandedCollectionExplorerComponents[folderId] = folder.Collapsed;
 
-            foreach (CollectionFolder subFolder in folder.Folders)
+            foreach (HurlFolderContainer subFolder in folder.Folders)
             {
                 this.BuildUiStateFolder(subFolder);
             }
@@ -268,6 +268,60 @@ namespace HurlStudio.Services.UiState
                 _uiState.SettingSectionCollapsedStates.Add(id, false);
             }
             _uiState.SettingSectionCollapsedStates[id] = visible;
+        }
+
+        /// <summary>
+        /// Sets the opened files
+        /// </summary>
+        /// <param name="openedFiles"></param>
+        public void SetOpenedFiles(List<string> openedFiles)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+
+            _uiState.OpenedFiles.Clear();
+            _uiState.OpenedFiles.AddRange(openedFiles); 
+        }
+
+        /// <summary>
+        /// Sets the collection explorers' proportional width
+        /// </summary>
+        /// <param name="proportion"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void SetCollectionExplorerProportion(double? proportion)
+        {
+            if (proportion == null) return;
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+
+            _uiState.CollectionExplorerProportion = proportion.Value;
+        }
+
+        /// <summary>
+        /// Sets the active environment file
+        /// </summary>
+        /// <param name="environmentFile"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public void SetActiveEnvironment(string? environmentFile)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+
+            _uiState.ActiveEnvironmentFile = environmentFile;
+        }
+
+        /// <summary>
+        /// Sets the collapsed state of settings (non file specific ones, for enabling/disabling per file)
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="visible"></param>
+        public void SetSettingEnabledState(string id, bool visible)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (!_uiState.SettingEnabledStates.ContainsKey(id))
+            {
+                _uiState.SettingEnabledStates.Add(id, false);
+            }
+            _uiState.SettingEnabledStates[id] = visible;
         }
     }
 }

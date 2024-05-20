@@ -99,10 +99,10 @@ namespace HurlStudio.Collections.Settings
                 switch (subConfigKey)
                 {
                     case SUBCONFIGURATION_KEY_USER: this.User = subConfigValue; break;
-                    case SUBCONFIGURATION_KEY_PASSWORD: this.Password = subConfigValue; break;
                     case SUBCONFIGURATION_KEY_HOST: this.Host = subConfigValue; break;
                     case SUBCONFIGURATION_KEY_PORT: this.Port = Convert.ToUInt16(subConfigValue); break;
                     case SUBCONFIGURATION_KEY_PROTOCOL: this.Protocol = Enum.Parse<ProxyProtocol>(subConfigValue ?? ProxyProtocol.Undefined.ToString(), true); break;
+                    case SUBCONFIGURATION_KEY_PASSWORD: this.Password = subConfigValue?.DecodeBase64(); break;
                     default: throw new ArgumentException("Unknown sub-config name: " + subConfigKey);
                 }
             }
@@ -165,7 +165,7 @@ namespace HurlStudio.Collections.Settings
             if (!string.IsNullOrEmpty(this.User))
             {
                 configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_USER}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.User}";
-                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PASSWORD}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Password}";
+                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PASSWORD}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Password?.EncodeBase64()}";
             }
 
             return configValue;

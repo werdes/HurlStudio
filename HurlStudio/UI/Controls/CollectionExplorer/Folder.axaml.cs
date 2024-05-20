@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Common.Utility;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
@@ -12,16 +12,16 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
-    public partial class Folder : CollectionExplorerControlBase<CollectionFolder>
+    public partial class Folder : CollectionExplorerControlBase<HurlFolderContainer>
     {
-        private CollectionFolder CollectionFolder
+        private HurlFolderContainer CollectionFolder
         {
-            get => (CollectionFolder)this.GetValue(CollectionFolderProperty);
+            get => (HurlFolderContainer)this.GetValue(CollectionFolderProperty);
             set => this.SetValue(CollectionFolderProperty, value);
         }
 
-        public static readonly StyledProperty<CollectionFolder> CollectionFolderProperty =
-            AvaloniaProperty.Register<Folder, CollectionFolder>(nameof(CollectionFolder));
+        public static readonly StyledProperty<HurlFolderContainer> CollectionFolderProperty =
+            AvaloniaProperty.Register<Folder, HurlFolderContainer>(nameof(CollectionFolder));
 
         private ILogger _log;
         private IEditorService _editorService;
@@ -42,7 +42,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Sets the view model
         /// </summary>
         /// <param name="viewModel"></param>
-        protected override void SetViewModelInstance(CollectionFolder viewModel)
+        protected override void SetViewModelInstance(HurlFolderContainer viewModel)
         {
             this.CollectionFolder = viewModel;
         }
@@ -72,7 +72,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// Returns the folder as bound element
         /// </summary>
         /// <returns></returns>
-        protected override CollectionComponentBase GetBoundCollectionComponent()
+        protected override HurlContainerBase GetBoundCollectionComponent()
         {
             return this.CollectionFolder;
         }

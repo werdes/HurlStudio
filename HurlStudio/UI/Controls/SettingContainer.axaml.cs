@@ -32,7 +32,7 @@ namespace HurlStudio.UI.Controls
         }
 
         /// <summary>
-        /// Enabled state
+        /// Enabled state (for file settings)
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -41,6 +41,18 @@ namespace HurlStudio.UI.Controls
             if (_settingContainer == null) return;
 
             _settingContainer.Setting.IsEnabled = !_settingContainer.Setting.IsEnabled;
+        }
+
+        /// <summary>
+        /// Enabled state of the container (for folder, collection and environment settings)
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_ButtonContainerEnable_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            _settingContainer.IsEnabled = !_settingContainer.IsEnabled;
         }
 
         /// <summary>

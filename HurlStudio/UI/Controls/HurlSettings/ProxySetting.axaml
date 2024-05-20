@@ -3,6 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
              xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
              
@@ -17,6 +18,7 @@
       <ColumnDefinition Width="*" />
     </Grid.ColumnDefinitions>
     <Grid.RowDefinitions>
+      <RowDefinition />
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
@@ -91,5 +93,15 @@
               Margin="0,0,5,0"
               VerticalAlignment="Center" />
 
+    <!--Encryption warning-->
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="4"
+                Grid.ColumnSpan="4"
+                HorizontalAlignment="Center">
+      <c:Icon Type="NotificationWarning" />
+      <Label VerticalAlignment="Center"
+             Foreground="{DynamicResource NeutralControlForegroundColor}"
+             Content="{x:Static localization:Localization.Setting_ProxySetting_NoEncryptionHint}" />
+    </StackPanel>
   </Grid>
 </UserControl>

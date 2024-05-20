@@ -709,6 +709,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Toolbar.Refresh.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Toolbar_Refresh_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.Refresh.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.FileSettings.Title} ähnelt.
         /// </summary>
         public static string Dock_Tool_FileSettings_Title {
@@ -759,6 +768,24 @@ namespace HurlStudio.UI.Localization {
         public static string MessageBox_ErrorTitle {
             get {
                 return ResourceManager.GetString("MessageBox.ErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.CollectionService.Errors.SettingParserError.Text} ähnelt.
+        /// </summary>
+        public static string Service_CollectionService_Errors_SettingParserError_Text {
+            get {
+                return ResourceManager.GetString("Service.CollectionService.Errors.SettingParserError.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.CollectionService.Errors.SettingParserError.Title} ähnelt.
+        /// </summary>
+        public static string Service_CollectionService_Errors_SettingParserError_Title {
+            get {
+                return ResourceManager.GetString("Service.CollectionService.Errors.SettingParserError.Title", resourceCulture);
             }
         }
         
@@ -979,15 +1006,6 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.NoEncryptionHint} ähnelt.
-        /// </summary>
-        public static string Setting_CaCertSetting_NoEncryptionHint {
-            get {
-                return ResourceManager.GetString("Setting.CaCertSetting.NoEncryptionHint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CaCertSetting.ShortDescription} ähnelt.
         /// </summary>
         public static string Setting_CaCertSetting_ShortDescription {
@@ -1047,6 +1065,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ClientCertificateSetting_KeyFile_Label {
             get {
                 return ResourceManager.GetString("Setting.ClientCertificateSetting.KeyFile.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ClientCertificateSetting.NoEncryptionHint} ähnelt.
+        /// </summary>
+        public static string Setting_ClientCertificateSetting_NoEncryptionHint {
+            get {
+                return ResourceManager.GetString("Setting.ClientCertificateSetting.NoEncryptionHint", resourceCulture);
             }
         }
         
@@ -1767,6 +1794,15 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_ProxySetting_HostAndPort_Label {
             get {
                 return ResourceManager.GetString("Setting.ProxySetting.HostAndPort.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.ProxySetting.NoEncryptionHint} ähnelt.
+        /// </summary>
+        public static string Setting_ProxySetting_NoEncryptionHint {
+            get {
+                return ResourceManager.GetString("Setting.ProxySetting.NoEncryptionHint", resourceCulture);
             }
         }
         
@@ -2577,6 +2613,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Loading_ActivityText_LoadingEnvironments {
             get {
                 return ResourceManager.GetString("View.Loading.ActivityText.LoadingEnvironments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Loading.ActivityText.OpeningPreviousSessionFiles} ähnelt.
+        /// </summary>
+        public static string View_Loading_ActivityText_OpeningPreviousSessionFiles {
+            get {
+                return ResourceManager.GetString("View.Loading.ActivityText.OpeningPreviousSessionFiles", resourceCulture);
             }
         }
         

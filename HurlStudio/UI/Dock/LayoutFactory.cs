@@ -4,6 +4,7 @@ using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Model.Enums;
+using HurlStudio.Services.UiState;
 using HurlStudio.UI.Controls;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
@@ -11,6 +12,7 @@ using HurlStudio.UI.ViewModels.Tools;
 using HurlStudio.UI.Views;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using MsBox.Avalonia;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -32,12 +34,12 @@ namespace HurlStudio.UI.Dock
         private ServiceManager<Tool> _toolLayoutBuilder;
         private ServiceManager<Document> _documentLayoutBuilder;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
+        private IUiStateService _uiStateService;
 
-        private IRootDock _rootDock;
-        private CollectionExplorerToolViewModel _collectionExplorer;
+        private IRootDock? _rootDock;
         private EditorViewViewModel _editorViewViewModel;
 
-        public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ViewModelBasedControl> controlBuilder, EditorViewViewModel editorViewViewModel)
+        public LayoutFactory(ILogger<LayoutFactory> logger, IConfiguration configuration, ServiceManager<Tool> toolLayoutBuilder, ServiceManager<Document> documentLayoutBuilder, ServiceManager<ViewModelBasedControl> controlBuilder, EditorViewViewModel editorViewViewModel, IUiStateService uiStateService)
         {
             _configuration = configuration;
             _log = logger;
@@ -45,6 +47,7 @@ namespace HurlStudio.UI.Dock
             _documentLayoutBuilder = documentLayoutBuilder;
             _controlBuilder = controlBuilder;
             _editorViewViewModel = editorViewViewModel;
+            _uiStateService = uiStateService;
         }
 
         /// <summary>
@@ -57,12 +60,12 @@ namespace HurlStudio.UI.Dock
             collectionExplorer.Id = COLLECTION_EXPLORER_TOOL_ID;
             collectionExplorer.IsEnabled = true;
 
-            //FileSettingsToolViewModel fileSettings = _toolLayoutBuilder.Get<FileSettingsToolViewModel>();
-            //fileSettings.Id = FILE_SETTINGS_TOOL_ID;
+            Model.UiState.UiState? uiState = _uiStateService.GetUiState(false);
+            double collectionExplorerProportion = uiState?.CollectionExplorerProportion ?? 0.2D;
 
             ProportionalDock leftDock = new ProportionalDock()
             {
-                Proportion = 0.2,
+                Proportion = collectionExplorerProportion,
                 Orientation = Orientation.Vertical,
                 ActiveDockable = collectionExplorer,
                 FocusedDockable = null,
@@ -114,7 +117,6 @@ namespace HurlStudio.UI.Dock
 
 
             _rootDock = rootDock;
-            _collectionExplorer = collectionExplorer;
             _editorViewViewModel.DocumentDock = documentDock;
 
             return rootDock;
@@ -130,7 +132,6 @@ namespace HurlStudio.UI.Dock
             if (_editorViewViewModel != null && _editorViewViewModel.DocumentDock != null)
             {
                 this.AddDockable(_editorViewViewModel.DocumentDock, document);
-
             }
         }
 
@@ -146,18 +147,21 @@ namespace HurlStudio.UI.Dock
         }
 
         /// <summary>
-        /// Overwritten dockable closer that asks for a method for closing the dockable
+        /// Closes a dockable asynchronously
         /// </summary>
         /// <param name="dockable"></param>
-        public override async void CloseDockable(IDockable dockable)
+        /// <returns></returns>
+        public async Task<bool> CloseDockableAsync(IDockable dockable)
         {
             if (dockable is IExtendedAsyncDockable dockableAsync)
             {
                 DockableCloseMode closeMode = await dockableAsync.AskAllowClose();
                 switch (closeMode)
                 {
-                    case DockableCloseMode.Cancel: return;
-                    case DockableCloseMode.Discard: 
+                    case DockableCloseMode.Cancel:
+                        return false;
+                    case DockableCloseMode.Close:
+                    case DockableCloseMode.Discard:
                         await dockableAsync.Discard();
                         base.CloseDockable(dockable);
                         break;
@@ -165,7 +169,7 @@ namespace HurlStudio.UI.Dock
                         await dockableAsync.Save();
                         base.CloseDockable(dockable);
                         break;
-                    case DockableCloseMode.Close:
+                    case DockableCloseMode.Undefined:
                         base.CloseDockable(dockable);
                         break;
                 }
@@ -174,6 +178,22 @@ namespace HurlStudio.UI.Dock
             {
                 base.CloseDockable(dockable);
             }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Overwritten dockable closer that asks for a method for closing the dockable
+        /// </summary>
+        /// <param name="dockable"></param>
+        public override void CloseDockable(IDockable dockable)
+        {
+            Task task = new Task(async () =>
+            {
+                await this.CloseDockableAsync(dockable);
+            });
+
+            task.RunSynchronously();
         }
 
     }

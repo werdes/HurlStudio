@@ -21,7 +21,7 @@ using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using Avalonia;
 using Avalonia.Styling;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.UiState;
 using HurlStudio.Model.UiState;
 using HurlStudio.Common.Extensions;
@@ -30,6 +30,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System.ComponentModel;
 using System.Linq;
 using HurlStudio.UI.ViewModels.Controls;
+using HurlStudio.UI.Dock;
 
 namespace HurlStudio.UI.Views
 {
@@ -46,6 +47,7 @@ namespace HurlStudio.UI.Views
         private INotificationService _notificationService;
         private ControlLocator _controlLocator;
         private ViewFrameViewModel _viewFrameViewModel;
+        private LayoutFactory _layoutFactory;
 
         /// <summary>
         /// Design time constructor
@@ -53,6 +55,7 @@ namespace HurlStudio.UI.Views
         public MainView()
         {
             if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
+            if (App.Services == null) return;
 
             _log = App.Services.GetRequiredService<ILogger<MainView>>();
             _notificationService = App.Services.GetRequiredService<INotificationService>();
@@ -62,7 +65,7 @@ namespace HurlStudio.UI.Views
             this.InitializeComponent();
         }
 
-        public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel)
+        public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel, LayoutFactory layoutFactory)
         {
             _viewModel = viewModel;
 
@@ -77,6 +80,7 @@ namespace HurlStudio.UI.Views
             _uiStateService = uiStateService;
             _notificationService = notificationService;
             _viewFrameViewModel = viewFrameViewModel;
+            _layoutFactory = layoutFactory;
 
             this.DataContext = _viewModel;
             this.DataTemplates.Add(_controlLocator);
@@ -93,7 +97,7 @@ namespace HurlStudio.UI.Views
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        /// <exception cref="ArgumentNullException">if no frame was provided to the view</exception>
+        /// <exception cref="ArgumentNullException">if no view model or user settings were provided to the view</exception>
         private async void On_MainView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             try
@@ -109,27 +113,24 @@ namespace HurlStudio.UI.Views
 
                 if (userSettings == null) throw new ArgumentNullException($"No user settings provided");
 
+                // Load enviroments
+                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
+                _viewModel.EditorView.Environments = await _environmentService.GetEnvironmentContainersAsync();
+                _viewModel.EditorView.ActiveEnvironment = _viewModel.EditorView.Environments.FirstOrDefault(x => x.FileLocation == uiState?.ActiveEnvironmentFile) ?? _viewModel.EditorView.Environments.FirstOrDefault();
 
-
+                // Load collections and open files from previous session
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
                 _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
-                _viewModel.EditorView.Documents = await _editorService.GetOpenDocuments();
-                _viewModel.EditorView.FileHistoryEntries.AddRangeIfNotNull(uiState?.FileHistoryEntries);
-                _viewModel.EditorView.ShowWhitespace = userSettings.ShowWhitespace;
-                _viewModel.EditorView.ShowEndOfLine = userSettings.ShowEndOfLine;
-                _viewModel.EditorView.WordWrap = userSettings.WordWrap;
 
-                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
-                _viewModel.EditorView.Environments = new ObservableCollection<CollectionEnvironment>(
-                    (await _environmentService.GetEnvironmentsAsync())
-                    .Select(x => new CollectionEnvironment(x)));
+                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.OpeningPreviousSessionFiles;
+                _viewModel.EditorView.Layout = _layoutFactory.CreateLayout();
+                await _editorService.LoadInitialUserSettings();
+                await _editorService.OpenInitialDocuments();
 
                 _viewModel.InitializationCompleted = true;
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
 
-
                 _viewFrameViewModel.SelectedViewModel = _viewModel.EditorView;
-
             }
             catch (Exception ex)
             {
@@ -202,5 +203,6 @@ namespace HurlStudio.UI.Views
                 _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
             }
         }
+
     }
 }

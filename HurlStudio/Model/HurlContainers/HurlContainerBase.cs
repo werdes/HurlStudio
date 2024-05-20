@@ -8,19 +8,19 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public abstract class CollectionComponentBase : INotifyPropertyChanged
+    public abstract class HurlContainerBase : INotifyPropertyChanged
     {
         public event EventHandler<ControlSelectionChangedEventArgs>? ControlSelectionChanged;
-        public event EventHandler<CollectionComponentMovedEventArgs>? CollectionComponentMoved;
+        public event EventHandler<HurlContainerMovedEventArgs>? CollectionComponentMoved;
 
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private bool _selected;
 
-        public CollectionComponentBase()
+        public HurlContainerBase()
         {
             _selected = false;
         }
@@ -47,13 +47,13 @@ namespace HurlStudio.Model.CollectionContainer
             =>
                 this.ControlSelectionChanged?.Invoke(sender, e);
         
-        protected void On_CollectionComponentHierarchyBase_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
+        protected void On_CollectionComponentHierarchyBase_CollectionComponentMoved(object? sender, HurlContainerMovedEventArgs e)
             =>
                 this.CollectionComponentMoved?.Invoke(sender, e);
 
-        public void Move(CollectionComponentBase target)
+        public void Move(HurlContainerBase target)
         {
-            CollectionComponentMovedEventArgs eventArgs = new CollectionComponentMovedEventArgs(this, target);
+            HurlContainerMovedEventArgs eventArgs = new HurlContainerMovedEventArgs(this, target);
             this.CollectionComponentMoved?.Invoke(this, eventArgs);
         }
 

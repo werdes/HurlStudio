@@ -1,6 +1,8 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
+using Dock.Model.Mvvm.Controls;
 using HurlStudio.Model.UiState;
+using HurlStudio.Services.Editor;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Controls;
@@ -12,6 +14,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Windows
 {
@@ -23,7 +27,9 @@ namespace HurlStudio.UI.Windows
         private IUiStateService _uiStateService;
         private MainWindowViewModel? _viewModel;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
-        
+        private IEditorService _editorService;
+        private bool _overrideClose = false;
+
         /// <summary>
         /// Design time constructor
         /// </summary>
@@ -38,11 +44,11 @@ namespace HurlStudio.UI.Windows
             _uiStateService = App.Services.GetRequiredService<IUiStateService>();
             _viewModel = App.Services.GetRequiredService<MainWindowViewModel>();
             _controlBuilder = App.Services.GetRequiredService<ServiceManager<ViewModelBasedControl>>();
-            
+
             this.InitializeComponent();
         }
 
-        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel, ServiceManager<ViewModelBasedControl> controlBuilder)
+        public MainWindow(ILogger<MainWindow> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IUiStateService uiStateService, MainWindowViewModel mainWindowViewModel, ServiceManager<ViewModelBasedControl> controlBuilder, IEditorService editorService)
         {
             _log = logger;
             _configuration = configuration;
@@ -50,6 +56,7 @@ namespace HurlStudio.UI.Windows
             _uiStateService = uiStateService;
             _viewModel = mainWindowViewModel;
             _controlBuilder = controlBuilder;
+            _editorService = editorService;
 
             this.DataContext = _viewModel;
 
@@ -80,13 +87,13 @@ namespace HurlStudio.UI.Windows
 
                     // Load ui state
                     UiState? uiState = await _uiStateService.GetUiStateAsync(false);
-                    if(uiState != null && uiState.MainWindowPosition.Width > 0 && uiState.MainWindowPosition.Height > 0)
+                    if (uiState != null && uiState.MainWindowPosition.Width > 0 && uiState.MainWindowPosition.Height > 0)
                     {
                         this.Position = new PixelPoint((int)uiState.MainWindowPosition.X, (int)uiState.MainWindowPosition.Y);
                         this.Width = (int)uiState.MainWindowPosition.Width;
                         this.Height = (int)uiState.MainWindowPosition.Height;
 
-                        if(uiState.MainWindowIsMaximized)
+                        if (uiState.MainWindowIsMaximized)
                         {
                             this.WindowState = WindowState.Maximized;
                         }
@@ -97,7 +104,7 @@ namespace HurlStudio.UI.Windows
                     this.Content = new TextBlock() { Text = $"No entry view found: {typeof(MainView)}" };
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
                 await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
@@ -109,26 +116,30 @@ namespace HurlStudio.UI.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected void On_MainWindow_Closed(object? sender, EventArgs e)
+        protected async void On_MainWindow_Closed(object? sender, EventArgs e)
         {
+            if (_viewModel == null) return;
+
             try
             {
-                if(_userSettingsService != null)
-                {
-                    _userSettingsService.StoreUserSettings();
-                }
+                _userSettingsService.StoreUserSettings();
 
-                if (_uiStateService != null && _viewModel != null && _viewModel.MainViewViewModel.EditorView != null)
-                {
-                    _uiStateService.SetCollectionExplorerState(_viewModel.MainViewViewModel.EditorView);
-                    _uiStateService.SetFileHistory(_viewModel.MainViewViewModel.EditorView);
-                    _uiStateService.StoreUiState();
-                }
+                if (_viewModel.MainViewViewModel.EditorView == null) return;
+
+                RootDock? rootDock = _viewModel.MainViewViewModel.EditorView.Layout?.VisibleDockables?.FirstOrDefault() as RootDock;
+                ProportionalDock? windowDock = rootDock?.VisibleDockables?.FirstOrDefault() as ProportionalDock;
+                ProportionalDock? collectionExplorerDock = windowDock?.VisibleDockables?.Where(x => x is ProportionalDock).Select(x => x as ProportionalDock).FirstOrDefault();
+
+                _uiStateService.SetCollectionExplorerProportion(collectionExplorerDock?.Proportion);
+                _uiStateService.SetFileHistory(_viewModel.MainViewViewModel.EditorView);
+                _uiStateService.SetCollectionExplorerState(_viewModel.MainViewViewModel.EditorView);
+
+                _uiStateService.StoreUiState();
             }
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
+                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -137,19 +148,44 @@ namespace HurlStudio.UI.Windows
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        protected async void On_MainWindow_Closing(object? sender, WindowClosingEventArgs e)
+        protected void On_MainWindow_Closing(object? sender, WindowClosingEventArgs e)
         {
             try
             {
-                if (_uiStateService != null && _viewModel != null && _viewModel.MainViewViewModel.EditorView != null)
-                {
-                    _uiStateService.SetMainWindowState(this);
-                }
+                _uiStateService.SetMainWindowState(this);
             }
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
+            }
+        }
+
+        /// <summary>
+        /// Overridden OnClosing handler -> Override closing for editor shutdown
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosing(WindowClosingEventArgs e)
+        {
+            base.OnClosing(e);
+            if (_overrideClose)
+            {
+                _overrideClose = false;
+                return;
+            }
+            e.Cancel = true;
+            this.CloseWindow();
+        }
+
+        /// <summary>
+        /// Wait for editor service shutdown
+        /// -> ask for document closing on opened documents with changes
+        /// </summary>
+        private async void CloseWindow()
+        {
+            if (await _editorService.Shutdown())
+            {
+                _overrideClose = true;
+                Close();
             }
         }
     }

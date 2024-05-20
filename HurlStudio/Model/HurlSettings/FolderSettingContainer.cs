@@ -1,5 +1,5 @@
 ﻿using HurlStudio.Common.UI;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,9 +17,9 @@ namespace HurlStudio.Model.HurlSettings
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private OrderedObservableCollection<HurlSettingContainer> _containers;
-        private CollectionFolder _collectionFolder;
+        private HurlFolderContainer _collectionFolder;
 
-        public FolderSettingContainer(CollectionFolder folder)
+        public FolderSettingContainer(HurlFolderContainer folder)
         {
             _containers = new OrderedObservableCollection<HurlSettingContainer>();
             _collectionFolder = folder;
@@ -35,7 +35,7 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        public CollectionFolder Folder
+        public HurlFolderContainer Folder
         {
             get => _collectionFolder;
             set

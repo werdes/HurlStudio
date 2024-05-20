@@ -78,7 +78,7 @@ namespace HurlStudio.UI.Windows
             }
             catch (Exception ex)
             {
-                _log?.LogCritical(ex);
+                _log?.LogException(ex);
                 await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
@@ -99,7 +99,7 @@ namespace HurlStudio.UI.Windows
             }
             catch (Exception ex)
             {
-                _log?.LogCritical(ex);
+                _log?.LogException(ex);
                 await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }

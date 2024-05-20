@@ -12,13 +12,6 @@ namespace HurlStudio.Collections.Utility
 {
     public class IniCollectionSerializer : ICollectionSerializer
     {
-        private IniSettingParser _settingParser;
-
-        public IniCollectionSerializer(IniSettingParser settingParser)
-        {
-            _settingParser = settingParser;
-        }
-
         private readonly Regex NEWLINE_REGEX = new Regex(@"\r\n?|\n", RegexOptions.Compiled);
         private const string SECTION_GENERAL_HEADER = "[Collection]";
         private const string SECTION_GENERAL_NAME_KEY = "name";
@@ -32,12 +25,19 @@ namespace HurlStudio.Collections.Utility
         private const string SECTION_FOLDER_SETTINGS_LOCATION_KEY = "location";
 
 
+        private IniSettingParser _settingParser;
+
+        public IniCollectionSerializer(IniSettingParser settingParser)
+        {
+            _settingParser = settingParser;
+        }
+
         /// <summary>
         /// Deserializes a .hurlc formatted string
         /// </summary>
         /// <param name="collectionContent">.hurlc file content</param>
         /// <returns></returns>
-        public HurlCollection Deserialize(string collectionContent, string? path)
+        public HurlCollection Deserialize(string collectionContent, string path)
         {
             collectionContent = NEWLINE_REGEX.Replace(collectionContent, Environment.NewLine);
 
@@ -66,6 +66,7 @@ namespace HurlStudio.Collections.Utility
                         break;
                 }
             }
+
 
             return collection;
         }
@@ -137,7 +138,7 @@ namespace HurlStudio.Collections.Utility
                 }
             }
 
-            if(string.IsNullOrEmpty(hurlFile.FileLocation)) throw new ArgumentNullException(nameof(hurlFile.FileLocation)); 
+            if (string.IsNullOrEmpty(hurlFile.FileLocation)) throw new ArgumentNullException(nameof(hurlFile.FileLocation));
             collection.FileSettings.Add(hurlFile);
         }
 
@@ -156,7 +157,6 @@ namespace HurlStudio.Collections.Utility
                 {
                     collection.CollectionSettings.Add(hurlSetting);
                 }
-
             }
         }
 
@@ -184,7 +184,7 @@ namespace HurlStudio.Collections.Utility
                 string excludeRootKey = $"{SECTION_GENERAL_EXCLUDE_ROOT_KEY}=";
                 if (line.StartsWith(nameKey))
                 {
-                    collection.Name = line.Split("=").Get(1) ?? string.Empty;
+                    collection.Name = line.Split("=").Get(1)?.DecodeUrl() ?? string.Empty;
                 }
                 else if (line.StartsWith(excludeRootKey))
                 {
@@ -315,7 +315,7 @@ namespace HurlStudio.Collections.Utility
         }
 
         /// <summary>
-        /// Serializes a collection as a .hurl file
+        /// Serializes a collection as a .hurlc file
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>

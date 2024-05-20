@@ -14,13 +14,13 @@ namespace HurlStudio.UI.Converters
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
             if (value == null) return string.Empty;
-            if (value is not LoadingViewStep) return string.Empty;
-            LoadingViewStep loadingViewStep = (LoadingViewStep)value;
+            if (value is not LoadingViewStep loadingViewStep) return string.Empty;
             
             switch (loadingViewStep)
             {
                 case LoadingViewStep.LoadingCollections: return Localization.Localization.View_Loading_ActivityText_LoadingCollections;
                 case LoadingViewStep.LoadingEnvironments: return Localization.Localization.View_Loading_ActivityText_LoadingEnvironments;
+                case LoadingViewStep.OpeningPreviousSessionFiles: return Localization.Localization.View_Loading_ActivityText_OpeningPreviousSessionFiles;
             }
 
             return string.Empty;

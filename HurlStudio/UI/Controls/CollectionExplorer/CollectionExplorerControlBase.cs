@@ -1,7 +1,7 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Notifications;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,13 +32,13 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             this.AddHandler(DragDrop.DragOverEvent, this.On_CollectionExplorerControlBase_DragOver);
         }
 
-        protected abstract CollectionComponentBase GetBoundCollectionComponent();
+        protected abstract HurlContainerBase GetBoundCollectionComponent();
         protected abstract Task OpenComponentDocument();
 
         protected async void On_TitlePanel_PointerPressed(object? sender, PointerPressedEventArgs e)
         {
             PointerPointProperties pointerProperties = e.GetCurrentPoint(this).Properties;
-            CollectionComponentBase? component = this.GetBoundCollectionComponent();
+            HurlContainerBase? component = this.GetBoundCollectionComponent();
 
             _pressed = pointerProperties.IsLeftButtonPressed;
             if (_pressed)
@@ -77,8 +77,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             PointerPoint currentPoint = e.GetCurrentPoint(this);
             if (!currentPoint.Position.NearlyEquals(_pressedPosition.Value))
             {
-                CollectionComponentBase? component = this.GetBoundCollectionComponent();
-                if (component != null && component.GetType() != typeof(CollectionContainer))
+                HurlContainerBase? component = this.GetBoundCollectionComponent();
+                if (component != null && component.GetType() != typeof(HurlCollectionContainer))
                 {
                     DataObject dataObject = new DataObject();
                     dataObject.Set(DataFormats.Files, component);
@@ -99,7 +99,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         {
             bool allowDrop = DragDrop.GetAllowDrop(this);
 
-            CollectionComponentBase? component = this.GetBoundCollectionComponent();
+            HurlContainerBase? component = this.GetBoundCollectionComponent();
             if (component != null)
             {
                 component.Selected = allowDrop;
@@ -128,7 +128,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         {
             try
             {
-                CollectionComponentBase? source = (CollectionComponentBase?)(e.Data.Get(DataFormats.Files));
+                HurlContainerBase? source = (HurlContainerBase?)(e.Data.Get(DataFormats.Files));
 
                 if (source != null)
                 {

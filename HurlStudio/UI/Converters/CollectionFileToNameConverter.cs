@@ -1,5 +1,5 @@
 ﻿using Avalonia.Data.Converters;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,9 +14,9 @@ namespace HurlStudio.UI.Converters
     {
         public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
         {
-            if(value is CollectionFile)
+            if(value is HurlFileContainer)
             {
-                var collectionFile = (CollectionFile)value;
+                var collectionFile = (HurlFileContainer)value;
                 if(collectionFile != null)
                 {
                     string title = collectionFile.File?.FileTitle ?? Path.GetFileName(collectionFile.Location);

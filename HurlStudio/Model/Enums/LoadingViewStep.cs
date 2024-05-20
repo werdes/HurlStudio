@@ -10,6 +10,7 @@ namespace HurlStudio.Model.Enums
     {
         Initial,
         LoadingCollections,
+        OpeningPreviousSessionFiles,
         LoadingEnvironments,
         Finished
     }

@@ -14,6 +14,10 @@ namespace HurlStudio.Model.UiState
         private List<FileHistoryEntry> _fileHistoryEntries;
         private Dictionary<string, bool> _settingCollapsedStates;
         private Dictionary<string, bool> _settingSectionCollapsedStates;
+        private List<string> _openedFiles;
+        private double _collectionExplorerProportion;
+        private string? _activeEnvironmentFile;
+        private Dictionary<string, bool> _settingEnabledStates;
 
         private bool _mainWindowIsMaximized;
         private Rectangle _mainWindowPosition;
@@ -24,6 +28,9 @@ namespace HurlStudio.Model.UiState
             _settingCollapsedStates = new Dictionary<string, bool>();
             _fileHistoryEntries = new List<FileHistoryEntry>();
             _settingSectionCollapsedStates = new Dictionary<string, bool>();
+            _openedFiles = new List<string>();
+            _collectionExplorerProportion = .2D;
+            _settingEnabledStates = new Dictionary<string, bool>();
         }
 
         [JsonPropertyName("expanded_collectionexplorer_components")]
@@ -83,6 +90,46 @@ namespace HurlStudio.Model.UiState
             set
             {
                 _settingSectionCollapsedStates = value;
+            }
+        }
+
+        [JsonPropertyName("opened_files")]
+        public List<string> OpenedFiles
+        {
+            get => _openedFiles;
+            set
+            {
+                _openedFiles = value;
+            }
+        }
+
+        [JsonPropertyName("collection_explorer_proportion")]
+        public double CollectionExplorerProportion
+        {
+            get => _collectionExplorerProportion;
+            set
+            {
+                _collectionExplorerProportion = value;
+            }
+        }
+
+        [JsonPropertyName("active_environment")]
+        public string? ActiveEnvironmentFile
+        {
+            get => _activeEnvironmentFile;
+            set
+            {
+                _activeEnvironmentFile = value;
+            }
+        }
+
+        [JsonPropertyName("setting_enabled_states")]
+        public Dictionary<string, bool> SettingEnabledStates
+        {
+            get => _settingEnabledStates;
+            set
+            {
+                _settingEnabledStates = value;
             }
         }
     }

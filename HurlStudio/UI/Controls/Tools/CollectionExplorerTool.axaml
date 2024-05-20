@@ -28,6 +28,11 @@
       <DockPanel HorizontalAlignment="Right" Margin="0,1,1,1"
                  Background="{DynamicResource WindowBackgroundColor}">
         <Button Classes="toolbarButton"
+                Click="On_ButtonRefresh_Click"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_Refresh_Tooltip }">
+          <c:Icon Type="Refresh" />
+        </Button>
+        <Button Classes="toolbarButton"
                 Click="On_ButtonExpandAll_Click"
                 ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_ExpandAll_Tooltip }">
           <c:Icon Type="ExpandAll" />

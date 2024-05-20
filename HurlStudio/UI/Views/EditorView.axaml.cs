@@ -51,12 +51,9 @@ namespace HurlStudio.UI.Views
         private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_viewModel == null) return;
-            if (_viewModel.Layout != null) return; // Layout has already been created
-
+            
             try
             {
-                _viewModel.Layout = _layoutFactory.CreateLayout();
-
                 if (_viewModel.Layout != null)
                 {
                     _layoutFactory.InitLayout(_viewModel.Layout);

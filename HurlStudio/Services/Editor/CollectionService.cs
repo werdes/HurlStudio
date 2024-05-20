@@ -2,13 +2,16 @@
 using AvaloniaEdit.Highlighting;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
+using HurlStudio.Collections.Model.Exceptions;
 using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.UiState;
+using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
+using HurlStudio.UI.Localization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -29,11 +32,12 @@ namespace HurlStudio.Services.Editor
         private IEnvironmentSerializer _environmentSerializer;
         private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
+        private INotificationService _notificationService;
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
         private string[] _collectionExplorerIgnoredDirectories = [];
 
-        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService)
+        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService, INotificationService notificationService)
         {
             _log = logger;
             _configuration = configuration;
@@ -41,6 +45,7 @@ namespace HurlStudio.Services.Editor
             _environmentSerializer = environmentSerializer;
             _userSettingsService = userSettingsService;
             _uiStateService = uiStateService;
+            _notificationService = notificationService;
 
             _collectionLoaderMaxDirectoryDepth = Math.Max(1, _configuration.GetValue<int>("collectionLoaderMaxDirectoryDepth"));
             _collectionExplorerIgnoredDirectories = _configuration.GetSection("collectionExplorerIgnoredDirectories").Get<string[]>() ?? [];
@@ -51,11 +56,11 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="collection"></param>
         /// <returns></returns>
-        public async Task<CollectionContainer> GetCollectionContainerAsync(HurlCollection collection)
+        public async Task<HurlCollectionContainer> GetCollectionContainerAsync(HurlCollection collection)
         {
             bool collapsed = true;
             Model.UiState.UiState? uiState = await _uiStateService.GetUiStateAsync(false);
-            CollectionContainer collectionContainer = new CollectionContainer(collection);
+            HurlCollectionContainer collectionContainer = new HurlCollectionContainer(collection);
 
             if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionContainer.GetId(), out collapsed) ?? false)
             {
@@ -66,7 +71,7 @@ namespace HurlStudio.Services.Editor
             // Root location
             if (!collection.ExcludeRootDirectory)
             {
-                CollectionFolder? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState);
+                HurlFolderContainer? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState);
                 if (collectionRootFolder != null)
                 {
                     collectionContainer.Files.AddRange(collectionRootFolder.Files);
@@ -95,7 +100,7 @@ namespace HurlStudio.Services.Editor
                 }
                 else
                 {
-                    collectionContainer.Folders.Add(new CollectionFolder(collectionContainer, null, absoluteLocationPath)
+                    collectionContainer.Folders.Add(new HurlFolderContainer(collectionContainer, null, absoluteLocationPath)
                     {
                         Found = false,
                         Collapsed = true
@@ -110,19 +115,17 @@ namespace HurlStudio.Services.Editor
         /// Provides a hierarchical structure of loaded collections
         /// </summary>
         /// <returns>List of collection containers</returns>
-        public async Task<ObservableCollection<CollectionContainer>> GetCollectionContainersAsync()
+        public async Task<ObservableCollection<HurlCollectionContainer>> GetCollectionContainersAsync()
         {
-            ObservableCollection<CollectionContainer> collectionContainers = new ObservableCollection<CollectionContainer>();
+            ObservableCollection<HurlCollectionContainer> collectionContainers = new ObservableCollection<HurlCollectionContainer>();
             IEnumerable<HurlCollection> collections = await this.GetCollectionsAsync();
-
 
             // Trace Collections
             _log.LogObject(collections);
 
             foreach (HurlCollection collection in collections)
             {
-                CollectionContainer collectionContainer = await GetCollectionContainerAsync(collection);
-
+                HurlCollectionContainer collectionContainer = await GetCollectionContainerAsync(collection);
                 collectionContainers.Add(collectionContainer);
             }
 
@@ -136,12 +139,12 @@ namespace HurlStudio.Services.Editor
         /// <param name="location">The absolute location of the directory to be traversed</param>
         /// <param name="collectionRoot">The absolute path of the collection file</param>
         /// <returns>A Folder file</returns>
-        private async Task<CollectionFolder?> GetFolderRecursive(int depth, CollectionContainer collectionContainer, CollectionFolder? parent, string location, string collectionRoot, Model.UiState.UiState? uiState)
+        private async Task<HurlFolderContainer?> GetFolderRecursive(int depth, HurlCollectionContainer collectionContainer, HurlFolderContainer? parent, string location, string collectionRoot, Model.UiState.UiState? uiState)
         {
             if (depth > _collectionLoaderMaxDirectoryDepth) return null;
-            if (_collectionExplorerIgnoredDirectories.Contains(new DirectoryInfo(location).Name)) return null;  
+            if (_collectionExplorerIgnoredDirectories.Contains(new DirectoryInfo(location).Name)) return null;
 
-            CollectionFolder collectionFolder = new CollectionFolder(collectionContainer, parent, location);
+            HurlFolderContainer collectionFolder = new HurlFolderContainer(collectionContainer, parent, location);
             bool folderCollapsed = false;
             if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(), out folderCollapsed) ?? false)
             {
@@ -173,12 +176,12 @@ namespace HurlStudio.Services.Editor
                 // try to find a setting with a matching file location
                 // -> If no setting block is found, create an empty one
                 HurlFile? fileSettings = collectionContainer.Collection.FileSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FileLocation.ConvertDirectorySeparator()) == relativeFilePathToCollectionRoot).FirstOrDefault();
-                if(fileSettings == null)
+                if (fileSettings == null)
                 {
                     fileSettings = new HurlFile(relativeFilePathToCollectionRoot);
                 }
 
-                CollectionFile collectionFile = new CollectionFile(collectionFolder, fileSettings, hurlFile);
+                HurlFileContainer collectionFile = new HurlFileContainer(collectionFolder, fileSettings, hurlFile);
                 collectionFile.File = fileSettings;
 
                 collectionFolder.Files.Add(collectionFile);
@@ -200,7 +203,18 @@ namespace HurlStudio.Services.Editor
                 IEnumerable<string> files = userSettings.CollectionFiles;
                 foreach (string file in files)
                 {
-                    collections.AddIfNotNull(await GetCollectionAsync(file));
+                    try
+                    {
+                        collections.AddIfNotNull(await GetCollectionAsync(file));
+                    }
+                    catch (SettingParserException ex)
+                    {
+                        _log.LogException(ex);
+                        _notificationService.Notify(
+                            Model.Notifications.NotificationType.Error,
+                            Localization.Service_CollectionService_Errors_SettingParserError_Title,
+                            $"{Localization.Service_CollectionService_Errors_SettingParserError_Text}: Collection {file}: {ex.Message}");
+                    }
                 }
             }
 

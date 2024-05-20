@@ -41,7 +41,7 @@ namespace HurlStudio.Common.Extensions
         /// <param name="logger"></param>
         /// <param name="exception"></param>
         /// <param name="caller"></param>
-        public static void LogCritical(this ILogger logger, Exception exception, [CallerMemberName] string caller = "")
+        public static void LogException(this ILogger logger, Exception exception, [CallerMemberName] string caller = "")
         {
             logger.LogCritical(exception, caller);
         }

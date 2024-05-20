@@ -9,12 +9,13 @@ namespace HurlStudio.Collections.Model.Environment
 {
     public class HurlEnvironment
     {
-        private string _name;
+        private string? _name;
+        private string _fileLocation;
         private List<IHurlSetting> _settings;
 
-        public HurlEnvironment()
+        public HurlEnvironment(string location)
         {
-            _name = string.Empty;
+            _fileLocation = location;
             _settings = new List<IHurlSetting>();
         }
 
@@ -24,10 +25,16 @@ namespace HurlStudio.Collections.Model.Environment
             set => _settings = value;
         }
 
-        public string Name
+        public string? Name
         {
             get => _name;
             set => _name = value;
+        }
+
+        public string FileLocation
+        {
+            get => _fileLocation;
+            set => _fileLocation = value;   
         }
     }
 }

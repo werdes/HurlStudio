@@ -42,7 +42,7 @@ using HurlStudio.Services.UiState;
 using HurlStudio.UI.ViewModels.Tools;
 using HurlStudio.UI.ViewModels.Documents;
 using HurlStudio.UI.Controls.CollectionExplorer;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.UiState;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Model.Notifications;
@@ -210,9 +210,9 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
             controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
 
-            controlBuilder.RegisterProviderAssociated<Collection, CollectionContainer>(() => Services.GetRequiredService<Collection>());
-            controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, CollectionFile>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
-            controlBuilder.RegisterProviderAssociated<Folder, CollectionFolder>(() => Services.GetRequiredService<Folder>());
+            controlBuilder.RegisterProviderAssociated<Collection, HurlCollectionContainer>(() => Services.GetRequiredService<Collection>());
+            controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, HurlFileContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
+            controlBuilder.RegisterProviderAssociated<Folder, HurlFolderContainer>(() => Services.GetRequiredService<Folder>());
             controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
 
             // HurlSettings

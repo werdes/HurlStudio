@@ -1,5 +1,5 @@
 ﻿using Avalonia.Data.Converters;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

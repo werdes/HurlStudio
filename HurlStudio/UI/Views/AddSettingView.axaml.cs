@@ -21,7 +21,7 @@ using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Model.Environment;
 using Avalonia;
 using Avalonia.Styling;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.UiState;
 using HurlStudio.Model.UiState;
 using HurlStudio.Common.Extensions;
@@ -84,7 +84,7 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _notificationService.Notify(ex);
-                _log.LogCritical(ex);
+                _log.LogException(ex);
             }
         }
 
@@ -106,7 +106,7 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _notificationService.Notify(ex);
-                _log.LogCritical(ex);
+                _log.LogException(ex);
             }
         }
 
@@ -137,7 +137,7 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _notificationService.Notify(ex);
-                _log.LogCritical(ex);
+                _log.LogException(ex);
             }
         }
 
@@ -156,7 +156,7 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _notificationService.Notify(ex);
-                _log.LogCritical(ex);
+                _log.LogException(ex);
             }
         }
     }

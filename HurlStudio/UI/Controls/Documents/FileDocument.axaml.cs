@@ -158,7 +158,7 @@ namespace HurlStudio.UI.Controls.Documents
                 HurlSettingSection? fileSection = _viewModel.SettingSections.FirstOrDefault(x => x.SectionType == HurlSettingSectionType.File);
                 if (fileSection == null) return;
 
-                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true, true));
+                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true));
             }
             catch (Exception ex)
             {

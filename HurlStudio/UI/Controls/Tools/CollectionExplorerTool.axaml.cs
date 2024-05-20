@@ -1,6 +1,6 @@
 using Avalonia.Controls;
 using Dock.Model.Mvvm.Controls;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
@@ -9,6 +9,7 @@ using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Tools;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 namespace HurlStudio.UI.Controls.Tools
 {
     public partial class CollectionExplorerTool : ViewModelBasedControl<CollectionExplorerToolViewModel>
@@ -18,14 +19,16 @@ namespace HurlStudio.UI.Controls.Tools
         private CollectionExplorerToolViewModel? _viewModel;
         private IEditorService _editorService;
         private INotificationService _notificationService;
+        private ICollectionService _collectionService;
 
-        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService)
+        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, ICollectionService collectionService)
         {
             this.InitializeComponent();
             _log = logger;
             _editorViewViewModel = editorViewViewModel;
             _editorService = editorService;
             _notificationService = notificationService;
+            _collectionService = collectionService;
 
             _editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
         }
@@ -39,7 +42,7 @@ namespace HurlStudio.UI.Controls.Tools
         {
             if (e.NewItems != null && e.NewItems.Count > 0)
             {
-                foreach (CollectionContainer collection in e.NewItems)
+                foreach (HurlCollectionContainer collection in e.NewItems)
                 {
                     this.BindCollectionEvents(collection);
                 }
@@ -64,7 +67,7 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="e"></param>
         private void On_CollectionExplorerTool_Initialized(object? sender, EventArgs e)
         {
-            foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
+            foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
                 this.BindCollectionEvents(collectionContainer);
             }
@@ -74,7 +77,7 @@ namespace HurlStudio.UI.Controls.Tools
         /// Binds a collections events to local handlers
         /// </summary>
         /// <param name="collectionContainer"></param>
-        private void BindCollectionEvents(CollectionContainer collectionContainer)
+        private void BindCollectionEvents(HurlCollectionContainer collectionContainer)
         {
             collectionContainer.ControlSelectionChanged += this.On_CollectionContainer_ControlSelectionChanged;
             collectionContainer.CollectionComponentMoved += this.On_CollectionContainer_CollectionComponentMoved;
@@ -87,7 +90,7 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="e"></param>
         private void On_CollectionContainer_ControlSelectionChanged(object? sender, ControlSelectionChangedEventArgs e)
         {
-            foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
+            foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
                 collectionContainer.Unselect();
             }
@@ -133,9 +136,9 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="isCollapsed"></param>
         private void SetCollapsedStateForCollections(bool isCollapsed)
         {
-            foreach (CollectionContainer collectionContainer in _editorViewViewModel.Collections)
+            foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
-                foreach (CollectionFolder folder in collectionContainer.Folders)
+                foreach (HurlFolderContainer folder in collectionContainer.Folders)
                 {
                     this.SetCollapsedStateForFolder(isCollapsed, folder);
                 }
@@ -149,12 +152,12 @@ namespace HurlStudio.UI.Controls.Tools
         /// </summary>
         /// <param name="isCollapsed"></param>
         /// <param name="folder"></param>
-        private void SetCollapsedStateForFolder(bool isCollapsed, CollectionFolder folder)
+        private void SetCollapsedStateForFolder(bool isCollapsed, HurlFolderContainer folder)
         {
             if (folder.Found)
             {
                 folder.Collapsed = isCollapsed;
-                foreach (CollectionFolder subFolder in folder.Folders)
+                foreach (HurlFolderContainer subFolder in folder.Folders)
                 {
                     this.SetCollapsedStateForFolder(isCollapsed, subFolder);
                 }
@@ -166,7 +169,7 @@ namespace HurlStudio.UI.Controls.Tools
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void On_CollectionContainer_CollectionComponentMoved(object? sender, CollectionComponentMovedEventArgs e)
+        private async void On_CollectionContainer_CollectionComponentMoved(object? sender, HurlContainerMovedEventArgs e)
         {
             if (_viewModel == null) return; // should not happen, since moving an object requires an object to be present, which
                                             // originates from the view model
@@ -175,20 +178,20 @@ namespace HurlStudio.UI.Controls.Tools
                 _viewModel.IsEnabled = false;
 
                 // File or folder to collection root
-                if (e.Target is CollectionContainer collectionContainer)
+                if (e.Target is HurlCollectionContainer collectionContainer)
                 {
-                    if (e.Source is CollectionFolder collectionRootFolder)
+                    if (e.Source is HurlFolderContainer collectionRootFolder)
                     {
                         await _editorService.MoveFolderToCollectionRoot(collectionRootFolder, collectionContainer);
                     }
-                    else if (e.Source is CollectionFile collectionRootFile)
+                    else if (e.Source is HurlFileContainer collectionRootFile)
                     {
                         await _editorService.MoveFileToCollectionRoot(collectionRootFile, collectionContainer);
                     }
                 }
                 // File to folder
-                else if (e.Source is CollectionFile collectionFile &&
-                         e.Target is CollectionFolder collectionFolder &&
+                else if (e.Source is HurlFileContainer collectionFile &&
+                         e.Target is HurlFolderContainer collectionFolder &&
                          collectionFile != null &&
                          collectionFolder != null)
                 {
@@ -203,8 +206,8 @@ namespace HurlStudio.UI.Controls.Tools
                     }
                 }
                 // Folder to folder
-                else if (e.Source is CollectionFolder collectionFolderChild &&
-                         e.Target is CollectionFolder collectionFolderParent &&
+                else if (e.Source is HurlFolderContainer collectionFolderChild &&
+                         e.Target is HurlFolderContainer collectionFolderParent &&
                          collectionFolderChild != null &&
                          collectionFolderParent != null)
                 {
@@ -227,6 +230,50 @@ namespace HurlStudio.UI.Controls.Tools
             finally
             {
                 _viewModel.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Refresh the Collections
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonRefresh_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_viewModel == null) return;
+            try
+            {
+                await this.RefreshCollections();
+            }
+            catch (Exception ex)
+            {
+                _log.LogCritical(ex, nameof(this.On_CollectionContainer_CollectionComponentMoved));
+                _notificationService.Notify(ex);
+            }
+            finally
+            {
+                _viewModel.IsEnabled = true;
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the collections and re-binds their events
+        /// </summary>
+        /// <returns></returns>
+        private async Task RefreshCollections()
+        {
+            if (_viewModel == null) return;
+
+            _viewModel.IsEnabled = false;
+            _editorViewViewModel.Collections.CollectionChanged -= this.On_Collections_CollectionChanged;
+
+            _editorViewViewModel.Collections = await _collectionService.GetCollectionContainersAsync();
+
+            // Re-Bind events
+            _editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
+            foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
+            {
+                this.BindCollectionEvents(collectionContainer);
             }
         }
     }

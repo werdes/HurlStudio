@@ -9,16 +9,16 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public class CollectionFile : CollectionComponentBase
+    public class HurlFileContainer : HurlContainerBase
     {
-        private CollectionFolder _collectionFolder;
-        private CollectionContainer _collectionContainer;
+        private HurlFolderContainer _collectionFolder;
+        private HurlCollectionContainer _collectionContainer;
         private HurlFile _file;
         private string _location;
 
-        public CollectionFile(CollectionFolder collectionFolder, HurlFile fileSettings, string location)
+        public HurlFileContainer(HurlFolderContainer collectionFolder, HurlFile fileSettings, string location)
         {
             _collectionFolder = collectionFolder;
             _collectionContainer = collectionFolder.CollectionContainer;
@@ -26,7 +26,7 @@ namespace HurlStudio.Model.CollectionContainer
             _location = location;
         }
 
-        public CollectionFolder Folder
+        public HurlFolderContainer Folder
         {
             get => _collectionFolder;
             set
@@ -46,7 +46,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public CollectionContainer Collection
+        public HurlCollectionContainer Collection
         {
             get => _collectionContainer;
             set
@@ -82,7 +82,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionFile)}: {this.GetId()} | {this.File}";
+            return $"{nameof(HurlFileContainer)}: {this.GetId()} | {this.File}";
         }
     }
 }

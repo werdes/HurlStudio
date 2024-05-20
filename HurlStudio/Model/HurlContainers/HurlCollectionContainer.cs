@@ -9,13 +9,13 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public class CollectionContainer : CollectionComponentHierarchyBase
+    public class HurlCollectionContainer : HurlContainerHierarchyBase
     {
         private HurlCollection _collection;
 
-        public CollectionContainer(HurlCollection collection) : base()
+        public HurlCollectionContainer(HurlCollection collection) : base()
         {
             _collection = collection;
         }
@@ -43,7 +43,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionContainer)}: {this.GetId()} | {this.Collection}";
+            return $"{nameof(HurlCollectionContainer)}: {this.GetId()} | {this.Collection}";
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;
-using HurlStudio.Model.CollectionContainer;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.Enums;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.UI.ViewModels.Documents;
@@ -22,13 +22,13 @@ namespace HurlStudio.Model.HurlSettings
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
         private OrderedObservableCollection<HurlSettingContainer> _settingContainers;
-        private CollectionComponentBase? _collectionComponent;
+        private HurlContainerBase? _collectionComponent;
         private FileDocumentViewModel _document;
         private HurlSettingSectionType _sectionType;
         private string _sectionSubText;
         private bool _collapsed;
 
-        public HurlSettingSection(FileDocumentViewModel document, HurlSettingSectionType sectionType, CollectionComponentBase? collectionComponent)
+        public HurlSettingSection(FileDocumentViewModel document, HurlSettingSectionType sectionType, HurlContainerBase? collectionComponent)
         {
             _settingContainers = new OrderedObservableCollection<HurlSettingContainer>();
 
@@ -36,12 +36,12 @@ namespace HurlStudio.Model.HurlSettings
             _collectionComponent = collectionComponent;
             _document = document;
             
-            if(collectionComponent is CollectionFolder collectionFolder)
+            if(collectionComponent is HurlFolderContainer collectionFolder)
             {
                 _sectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
                 collectionFolder.PropertyChanged += this.On_CollectionFolder_PropertyChanged;
             }
-            else if(collectionComponent is CollectionEnvironment environment)
+            else if(collectionComponent is HurlEnvironmentContainer environment)
             {
                 _sectionSubText = environment.Environment.Name;
             }
@@ -58,7 +58,7 @@ namespace HurlStudio.Model.HurlSettings
         /// <param name="e"></param>
         private void On_CollectionFolder_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(sender != null && sender is CollectionFolder collectionFolder && e.PropertyName == nameof(collectionFolder.Location))
+            if(sender != null && sender is HurlFolderContainer collectionFolder && e.PropertyName == nameof(collectionFolder.Location))
             {
                 this.SectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
             }
@@ -74,7 +74,7 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        public CollectionComponentBase? CollectionComponent
+        public HurlContainerBase? CollectionComponent
         {
             get => _collectionComponent;
             set

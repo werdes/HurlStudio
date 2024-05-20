@@ -1,5 +1,7 @@
-﻿using HurlStudio.Collections.Settings;
+﻿using HurlStudio.Collections.Model.Exceptions;
+using HurlStudio.Collections.Settings;
 using HurlStudio.Common.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,10 +16,12 @@ namespace HurlStudio.Collections.Utility
 
         private Lazy<Dictionary<string, Type>> _possibleSettingTypesLazy;
         private Dictionary<string, Type> _possibleSettingTypes => _possibleSettingTypesLazy.Value;
+        private ILogger _logger;
 
-        public IniSettingParser()
+        public IniSettingParser(ILogger<IniSettingParser> logger)
         {
             _possibleSettingTypesLazy = new Lazy<Dictionary<string, Type>>(this.RegisterSettingTypes);
+            _logger = logger;
         }
 
         /// <summary>
@@ -57,23 +61,34 @@ namespace HurlStudio.Collections.Utility
         /// <returns>Hurl Setting</returns>
         public IHurlSetting? Parse(string value)
         {
-            bool isActive = true;
-            string settingName = value.Split('=').Get(0) ?? string.Empty;
-            if(settingName.StartsWith(INACTIVE_PREFIX))
+            IHurlSetting? setting = null;
+            try
             {
-                settingName = settingName.Substring(1);
-                isActive = false;
-            }
+                bool isActive = true;
 
-            string? settingValue = string.Join('=', value.Split('=').Skip(1));
-            if (!string.IsNullOrEmpty(settingName))
-            {
-                IHurlSetting? setting = this.GetSetting(settingName);
-                if (setting != null)
+                string settingName = value.Split('=').Get(0) ?? string.Empty;
+                if (settingName.StartsWith(INACTIVE_PREFIX))
                 {
-                    setting.IsEnabled = isActive;    
-                    return setting.FillFromString(settingValue);
+                    settingName = settingName.Substring(1);
+                    isActive = false;
                 }
+
+                string? settingValue = string.Join('=', value.Split('=').Skip(1));
+                if (!string.IsNullOrEmpty(settingName))
+                {
+                    setting = this.GetSetting(settingName);
+                    if (setting != null)
+                    {
+                        setting.IsEnabled = isActive;
+                        setting.FillFromString(settingValue);
+                        return setting;
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                _logger.LogException(ex);
+                //throw new SettingParserException(value, setting?.GetType(), ex);
             }
             return null;
         }

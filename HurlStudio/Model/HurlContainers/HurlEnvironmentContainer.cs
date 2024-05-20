@@ -6,15 +6,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public class CollectionEnvironment : CollectionComponentBase
+    public class HurlEnvironmentContainer : HurlContainerBase
     {
         private HurlEnvironment _enviroment;
+        private string _fileLocation;
 
-        public CollectionEnvironment(HurlEnvironment environment) : base()
+        public HurlEnvironmentContainer(HurlEnvironment environment, string fileLocation) : base()
         {
             _enviroment = environment;
+            _fileLocation = fileLocation;
         }
 
         public HurlEnvironment Environment
@@ -27,11 +29,21 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
+        public string FileLocation
+        {
+            get => _fileLocation;
+            set
+            {
+                _fileLocation= value;
+                this.Notify();
+            }
+        }
+
         public override string GetId()
         {
             if (_enviroment == null) throw new ArgumentNullException(nameof(this.Environment));
 
-            return _enviroment.Name.ToSha256Hash();
+            return _enviroment.FileLocation.ToSha256Hash();
         }
     }
 }

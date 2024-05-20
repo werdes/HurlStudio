@@ -1,5 +1,6 @@
 ﻿using HurlStudio.Collections.Settings;
 using HurlStudio.Collections.Utility;
+using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.Tests
 {
@@ -11,7 +12,9 @@ namespace HurlStudio.Tests
         [TestInitialize]
         public void Init()
         {
-            _parser = new IniSettingParser();
+            ILogger<IniSettingParser> logger = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace))
+                                                            .CreateLogger<IniSettingParser>();
+            _parser = new IniSettingParser(logger);
         }
 
         [TestMethod]
@@ -274,15 +277,15 @@ namespace HurlStudio.Tests
             List<ClientCertificateSetting> settings = new List<ClientCertificateSetting>();
             string[] testValues =
             {
-                @"client_certificate=D:\Files\Certs\Test.crt|TestPassword|D:\Files\Keys\TestKey.key",
-                @"client_certificate=D:/Files/Certs/Test.crt|TestPassword|",
-                @"client_certificate=D:\Files\Certs\Test.crt|TestPassword",
-                @"client_certificate=D:/Files/Certs/Test.crt|TestPassword",
+                @"client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk|D:\Files\Keys\TestKey.key",
+                @"client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk|",
+                @"client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk",
+                @"client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk",
                 @"client_certificate=D:\Files\Certs\Test.crt|",
-                @"#client_certificate=D:\Files\Certs\Test.crt|TestPassword|D:\Files\Keys\TestKey.key",
-                @"#client_certificate=D:/Files/Certs/Test.crt|TestPassword|",
-                @"#client_certificate=D:\Files\Certs\Test.crt|TestPassword",
-                @"#client_certificate=D:/Files/Certs/Test.crt|TestPassword",
+                @"#client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk|D:\Files\Keys\TestKey.key",
+                @"#client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk|",
+                @"#client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk",
+                @"#client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk",
                 @"#client_certificate=D:\Files\Certs\Test.crt|",
             };
 
@@ -824,13 +827,13 @@ namespace HurlStudio.Tests
             List<ProxySetting> settings = new List<ProxySetting>();
             string[] testValues =
             {
-                "proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:testpassword",
-                "proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:testpassword",
+                "proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
+                "proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
                 "proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:",
                 "proxy=protocol:http,host:testproxy.local,port:8080,user:,password:",
                 "proxy=protocol:http,host:testproxy.local,port:8123,user:,password:",
-                "#proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:testpassword",
-                "#proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:testpassword",
+                "#proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
+                "#proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
                 "#proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:",
                 "#proxy=protocol:http,host:testproxy.local,port:8080,user:,password:",
                 "#proxy=protocol:http,host:testproxy.local,port:8123,user:,password:",

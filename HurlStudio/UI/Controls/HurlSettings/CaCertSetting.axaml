@@ -15,10 +15,6 @@
       <ColumnDefinition Width="*" />
       <ColumnDefinition Width="20" />
     </Grid.ColumnDefinitions>
-    <Grid.RowDefinitions>
-      <RowDefinition />
-      <RowDefinition />
-    </Grid.RowDefinitions>
 
     <Label VerticalAlignment="Center"
            Foreground="{DynamicResource NeutralControlForegroundColor}"
@@ -37,15 +33,5 @@
       <c:Icon Type="OpenNeutral" />
     </Button>
 
-    <!--Encryption warning-->
-    <StackPanel Orientation="Horizontal"
-                Grid.Row="2"
-                Grid.ColumnSpan="3"
-                HorizontalAlignment="Center">
-      <c:Icon Type="NotificationWarning" />
-      <Label VerticalAlignment="Center"
-             Foreground="{DynamicResource NeutralControlForegroundColor}"
-             Content="{x:Static localization:Localization.Setting_CaCertSetting_NoEncryptionHint}" />
-    </StackPanel>
   </Grid>
 </UserControl>

@@ -2,6 +2,8 @@ using HurlStudio.Collections;
 using HurlStudio.Collections.Model.Collection;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Collections.Utility;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Console;
 using System.Runtime.ConstrainedExecution;
 using System.Text;
 using static System.Net.WebRequestMethods;
@@ -17,7 +19,10 @@ namespace HurlStudio.Tests
         [TestInitialize]
         public void Init()
         {
-            _parser = new IniSettingParser();
+            ILogger<IniSettingParser> logger = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace))
+                                                            .CreateLogger<IniSettingParser>();
+
+            _parser = new IniSettingParser(logger);
             _serializer = new IniCollectionSerializer((IniSettingParser)_parser);
         }
 

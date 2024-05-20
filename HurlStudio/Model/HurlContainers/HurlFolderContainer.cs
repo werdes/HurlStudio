@@ -10,17 +10,17 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Model.CollectionContainer
+namespace HurlStudio.Model.HurlContainers
 {
-    public class CollectionFolder : CollectionComponentHierarchyBase
+    public class HurlFolderContainer : HurlContainerHierarchyBase
     {
-        private CollectionContainer _collectionContainer;
-        private CollectionFolder? _parentFolder;
+        private HurlCollectionContainer _collectionContainer;
+        private HurlFolderContainer? _parentFolder;
         private HurlFolder? _folder;
         private string _location;
         private bool _found;
 
-        public CollectionFolder(CollectionContainer collectionContainer, CollectionFolder? parentFolder, string location) : base()
+        public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, string location) : base()
         {
             _collectionContainer = collectionContainer;
             _parentFolder = parentFolder;
@@ -48,7 +48,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public CollectionContainer CollectionContainer
+        public HurlCollectionContainer CollectionContainer
         {
             get => _collectionContainer;
             set
@@ -58,7 +58,7 @@ namespace HurlStudio.Model.CollectionContainer
             }
         }
 
-        public CollectionFolder? ParentFolder
+        public HurlFolderContainer? ParentFolder
         {
             get => _parentFolder;
             set
@@ -96,7 +96,7 @@ namespace HurlStudio.Model.CollectionContainer
 
         public override string ToString()
         {
-            return $"{nameof(CollectionFolder)}: {this.GetId()} | {this.Folder}";
+            return $"{nameof(HurlFolderContainer)}: {this.GetId()} | {this.Folder}";
         }
     }
 }

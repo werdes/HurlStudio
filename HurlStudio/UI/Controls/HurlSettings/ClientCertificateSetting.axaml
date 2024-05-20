@@ -19,6 +19,7 @@
       <RowDefinition />
       <RowDefinition />
       <RowDefinition />
+      <RowDefinition />
     </Grid.RowDefinitions>
 
     <TextBlock Text="{x:Static localization:Localization.Setting_ClientCertificateSetting_CertificateFile_Label}"
@@ -65,5 +66,16 @@
             Click="On_ButtonOpenKey_Click">
       <c:Icon Type="OpenNeutral" />
     </Button>
+
+    <!--Encryption warning-->
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="3"
+                Grid.ColumnSpan="3"
+                HorizontalAlignment="Center">
+      <c:Icon Type="NotificationWarning" />
+      <Label VerticalAlignment="Center"
+             Foreground="{DynamicResource NeutralControlForegroundColor}"
+             Content="{x:Static localization:Localization.Setting_ClientCertificateSetting_NoEncryptionHint}" />
+    </StackPanel>
   </Grid>
 </UserControl>
