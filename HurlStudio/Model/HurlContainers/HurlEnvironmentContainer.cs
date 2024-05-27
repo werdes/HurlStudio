@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Model.Environment;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -15,8 +15,9 @@ namespace HurlStudio.Model.HurlContainers
 
         public HurlEnvironmentContainer(HurlEnvironment environment, string fileLocation) : base()
         {
-            _enviroment = environment;
             _fileLocation = fileLocation;
+            _enviroment = environment;
+            _enviroment.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
         public HurlEnvironment Environment
@@ -26,8 +27,15 @@ namespace HurlStudio.Model.HurlContainers
             {
                 _enviroment = value;
                 this.Notify();
+
+                if (_enviroment != null)
+                {
+                    _enviroment.ComponentPropertyChanged -= this.On_HurlComponent_ComponentPropertyChanged;
+                    _enviroment.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
+                }
             }
         }
+
 
         public string FileLocation
         {
@@ -37,6 +45,15 @@ namespace HurlStudio.Model.HurlContainers
                 _fileLocation= value;
                 this.Notify();
             }
+        }
+
+        /// <summary>
+        /// Returns the components' path
+        /// </summary>
+        /// <returns></returns>
+        public override string GetPath()
+        {
+            return _fileLocation;
         }
 
         public override string GetId()

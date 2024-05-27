@@ -14,7 +14,8 @@ namespace HurlStudio.Model.UiState
         private List<FileHistoryEntry> _fileHistoryEntries;
         private Dictionary<string, bool> _settingCollapsedStates;
         private Dictionary<string, bool> _settingSectionCollapsedStates;
-        private List<string> _openedFiles;
+        private List<string> _openedDocuments;
+        private string? _activeDocument;
         private double _collectionExplorerProportion;
         private string? _activeEnvironmentFile;
         private Dictionary<string, bool> _settingEnabledStates;
@@ -28,7 +29,7 @@ namespace HurlStudio.Model.UiState
             _settingCollapsedStates = new Dictionary<string, bool>();
             _fileHistoryEntries = new List<FileHistoryEntry>();
             _settingSectionCollapsedStates = new Dictionary<string, bool>();
-            _openedFiles = new List<string>();
+            _openedDocuments = new List<string>();
             _collectionExplorerProportion = .2D;
             _settingEnabledStates = new Dictionary<string, bool>();
         }
@@ -93,13 +94,23 @@ namespace HurlStudio.Model.UiState
             }
         }
 
-        [JsonPropertyName("opened_files")]
-        public List<string> OpenedFiles
+        [JsonPropertyName("opened_documents")]
+        public List<string> OpenedDocuments
         {
-            get => _openedFiles;
+            get => _openedDocuments;
             set
             {
-                _openedFiles = value;
+                _openedDocuments = value;
+            }
+        }
+
+        [JsonPropertyName("active_document")]
+        public string? ActiveDocument
+        {
+            get => _activeDocument;
+            set
+            {
+                _activeDocument = value;
             }
         }
 

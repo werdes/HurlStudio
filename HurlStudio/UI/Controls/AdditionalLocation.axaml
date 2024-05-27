@@ -1,0 +1,35 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:model="clr-namespace:HurlStudio.Collections.Model.Containers;assembly=HurlStudio.Collections"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.AdditionalLocation"
+             x:DataType="model:AdditionalLocation">
+  <Grid>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+      <ColumnDefinition Width="20" />
+      <ColumnDefinition Width="20" />
+    </Grid.ColumnDefinitions>
+    
+    <TextBox Classes="framelessTextBox"
+                     Text="{Binding Path}" />
+
+    <Button Classes="framelessButton"
+            Click="On_ButtonSelectDirectory_Click"
+            ToolTip.Tip="{x:Static localization:Localization.Dock_Document_Collection_AdditionalLocations_SelectFolder_Tooltip}"
+            Grid.Column="1">
+      <c:Icon Type="Open" />
+    </Button>
+    <Button Classes="framelessButton"
+            Click="On_ButtonRemoveRow_Click"
+            ToolTip.Tip="{x:Static localization:Localization.Dock_Document_Collection_AdditionalLocations_Remove_Tooltip}"
+            Grid.Column="2">
+      <c:Icon Type="Trash" />
+    </Button>
+  </Grid>
+</UserControl>

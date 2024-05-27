@@ -1,19 +1,20 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-            xmlns:v="clr-namespace:HurlStudio.UI.Views"
-            xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
-            xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
-            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-            xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
-            xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
-            mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-            Loaded="On_EditorView_Loaded"
-            x:Class="HurlStudio.UI.Views.EditorView"
-            x:DataType="vm:EditorViewViewModel">
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+             xmlns:model="clr-namespace:HurlStudio.Model.HurlContainers;assembly=HurlStudio"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             Loaded="On_EditorView_Loaded"
+             x:Class="HurlStudio.UI.Views.EditorView"
+             x:DataType="vm:EditorViewViewModel">
   <UserControl.Resources>
   </UserControl.Resources>
-  <Grid>
+  <Grid IsEnabled="{Binding InitializationCompleted}">
     <Grid.RowDefinitions>
       <RowDefinition Height="30" />
       <RowDefinition Height="*" />
@@ -34,12 +35,12 @@
           <controls:Icon Type="Forward" />
         </Button>
         <controls:ToolbarSeparator />
-        
+
         <!--Save-->
         <Button Classes="toolbarButton"
                 Click="On_ButtonSave_Click"
                 ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Save_Tooltip }">
-           <controls:Icon Type="Save" />
+          <controls:Icon Type="Save" />
         </Button>
         <!--Save all-->
         <Button Classes="toolbarButton"
@@ -47,7 +48,7 @@
           <controls:Icon Type="SaveAll" />
         </Button>
         <controls:ToolbarSeparator />
-        
+
         <!--Undo-->
         <Button Classes="toolbarButton"
                 IsEnabled="{Binding CanUndo}"
@@ -64,21 +65,21 @@
           <controls:Icon Type="Redo" />
         </Button>
         <controls:ToolbarSeparator />
-        
+
         <!--Show end of line-->
         <ToggleButton IsChecked="{Binding ShowEndOfLine}"
                       ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_ShowEndOfLine_Tooltip }"
                       Classes="toolbarButton" >
           <controls:Icon Type="EndOfLine" />
         </ToggleButton>
-        
+
         <!--Show whitespace-->
         <ToggleButton IsChecked="{Binding ShowWhitespace}"
                       ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_ShowWhitespace_Tooltip }"
                       Classes="toolbarButton" >
           <controls:Icon Type="Whitespace" />
         </ToggleButton>
-        
+
         <!--WordWrap-->
         <ToggleButton IsChecked="{Binding WordWrap}"
                       ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_WordWrap_Tooltip }"
@@ -86,6 +87,31 @@
           <controls:Icon Type="WordWrap" />
         </ToggleButton>
         <controls:ToolbarSeparator />
+
+
+        <!--Selected Environment-->
+        <StackPanel Background="{DynamicResource NeutralControlHoverColor}">
+          <StackPanel Margin="2"
+                      Orientation="Horizontal">
+            <controls:Icon Type="Environment" 
+                           Margin="2,0,2,0"
+                           ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_ActiveEnvironment_Tooltip}"/>
+            <ComboBox Classes="framelessComboBox"
+                Grid.Column="1"
+                Width="200"
+                ItemsSource="{Binding Environments}"
+                SelectedValue="{Binding ActiveEnvironment}"
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_ActiveEnvironment_Tooltip}"
+                VerticalAlignment="Center" >
+              <ComboBox.ItemTemplate>
+                <DataTemplate>
+                  <TextBlock x:DataType="model:HurlEnvironmentContainer" Text="{Binding Environment.Name}" />
+                </DataTemplate>
+              </ComboBox.ItemTemplate>
+            </ComboBox>
+          </StackPanel>
+        </StackPanel>
+
       </DockPanel>
     </Panel>
 

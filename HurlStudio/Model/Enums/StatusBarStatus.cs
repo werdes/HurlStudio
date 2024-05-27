@@ -14,7 +14,13 @@ namespace HurlStudio.Model.Enums
     {
         Idle,
         OpeningFile,
-        SavingFile
+        OpeningFolder,
+        OpeningCollection,
+        OpeningEnvironment,
+        SavingFile,
+        SavingFolder,
+        SavingCollection,
+        SavingEnvironment
     }
 
     public static class StatusBarStatusExtensions
@@ -35,7 +41,13 @@ namespace HurlStudio.Model.Enums
             switch (status)
             {
                 case StatusBarStatus.OpeningFile:
+                case StatusBarStatus.OpeningCollection:
+                case StatusBarStatus.OpeningEnvironment:
+                case StatusBarStatus.OpeningFolder:
                     return Icon.OpenNeutral;
+                case StatusBarStatus.SavingFolder:
+                case StatusBarStatus.SavingCollection:
+                case StatusBarStatus.SavingEnvironment:
                 case StatusBarStatus.SavingFile:
                     return Icon.SaveNeutral;
                 case StatusBarStatus.Idle:

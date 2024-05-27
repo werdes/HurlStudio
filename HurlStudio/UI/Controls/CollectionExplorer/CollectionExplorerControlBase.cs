@@ -32,7 +32,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             this.AddHandler(DragDrop.DragOverEvent, this.On_CollectionExplorerControlBase_DragOver);
         }
 
-        protected abstract HurlContainerBase GetBoundCollectionComponent();
+        protected abstract HurlContainerBase? GetBoundCollectionComponent();
         protected abstract Task OpenComponentDocument();
 
         protected async void On_TitlePanel_PointerPressed(object? sender, PointerPressedEventArgs e)

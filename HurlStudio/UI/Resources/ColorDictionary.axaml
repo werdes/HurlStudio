@@ -28,6 +28,11 @@
       <Color x:Key="NeutralControlBorderHoverColor">#e4e4e4</Color>
       <Color x:Key="NeutralControlForegroundColor">#222222</Color>
       <Color x:Key="NeutralControlForegroundMutedColor">#555555</Color>
+
+      <Color x:Key="ThemeAccentBrush1Color">#a4a4a4</Color>
+      <Color x:Key="ThemeAccentBrush2Color">#d4d4d4</Color>
+      <Color x:Key="ThemeAccentBrush3Color">#b4b4b4</Color>
+      <Color x:Key="ThemeAccentBrush4Color">#e4e4e4</Color>
       
       <Color x:Key="OverlayBackdropColor">#e1e1e1</Color>
       <Color x:Key="OverlayBackdropBorderColor">#cccccc</Color>
@@ -56,7 +61,12 @@
       <Color x:Key="NeutralControlBorderHoverColor">#666666</Color>
       <Color x:Key="NeutralControlForegroundColor">#dddddd</Color>
       <Color x:Key="NeutralControlForegroundMutedColor">#aaaaaa</Color>
-      
+
+      <Color x:Key="ThemeAccentBrush1Color">#333333</Color>
+      <Color x:Key="ThemeAccentBrush2Color">#444444</Color>
+      <Color x:Key="ThemeAccentBrush3Color">#555555</Color>
+      <Color x:Key="ThemeAccentBrush4Color">#666666</Color>
+
       <Color x:Key="OverlayBackdropColor">#1f1f1f</Color>
       <Color x:Key="OverlayBackdropBorderColor">#333</Color>
 
@@ -70,4 +80,9 @@
     </ResourceDictionary>
   </ResourceDictionary.ThemeDictionaries>
 
+  <!--Redefinition of theme colors-->
+  <SolidColorBrush x:Key="ThemeAccentBrush1" Color="{DynamicResource ThemeAccentBrush1Color}" />
+  <SolidColorBrush x:Key="ThemeAccentBrush2" Color="{DynamicResource ThemeAccentBrush2Color}" />
+  <SolidColorBrush x:Key="ThemeAccentBrush3" Color="{DynamicResource ThemeAccentBrush3Color}" />
+  <SolidColorBrush x:Key="ThemeAccentBrush4" Color="{DynamicResource ThemeAccentBrush4Color}" />
 </ResourceDictionary>

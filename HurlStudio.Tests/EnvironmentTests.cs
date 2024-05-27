@@ -1,6 +1,5 @@
 using HurlStudio.Collections;
-using HurlStudio.Collections.Model.Collection;
-using HurlStudio.Collections.Model.Environment;
+using HurlStudio.Collections.Model;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Collections.Utility;
 using Microsoft.Extensions.Logging;

@@ -266,7 +266,6 @@ namespace HurlStudio.UI.Controls.Tools
 
             _viewModel.IsEnabled = false;
             _editorViewViewModel.Collections.CollectionChanged -= this.On_Collections_CollectionChanged;
-
             _editorViewViewModel.Collections = await _collectionService.GetCollectionContainersAsync();
 
             // Re-Bind events

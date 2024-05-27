@@ -1,12 +1,8 @@
-using HurlStudio.Collections;
-using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Collections.Model;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Collections.Utility;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Console;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
-using static System.Net.WebRequestMethods;
 
 namespace HurlStudio.Tests
 {

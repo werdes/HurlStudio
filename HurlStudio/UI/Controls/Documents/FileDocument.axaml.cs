@@ -5,6 +5,7 @@ using AvaloniaEdit;
 using AvaloniaEdit.TextMate;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Common;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Model.Enums;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.Model.UserSettings;
@@ -14,6 +15,7 @@ using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Editor;
 using HurlStudio.UI.ViewModels.Documents;
 using HurlStudio.UI.Windows;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Logging;
 using SkiaSharp;
 using System;
@@ -130,7 +132,7 @@ namespace HurlStudio.UI.Controls.Documents
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.On_FileDocument_Initialized));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }
@@ -158,11 +160,11 @@ namespace HurlStudio.UI.Controls.Documents
                 HurlSettingSection? fileSection = _viewModel.SettingSections.FirstOrDefault(x => x.SectionType == HurlSettingSectionType.File);
                 if (fileSection == null) return;
 
-                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true));
+                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true, EnableType.Setting));
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.On_FileDocument_Initialized));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }

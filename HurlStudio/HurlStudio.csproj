@@ -70,6 +70,12 @@
     <Compile Update="UI\Controls\CollectionExplorer\Folder.axaml.cs">
       <DependentUpon>Folder.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\Documents\CollectionDocument.axaml.cs">
+      <DependentUpon>CollectionDocument.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\Documents\FolderDocument.axaml.cs">
+      <DependentUpon>FolderDocument.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Documents\WelcomeDocument.axaml.cs">
       <DependentUpon>WelcomeDocument.axaml</DependentUpon>
     </Compile>
@@ -151,6 +157,9 @@
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\VariableSetting.axaml.cs">
       <DependentUpon>VariableSetting.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\AdditionalLocation.axaml.cs">
+      <DependentUpon>AdditionalLocation.axaml</DependentUpon>
     </Compile>
     <Compile Update="UI\Controls\SettingTypeContainer.axaml.cs">
       <DependentUpon>SettingTypeContainer.axaml</DependentUpon>

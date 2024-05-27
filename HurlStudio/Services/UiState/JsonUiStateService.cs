@@ -16,6 +16,8 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using HurlStudio.UI.ViewModels.Documents;
+using Dock.Model.Core;
 
 namespace HurlStudio.Services.UiState
 {
@@ -156,6 +158,23 @@ namespace HurlStudio.Services.UiState
         }
 
         /// <summary>
+        /// Sets a specific collapse state
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="collapsed"></param>
+        public void SetCollectionExplorerCollapseState(string id, bool collapsed)
+        {
+            if (_uiState == null) _uiState = this.GetDefaultUiState();
+
+            if (!_uiState.ExpandedCollectionExplorerComponents.ContainsKey(id))
+            {
+                _uiState.ExpandedCollectionExplorerComponents.Add(id, false);
+            }
+            _uiState.ExpandedCollectionExplorerComponents[id] = collapsed;
+        }
+
+
+        /// <summary>
         /// Builds the ui state from models
         /// </summary>
         private void BuildUiStateCollections(EditorViewViewModel editorViewViewModel)
@@ -246,7 +265,7 @@ namespace HurlStudio.Services.UiState
             if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
             if (id == null) throw new ArgumentNullException(nameof(id));
 
-            if(!_uiState.SettingCollapsedStates.ContainsKey(id))
+            if (!_uiState.SettingCollapsedStates.ContainsKey(id))
             {
                 _uiState.SettingCollapsedStates.Add(id, false);
             }
@@ -274,12 +293,12 @@ namespace HurlStudio.Services.UiState
         /// Sets the opened files
         /// </summary>
         /// <param name="openedFiles"></param>
-        public void SetOpenedFiles(List<string> openedFiles)
+        public void SetOpenedDocuments(List<string> openedFiles)
         {
             if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
 
-            _uiState.OpenedFiles.Clear();
-            _uiState.OpenedFiles.AddRange(openedFiles); 
+            _uiState.OpenedDocuments.Clear();
+            _uiState.OpenedDocuments.AddRange(openedFiles);
         }
 
         /// <summary>
@@ -322,6 +341,24 @@ namespace HurlStudio.Services.UiState
                 _uiState.SettingEnabledStates.Add(id, false);
             }
             _uiState.SettingEnabledStates[id] = visible;
+        }
+
+        /// <summary>
+        /// Sets the active document path
+        /// </summary>
+        /// <param name="documentPath"></param>
+        public void SetActiveDocument(EditorViewViewModel editorViewViewModel)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (editorViewViewModel == null) throw new ArgumentNullException(nameof(editorViewViewModel));
+
+            IDockable? activeDocument = editorViewViewModel.ActiveDocument;
+
+            if (activeDocument is IEditorDocument document &&
+                document.HurlContainer != null)
+            {
+                _uiState.ActiveDocument = document.HurlContainer.GetPath();
+            }
         }
     }
 }

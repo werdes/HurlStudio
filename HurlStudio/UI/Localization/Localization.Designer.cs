@@ -277,6 +277,105 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.AdditionalLocations.Remove.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_AdditionalLocations_Remove_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.AdditionalLocations.Remove.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.AdditionalLocations.SelectFolder.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_AdditionalLocations_SelectFolder_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.AdditionalLocations.SelectFolder.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.AdditionalLocations.Add.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_AdditionalLocations_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.AdditionalLocations.Add.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.AdditionalLocations.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_AdditionalLocations_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.AdditionalLocations.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.ExcludeRootDirectory.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_ExcludeRootDirectory_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.ExcludeRootDirectory.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.Name.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_Name_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.Name.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Properties.Path.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Properties_Path_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Properties.Path.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Settings.Add} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Settings_Add {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Settings.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Settings.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Settings_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Settings.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Collection.Settings.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Collection_Settings_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Collection.Settings.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.ContextMenu.Close} ähnelt.
         /// </summary>
         public static string Dock_Document_ContextMenu_Close {
@@ -331,29 +430,11 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Collection.EmptyList} ähnelt.
-        /// </summary>
-        public static string Dock_Document_File_Settings_Collection_EmptyList {
-            get {
-                return ResourceManager.GetString("Dock.Document.File.Settings.Collection.EmptyList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Collection.Title} ähnelt.
         /// </summary>
         public static string Dock_Document_File_Settings_Collection_Title {
             get {
                 return ResourceManager.GetString("Dock.Document.File.Settings.Collection.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Environment.EmptyList} ähnelt.
-        /// </summary>
-        public static string Dock_Document_File_Settings_Environment_EmptyList {
-            get {
-                return ResourceManager.GetString("Dock.Document.File.Settings.Environment.EmptyList", resourceCulture);
             }
         }
         
@@ -367,29 +448,11 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.File.EmptyList} ähnelt.
-        /// </summary>
-        public static string Dock_Document_File_Settings_File_EmptyList {
-            get {
-                return ResourceManager.GetString("Dock.Document.File.Settings.File.EmptyList", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.File.Title} ähnelt.
         /// </summary>
         public static string Dock_Document_File_Settings_File_Title {
             get {
                 return ResourceManager.GetString("Dock.Document.File.Settings.File.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Folder.EmptyList} ähnelt.
-        /// </summary>
-        public static string Dock_Document_File_Settings_Folder_EmptyList {
-            get {
-                return ResourceManager.GetString("Dock.Document.File.Settings.Folder.EmptyList", resourceCulture);
             }
         }
         
@@ -417,6 +480,60 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Document_File_Settings_Section_ExpandAll_Tooltip {
             get {
                 return ResourceManager.GetString("Dock.Document.File.Settings.Section.ExpandAll.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Properties.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Properties_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Properties.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Properties.Name.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Properties_Name_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Properties.Name.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Properties.Path.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Properties_Path_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Properties.Path.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Settings.Add} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Settings_Add {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Settings.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Settings.EmptyList} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Settings_EmptyList {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Settings.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Folder.Settings.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Folder_Settings_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Folder.Settings.Header", resourceCulture);
             }
         }
         
@@ -565,11 +682,11 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Properties} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Open} ähnelt.
         /// </summary>
-        public static string Dock_Tool_CollectionExplorer_File_Properties {
+        public static string Dock_Tool_CollectionExplorer_File_Open {
             get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Properties", resourceCulture);
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Open", resourceCulture);
             }
         }
         
@@ -2392,6 +2509,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.Duplicate} ähnelt.
+        /// </summary>
+        public static string SettingContainer_ContextMenu_Duplicate {
+            get {
+                return ResourceManager.GetString("SettingContainer.ContextMenu.Duplicate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.MoveToBottom} ähnelt.
         /// </summary>
         public static string SettingContainer_ContextMenu_MoveToBottom {
@@ -2406,6 +2532,15 @@ namespace HurlStudio.UI.Localization {
         public static string SettingContainer_ContextMenu_MoveToTop {
             get {
                 return ResourceManager.GetString("SettingContainer.ContextMenu.MoveToTop", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.ContextMenu.RedefineInFileSettings} ähnelt.
+        /// </summary>
+        public static string SettingContainer_ContextMenu_RedefineInFileSettings {
+            get {
+                return ResourceManager.GetString("SettingContainer.ContextMenu.RedefineInFileSettings", resourceCulture);
             }
         }
         
@@ -2433,6 +2568,33 @@ namespace HurlStudio.UI.Localization {
         public static string SettingContainer_Overwritten_Tooltip {
             get {
                 return ResourceManager.GetString("SettingContainer.Overwritten.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingContainer.UnderlyingSettingDisabled.Tooltip} ähnelt.
+        /// </summary>
+        public static string SettingContainer_UnderlyingSettingDisabled_Tooltip {
+            get {
+                return ResourceManager.GetString("SettingContainer.UnderlyingSettingDisabled.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingSection.ContextMenu.Properties} ähnelt.
+        /// </summary>
+        public static string SettingSection_ContextMenu_Properties {
+            get {
+                return ResourceManager.GetString("SettingSection.ContextMenu.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {SettingSection.EmptyList} ähnelt.
+        /// </summary>
+        public static string SettingSection_EmptyList {
+            get {
+                return ResourceManager.GetString("SettingSection.EmptyList", resourceCulture);
             }
         }
         
@@ -2505,6 +2667,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Editor_MessageBox_UnsavedChanges_Title {
             get {
                 return ResourceManager.GetString("View.Editor.MessageBox.UnsavedChanges.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Editor.Toolbar.ActiveEnvironment.Tooltip} ähnelt.
+        /// </summary>
+        public static string View_Editor_Toolbar_ActiveEnvironment_Tooltip {
+            get {
+                return ResourceManager.GetString("View.Editor.Toolbar.ActiveEnvironment.Tooltip", resourceCulture);
             }
         }
         
@@ -2698,7 +2869,7 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File.Save} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.Menu.File._Save} ähnelt.
         /// </summary>
         public static string View_Main_Menu_File_Save {
             get {
@@ -2752,6 +2923,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.OpeningCollection.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_OpeningCollection_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.OpeningCollection.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.OpeningEnvironment.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_OpeningEnvironment_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.OpeningEnvironment.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.OpeningFile.Text} ähnelt.
         /// </summary>
         public static string View_Main_StatusBar_Status_OpeningFile_Text {
@@ -2761,11 +2950,47 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.OpeningFolder.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_OpeningFolder_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.OpeningFolder.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.SavingCollection.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_SavingCollection_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.SavingCollection.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.SavingEnvironment.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_SavingEnvironment_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.SavingEnvironment.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.SavingFile.Text} ähnelt.
         /// </summary>
         public static string View_Main_StatusBar_Status_SavingFile_Text {
             get {
                 return ResourceManager.GetString("View.Main.StatusBar.Status.SavingFile.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.Main.StatusBar.Status.SavingFolder.Text} ähnelt.
+        /// </summary>
+        public static string View_Main_StatusBar_Status_SavingFolder_Text {
+            get {
+                return ResourceManager.GetString("View.Main.StatusBar.Status.SavingFolder.Text", resourceCulture);
             }
         }
         

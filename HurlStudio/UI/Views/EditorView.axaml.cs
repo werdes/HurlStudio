@@ -5,6 +5,7 @@ using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
+using HurlStudio.Services.UiState;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
@@ -24,14 +25,16 @@ namespace HurlStudio.UI.Views
         private LayoutFactory _layoutFactory;
         private INotificationService _notificationService;
         private IEditorService _editorService;
+        private IUiStateService _uiStateService;
 
-        public EditorView(ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService, IEditorService editorService)
+        public EditorView(ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
         {
             _log = logger;
             _configuration = configuration;
             _layoutFactory = layoutFactory;
             _notificationService = notificationService;
             _editorService = editorService;
+            _uiStateService = uiStateService;
 
             this.DebugFactoryEvents(layoutFactory);
 
@@ -51,7 +54,7 @@ namespace HurlStudio.UI.Views
         private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_viewModel == null) return;
-            
+
             try
             {
                 if (_viewModel.Layout != null)
@@ -61,6 +64,8 @@ namespace HurlStudio.UI.Views
                     _layoutFactory.DockableRemoved += this.On_LayoutFactory_DockableRemoved;
                     _layoutFactory.DockableClosed += this.On_LayoutFactory_DockableClosed;
                 }
+
+                _viewModel.InitializationCompleted = true;
             }
             catch (Exception ex)
             {
@@ -112,23 +117,21 @@ namespace HurlStudio.UI.Views
             _log.LogDebug($"[ActiveDockableChanged] Title='{e.Dockable?.Title}'");
             if (_viewModel == null) return;
 
-            if (e.Dockable is FileDocumentViewModel document)
+            _viewModel.CanRedo = false;
+            _viewModel.CanUndo = false;
+
+            if (e.Dockable is DocumentBase document)
             {
-                if (document.Document != null)
-                {
-                    _viewModel.CanRedo = document.Document.UndoStack.CanRedo;
-                    _viewModel.CanUndo = document.Document.UndoStack.CanUndo;
-                }
-                else
-                {
-                    _viewModel.CanRedo = false;
-                    _viewModel.CanUndo = false;
-                }
+                _viewModel.ActiveDocument = document;
             }
-            else
+
+            if (e.Dockable is FileDocumentViewModel fileDocument)
             {
-                _viewModel.CanRedo = false;
-                _viewModel.CanUndo = false;
+                if (fileDocument.Document != null)
+                {
+                    _viewModel.CanRedo = fileDocument.Document.UndoStack.CanRedo;
+                    _viewModel.CanUndo = fileDocument.Document.UndoStack.CanUndo;
+                }
             }
         }
 
@@ -257,7 +260,7 @@ namespace HurlStudio.UI.Views
         {
             try
             {
-                bool saveResult = await _editorService.SaveCurrentFile();
+                bool saveResult = await _editorService.SaveCurrentDocument();
                 if (!saveResult)
                 {
                     _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);

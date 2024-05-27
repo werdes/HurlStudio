@@ -58,12 +58,14 @@
                 </MenuItem.Icon>
               </MenuItem>
               <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_Save}"
-                        Click="On_MenuItemSave_Click">
+                        Click="On_MenuItemSave_Click"
+                        HotKey="Ctrl+S">
                 <MenuItem.Icon>
                   <c:Icon Width="16" Height="16" Type="Save" />
                 </MenuItem.Icon>
               </MenuItem>
-              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_SaveAll}">
+              <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_SaveAll}"
+                        HotKey="Ctrl+Shift+S">
                 <MenuItem.Icon>
                   <c:Icon Width="16" Height="16" Type="SaveAll" />
                 </MenuItem.Icon>

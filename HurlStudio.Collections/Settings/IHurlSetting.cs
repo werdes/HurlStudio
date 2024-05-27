@@ -13,6 +13,7 @@ namespace HurlStudio.Collections.Settings
         string GetConfigurationValue();
         string GetConfigurationString();
         string GetDisplayString();
+        IHurlSetting Duplicate();
         HurlSettingInheritanceBehavior GetInheritanceBehavior();
 
         bool IsEnabled { get; set; }

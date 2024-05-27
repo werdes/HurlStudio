@@ -6,7 +6,6 @@ using Avalonia.Markup.Xaml;
 using HurlStudio.Common;
 using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.UserSettings;
-using HurlStudio.UI;
 using HurlStudio.UI.Controls;
 using HurlStudio.UI.Localization;
 using HurlStudio.UI.ViewModels;
@@ -55,6 +54,7 @@ using NLog;
 using HurlStudio.Utility;
 using HurlStudio.UI.ViewModels.Windows;
 using ActiproSoftware.Properties.Shared;
+using HurlStudio.UI;
 
 namespace HurlStudio
 {
@@ -201,11 +201,16 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
             controlBuilder.RegisterProviderAssociated<AddSettingView, AddSettingViewViewModel>(() => Services.GetRequiredService<AddSettingView>());
 
-            // Controls
+            // Dock controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
             controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
             controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
             controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
+            controlBuilder.RegisterProviderAssociated<FolderDocument, FolderDocumentViewModel>(() => Services.GetRequiredService<FolderDocument>());
+            controlBuilder.RegisterProviderAssociated<CollectionDocument, CollectionDocumentViewModel>(() => Services.GetRequiredService<CollectionDocument>());
+
+
+            // Controls
             controlBuilder.RegisterProviderAssociated<RecentFile, FileHistoryEntry>(() => Services.GetRequiredService<RecentFile>());
             controlBuilder.RegisterProviderAssociated<NotificationCard, Notification>(() => Services.GetRequiredService<NotificationCard>());
             controlBuilder.RegisterProviderAssociated<SettingSection, HurlSettingSection>(() => Services.GetRequiredService<SettingSection>());
@@ -214,6 +219,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, HurlFileContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
             controlBuilder.RegisterProviderAssociated<Folder, HurlFolderContainer>(() => Services.GetRequiredService<Folder>());
             controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
+            controlBuilder.RegisterProviderAssociated<AdditionalLocation, Collections.Model.Containers.AdditionalLocation>(() => Services.GetRequiredService<AdditionalLocation>());    
 
             // HurlSettings
             controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
@@ -255,6 +261,8 @@ namespace HurlStudio
             // Documents
             documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
             documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
+            documentControlBuilder.RegisterProvider<FolderDocumentViewModel>(() => Services.GetRequiredService<FolderDocumentViewModel>());
+            documentControlBuilder.RegisterProvider<CollectionDocumentViewModel>(() => Services.GetRequiredService<CollectionDocumentViewModel>());
         }
 
         /// <summary>
@@ -308,7 +316,6 @@ namespace HurlStudio
             services.AddSingleton<ICollectionService, CollectionService>();
             services.AddSingleton<IEnvironmentService, EnvironmentService>();
 
-            ConfigureDockControlViewmodels(services);
             ConfigureControls(services);
             ConfigureViewModels(services);
 
@@ -322,6 +329,7 @@ namespace HurlStudio
         /// <param name="services"></param>
         private static void ConfigureViewModels(IServiceCollection services)
         {
+
             // Window view models
             services.AddSingleton<MainWindowViewModel>();
             services.AddTransient<AddSettingWindowViewModel>();
@@ -333,25 +341,20 @@ namespace HurlStudio
             services.AddSingleton<ViewFrameViewModel>();
             services.AddTransient<AddSettingViewViewModel>();
 
-            services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
-                .Register(provider.GetRequiredService<MainViewViewModel>()));
-        }
-
-        /// <summary>
-        /// Configures the tool/document viewmodels
-        /// </summary>
-        /// <param name="services"></param>
-        private static void ConfigureDockControlViewmodels(IServiceCollection services)
-        {
-            // Viewmodel Builders
-            services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
-            services.AddSingleton<ServiceManager<Document>>(provider => new ServiceManager<Document>());
-
-            // View models
+            // Dock view models
             services.AddSingleton<CollectionExplorerToolViewModel>();
             services.AddTransient<FileSettingsToolViewModel>();
             services.AddTransient<FileDocumentViewModel>();
+            services.AddTransient<FolderDocumentViewModel>();
+            services.AddTransient<CollectionDocumentViewModel>();
             services.AddTransient<WelcomeDocumentViewModel>();
+
+
+            // Viewmodel Builders
+            services.AddSingleton<ServiceManager<Tool>>(provider => new ServiceManager<Tool>());
+            services.AddSingleton<ServiceManager<Document>>(provider => new ServiceManager<Document>());
+            services.AddSingleton<ServiceManager<ViewModelBase>>(provider => new ServiceManager<ViewModelBase>()
+                .Register(provider.GetRequiredService<MainViewViewModel>()));
         }
 
         /// <summary>
@@ -374,15 +377,21 @@ namespace HurlStudio
             services.AddSingleton<EditorView>();
             services.AddTransient<AddSettingView>();
 
-            // Controls
+            // Dock controls
             services.AddTransient<CollectionExplorerTool>();
             services.AddTransient<FileSettingsTool>();
             services.AddTransient<FileDocument>();
+            services.AddTransient<FolderDocument>();
+            services.AddTransient<CollectionDocument>();
+            
+
+            // Controls
             services.AddTransient<WelcomeDocument>();
             services.AddTransient<RecentFile>();
             services.AddTransient<NotificationCard>();
             services.AddTransient<SettingSection>();
             services.AddTransient<ViewFrame>();
+            services.AddTransient<AdditionalLocation>();
 
             // Collection Explorer components
             services.AddTransient<Collection>();

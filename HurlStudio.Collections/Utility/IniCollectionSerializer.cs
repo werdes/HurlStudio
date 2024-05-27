@@ -1,5 +1,5 @@
 ﻿using HurlStudio.Collections.Model;
-using HurlStudio.Collections.Model.Collection;
+using HurlStudio.Collections.Model.Containers;
 using HurlStudio.Collections.Model.Serializer;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Common.Enums;
@@ -50,19 +50,19 @@ namespace HurlStudio.Collections.Utility
                 switch (sectionContainer.Type)
                 {
                     case CollectionSectionType.General:
-                        this.DeserializeGeneralSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeGeneralSection(sectionContainer.Lines, collection);
                         break;
                     case CollectionSectionType.AdditionalLocations:
-                        this.DeserializeAdditionalLocationsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeAdditionalLocationsSection(sectionContainer.Lines, collection);
                         break;
                     case CollectionSectionType.CollectionSettings:
-                        this.DeserializeCollectionSettingsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeCollectionSettingsSection(sectionContainer.Lines, collection);
                         break;
                     case CollectionSectionType.FileSettings:
-                        this.DeserializeFileSettingsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeFileSettingsSection(sectionContainer.Lines, collection);
                         break;
                     case CollectionSectionType.FolderSettings:
-                        this.DeserializeFolderSettingsSection(sectionContainer.Lines, ref collection);
+                        this.DeserializeFolderSettingsSection(sectionContainer.Lines, collection);
                         break;
                 }
             }
@@ -75,8 +75,8 @@ namespace HurlStudio.Collections.Utility
         /// Deserializes the folder settings part of the collection
         /// </summary>
         /// <param name="lines">plain text lines of a CollectionSectionType.FolderSettings section container</param>
-        /// <param name="collection">Target collection</param>
-        private void DeserializeFolderSettingsSection(List<string> lines, ref HurlCollection collection)
+        /// <param name="collection">Target collection</param>  
+        private void DeserializeFolderSettingsSection(List<string> lines, HurlCollection collection)
         {
             HurlFolder hurlFolder = new HurlFolder();
 
@@ -109,7 +109,7 @@ namespace HurlStudio.Collections.Utility
         /// <param name="lines">plain text lines of a CollectionSectionType.FileSettings section container</param>
         /// <param name="collection">Target collection</param>
         /// <exception cref="ArgumentNullException">if no location is provided</exception>
-        private void DeserializeFileSettingsSection(List<string> lines, ref HurlCollection collection)
+        private void DeserializeFileSettingsSection(List<string> lines, HurlCollection collection)
         {
             HurlFile hurlFile = new HurlFile();
 
@@ -148,7 +148,7 @@ namespace HurlStudio.Collections.Utility
         /// </summary>
         /// <param name="lines">plain text lines of a CollectionSectionType.Settings section container</param>
         /// <param name="collection">Target collection</param>
-        private void DeserializeCollectionSettingsSection(List<string> lines, ref HurlCollection collection)
+        private void DeserializeCollectionSettingsSection(List<string> lines, HurlCollection collection)
         {
             foreach (string line in lines)
             {
@@ -166,9 +166,9 @@ namespace HurlStudio.Collections.Utility
         /// </summary>
         /// <param name="lines">Plain text lines of a CollectionSectionType.AdditionalLocations section container</param>
         /// <param name="collection">Target collection</param>
-        private void DeserializeAdditionalLocationsSection(List<string> lines, ref HurlCollection collection)
+        private void DeserializeAdditionalLocationsSection(List<string> lines, HurlCollection collection)
         {
-            collection.AdditionalLocations = lines.Where(x => !string.IsNullOrEmpty(x)).ToList();
+            collection.AdditionalLocations = lines.Where(x => !string.IsNullOrEmpty(x)).Select(x => new AdditionalLocation(x.ConvertDirectorySeparator(), collection)).ToObservableCollection();
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace HurlStudio.Collections.Utility
         /// </summary>
         /// <param name="lines">Plain text lines of a CollectionSectionType.General section container</param>
         /// <param name="collection">Target collection</param>
-        private void DeserializeGeneralSection(List<string> lines, ref HurlCollection collection)
+        private void DeserializeGeneralSection(List<string> lines, HurlCollection collection)
         {
             foreach (string line in lines)
             {
@@ -273,9 +273,9 @@ namespace HurlStudio.Collections.Utility
 
             // AdditionalLocations section
             builder.AppendLine(SECTION_ADDITIONALLOCATIONS_HEADER);
-            foreach (string location in collection.AdditionalLocations)
+            foreach (AdditionalLocation location in collection.AdditionalLocations)
             {
-                builder.AppendLine($"{location}");
+                builder.AppendLine($"{location.Path}");
             }
             builder.AppendLine();
 

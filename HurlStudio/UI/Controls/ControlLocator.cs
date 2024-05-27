@@ -11,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HurlStudio.Utility;
+using Avalonia.Controls.Presenters;
+using HurlStudio.Common.UI;
+using Avalonia.VisualTree;
 
 namespace HurlStudio.UI.Controls
 {
@@ -44,7 +48,7 @@ namespace HurlStudio.UI.Controls
                     {
                         control.SetViewModel(data);
 
-                        //_log.LogDebug($"Built {control.GetType().Name} control: {control.GetHashCode()}");
+                        _log.LogTrace($"Built {control.GetType().Name} control: {control.GetHashCode()}");
                         return (Control)control;
                     }
                 }
@@ -62,7 +66,7 @@ namespace HurlStudio.UI.Controls
         /// <returns></returns>
         public bool Match(object? data)
         {
-            if(data == null) return false;
+            if (data == null) return false;
 
             return _controlBuilder.CheckAssociation(data.GetType());
         }

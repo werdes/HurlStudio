@@ -1,15 +1,27 @@
 using Avalonia;
 using Avalonia.Controls;
 using HurlStudio.Collections.Settings;
+using HurlStudio.Common.Extensions;
+using HurlStudio.Model.Enums;
+using HurlStudio.Model.HurlSettings;
+using HurlStudio.Services.Notifications;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace HurlStudio.UI.Controls
 {
     public partial class SettingContainer : ViewModelBasedControl<Model.HurlSettings.HurlSettingContainer>
     {
         private Model.HurlSettings.HurlSettingContainer? _settingContainer;
+        private ILogger _log;
+        private INotificationService _notificationService;
 
-        public SettingContainer()
+        public SettingContainer(ILogger<SettingContainer> logger, INotificationService notificationService)
         {
+            _log = logger;
+            _notificationService = notificationService;
+
             this.InitializeComponent();
         }
 
@@ -28,7 +40,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.Collapsed = !_settingContainer.Collapsed;
+            try
+            {
+                _settingContainer.Collapsed = !_settingContainer.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -40,7 +60,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.Setting.IsEnabled = !_settingContainer.Setting.IsEnabled;
+            try
+            {
+                _settingContainer.Setting.IsEnabled = !_settingContainer.Setting.IsEnabled;
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -52,7 +80,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.IsEnabled = !_settingContainer.IsEnabled;
+            try
+            {
+                _settingContainer.IsEnabled = !_settingContainer.IsEnabled;
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -64,7 +100,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.MoveUp();
+            try
+            {
+                _settingContainer.MoveUp();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -76,7 +120,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.MoveDown();
+            try
+            {
+                _settingContainer.MoveDown();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -88,7 +140,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.MoveToTop();
+            try
+            {
+                _settingContainer.MoveToTop();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -100,7 +160,15 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.MoveToBottom();
+            try
+            {
+                _settingContainer.MoveToBottom();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
@@ -112,7 +180,66 @@ namespace HurlStudio.UI.Controls
         {
             if (_settingContainer == null) return;
 
-            _settingContainer.Document.RemoveSetting(_settingContainer);
+            try
+            {
+                _settingContainer.Document.RemoveSetting(_settingContainer);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
+
+        /// <summary>
+        /// Duplicate a file setting
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemDuplicate_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            try
+            {
+                int currIdx = _settingContainer.Section.SettingContainers.IndexOf(_settingContainer);
+
+                BaseSetting duplicate = (BaseSetting)_settingContainer.Setting.Duplicate();
+
+                _settingContainer.Document.AddSetting(new HurlSettingContainer(_settingContainer.Document, _settingContainer.Section, duplicate, false, true, EnableType.Setting), currIdx + 1);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Copy a setting from an inherited section to file settings
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemRedefineInFileSettings_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingContainer == null) return;
+
+            try
+            {
+                BaseSetting duplicate = (BaseSetting)_settingContainer.Setting.Duplicate();
+                HurlSettingSection? settingSection = _settingContainer.Document.SettingSections.FirstOrDefault(x => x.SectionType == Model.Enums.HurlSettingSectionType.File);
+
+                if (settingSection == null) return;
+
+                _settingContainer.Document.AddSetting(new HurlSettingContainer(_settingContainer.Document, settingSection, duplicate, false, true, EnableType.Setting));
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
     }
 }

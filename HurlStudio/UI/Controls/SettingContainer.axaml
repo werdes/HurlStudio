@@ -41,6 +41,7 @@
         </StackPanel>
       </Button>
       <StackPanel Grid.Column="1"
+                  Background="Transparent"
                   Opacity="{Binding DisplayOpacity}"
                   Orientation="Horizontal">
         <StackPanel.ContextMenu>
@@ -55,6 +56,30 @@
                       Click="On_MenuItemMoveToBottom_Click">
               <MenuItem.Icon>
                 <controls:Icon Type="MoveBottom" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <Separator>
+              <Separator.IsVisible>
+                <MultiBinding Converter="{x:Static BoolConverters.Or}">
+                  <MultiBinding.Bindings>
+                    <Binding Path="IsRedefineInFileSettingsVisible" />
+                    <Binding Path="IsDuplicateVisible" />
+                  </MultiBinding.Bindings>
+                </MultiBinding>
+              </Separator.IsVisible>
+            </Separator>
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_RedefineInFileSettings}"
+                      Click="On_MenuItemRedefineInFileSettings_Click"
+                      IsVisible="{Binding IsRedefineInFileSettingsVisible}">
+              <MenuItem.Icon>
+                <controls:Icon Type="Redefine" />
+              </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static localization:Localization.SettingContainer_ContextMenu_Duplicate}"
+                      Click="On_MenuItemDuplicate_Click"
+                      IsVisible="{Binding IsDuplicateVisible}">
+              <MenuItem.Icon>
+                <controls:Icon Type="Duplicate" />
               </MenuItem.Icon>
             </MenuItem>
             <Separator />
@@ -96,6 +121,9 @@
         <controls:Icon Type="Overwritten"
                        IsVisible="{Binding Overwritten}"
                        ToolTip.Tip="{x:Static localization:Localization.SettingContainer_Overwritten_Tooltip}"/>
+        <controls:Icon Type="Unavailable"
+                       IsVisible="{Binding UnderlyingSettingDisabled}"
+                       ToolTip.Tip="{x:Static localization:Localization.SettingContainer_UnderlyingSettingDisabled_Tooltip}"/>
         <TextBlock Margin="4,0,0,0"
                    VerticalAlignment="Center"
                    TextDecorations="{Binding DisplayTextDecoration}"

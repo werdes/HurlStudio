@@ -1,14 +1,7 @@
-﻿using HurlStudio.Collections.Model.Collection;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Common.Extensions;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Model.HurlContainers
 {
@@ -16,16 +9,18 @@ namespace HurlStudio.Model.HurlContainers
     {
         private HurlCollectionContainer _collectionContainer;
         private HurlFolderContainer? _parentFolder;
-        private HurlFolder? _folder;
+        private HurlFolder _folder;
         private string _location;
         private bool _found;
 
-        public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, string location) : base()
+        public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, HurlFolder folderSettings, string location) : base()
         {
             _collectionContainer = collectionContainer;
             _parentFolder = parentFolder;
             _location = location;
             _found = true;
+            _folder = folderSettings;
+            _folder.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
         public string Location
@@ -38,13 +33,19 @@ namespace HurlStudio.Model.HurlContainers
             }
         }
 
-        public HurlFolder? Folder
+        public HurlFolder Folder
         {
             get => _folder;
             set
             {
                 _folder = value;
                 this.Notify();
+
+                if (_folder != null)
+                {
+                    _folder.ComponentPropertyChanged -= this.On_HurlComponent_ComponentPropertyChanged;
+                    _folder.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
+                }
             }
         }
 
@@ -92,6 +93,15 @@ namespace HurlStudio.Model.HurlContainers
             string id = _collectionContainer.GetId();
             string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.FileLocation) ?? string.Empty, _location);
             return $"{id}#{path}".ToSha256Hash();
+        }
+
+        /// <summary>
+        /// Returns the components' path
+        /// </summary>
+        /// <returns></returns>
+        public override string GetPath()
+        {
+            return _location;
         }
 
         public override string ToString()

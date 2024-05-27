@@ -182,6 +182,12 @@ namespace HurlStudio.UI.Windows
         /// </summary>
         private async void CloseWindow()
         {
+            if (_viewModel != null &&
+                _viewModel.MainViewViewModel.EditorView != null)
+            {
+                _uiStateService.SetActiveDocument(_viewModel.MainViewViewModel.EditorView);
+            }
+
             if (await _editorService.Shutdown())
             {
                 _overrideClose = true;

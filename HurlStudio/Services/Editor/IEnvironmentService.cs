@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Model.Environment;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;

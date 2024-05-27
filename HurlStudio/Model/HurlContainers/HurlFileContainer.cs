@@ -1,13 +1,8 @@
-﻿using HurlStudio.Collections.Model.Collection;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Common.Extensions;
+using HurlStudio.UI.Controls.CollectionExplorer;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.IO;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HurlStudio.Model.HurlContainers
 {
@@ -22,8 +17,9 @@ namespace HurlStudio.Model.HurlContainers
         {
             _collectionFolder = collectionFolder;
             _collectionContainer = collectionFolder.CollectionContainer;
-            _file = fileSettings;
             _location = location;
+            _file = fileSettings;
+            _file.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
         public HurlFolderContainer Folder
@@ -43,6 +39,12 @@ namespace HurlStudio.Model.HurlContainers
             {
                 _file = value;
                 this.Notify();
+
+                if (_file != null)
+                {
+                    _file.ComponentPropertyChanged -= this.On_HurlComponent_ComponentPropertyChanged;
+                    _file.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
+                }
             }
         }
 
@@ -78,6 +80,15 @@ namespace HurlStudio.Model.HurlContainers
             string folderId = _collectionFolder.GetId();
             string fileName = Path.GetFileName(_location);
             return $"{folderId}#{fileName}".ToSha256Hash();
+        }
+
+        /// <summary>
+        /// Returns the components' path
+        /// </summary>
+        /// <returns></returns>
+        public override string GetPath()
+        {
+            return _location;
         }
 
         public override string ToString()

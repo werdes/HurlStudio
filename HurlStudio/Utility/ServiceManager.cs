@@ -4,14 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.UI
+namespace HurlStudio.Utility
 {
     public class ServiceManager<T>
     {
         private readonly Dictionary<Type, T> _instances = new Dictionary<Type, T>();
         private readonly Dictionary<Type, Func<T>> _providers = new Dictionary<Type, Func<T>>();
         private readonly Dictionary<Type, Type> _associations = new Dictionary<Type, Type>();
-        
+
 
         public ServiceManager() { }
 
@@ -154,9 +154,9 @@ namespace HurlStudio.UI
         /// <exception cref="ArgumentException">if the associated type was not found</exception>
         public T GetAssociated(Type associatedType)
         {
-            if(_associations.ContainsKey(associatedType))
+            if (_associations.ContainsKey(associatedType))
             {
-                T instance = this.Get(_associations[associatedType]);
+                T instance = Get(_associations[associatedType]);
 
                 return instance;
             }
@@ -169,14 +169,14 @@ namespace HurlStudio.UI
         /// </summary>
         /// <typeparam name="TService">Service type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public TService Get<TService>() where TService : T => (TService)this.Get(typeof(TService));
+        public TService Get<TService>() where TService : T => (TService)Get(typeof(TService));
 
         /// <summary>
         /// Syntactic sugar for the GetAssociated method
         /// </summary>
         /// <typeparam name="TAssociated">Associated type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public T GetAssociated<TAssociated>() => this.GetAssociated(typeof(TAssociated));
+        public T GetAssociated<TAssociated>() => GetAssociated(typeof(TAssociated));
 
         /// <summary>
         /// Checks, if an associated type is registered

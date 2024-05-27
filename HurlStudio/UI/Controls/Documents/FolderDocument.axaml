@@ -1,0 +1,83 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:cs="clr-namespace:HurlStudio.UI.Controls.HurlSettings;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:ae="using:AvaloniaEdit"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Documents"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="HurlStudio.UI.Controls.Documents.FolderDocument"
+             x:DataType="vm:FolderDocumentViewModel"
+             
+             Initialized="On_FolderDocument_Initialized"
+             Loaded="On_FolderDocument_Loaded">
+  <Grid>
+    <ScrollViewer>
+      <StackPanel Margin="8">
+        <TextBlock Margin="0,5,0,0"
+                   FontSize="18"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                   Text="{x:Static localization:Localization.Dock_Document_Folder_Properties_Header}"/>
+        <!--Properties-->
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+
+          <!--Path-->
+          <Label VerticalAlignment="Center"
+                 Grid.Row="1"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.Dock_Document_Folder_Properties_Path_Label}" />
+
+          <TextBox Classes="framelessTextBox"
+                   Margin="0,0,5,0"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   IsEnabled="False"
+                   Text="{Binding Folder.Location}"
+                   VerticalAlignment="Center" />
+        </Grid>
+
+        <TextBlock Margin="0,5,0,0"
+                   FontSize="18"
+                   VerticalAlignment="Center"
+                   Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                   Text="{x:Static localization:Localization.Dock_Document_Folder_Settings_Header}"/>
+        <!--Settings list-->
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
+          </Grid.RowDefinitions>
+
+          <Border Grid.RowSpan="2"
+                  BorderBrush="{DynamicResource NeutralControlBorderColor}"
+                  BorderThickness="1" />
+
+          <StackPanel Margin="1"
+                      Orientation="Vertical">
+            <ItemsControl ItemsSource="{Binding SettingSections}" />
+          </StackPanel>
+          <Button Grid.Row="1"
+                  Click="On_ButtonAddSetting_Click"
+                  Cursor="Hand">
+            <StackPanel Orientation="Horizontal" >
+              <c:Icon Type="AddSetting" />
+              <TextBlock Text="{x:Static localization:Localization.Dock_Document_Folder_Settings_Add}" />
+            </StackPanel>
+          </Button>
+        </Grid>
+      </StackPanel>
+    </ScrollViewer>
+  </Grid>
+</UserControl>

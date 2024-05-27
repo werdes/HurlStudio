@@ -1,12 +1,15 @@
-﻿using Avalonia.Media;
+﻿using Avalonia.Controls;
+using Avalonia.Media;
 using HurlStudio.Collections.Attributes;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;
+using HurlStudio.Model.Enums;
 using HurlStudio.Model.EventArgs;
 using HurlStudio.Services.UiState;
 using HurlStudio.UI.Controls.Documents;
 using HurlStudio.UI.ViewModels.Documents;
+using HurlStudio.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -36,10 +39,11 @@ namespace HurlStudio.Model.HurlSettings
         private bool _canMove;
         private bool _isEnabled;
         private BaseSetting _setting;
-        private FileDocumentViewModel _document;
+        private IEditorDocument _document;
         private HurlSettingSection _section;
+        private EnableType _enableType;
 
-        public HurlSettingContainer(FileDocumentViewModel document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove)
+        public HurlSettingContainer(IEditorDocument document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove, EnableType enableType)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
@@ -48,6 +52,7 @@ namespace HurlStudio.Model.HurlSettings
             _document = document;
             _section = section;
             _isEnabled = true;
+            _enableType = enableType;
 
             _setting.PropertyChanged += this.On_Setting_PropertyChanged;
             _setting.SettingPropertyChanged += this.On_Setting_SettingPropertyChanged;
@@ -144,9 +149,14 @@ namespace HurlStudio.Model.HurlSettings
             get => _canMove;
         }
 
+        public EnableType EnableType
+        {
+            get => _enableType;
+        }
+
         public bool ChangeEnabledStateInContainer
         {
-            get => _section.SectionType != Enums.HurlSettingSectionType.File;
+            get => _enableType == EnableType.Container;
         }
 
         public bool IsFileSettingSection
@@ -169,21 +179,41 @@ namespace HurlStudio.Model.HurlSettings
             get => _section;
         }
 
-        public FileDocumentViewModel Document
+        public IEditorDocument Document
         {
             get => _document;
         }
 
         public double DisplayOpacity
         {
-            get => (_section.SectionType != Enums.HurlSettingSectionType.File ? !_isEnabled : !_setting.IsEnabled) || _overwritten ? 0.5D : 1D;
+            // Either overwritten or disabled -> 0.5 opacity
+            get => ((_enableType == EnableType.Container) ? (!_isEnabled || !_setting.IsEnabled) : !_setting.IsEnabled) || _overwritten ? 0.5D : 1D;
+        }
+
+        public bool UnderlyingSettingDisabled
+        {
+            get => ((_enableType == EnableType.Container) && !_setting.IsEnabled);
+        }
+
+        public bool IsInFileDocument
+        {
+            get => _document is FileDocumentViewModel;
         }
 
         public TextDecorationCollection? DisplayTextDecoration
         {
-            get => _overwritten ? TextDecorations.Strikethrough : null;
+            // Either overwritten or the setting being disabled despite being enabled/disabled by its container -> strikethrough
+            get => _overwritten || ( _enableType == EnableType.Container && !_setting.IsEnabled ) ? TextDecorations.Strikethrough : null;
         }
 
+        public bool IsRedefineInFileSettingsVisible
+        {
+            get => IsInFileDocument && !IsFileSettingSection;
+        }
+        public bool IsDuplicateVisible
+        {
+            get => IsInFileDocument && IsFileSettingSection;
+        }
 
         public void MoveUp() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Up));
         public void MoveDown() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Down));
@@ -196,7 +226,7 @@ namespace HurlStudio.Model.HurlSettings
             if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(this.Section.CollectionComponent));
             if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
-            string id = _document.File?.GetId() + "#" +
+            string id = _document.GetId() + "#" +
                         _section.CollectionComponent.GetId() + "#" +
                         _section.SettingContainers.IndexOf(this);
             return id.ToSha256Hash();

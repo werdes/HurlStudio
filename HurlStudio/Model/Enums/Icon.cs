@@ -143,7 +143,13 @@ namespace HurlStudio.Model.Enums
         [Icon("search.png")]
         Search,
         [Icon("refresh.png")]
-        Refresh
+        Refresh,
+        [Icon("redefine.png")]
+        Redefine,
+        [Icon("duplicate.png")]
+        Duplicate,
+        [Icon("unavailable.png")]
+        Unavailable
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

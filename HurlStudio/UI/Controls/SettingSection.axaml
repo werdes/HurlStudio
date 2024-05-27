@@ -17,7 +17,7 @@
     <converters:HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter x:Key="HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter" />
     <converters:HurlSettingSectionTypeToIconConverter x:Key="HurlSettingSectionTypeToIconConverter" />
   </UserControl.Resources>
-  <Grid IsVisible="{Binding SettingContainers.Count}">
+  <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
       <RowDefinition />
@@ -36,9 +36,21 @@
         <c:Icon Type="Expanded" IsVisible="{Binding !Collapsed}" />
       </StackPanel>
     </Button>
-    
+
     <StackPanel Orientation="Horizontal"
-                Grid.Column="1">
+                Grid.Column="1"
+                Background="Transparent">
+      <StackPanel.ContextMenu>
+        <ContextMenu IsVisible="{Binding ShowContextMenu}">
+          <MenuItem Header="{x:Static localization:Localization.SettingSection_ContextMenu_Properties}"
+                    Click="On_MenuItemProperties_Click"
+                    IsVisible="{Binding ShowContextMenuPropertiesItem}">
+            <MenuItem.Icon>
+              <c:Icon Type="Properties" />
+            </MenuItem.Icon>
+          </MenuItem>
+        </ContextMenu>
+      </StackPanel.ContextMenu>
       <c:Icon Type="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToIconConverter}}"
               Margin="3"/>
       <Label Content="{Binding SectionType, Converter={StaticResource HurlSettingSectionTypeToLocalizedSettingSectionTitleConverter}}"
@@ -62,9 +74,16 @@
       </Button>
     </StackPanel>
 
-    <ItemsControl ItemsSource="{Binding SettingContainers}"
-                  IsVisible="{Binding !Collapsed}"
-                  Grid.ColumnSpan="3"
-                  Grid.Row="1"/>
+    <StackPanel Grid.ColumnSpan="3"
+                Grid.Row="1" >
+      <ItemsControl ItemsSource="{Binding SettingContainers}"
+                    IsVisible="{Binding !Collapsed}"/>
+
+      <TextBlock IsVisible="{Binding !SettingContainers.Count}"
+                 Text="{x:Static localization:Localization.SettingSection_EmptyList}"
+                 Margin="0,0,0,5"
+                 Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                 HorizontalAlignment="Center" />
+    </StackPanel>
   </Grid>
 </UserControl>

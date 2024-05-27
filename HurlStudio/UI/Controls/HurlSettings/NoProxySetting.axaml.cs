@@ -1,5 +1,5 @@
 using Avalonia.Controls;
-using HurlStudio.Collections.Model.Settings;
+using HurlStudio.Collections.Model.Containers;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Windows;

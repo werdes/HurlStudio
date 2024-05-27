@@ -1,12 +1,6 @@
-﻿using Dock.Model.Core;
-using HurlStudio.Collections.Model.Collection;
-using HurlStudio.Model.HurlContainers;
+﻿using HurlStudio.Model.HurlContainers;
+using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HurlStudio.Services.Editor
@@ -21,13 +15,18 @@ namespace HurlStudio.Services.Editor
         Task<bool> MoveFolderToCollectionRoot(HurlFolderContainer folder, HurlCollectionContainer collection);
         Task OpenInitialDocuments();
         Task LoadInitialUserSettings();
+        Task OpenPath(string documentPath);
         Task OpenFile(string fileLocation, string collectionLocation);
         Task OpenFile(string fileLocation);
+        Task OpenFolder(string folderLocation, string collectionLocation);
+        Task OpenFolder(string folderLocation);
+        Task OpenCollection(string collectionLocation);
         Task<bool> CloseFileDocument(FileDocumentViewModel? fileDocument);
-        Task OpenFolderSettings(HurlFolderContainer folder);
-        Task OpenCollectionSettings(HurlCollectionContainer collection);
         Task<bool> SaveFile(FileDocumentViewModel fileDocument);
-        Task<bool> SaveCurrentFile();
+        Task<bool> SaveFolder(FolderDocumentViewModel folderDocument);
+        Task<bool> SaveCollection(CollectionDocumentViewModel collectionDocument);
+        Task<bool> SaveCurrentDocument();
         Task<bool> Shutdown();
+        Task RefreshCollectionExplorerCollections();
     }
 }

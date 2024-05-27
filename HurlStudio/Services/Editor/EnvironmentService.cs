@@ -1,5 +1,4 @@
-﻿using HurlStudio.Collections.Model.Collection;
-using HurlStudio.Collections.Model.Environment;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
@@ -12,7 +11,6 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 

@@ -1,5 +1,6 @@
 ﻿using HurlStudio.Collections.Model.EventArgs;
 using HurlStudio.Common.Enums;
+using HurlStudio.Common.UI;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -10,7 +11,7 @@ namespace HurlStudio.Collections.Settings
     public abstract class BaseSetting : INotifyPropertyChanged, IHurlSetting
     {
         private const string NAME_VALUE_SEPARATOR = "=";
-        
+
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<SettingPropertyChangedEventArgs>? SettingPropertyChanged;
 
@@ -20,7 +21,7 @@ namespace HurlStudio.Collections.Settings
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-            if(propertyName != nameof(this.DisplayString))
+            if (propertyName != nameof(this.DisplayString))
             {
                 this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
             }
@@ -101,6 +102,22 @@ namespace HurlStudio.Collections.Settings
         private void On_CollectionProperty_Item_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
             this.SettingPropertyChanged?.Invoke(this, new SettingPropertyChangedEventArgs(this));
+        }
+
+        /// <summary>
+        /// Creates a duplicate of the current setting
+        /// </summary>
+        /// <returns></returns>
+        public IHurlSetting Duplicate()
+        {
+            Type currentType = this.GetType();
+            IHurlSetting? duplicateSetting = Activator.CreateInstance(currentType) as IHurlSetting;  
+
+            if(duplicateSetting == null) throw new ArgumentNullException(nameof(duplicateSetting));
+
+            duplicateSetting.FillFromString(this.GetConfigurationValue());
+            duplicateSetting.IsEnabled = this.IsEnabled;
+            return duplicateSetting;
         }
     }
 }

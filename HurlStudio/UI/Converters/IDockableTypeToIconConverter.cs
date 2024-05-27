@@ -17,7 +17,9 @@ namespace HurlStudio.UI.Converters
         {
             if(value is IDockable dockable)
             {
+                if (dockable is CollectionDocumentViewModel) return Icon.Collection;
                 if (dockable is FileDocumentViewModel) return Icon.File;
+                if (dockable is FolderDocumentViewModel) return Icon.FolderClear;
                 if (dockable is WelcomeDocumentViewModel) return Icon.Home;
             }
 

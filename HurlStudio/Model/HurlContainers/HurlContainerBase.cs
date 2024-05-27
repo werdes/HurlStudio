@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using HurlStudio.Collections.Model.EventArgs;
 using HurlStudio.Model.EventArgs;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,13 @@ namespace HurlStudio.Model.HurlContainers
     {
         public event EventHandler<ControlSelectionChangedEventArgs>? ControlSelectionChanged;
         public event EventHandler<HurlContainerMovedEventArgs>? CollectionComponentMoved;
+        public event EventHandler<HurlContainerPropertyChangedEventArgs>? CollectionComponentPropertyChanged;
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected void Notify([CallerMemberName] string propertyName = "")
+        {
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
 
         private bool _selected;
 
@@ -44,12 +49,10 @@ namespace HurlStudio.Model.HurlContainers
         }
 
         protected void On_CollectionComponentHierarchyBase_ControlUnselected(object? sender, ControlSelectionChangedEventArgs e)
-            =>
-                this.ControlSelectionChanged?.Invoke(sender, e);
+            => this.ControlSelectionChanged?.Invoke(sender, e);
         
         protected void On_CollectionComponentHierarchyBase_CollectionComponentMoved(object? sender, HurlContainerMovedEventArgs e)
-            =>
-                this.CollectionComponentMoved?.Invoke(sender, e);
+            => this.CollectionComponentMoved?.Invoke(sender, e);
 
         public void Move(HurlContainerBase target)
         {
@@ -57,6 +60,18 @@ namespace HurlStudio.Model.HurlContainers
             this.CollectionComponentMoved?.Invoke(this, eventArgs);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void On_HurlComponent_ComponentPropertyChanged(object? sender, Collections.Model.EventArgs.HurlComponentPropertyChangedEventArgs e)
+        {
+            HurlContainerPropertyChangedEventArgs eventArgs = new HurlContainerPropertyChangedEventArgs(e.Component);
+            this.CollectionComponentPropertyChanged?.Invoke(this, eventArgs);
+        }
+
         public abstract string GetId();
+        public abstract string GetPath();
     }
 }

@@ -1,36 +1,19 @@
 ﻿using Avalonia.Controls;
-using HurlStudio.UI.Controls;
-using HurlStudio.UI;
-using HurlStudio.UI.ViewModels;
-using Microsoft.Extensions.Configuration;
-using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
-using HurlStudio.Services.UserSettings;
-using HurlStudio.Model.UserSettings;
-using System.Globalization;
-using MsBox.Avalonia;
-using MsBox.Avalonia.Base;
-using MsBox.Avalonia.Enums;
-using HurlStudio.Collections.Utility;
-using HurlStudio.Services.Editor;
-using System.Collections.ObjectModel;
-using HurlStudio.Collections.Model.Collection;
-using HurlStudio.Collections.Model.Environment;
-using Avalonia;
-using Avalonia.Styling;
-using HurlStudio.Model.HurlContainers;
-using HurlStudio.Services.UiState;
 using HurlStudio.Model.UiState;
-using HurlStudio.Common.Extensions;
+using HurlStudio.Model.UserSettings;
+using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
-using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel;
-using System.Linq;
-using HurlStudio.UI.ViewModels.Controls;
+using HurlStudio.Services.UiState;
+using HurlStudio.Services.UserSettings;
+using HurlStudio.UI.Controls;
 using HurlStudio.UI.Dock;
+using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.ViewModels.Controls;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
+using System.Linq;
 
 namespace HurlStudio.UI.Views
 {
@@ -183,7 +166,8 @@ namespace HurlStudio.UI.Views
         }
 
         /// <summary>
-        /// On MenuItem "Save" Click -> Call editor service to save the current file
+        /// On MenuItem "Save" Click -> action depending on current view
+        ///  Call editor service to save the current file
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -191,10 +175,14 @@ namespace HurlStudio.UI.Views
         {
             try
             {
-                bool saveResult = await _editorService.SaveCurrentFile();
-                if (!saveResult)
+                // Save in editor view
+                if (_viewFrameViewModel.SelectedViewModel is EditorViewViewModel editorViewViewModel)
                 {
-                    _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+                    bool saveResult = await _editorService.SaveCurrentDocument();
+                    if (!saveResult)
+                    {
+                        _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
+                    }
                 }
             }
             catch (Exception ex)

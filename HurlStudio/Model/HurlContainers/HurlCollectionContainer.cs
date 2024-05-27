@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Model.Collection;
+﻿using HurlStudio.Collections.Model;
 using HurlStudio.Common.Extensions;
 using System;
 using System.Collections.Generic;
@@ -18,6 +18,7 @@ namespace HurlStudio.Model.HurlContainers
         public HurlCollectionContainer(HurlCollection collection) : base()
         {
             _collection = collection;
+            _collection.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
         public HurlCollection Collection
@@ -27,6 +28,12 @@ namespace HurlStudio.Model.HurlContainers
             {
                 _collection = value;
                 this.Notify();
+
+                if (_collection != null)
+                {
+                    _collection.ComponentPropertyChanged -= this.On_HurlComponent_ComponentPropertyChanged;
+                    _collection.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
+                }
             }
         }
 
@@ -39,6 +46,15 @@ namespace HurlStudio.Model.HurlContainers
         {
             if(_collection.FileLocation == null) throw new ArgumentNullException(nameof(_collection.FileLocation));
             return _collection.FileLocation.ToSha256Hash();
+        }
+
+        /// <summary>
+        /// Returns the components' path
+        /// </summary>
+        /// <returns></returns>
+        public override string GetPath()
+        {
+            return _collection.FileLocation;
         }
 
         public override string ToString()

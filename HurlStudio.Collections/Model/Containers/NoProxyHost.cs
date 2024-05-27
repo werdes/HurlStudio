@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HurlStudio.Collections.Model.Settings
+namespace HurlStudio.Collections.Model.Containers
 {
     public class NoProxyHost : INotifyPropertyChanged
     {

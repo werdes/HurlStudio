@@ -1,4 +1,4 @@
-using HurlStudio.Collections.Model.Settings;
+using HurlStudio.Collections.Model.Containers;
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;

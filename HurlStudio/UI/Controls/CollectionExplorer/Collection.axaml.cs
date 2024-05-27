@@ -1,9 +1,11 @@
 using Avalonia;
 using Avalonia.Controls;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Common.Utility;
 using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
+using HurlStudio.Services.UiState;
 using HurlStudio.UI.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
@@ -16,23 +18,18 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 {
     public partial class Collection : CollectionExplorerControlBase<HurlCollectionContainer>
     {
-        private HurlCollectionContainer CollectionContainer
-        {
-            get => (HurlCollectionContainer)this.GetValue(CollectionContainerProperty);
-            set => this.SetValue(CollectionContainerProperty, value);
-        }
-
-        public static readonly StyledProperty<HurlCollectionContainer> CollectionContainerProperty =
-            AvaloniaProperty.Register<Collection, HurlCollectionContainer>(nameof(CollectionContainer));
+        private HurlCollectionContainer? _collectionContainer;
 
         private ILogger _log;
         private IEditorService _editorService;
         private INotificationService _notificationService;
+        private IUiStateService _uiStateService;
 
-        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService)
+        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
             : base(notificationService, logger)
         {
             _editorService = editorService;
+            _uiStateService = uiStateService;
             _log = logger;
             _notificationService = notificationService;
 
@@ -45,17 +42,17 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="viewModel"></param>
         protected override void SetViewModelInstance(HurlCollectionContainer viewModel)
         {
-            this.CollectionContainer = viewModel;
+            _collectionContainer = viewModel;
+            this.DataContext = _collectionContainer;
         }
 
         /// <summary>
-        /// Set DataContext to provided avalonia property
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void On_Collection_Initialized(object? sender, EventArgs e)
         {
-            this.DataContext = this.CollectionContainer;
+
         }
 
         /// <summary>
@@ -65,17 +62,27 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (this.DataContext == null) return;
-            this.CollectionContainer.Collapsed = !this.CollectionContainer.Collapsed;
+            if (_collectionContainer == null) return;
+
+            try
+            {
+                _collectionContainer.Collapsed = !_collectionContainer.Collapsed;
+                _uiStateService.SetCollectionExplorerCollapseState(_collectionContainer.GetId(), _collectionContainer.Collapsed);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
 
         /// <summary>
         /// Returns the collection container as bound element
         /// </summary>
         /// <returns></returns>
-        protected override HurlContainerBase GetBoundCollectionComponent()
+        protected override HurlContainerBase? GetBoundCollectionComponent()
         {
-            return this.CollectionContainer;
+            return _collectionContainer;
         }
 
         /// <summary>
@@ -84,13 +91,14 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <returns></returns>
         protected override async Task OpenComponentDocument()
         {
+            if (_collectionContainer == null) return;
             try
             {
-                await _editorService.OpenCollectionSettings(this.CollectionContainer);
+                await _editorService.OpenCollection(_collectionContainer.Collection.FileLocation);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }
@@ -102,16 +110,17 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (this.CollectionContainer == null) return;
-            if (this.CollectionContainer.Collection == null) return;
-            if (this.CollectionContainer.Collection.FileLocation == null) return;
+            if (_collectionContainer == null) return;
+            if (_collectionContainer.Collection == null) return;
+            if (_collectionContainer.Collection.FileLocation == null) return;
+
             try
             {
-                OSUtility.RevealFileInExplorer(this.CollectionContainer.Collection.FileLocation);
+                OSUtility.RevealFileInExplorer(_collectionContainer.Collection.FileLocation);
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.OpenComponentDocument));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }

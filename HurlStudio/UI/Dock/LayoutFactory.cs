@@ -10,6 +10,7 @@ using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
 using HurlStudio.UI.ViewModels.Tools;
 using HurlStudio.UI.Views;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MsBox.Avalonia;
@@ -48,6 +49,9 @@ namespace HurlStudio.UI.Dock
             _controlBuilder = controlBuilder;
             _editorViewViewModel = editorViewViewModel;
             _uiStateService = uiStateService;
+
+
+            this.DockableLocator = new Dictionary<string, Func<IDockable?>>();
         }
 
         /// <summary>
@@ -132,6 +136,7 @@ namespace HurlStudio.UI.Dock
             if (_editorViewViewModel != null && _editorViewViewModel.DocumentDock != null)
             {
                 this.AddDockable(_editorViewViewModel.DocumentDock, document);
+                //this.DockableLocator?.Add(document.Id, () => document);
             }
         }
 
@@ -195,6 +200,5 @@ namespace HurlStudio.UI.Dock
 
             task.RunSynchronously();
         }
-
     }
 }

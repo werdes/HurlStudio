@@ -1,6 +1,8 @@
 using Avalonia.Controls;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.HurlSettings;
+using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Tools;
@@ -13,12 +15,14 @@ namespace HurlStudio.UI.Controls
     {
         private readonly ILogger _log;
         private readonly INotificationService _notificationService;
+        private readonly IEditorService _editorService;
         private HurlSettingSection? _settingSection;
 
-        public SettingSection(ILogger<SettingSection> logger, INotificationService notificationService)
+        public SettingSection(ILogger<SettingSection> logger, INotificationService notificationService, IEditorService editorService)
         {
             _log = logger;
             _notificationService = notificationService;
+            _editorService = editorService;
 
             this.InitializeComponent();
         }
@@ -42,7 +46,7 @@ namespace HurlStudio.UI.Controls
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.On_ButtonExpandAll_Click));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }
@@ -60,7 +64,7 @@ namespace HurlStudio.UI.Controls
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.On_ButtonCollapseAll_Click));
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }
@@ -95,7 +99,28 @@ namespace HurlStudio.UI.Controls
             }
             catch (Exception ex)
             {
-                _log.LogCritical(ex, nameof(this.On_ButtonCollapseAll_Click));
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Open the corresponding properties document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemProperties_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_settingSection == null) return;
+            if (_settingSection.CollectionComponent == null) return;
+
+            try
+            {
+                _editorService.OpenPath(_settingSection.CollectionComponent.GetPath());
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
                 _notificationService.Notify(ex);
             }
         }

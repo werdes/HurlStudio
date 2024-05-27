@@ -1,4 +1,4 @@
-﻿using HurlStudio.Collections.Model.Collection;
+﻿using HurlStudio.Collections.Model;
 using System.Text;
 
 namespace HurlStudio.Collections.Utility

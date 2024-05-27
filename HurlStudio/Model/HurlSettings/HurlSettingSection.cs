@@ -12,6 +12,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Collections.Specialized.BitVector32;
+using System.IO;
 
 namespace HurlStudio.Model.HurlSettings
 {
@@ -23,12 +24,12 @@ namespace HurlStudio.Model.HurlSettings
 
         private OrderedObservableCollection<HurlSettingContainer> _settingContainers;
         private HurlContainerBase? _collectionComponent;
-        private FileDocumentViewModel _document;
+        private IEditorDocument _document;
         private HurlSettingSectionType _sectionType;
         private string _sectionSubText;
         private bool _collapsed;
 
-        public HurlSettingSection(FileDocumentViewModel document, HurlSettingSectionType sectionType, HurlContainerBase? collectionComponent)
+        public HurlSettingSection(IEditorDocument document, HurlSettingSectionType sectionType, HurlContainerBase? collectionComponent)
         {
             _settingContainers = new OrderedObservableCollection<HurlSettingContainer>();
 
@@ -38,12 +39,16 @@ namespace HurlStudio.Model.HurlSettings
             
             if(collectionComponent is HurlFolderContainer collectionFolder)
             {
-                _sectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
+                _sectionSubText = (collectionFolder.Folder?.Location ?? string.Empty).ConvertDirectorySeparator();
                 collectionFolder.PropertyChanged += this.On_CollectionFolder_PropertyChanged;
             }
             else if(collectionComponent is HurlEnvironmentContainer environment)
             {
-                _sectionSubText = environment.Environment.Name;
+                _sectionSubText = environment.Environment.Name ?? string.Empty;
+            }
+            else if(collectionComponent is HurlCollectionContainer collection)
+            {
+                _sectionSubText = collection.Collection.Name ?? Path.GetFileName(collection.Collection.FileLocation);
             }
             else
             {
@@ -115,9 +120,19 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        public FileDocumentViewModel Document
+        public IEditorDocument Document
         {
             get => _document;
+        }
+
+        public bool ShowContextMenu
+        {
+            get => this.ShowContextMenuPropertiesItem;
+        }
+
+        public bool ShowContextMenuPropertiesItem
+        {
+            get => _document is FileDocumentViewModel && _sectionType != HurlSettingSectionType.File;
         }
 
         /// <summary>
@@ -127,10 +142,7 @@ namespace HurlStudio.Model.HurlSettings
         /// <exception cref="ArgumentNullException"></exception>
         public string GetId()
         {
-            //if (_collectionComponent == null) throw new ArgumentNullException(nameof(this.CollectionComponent));
-            if (_document.File == null) throw new ArgumentNullException(nameof(_document.File));
-
-            string id = _document.File.GetId() + "#" + _collectionComponent?.GetId();
+            string id = _document.GetId() + "#" + _collectionComponent?.GetId();
             return id.ToSha256Hash();
         }
     }

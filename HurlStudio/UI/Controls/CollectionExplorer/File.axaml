@@ -25,6 +25,11 @@
         PointerPressed="On_TitlePanel_PointerPressed">
     <Grid.ContextMenu>
       <ContextMenu>
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_File_Open}">
+          <MenuItem.Icon>
+            <c:Icon Type="OpenNeutral" Height="16" Width="16" />
+          </MenuItem.Icon>
+        </MenuItem>
         <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_File_Rename}">
           <MenuItem.Icon>
             <c:Icon Type="Rename" Height="16" Width="16" />
@@ -35,11 +40,6 @@
                   Click="On_MenuItem_RevealInExplorer_Click">
           <MenuItem.Icon>
             <c:Icon Type="RevealExplorer" />
-          </MenuItem.Icon>
-        </MenuItem>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_File_Properties}">
-          <MenuItem.Icon>
-            <c:Icon Type="Properties" Height="16" Width="16" />
           </MenuItem.Icon>
         </MenuItem>
       </ContextMenu>

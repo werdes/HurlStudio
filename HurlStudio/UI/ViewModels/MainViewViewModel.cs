@@ -25,13 +25,11 @@ namespace HurlStudio.UI.ViewModels
         private string _statusBarDetail;
 
 
-        private bool _initializationCompleted;
         private ObservableCollection<Notification> _notifications;
 
 
         public MainViewViewModel() : base(typeof(MainView))
         {
-            _initializationCompleted = false;
             _notifications = new ObservableCollection<Notification>();
 
             _statusBarDetail = string.Empty;
@@ -84,15 +82,6 @@ namespace HurlStudio.UI.ViewModels
             }
         }
 
-        public bool InitializationCompleted
-        {
-            get => _initializationCompleted;
-            set
-            {
-                _initializationCompleted = value;
-                this.Notify();
-            }
-        }
 
         public ObservableCollection<Notification> Notifications
         {

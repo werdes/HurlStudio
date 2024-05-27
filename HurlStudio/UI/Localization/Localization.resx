@@ -186,26 +186,17 @@
   <data name="Dock.Document.ContextMenu.CloseRight" xml:space="preserve">
     <value>{Dock.Document.ContextMenu.CloseRight}</value>
   </data>
-  <data name="Dock.Document.File.Settings.Collection.EmptyList" xml:space="preserve">
-    <value>{Dock.Document.File.Settings.Collection.EmptyList}</value>
+  <data name="SettingSection.EmptyList" xml:space="preserve">
+    <value>{SettingSection.EmptyList}</value>
   </data>
   <data name="Dock.Document.File.Settings.Collection.Title" xml:space="preserve">
     <value>{Dock.Document.File.Settings.Collection.Title}</value>
   </data>
-  <data name="Dock.Document.File.Settings.Environment.EmptyList" xml:space="preserve">
-    <value>{Dock.Document.File.Settings.Environment.EmptyList}</value>
-  </data>
   <data name="Dock.Document.File.Settings.Environment.Title" xml:space="preserve">
     <value>{Dock.Document.File.Settings.Environment.Title}</value>
   </data>
-  <data name="Dock.Document.File.Settings.File.EmptyList" xml:space="preserve">
-    <value>{Dock.Document.File.Settings.File.EmptyList}</value>
-  </data>
   <data name="Dock.Document.File.Settings.File.Title" xml:space="preserve">
     <value>{Dock.Document.File.Settings.File.Title}</value>
-  </data>
-  <data name="Dock.Document.File.Settings.Folder.EmptyList" xml:space="preserve">
-    <value>{Dock.Document.File.Settings.Folder.EmptyList}</value>
   </data>
   <data name="Dock.Document.File.Settings.Folder.Title" xml:space="preserve">
     <value>{Dock.Document.File.Settings.Folder.Title}</value>
@@ -258,8 +249,8 @@
   <data name="Dock.Tool.CollectionExplorer.Collection.RevealInExplorer" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Collection.RevealInExplorer}</value>
   </data>
-  <data name="Dock.Tool.CollectionExplorer.File.Properties" xml:space="preserve">
-    <value>{Dock.Tool.CollectionExplorer.File.Properties}</value>
+  <data name="Dock.Tool.CollectionExplorer.File.Open" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.Open}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.File.Rename" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.File.Rename}</value>
@@ -454,7 +445,7 @@
     <value>{View.Main.Menu.File.OpenCollection}</value>
   </data>
   <data name="View.Main.Menu.File.Save" xml:space="preserve">
-    <value>{View.Main.Menu.File.Save}</value>
+    <value>{View.Main.Menu.File._Save}</value>
   </data>
   <data name="View.Main.Menu.File.SaveAll" xml:space="preserve">
     <value>{View.Main.Menu.File.SaveAll}</value>
@@ -1025,5 +1016,89 @@
   </data>
   <data name="View.Loading.ActivityText.OpeningPreviousSessionFiles" xml:space="preserve">
     <value>{View.Loading.ActivityText.OpeningPreviousSessionFiles}</value>
+  </data>
+  <data name="View.Editor.Toolbar.ActiveEnvironment.Tooltip" xml:space="preserve">
+    <value>{View.Editor.Toolbar.ActiveEnvironment.Tooltip}</value>
+  </data>
+  <data name="SettingContainer.ContextMenu.Duplicate" xml:space="preserve">
+    <value>{SettingContainer.ContextMenu.Duplicate}</value>
+  </data>
+  <data name="SettingContainer.ContextMenu.RedefineInFileSettings" xml:space="preserve">
+    <value>{SettingContainer.ContextMenu.RedefineInFileSettings}</value>
+  </data>
+  <data name="Dock.Document.Folder.Properties.Header" xml:space="preserve">
+    <value>{Dock.Document.Folder.Properties.Header}</value>
+  </data>
+  <data name="Dock.Document.Folder.Settings.Add" xml:space="preserve">
+    <value>{Dock.Document.Folder.Settings.Add}</value>
+  </data>
+  <data name="Dock.Document.Folder.Settings.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.Folder.Settings.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.Folder.Settings.Header" xml:space="preserve">
+    <value>{Dock.Document.Folder.Settings.Header}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.OpeningFolder.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.OpeningFolder.Text}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.ExcludeRootDirectory.Label" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.ExcludeRootDirectory.Label}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.Header" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.Header}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.Name.Label" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.Name.Label}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.Path.Label" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.Path.Label}</value>
+  </data>
+  <data name="Dock.Document.Collection.Settings.Add" xml:space="preserve">
+    <value>{Dock.Document.Collection.Settings.Add}</value>
+  </data>
+  <data name="Dock.Document.Collection.Settings.EmptyList" xml:space="preserve">
+    <value>{Dock.Document.Collection.Settings.EmptyList}</value>
+  </data>
+  <data name="Dock.Document.Collection.Settings.Header" xml:space="preserve">
+    <value>{Dock.Document.Collection.Settings.Header}</value>
+  </data>
+  <data name="Dock.Document.Folder.Properties.Name.Label" xml:space="preserve">
+    <value>{Dock.Document.Folder.Properties.Name.Label}</value>
+  </data>
+  <data name="Dock.Document.Folder.Properties.Path.Label" xml:space="preserve">
+    <value>{Dock.Document.Folder.Properties.Path.Label}</value>
+  </data>
+  <data name="SettingContainer.UnderlyingSettingDisabled.Tooltip" xml:space="preserve">
+    <value>{SettingContainer.UnderlyingSettingDisabled.Tooltip}</value>
+  </data>
+  <data name="SettingSection.ContextMenu.Properties" xml:space="preserve">
+    <value>{SettingSection.ContextMenu.Properties}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.OpeningCollection.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.OpeningCollection.Text}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.OpeningEnvironment.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.OpeningEnvironment.Text}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.SavingCollection.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.SavingCollection.Text}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.SavingEnvironment.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.SavingEnvironment.Text}</value>
+  </data>
+  <data name="View.Main.StatusBar.Status.SavingFolder.Text" xml:space="preserve">
+    <value>{View.Main.StatusBar.Status.SavingFolder.Text}</value>
+  </data>
+  <data name="Dock.Document.Collection.AdditionalLocations.Remove.Tooltip" xml:space="preserve">
+    <value>{Dock.Document.Collection.AdditionalLocations.Remove.Tooltip}</value>
+  </data>
+  <data name="Dock.Document.Collection.AdditionalLocations.SelectFolder.Tooltip" xml:space="preserve">
+    <value>{Dock.Document.Collection.AdditionalLocations.SelectFolder.Tooltip}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.AdditionalLocations.Add.Tooltip" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.AdditionalLocations.Add.Tooltip}</value>
+  </data>
+  <data name="Dock.Document.Collection.Properties.AdditionalLocations.Label" xml:space="preserve">
+    <value>{Dock.Document.Collection.Properties.AdditionalLocations.Label}</value>
   </data>
 </root>
