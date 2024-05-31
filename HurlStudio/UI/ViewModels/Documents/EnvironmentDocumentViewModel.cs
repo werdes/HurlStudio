@@ -1,4 +1,5 @@
 ﻿using AvaloniaEdit.Document;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;
 using HurlStudio.Model.Enums;
 using HurlStudio.Model.EventArgs;
@@ -14,19 +15,19 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
-    public class CollectionDocumentViewModel : DocumentBase, IExtendedAsyncDockable, IEditorDocument
+    public class EnvironmentDocumentViewModel : DocumentBase, IExtendedAsyncDockable, IEditorDocument
     {
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingAdded;
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
 
-        private HurlCollectionContainer? _collectionContainer;
+        private HurlEnvironmentContainer? _environmentContainer;
         private EditorViewViewModel _editorViewViewModel;
         private IEditorService _editorService;
         private MainWindow _mainWindow;
         private bool _hasChanges;
         private OrderedObservableCollection<HurlSettingSection> _settingSections;
 
-        public CollectionDocumentViewModel(EditorViewViewModel editorViewViewModel, IEditorService editorService, MainWindow mainWindow)
+        public EnvironmentDocumentViewModel(EditorViewViewModel editorViewViewModel, IEditorService editorService, MainWindow mainWindow)
         {
             this.CanFloat = false;
             this.CanPin = false;
@@ -38,19 +39,19 @@ namespace HurlStudio.UI.ViewModels.Documents
             _mainWindow = mainWindow;
         }
 
-        public HurlCollectionContainer? CollectionContainer
+        public HurlEnvironmentContainer? EnvironmentContainer
         {
-            get => _collectionContainer;
+            get => _environmentContainer;
             set
             {
-                this.SetProperty(ref _collectionContainer, value);
-                if (_collectionContainer != null)
+                this.SetProperty(ref _environmentContainer, value);
+                if (_environmentContainer != null)
                 {
-                    _collectionContainer.PropertyChanged -= this.On_Collection_PropertyChanged;
-                    _collectionContainer.PropertyChanged += this.On_Collection_PropertyChanged;
+                    _environmentContainer.PropertyChanged -= this.On_Environment_PropertyChanged;
+                    _environmentContainer.PropertyChanged += this.On_Environment_PropertyChanged;
 
-                    _collectionContainer.CollectionComponentPropertyChanged -= this.On_Collection_CollectionComponentPropertyChanged;
-                    _collectionContainer.CollectionComponentPropertyChanged += this.On_Collection_CollectionComponentPropertyChanged;
+                    _environmentContainer.CollectionComponentPropertyChanged -= this.On_Environment_CollectionComponentPropertyChanged;
+                    _environmentContainer.CollectionComponentPropertyChanged += this.On_Environment_CollectionComponentPropertyChanged;
                 }
 
                 this.RefreshTitle();
@@ -62,9 +63,9 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_Collection_CollectionComponentPropertyChanged(object? sender, HurlContainerPropertyChangedEventArgs e)
+        private void On_Environment_CollectionComponentPropertyChanged(object? sender, HurlContainerPropertyChangedEventArgs e)
         {
-           this.HasChanges = true;
+            this.HasChanges = true;
         }
 
         public EditorViewViewModel EditorViewViewModel
@@ -100,7 +101,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public HurlContainerBase? HurlContainer
         {
-            get => _collectionContainer;
+            get => _environmentContainer;
         }
 
         /// <summary>
@@ -108,10 +109,16 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// </summary>
         private void RefreshTitle()
         {
-            if (_collectionContainer != null)
+            if (_environmentContainer != null)
             {
-                this.Title = (_collectionContainer.Collection.Name ?? Path.GetFileName(_collectionContainer.Collection.CollectionFileLocation)) +
-                                 (this.HasChanges ? "*" : string.Empty); ;
+                string? title = _environmentContainer.Environment.Name;
+                if(string.IsNullOrEmpty(title))
+                {
+                    title = Path.GetFileName(_environmentContainer.EnvironmentFileLocation);
+                }
+
+                this.Title = title +
+                             (this.HasChanges ? "*" : string.Empty);
             }
             else
             {
@@ -123,18 +130,16 @@ namespace HurlStudio.UI.ViewModels.Documents
         }
 
         /// <summary>
-        /// Refresh Title on Property change of underlying collection
+        /// Refresh Title on Property change of underlying folder
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void On_Collection_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void On_Environment_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            //if (e.PropertyName == nameof(this.Collection.Collection.FileLocation))
-            //{
-            //    //this.RefreshTitle();
-            //}
-
-            this.HasChanges = true;
+            if (e.PropertyName == nameof(this.EnvironmentContainer.Environment.Name))
+            {
+                this.RefreshTitle();
+            }
         }
 
         /// <summary>
@@ -147,7 +152,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
                 _mainWindow,
-                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.CollectionContainer?.Collection.CollectionFileLocation,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + System.Environment.NewLine + this.EnvironmentContainer?.EnvironmentFileLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
                 Icon.MessageBoxWarning
@@ -164,12 +169,12 @@ namespace HurlStudio.UI.ViewModels.Documents
         }
 
         /// <summary>
-        /// Tell the editor service to save the collection
+        /// Tell the editor service to save the folder
         /// </summary>
         /// <returns></returns>
         public async Task Save()
         {
-            await _editorService.SaveCollection(this);
+            await _editorService.SaveEnvironment(this);
         }
 
         public async Task Discard()

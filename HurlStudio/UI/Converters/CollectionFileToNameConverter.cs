@@ -19,7 +19,7 @@ namespace HurlStudio.UI.Converters
                 var collectionFile = (HurlFileContainer)value;
                 if(collectionFile != null)
                 {
-                    string title = collectionFile.File?.FileTitle ?? Path.GetFileName(collectionFile.Location);
+                    string title = collectionFile.File?.FileTitle ?? Path.GetFileName(collectionFile.AbsoluteLocation);
                     return title;
                 }
             }

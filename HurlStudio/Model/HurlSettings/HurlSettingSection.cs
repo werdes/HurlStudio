@@ -39,7 +39,7 @@ namespace HurlStudio.Model.HurlSettings
             
             if(collectionComponent is HurlFolderContainer collectionFolder)
             {
-                _sectionSubText = (collectionFolder.Folder?.Location ?? string.Empty).ConvertDirectorySeparator();
+                _sectionSubText = (collectionFolder.Folder?.FolderLocation ?? string.Empty).ConvertDirectorySeparator();
                 collectionFolder.PropertyChanged += this.On_CollectionFolder_PropertyChanged;
             }
             else if(collectionComponent is HurlEnvironmentContainer environment)
@@ -48,7 +48,7 @@ namespace HurlStudio.Model.HurlSettings
             }
             else if(collectionComponent is HurlCollectionContainer collection)
             {
-                _sectionSubText = collection.Collection.Name ?? Path.GetFileName(collection.Collection.FileLocation);
+                _sectionSubText = collection.Collection.Name ?? Path.GetFileName(collection.Collection.CollectionFileLocation);
             }
             else
             {
@@ -63,9 +63,9 @@ namespace HurlStudio.Model.HurlSettings
         /// <param name="e"></param>
         private void On_CollectionFolder_PropertyChanged(object? sender, PropertyChangedEventArgs e)
         {
-            if(sender != null && sender is HurlFolderContainer collectionFolder && e.PropertyName == nameof(collectionFolder.Location))
+            if(sender != null && sender is HurlFolderContainer collectionFolder && e.PropertyName == nameof(collectionFolder.AbsoluteLocation))
             {
-                this.SectionSubText = collectionFolder.Folder?.Location ?? string.Empty;
+                this.SectionSubText = collectionFolder.Folder?.FolderLocation ?? string.Empty;
             }
         }
 

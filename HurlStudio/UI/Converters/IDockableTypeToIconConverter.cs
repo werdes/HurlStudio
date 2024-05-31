@@ -17,10 +17,14 @@ namespace HurlStudio.UI.Converters
         {
             if(value is IDockable dockable)
             {
-                if (dockable is CollectionDocumentViewModel) return Icon.Collection;
-                if (dockable is FileDocumentViewModel) return Icon.File;
-                if (dockable is FolderDocumentViewModel) return Icon.FolderClear;
-                if (dockable is WelcomeDocumentViewModel) return Icon.Home;
+                switch(dockable.GetType().Name)
+                {
+                    case nameof(CollectionDocumentViewModel): return Icon.Collection;
+                    case nameof(EnvironmentDocumentViewModel): return Icon.Environment;
+                    case nameof(FileDocumentViewModel): return Icon.File;
+                    case nameof(FolderDocumentViewModel): return Icon.FolderClear;
+                    case nameof(WelcomeDocumentViewModel): return Icon.Home;
+                }
             }
 
             return Icon.Blank;

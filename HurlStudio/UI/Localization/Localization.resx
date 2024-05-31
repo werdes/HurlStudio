@@ -280,7 +280,7 @@
     <value>{Dock.Tool.CollectionExplorer.Folder.RevealInExplorer}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.Title" xml:space="preserve">
-    <value>{Dock.Tool.CollectionExplorer.Title}</value>
+    <value>{Collections}</value>
   </data>
   <data name="Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Toolbar.CollapseAll.Tooltip}</value>
@@ -1100,5 +1100,35 @@
   </data>
   <data name="Dock.Document.Collection.Properties.AdditionalLocations.Label" xml:space="preserve">
     <value>{Dock.Document.Collection.Properties.AdditionalLocations.Label}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.Open" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.Open}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.RevealInExplorer" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.RevealInExplorer}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Title" xml:space="preserve">
+    <value>{Environments}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Toolbar.AddEnvironment.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Toolbar.AddEnvironment.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Toolbar.Refresh.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Toolbar.Refresh.Tooltip}</value>
+  </data>
+  <data name="Dock.Document.Environment.Properties.Header" xml:space="preserve">
+    <value>{Dock.Document.Environment.Properties.Header}</value>
+  </data>
+  <data name="Dock.Document.Environment.Properties.Name.Label" xml:space="preserve">
+    <value>{Dock.Document.Environment.Properties.Name.Label}</value>
+  </data>
+  <data name="Dock.Document.Environment.Properties.Path.Label" xml:space="preserve">
+    <value>{Dock.Document.Environment.Properties.Path.Label}</value>
+  </data>
+  <data name="Dock.Document.Environment.Settings.Add" xml:space="preserve">
+    <value>{Dock.Document.Environment.Settings.Add}</value>
+  </data>
+  <data name="Dock.Document.Environment.Settings.Header" xml:space="preserve">
+    <value>{Dock.Document.Environment.Settings.Header}</value>
   </data>
 </root>

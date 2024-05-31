@@ -47,7 +47,7 @@ namespace HurlStudio.Tests
             // Folder HurlSettings
             Assert.IsTrue(collection.FolderSettings.Count == 1);
             Assert.IsNotNull(collection.FolderSettings.FirstOrDefault());
-            Assert.IsTrue(collection.FolderSettings.FirstOrDefault()?.Location == "../HurlFiles/");
+            Assert.IsTrue(collection.FolderSettings.FirstOrDefault()?.FolderLocation == "../HurlFiles/");
             Assert.IsInstanceOfType(collection.FolderSettings.FirstOrDefault()?.FolderSettings[0], typeof(VariableSetting));
             VariableSetting? variableSetting1 = (VariableSetting?)collection.FolderSettings.FirstOrDefault()?.FolderSettings[0];
             VariableSetting? variableSetting2 = (VariableSetting?)collection.FolderSettings.FirstOrDefault()?.FolderSettings[1];

@@ -16,31 +16,31 @@ namespace HurlStudio.Model.HurlSettings
         public event PropertyChangedEventHandler? PropertyChanged;
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 
-        private OrderedObservableCollection<HurlSettingContainer> _containers;
-        private HurlFolderContainer _collectionFolder;
+        private OrderedObservableCollection<HurlSettingContainer> _settingContainers;
+        private HurlFolderContainer _folderContainer;
 
         public FolderSettingContainer(HurlFolderContainer folder)
         {
-            _containers = new OrderedObservableCollection<HurlSettingContainer>();
-            _collectionFolder = folder;
+            _settingContainers = new OrderedObservableCollection<HurlSettingContainer>();
+            _folderContainer = folder;
         }
 
-        public OrderedObservableCollection<HurlSettingContainer> Containers
+        public OrderedObservableCollection<HurlSettingContainer> SettingContainers
         {
-            get => _containers;
+            get => _settingContainers;
             set
             {
-                _containers = value;
+                _settingContainers = value;
                 this.Notify();
             }
         }
 
-        public HurlFolderContainer Folder
+        public HurlFolderContainer FolderContainer
         {
-            get => _collectionFolder;
+            get => _folderContainer;
             set
             {
-                _collectionFolder = value;
+                _folderContainer = value;
                 this.Notify();
             }
         }

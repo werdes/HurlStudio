@@ -138,7 +138,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             if (_file != null)
             {
-                this.Title = Path.GetFileName(_file.Location) +
+                this.Title = Path.GetFileName(_file.AbsoluteLocation) +
                              (this.HasChanges ? "*" : string.Empty);
             }
             else
@@ -157,7 +157,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="e"></param>
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.File.Location))
+            if (e.PropertyName == nameof(this.File.AbsoluteLocation))
             {
                 this.RefreshTitle();
             }
@@ -188,7 +188,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
                 _mainWindow,
-                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.File?.Location,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.File?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
                 Icon.MessageBoxWarning
@@ -225,7 +225,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <exception cref="ArgumentException">If the settings' section isn't part of this document</exception>
         public void AddSetting(HurlSettingContainer settingContainer, int idx = 0)
         {
-            HurlSettingSection section = settingContainer.Section;
+            HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
 
             section.SettingContainers.Insert(idx, settingContainer);
@@ -241,7 +241,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <exception cref="ArgumentException">If the settings' section isn't part of this document</exception>
         public void RemoveSetting(HurlSettingContainer settingContainer)
         {
-            HurlSettingSection section = settingContainer.Section;
+            HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
             if (!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
 

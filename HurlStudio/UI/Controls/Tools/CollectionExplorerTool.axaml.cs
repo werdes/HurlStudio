@@ -79,6 +79,8 @@ namespace HurlStudio.UI.Controls.Tools
         /// <param name="collectionContainer"></param>
         private void BindCollectionEvents(HurlCollectionContainer collectionContainer)
         {
+            collectionContainer.ControlSelectionChanged -= this.On_CollectionContainer_ControlSelectionChanged;
+            collectionContainer.CollectionComponentMoved -= this.On_CollectionContainer_CollectionComponentMoved;
             collectionContainer.ControlSelectionChanged += this.On_CollectionContainer_ControlSelectionChanged;
             collectionContainer.CollectionComponentMoved += this.On_CollectionContainer_CollectionComponentMoved;
         }
@@ -196,7 +198,7 @@ namespace HurlStudio.UI.Controls.Tools
                          collectionFolder != null)
                 {
                     // Check if the target folder is in a different collection than the source file
-                    if (collectionFile.Folder.CollectionContainer == collectionFolder.CollectionContainer)
+                    if (collectionFile.FolderContainer.CollectionContainer == collectionFolder.CollectionContainer)
                     {
                         await _editorService.MoveFileToFolder(collectionFile, collectionFolder);
                     }

@@ -32,9 +32,9 @@ using TextMateSharp.Registry;
 
 namespace HurlStudio.UI.Controls.Documents
 {
-    public partial class CollectionDocument : ViewModelBasedControl<CollectionDocumentViewModel>
+    public partial class EnvironmentDocument : ViewModelBasedControl<EnvironmentDocumentViewModel>
     {
-        private CollectionDocumentViewModel? _viewModel;
+        private EnvironmentDocumentViewModel? _viewModel;
         private MainWindow _mainWindow;
         private IEditorService _editorService;
         private ILogger _log;
@@ -44,7 +44,7 @@ namespace HurlStudio.UI.Controls.Documents
         private TextEditor? _textEditor;
         private bool _initializationCompleted = false;
 
-        public CollectionDocument(IEditorService editorService, MainWindow mainWindow, ILogger<CollectionDocument> logger, INotificationService notificationService, IUserSettingsService userSettingsService, ServiceManager<Windows.WindowBase> windowBuilder)
+        public EnvironmentDocument(IEditorService editorService, MainWindow mainWindow, ILogger<FolderDocument> logger, INotificationService notificationService, IUserSettingsService userSettingsService, ServiceManager<Windows.WindowBase> windowBuilder)
         {
             _editorService = editorService;
             _notificationService = notificationService;
@@ -56,7 +56,7 @@ namespace HurlStudio.UI.Controls.Documents
             this.InitializeComponent();
         }
 
-        protected override void SetViewModelInstance(CollectionDocumentViewModel viewModel)
+        protected override void SetViewModelInstance(EnvironmentDocumentViewModel viewModel)
         {
             _viewModel = viewModel;
             this.DataContext = _viewModel;
@@ -68,10 +68,10 @@ namespace HurlStudio.UI.Controls.Documents
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private async void On_CollectionDocument_Initialized(object? sender, EventArgs e)
+        private async void On_EnvironmentDocument_Initialized(object? sender, EventArgs e)
         {
             if (_viewModel == null) return;
-            if (_viewModel.CollectionContainer == null) return;
+            if (_viewModel.EnvironmentContainer == null) return;
 
             try
             {
@@ -83,7 +83,7 @@ namespace HurlStudio.UI.Controls.Documents
             }
         }
 
-        private void On_CollectionDocument_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        private void On_EnvironmentDocument_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             _initializationCompleted = true;
         }
@@ -104,31 +104,10 @@ namespace HurlStudio.UI.Controls.Documents
                 if (setting == null) return;
 
 
-                HurlSettingSection? collectionSection = _viewModel.SettingSections.FirstOrDefault(x => x.SectionType == HurlSettingSectionType.Collection);
-                if (collectionSection == null) return;
+                HurlSettingSection? environmentSection = _viewModel.SettingSections.FirstOrDefault(x => x.SectionType == HurlSettingSectionType.Environment);
+                if (environmentSection == null) return;
 
-                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, collectionSection, setting, false, true, EnableType.Setting));
-            }
-            catch (Exception ex)
-            {
-                _log.LogException(ex);
-                _notificationService.Notify(ex);
-            }
-        }
-
-        /// <summary>
-        /// Adds an empty row to the collection
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private async void On_ButtonAddAdditionalLocation_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
-        {
-            if (_viewModel == null) return;
-            if (_viewModel.CollectionContainer == null) return;
-
-            try
-            {
-                _viewModel.CollectionContainer.Collection.AdditionalLocations.Add(new Collections.Model.Containers.AdditionalLocation(string.Empty, _viewModel.CollectionContainer.Collection));
+                _viewModel.AddSetting(new HurlSettingContainer(_viewModel, environmentSection, setting, false, true, EnableType.Setting));
             }
             catch (Exception ex)
             {

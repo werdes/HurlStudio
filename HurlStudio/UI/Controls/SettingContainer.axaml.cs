@@ -202,11 +202,11 @@ namespace HurlStudio.UI.Controls
 
             try
             {
-                int currIdx = _settingContainer.Section.SettingContainers.IndexOf(_settingContainer);
+                int currIdx = _settingContainer.SettingSection.SettingContainers.IndexOf(_settingContainer);
 
                 BaseSetting duplicate = (BaseSetting)_settingContainer.Setting.Duplicate();
 
-                _settingContainer.Document.AddSetting(new HurlSettingContainer(_settingContainer.Document, _settingContainer.Section, duplicate, false, true, EnableType.Setting), currIdx + 1);
+                _settingContainer.Document.AddSetting(new HurlSettingContainer(_settingContainer.Document, _settingContainer.SettingSection, duplicate, false, true, EnableType.Setting), currIdx + 1);
             }
             catch (Exception ex)
             {

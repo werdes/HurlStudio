@@ -37,7 +37,7 @@ namespace HurlStudio.Model.HurlContainers
         }
 
 
-        public string FileLocation
+        public string EnvironmentFileLocation
         {
             get => _fileLocation;
             set
@@ -60,7 +60,7 @@ namespace HurlStudio.Model.HurlContainers
         {
             if (_enviroment == null) throw new ArgumentNullException(nameof(this.Environment));
 
-            return _enviroment.FileLocation.ToSha256Hash();
+            return _enviroment.EnvironmentFileLocation.ToSha256Hash();
         }
     }
 }

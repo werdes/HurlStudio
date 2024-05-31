@@ -1,0 +1,45 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Tools;assembly=HurlStudio"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:DataType="vm:EnvironmentExplorerToolViewModel"
+             x:Class="HurlStudio.UI.Controls.Tools.EnvironmentExplorerTool"
+             Initialized="On_EnvironmentExplorerTool_Initialized">
+  <Grid IsEnabled="{Binding IsEnabled}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="25" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Panel Grid.Row="0">
+      <DockPanel HorizontalAlignment="Left">
+        <TextBlock
+          Margin="5,1,1,1"
+          VerticalAlignment="Center"
+          Text="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Title}" />
+      </DockPanel>
+
+      <DockPanel HorizontalAlignment="Right" Margin="0,1,1,1"
+                 Background="{DynamicResource WindowBackgroundColor}">
+        <Button Classes="toolbarButton"
+                Click="On_ButtonRefresh_Click"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Toolbar_Refresh_Tooltip }">
+          <c:Icon Type="Refresh" />
+        </Button>
+        <Button Classes="toolbarButton"
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Toolbar_AddEnvironment_Tooltip }">
+          <c:Icon Type="AddEnvironment" />
+        </Button>
+      </DockPanel>
+    </Panel>
+
+    <ScrollViewer Grid.Row="1">
+      <ItemsControl ItemsSource="{Binding EditorViewModel.Environments}" Margin="1" />
+    </ScrollViewer>
+  </Grid>
+</UserControl>

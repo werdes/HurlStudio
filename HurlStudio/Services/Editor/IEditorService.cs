@@ -7,12 +7,12 @@ namespace HurlStudio.Services.Editor
 {
     public interface IEditorService
     {
-        Task<bool> MoveFileToFolder(HurlFileContainer collectionFile, HurlFolderContainer folder);
-        Task<bool> MoveFileToCollection(HurlFileContainer collectionFile, HurlFolderContainer parentFolder, HurlCollectionContainer collection);
-        Task<bool> MoveFileToCollectionRoot(HurlFileContainer collectionFile, HurlCollectionContainer collection);
-        Task<bool> MoveFolderToCollection(HurlFolderContainer folder, HurlFolderContainer parentFolder, HurlCollectionContainer collection);
-        Task<bool> MoveFolderToFolder(HurlFolderContainer folder, HurlFolderContainer parentFolder);
-        Task<bool> MoveFolderToCollectionRoot(HurlFolderContainer folder, HurlCollectionContainer collection);
+        Task<bool> MoveFileToFolder(HurlFileContainer fileContainer, HurlFolderContainer folderContainer);
+        Task<bool> MoveFileToCollection(HurlFileContainer fileContainer, HurlFolderContainer parentFolderContainer, HurlCollectionContainer collectionContainer);
+        Task<bool> MoveFileToCollectionRoot(HurlFileContainer fileContainer, HurlCollectionContainer collectionContainer);
+        Task<bool> MoveFolderToCollection(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer, HurlCollectionContainer collectionContainer);
+        Task<bool> MoveFolderToFolder(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer);
+        Task<bool> MoveFolderToCollectionRoot(HurlFolderContainer folderContainer, HurlCollectionContainer collectionContainer);
         Task OpenInitialDocuments();
         Task LoadInitialUserSettings();
         Task OpenPath(string documentPath);
@@ -21,12 +21,17 @@ namespace HurlStudio.Services.Editor
         Task OpenFolder(string folderLocation, string collectionLocation);
         Task OpenFolder(string folderLocation);
         Task OpenCollection(string collectionLocation);
+        Task OpenEnvironment(string environmentLocation);
         Task<bool> CloseFileDocument(FileDocumentViewModel? fileDocument);
         Task<bool> SaveFile(FileDocumentViewModel fileDocument);
         Task<bool> SaveFolder(FolderDocumentViewModel folderDocument);
         Task<bool> SaveCollection(CollectionDocumentViewModel collectionDocument);
+        Task<bool> SaveEnvironment(EnvironmentDocumentViewModel environmentDocument);
         Task<bool> SaveCurrentDocument();
         Task<bool> Shutdown();
         Task RefreshCollectionExplorerCollections();
+        Task RefreshCollectionExplorerCollection(string collectionLocation);
+        Task RefreshEnvironmentExplorerEnvironments();
+        Task RefreshEnvironmentExplorerEnvironment(string environmentLocation);
     }
 }

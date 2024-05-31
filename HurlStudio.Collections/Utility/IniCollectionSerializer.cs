@@ -87,7 +87,7 @@ namespace HurlStudio.Collections.Utility
                 if (line.StartsWith(locationKey))
                 {
                     // Folder path
-                    hurlFolder.Location = line.Split('=').Get(1) ?? string.Empty;
+                    hurlFolder.FolderLocation = line.Split('=').Get(1) ?? string.Empty;
                 }
                 else
                 {
@@ -291,7 +291,7 @@ namespace HurlStudio.Collections.Utility
             foreach (HurlFolder hurlFolder in collection.FolderSettings)
             {
                 builder.AppendLine(SECTION_FOLDER_SETTINGS_HEADER);
-                builder.AppendLine($"{SECTION_FOLDER_SETTINGS_LOCATION_KEY}={hurlFolder.Location}");
+                builder.AppendLine($"{SECTION_FOLDER_SETTINGS_LOCATION_KEY}={hurlFolder.FolderLocation}");
                 foreach (IHurlSetting folderSetting in hurlFolder.FolderSettings)
                 {
                     builder.AppendLine(folderSetting.GetConfigurationString());

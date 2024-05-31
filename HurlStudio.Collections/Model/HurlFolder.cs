@@ -12,24 +12,25 @@ namespace HurlStudio.Collections.Model
     public class HurlFolder : HurlComponentBase
     {
         private ObservableCollection<IHurlSetting> _folderSettings;
-        private string _location;
+        private string _folderLocation;
 
         public HurlFolder()
         {
+            _folderLocation = string.Empty;
             _folderSettings = new ObservableCollection<IHurlSetting>();
         }
 
         public HurlFolder(string location) : this()
         {
-            _location = location;
+            _folderLocation = location;
         }
 
-        public string Location
+        public string FolderLocation
         {
-            get => _location;
+            get => _folderLocation;
             set
             {
-                _location = value;
+                _folderLocation = value;
                 this.Notify();
             }
         }
@@ -52,7 +53,7 @@ namespace HurlStudio.Collections.Model
 
         public override string ToString()
         {
-            return $"{this.Location}";
+            return $"{this.FolderLocation}";
         }
     }
 }

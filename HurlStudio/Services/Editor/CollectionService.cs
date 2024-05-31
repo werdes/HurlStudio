@@ -83,7 +83,7 @@ namespace HurlStudio.Services.Editor
             {
                 collectionContainer.Collapsed = collapsed;
             }
-            string collectionRootPath = Path.GetDirectoryName(collection.FileLocation) ?? throw new ArgumentNullException(nameof(collection.FileLocation));
+            string collectionRootPath = Path.GetDirectoryName(collection.CollectionFileLocation) ?? throw new ArgumentNullException(nameof(collection.CollectionFileLocation));
 
             // Root location
             if (!collection.ExcludeRootDirectory)
@@ -172,7 +172,7 @@ namespace HurlStudio.Services.Editor
             {
                 // Get path of the directory relative to the location of the collection file
                 string relativeDirectoryPathToCollectionRoot = Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, location));
-                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.Location.ConvertDirectorySeparator()) == relativeDirectoryPathToCollectionRoot).FirstOrDefault();
+                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) == relativeDirectoryPathToCollectionRoot).FirstOrDefault();
                 if (folderSettings == null)
                 {
                     folderSettings = new HurlFolder(relativeDirectoryPathToCollectionRoot);
@@ -183,7 +183,7 @@ namespace HurlStudio.Services.Editor
             {
                 // For additional locations, take the absolute path
                 string absoluteDirectoryPath = location;
-                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.Location.ConvertDirectorySeparator()) == absoluteDirectoryPath).FirstOrDefault();
+                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) == absoluteDirectoryPath).FirstOrDefault();
                 if (folderSettings == null)
                 {
                     folderSettings = new HurlFolder(absoluteDirectoryPath);

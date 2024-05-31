@@ -17,7 +17,7 @@ namespace HurlStudio.Collections.Model
         private ObservableCollection<IHurlSetting> _collectionSettings;
         private ObservableCollection<HurlFile> _fileSettings;
         private ObservableCollection<HurlFolder> _folderSettings;
-        private string _fileLocation;
+        private string _collectionFileLocation;
         private bool _excludeRootDirectory;
 
         public HurlCollection(string fileLocation)
@@ -27,15 +27,15 @@ namespace HurlStudio.Collections.Model
             _collectionSettings = new ObservableCollection<IHurlSetting>();
             _fileSettings = new ObservableCollection<HurlFile>();
             _folderSettings = new ObservableCollection<HurlFolder>();
-            _fileLocation = fileLocation;
+            _collectionFileLocation = fileLocation;
         }
 
-        public string FileLocation
+        public string CollectionFileLocation
         {
-            get => _fileLocation;
+            get => _collectionFileLocation;
             set
             {
-                _fileLocation = value;
+                _collectionFileLocation = value;
                 this.Notify();
             }
         }
@@ -125,7 +125,7 @@ namespace HurlStudio.Collections.Model
         }
         public override string ToString()
         {
-            return $"{FileLocation}, {Name}";
+            return $"{CollectionFileLocation}, {Name}";
         }
     }
 }

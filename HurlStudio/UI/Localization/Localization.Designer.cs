@@ -421,6 +421,51 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Environment.Properties.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Environment_Properties_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Environment.Properties.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Environment.Properties.Name.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Environment_Properties_Name_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Environment.Properties.Name.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Environment.Properties.Path.Label} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Environment_Properties_Path_Label {
+            get {
+                return ResourceManager.GetString("Dock.Document.Environment.Properties.Path.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Environment.Settings.Add} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Environment_Settings_Add {
+            get {
+                return ResourceManager.GetString("Dock.Document.Environment.Settings.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.Environment.Settings.Header} ähnelt.
+        /// </summary>
+        public static string Dock_Document_Environment_Settings_Header {
+            get {
+                return ResourceManager.GetString("Dock.Document.Environment.Settings.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Document.File.Settings.Add} ähnelt.
         /// </summary>
         public static string Dock_Document_File_Settings_Add {
@@ -772,7 +817,7 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Title} ähnelt.
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Collections} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Title {
             get {
@@ -831,6 +876,51 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_Toolbar_Refresh_Tooltip {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Toolbar.Refresh.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.Open} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_Open {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.RevealInExplorer} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_RevealInExplorer {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.RevealInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Environments} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Title {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Toolbar.AddEnvironment.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Toolbar_AddEnvironment_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Toolbar.AddEnvironment.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Toolbar.Refresh.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Toolbar_Refresh_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Toolbar.Refresh.Tooltip", resourceCulture);
             }
         }
         

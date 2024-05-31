@@ -93,7 +93,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                await _editorService.OpenFolder(_collectionFolder.Location);
+                await _editorService.OpenFolder(_collectionFolder.AbsoluteLocation);
             }
             catch (Exception ex)
             {
@@ -110,11 +110,31 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_collectionFolder == null) return;
-            if (_collectionFolder.Location == null) return;
+            if (_collectionFolder.AbsoluteLocation == null) return;
 
             try
             {
-                OSUtility.RevealFileInExplorer(_collectionFolder.Location);
+                OSUtility.RevealFileInExplorer(_collectionFolder.AbsoluteLocation);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens the collection document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_Properties_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_collectionFolder == null) return;
+
+            try
+            {
+                await _editorService.OpenFolder(_collectionFolder.AbsoluteLocation);
             }
             catch (Exception ex)
             {

@@ -203,11 +203,12 @@ namespace HurlStudio
 
             // Dock controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
-            controlBuilder.RegisterProviderAssociated<FileSettingsTool, FileSettingsToolViewModel>(() => Services.GetRequiredService<FileSettingsTool>());
+            controlBuilder.RegisterProviderAssociated<EnvironmentExplorerTool, EnvironmentExplorerToolViewModel>(() => Services.GetRequiredService<EnvironmentExplorerTool>());
             controlBuilder.RegisterProviderAssociated<FileDocument, FileDocumentViewModel>(() => Services.GetRequiredService<FileDocument>());
             controlBuilder.RegisterProviderAssociated<WelcomeDocument, WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocument>());
             controlBuilder.RegisterProviderAssociated<FolderDocument, FolderDocumentViewModel>(() => Services.GetRequiredService<FolderDocument>());
             controlBuilder.RegisterProviderAssociated<CollectionDocument, CollectionDocumentViewModel>(() => Services.GetRequiredService<CollectionDocument>());
+            controlBuilder.RegisterProviderAssociated<EnvironmentDocument, EnvironmentDocumentViewModel>(() => Services.GetRequiredService<EnvironmentDocument>());
 
 
             // Controls
@@ -218,6 +219,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<Collection, HurlCollectionContainer>(() => Services.GetRequiredService<Collection>());
             controlBuilder.RegisterProviderAssociated<UI.Controls.CollectionExplorer.File, HurlFileContainer>(() => Services.GetRequiredService<UI.Controls.CollectionExplorer.File>());
             controlBuilder.RegisterProviderAssociated<Folder, HurlFolderContainer>(() => Services.GetRequiredService<Folder>());
+            controlBuilder.RegisterProviderAssociated<UI.Controls.EnvironmentExplorer.Environment, HurlEnvironmentContainer>(() => Services.GetRequiredService<UI.Controls.EnvironmentExplorer.Environment>());
             controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
             controlBuilder.RegisterProviderAssociated<AdditionalLocation, Collections.Model.Containers.AdditionalLocation>(() => Services.GetRequiredService<AdditionalLocation>());    
 
@@ -257,12 +259,14 @@ namespace HurlStudio
 
             // Tools
             toolControlBuilder.RegisterProvider<CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerToolViewModel>());
+            toolControlBuilder.RegisterProvider<EnvironmentExplorerToolViewModel>(() => Services.GetRequiredService<EnvironmentExplorerToolViewModel>());
 
             // Documents
             documentControlBuilder.RegisterProvider<FileDocumentViewModel>(() => Services.GetRequiredService<FileDocumentViewModel>());
             documentControlBuilder.RegisterProvider<WelcomeDocumentViewModel>(() => Services.GetRequiredService<WelcomeDocumentViewModel>());
             documentControlBuilder.RegisterProvider<FolderDocumentViewModel>(() => Services.GetRequiredService<FolderDocumentViewModel>());
             documentControlBuilder.RegisterProvider<CollectionDocumentViewModel>(() => Services.GetRequiredService<CollectionDocumentViewModel>());
+            documentControlBuilder.RegisterProvider<EnvironmentDocumentViewModel>(() => Services.GetRequiredService<EnvironmentDocumentViewModel>());
         }
 
         /// <summary>
@@ -343,10 +347,11 @@ namespace HurlStudio
 
             // Dock view models
             services.AddSingleton<CollectionExplorerToolViewModel>();
-            services.AddTransient<FileSettingsToolViewModel>();
+            services.AddSingleton<EnvironmentExplorerToolViewModel>();
             services.AddTransient<FileDocumentViewModel>();
             services.AddTransient<FolderDocumentViewModel>();
             services.AddTransient<CollectionDocumentViewModel>();
+            services.AddTransient<EnvironmentDocumentViewModel>();
             services.AddTransient<WelcomeDocumentViewModel>();
 
 
@@ -379,10 +384,11 @@ namespace HurlStudio
 
             // Dock controls
             services.AddTransient<CollectionExplorerTool>();
-            services.AddTransient<FileSettingsTool>();
+            services.AddTransient<EnvironmentExplorerTool>();
             services.AddTransient<FileDocument>();
             services.AddTransient<FolderDocument>();
             services.AddTransient<CollectionDocument>();
+            services.AddTransient<EnvironmentDocument>();
             
 
             // Controls
@@ -397,6 +403,7 @@ namespace HurlStudio
             services.AddTransient<Collection>();
             services.AddTransient<UI.Controls.CollectionExplorer.File>();
             services.AddTransient<Folder>();
+            services.AddTransient<UI.Controls.EnvironmentExplorer.Environment>();
 
             // Hurl Settings
             services.AddTransient<SettingContainer>();

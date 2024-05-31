@@ -26,6 +26,7 @@ namespace HurlStudio.UI.Dock
     public class LayoutFactory : Factory
     {
         private const string COLLECTION_EXPLORER_TOOL_ID = "COLLECTIONEXPLORER";
+        private const string ENVIRONMENT_EXPLORER_TOOL_ID = "ENVIRONMENTEXPLORER";
         private const string FILE_SETTINGS_TOOL_ID = "FILESETTINGS";
         private const string DOCUMENT_DOCK_ID = "DOCUMENTS";
         private const string MAIN_DOCK_ID = "MAINDOCK";
@@ -64,6 +65,10 @@ namespace HurlStudio.UI.Dock
             collectionExplorer.Id = COLLECTION_EXPLORER_TOOL_ID;
             collectionExplorer.IsEnabled = true;
 
+            EnvironmentExplorerToolViewModel environmentExplorer = _toolLayoutBuilder.Get<EnvironmentExplorerToolViewModel>();
+            environmentExplorer.Id = ENVIRONMENT_EXPLORER_TOOL_ID;
+            environmentExplorer.IsEnabled = true;
+
             Model.UiState.UiState? uiState = _uiStateService.GetUiState(false);
             double collectionExplorerProportion = uiState?.CollectionExplorerProportion ?? 0.2D;
 
@@ -71,7 +76,6 @@ namespace HurlStudio.UI.Dock
             {
                 Proportion = collectionExplorerProportion,
                 Orientation = Orientation.Vertical,
-                ActiveDockable = collectionExplorer,
                 FocusedDockable = null,
                 CanClose = false,
                 CanFloat = false,
@@ -82,7 +86,17 @@ namespace HurlStudio.UI.Dock
                     {
                         IsCollapsable = false,
                         ActiveDockable = collectionExplorer,
-                        GripMode = GripMode.Hidden
+                        GripMode = GripMode.Hidden,
+                        Proportion = .8
+                    },
+                    new ProportionalDockSplitter(), 
+                    new ToolDock()
+                    {
+                        IsCollapsable = false,
+                        Alignment = Alignment.Bottom,
+                        ActiveDockable = environmentExplorer,
+                        GripMode= GripMode.Hidden,
+                        Proportion = .2
                     }
                 )
             };

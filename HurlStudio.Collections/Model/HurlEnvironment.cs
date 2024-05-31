@@ -11,27 +11,27 @@ namespace HurlStudio.Collections.Model
     public class HurlEnvironment : HurlComponentBase
     {
         private string? _name;
-        private string _fileLocation;
-        private ObservableCollection<IHurlSetting> _settings;
+        private string _environmentFileLocation;
+        private ObservableCollection<IHurlSetting> _environmentSettings;
 
         public HurlEnvironment(string location)
         {
-            _fileLocation = location;
-            _settings = new ObservableCollection<IHurlSetting>();
+            _environmentFileLocation = location;
+            _environmentSettings = new ObservableCollection<IHurlSetting>();
         }
 
-        public ObservableCollection<IHurlSetting> Settings
+        public ObservableCollection<IHurlSetting> EnvironmentSettings
         {
-            get => _settings;
+            get => _environmentSettings;
             set
             {
-                _settings = value;
+                _environmentSettings = value;
                 this.Notify();
 
-                if (_settings != null)
+                if (_environmentSettings != null)
                 {
-                    _settings.CollectionChanged -= this.On_GenericCollection_CollectionChanged;
-                    _settings.CollectionChanged += this.On_GenericCollection_CollectionChanged;
+                    _environmentSettings.CollectionChanged -= this.On_GenericCollection_CollectionChanged;
+                    _environmentSettings.CollectionChanged += this.On_GenericCollection_CollectionChanged;
                 }
             }
         }
@@ -46,12 +46,12 @@ namespace HurlStudio.Collections.Model
             }
         }
 
-        public string FileLocation
+        public string EnvironmentFileLocation
         {
-            get => _fileLocation;
+            get => _environmentFileLocation;
             set
             {
-                _fileLocation = value;
+                _environmentFileLocation = value;
                 this.Notify();
             }
         }

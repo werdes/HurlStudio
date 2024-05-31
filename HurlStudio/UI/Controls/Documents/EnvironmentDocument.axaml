@@ -9,11 +9,11 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
-             x:Class="HurlStudio.UI.Controls.Documents.FolderDocument"
-             x:DataType="vm:FolderDocumentViewModel"
+             x:Class="HurlStudio.UI.Controls.Documents.EnvironmentDocument"
+             x:DataType="vm:EnvironmentDocumentViewModel"
              
-             Initialized="On_FolderDocument_Initialized"
-             Loaded="On_FolderDocument_Loaded">
+             Initialized="On_EnvironmentDocument_Initialized"
+             Loaded="On_EnvironmentDocument_Loaded">
   <Grid>
     <ScrollViewer>
       <StackPanel Margin="8">
@@ -21,24 +21,42 @@
                    FontSize="18"
                    VerticalAlignment="Center"
                    Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
-                   Text="{x:Static localization:Localization.Dock_Document_Folder_Properties_Header}"/>
+                   Text="{x:Static localization:Localization.Dock_Document_Environment_Properties_Header}"/>
         <!--Properties-->
         <Grid>
           <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition />
           </Grid.ColumnDefinitions>
-          
-          <!--Path-->
-          <Label VerticalAlignment="Center"
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+          <!--Name-->
+          <Label VerticalAlignment="Top"
                  Foreground="{DynamicResource NeutralControlForegroundColor}"
-                 Content="{x:Static localization:Localization.Dock_Document_Folder_Properties_Path_Label}" />
+                 Content="{x:Static localization:Localization.Dock_Document_Environment_Properties_Name_Label}" />
 
           <TextBox Classes="framelessTextBox"
                    Margin="0,0,5,0"
                    Grid.Column="1"
+                   Text="{Binding EnvironmentContainer.Environment.Name}"
+                   VerticalAlignment="Center" />
+
+
+          <!--Path-->
+          <Label VerticalAlignment="Center"
+                 Grid.Row="1"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.Dock_Document_Environment_Properties_Path_Label}" />
+
+          <TextBox Classes="framelessTextBox"
+                   Margin="0,0,5,0"
+                   Grid.Row="1"
+                   Grid.Column="1"
                    IsEnabled="False"
-                   Text="{Binding Folder.AbsoluteLocation}"
+                   Text="{Binding EnvironmentContainer.EnvironmentFileLocation}"
                    VerticalAlignment="Center" />
         </Grid>
 
@@ -46,7 +64,8 @@
                    FontSize="18"
                    VerticalAlignment="Center"
                    Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
-                   Text="{x:Static localization:Localization.Dock_Document_Folder_Settings_Header}"/>
+                   Text="{x:Static localization:Localization.Dock_Document_Environment_Settings_Header}"/>
+        
         <!--Settings list-->
         <Grid>
           <Grid.RowDefinitions>
@@ -67,7 +86,7 @@
                   Cursor="Hand">
             <StackPanel Orientation="Horizontal" >
               <c:Icon Type="AddSetting" />
-              <TextBlock Text="{x:Static localization:Localization.Dock_Document_Folder_Settings_Add}" />
+              <TextBlock Text="{x:Static localization:Localization.Dock_Document_Environment_Settings_Add}" />
             </StackPanel>
           </Button>
         </Grid>

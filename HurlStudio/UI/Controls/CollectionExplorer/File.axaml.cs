@@ -67,11 +67,11 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         protected override async Task OpenComponentDocument()
         {
             if (_collectionFile == null) return;
-            if (_collectionFile.Collection.Collection.FileLocation == null) return;
+            if (_collectionFile.CollectionContainer.Collection.CollectionFileLocation == null) return;
 
             try
             {
-                await _editorService.OpenFile(_collectionFile.Location, _collectionFile.Collection.Collection.FileLocation);
+                await _editorService.OpenFile(_collectionFile.AbsoluteLocation, _collectionFile.CollectionContainer.Collection.CollectionFileLocation);
             }
             catch (Exception ex)
             {
@@ -88,10 +88,10 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_collectionFile == null) return;
-            if (_collectionFile.Location == null) return;
+            if (_collectionFile.AbsoluteLocation == null) return;
             try
             {
-                OSUtility.RevealFileInExplorer(_collectionFile.Location);
+                OSUtility.RevealFileInExplorer(_collectionFile.AbsoluteLocation);
             }
             catch (Exception ex)
             {

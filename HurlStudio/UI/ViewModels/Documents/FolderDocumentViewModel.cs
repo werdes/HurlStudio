@@ -111,10 +111,10 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             if (_folder != null)
             {
-                string? collectionRootFolder = Path.GetDirectoryName(_folder.CollectionContainer.Collection.FileLocation);
+                string? collectionRootFolder = Path.GetDirectoryName(_folder.CollectionContainer.Collection.CollectionFileLocation);
 
                 if (collectionRootFolder != null) {
-                    string folderPath = Path.TrimEndingDirectorySeparator(_folder.Folder.Location).ConvertDirectorySeparator();
+                    string folderPath = Path.TrimEndingDirectorySeparator(_folder.Folder.FolderLocation).ConvertDirectorySeparator();
 
                     this.Title = folderPath +
                                  (this.HasChanges ? "*" : string.Empty);
@@ -140,7 +140,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="e"></param>
         private void On_Folder_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Folder.Location))
+            if (e.PropertyName == nameof(this.Folder.AbsoluteLocation))
             {
                 this.RefreshTitle();
             }
@@ -156,7 +156,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
                 _mainWindow,
-                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.Folder?.Location,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.Folder?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
                 Icon.MessageBoxWarning
@@ -192,7 +192,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="settingContainer">The setting to be added</param>
         public void AddSetting(HurlSettingContainer settingContainer, int idx = 0)
         {
-            HurlSettingSection section = settingContainer.Section;
+            HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
 
             section.SettingContainers.Insert(idx, settingContainer);
@@ -208,7 +208,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <exception cref="ArgumentException">If the settings' section isn't part of this document</exception>
         public void RemoveSetting(HurlSettingContainer settingContainer)
         {
-            HurlSettingSection section = settingContainer.Section;
+            HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
             if (!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
 

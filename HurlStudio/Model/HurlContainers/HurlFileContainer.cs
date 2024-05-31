@@ -8,26 +8,26 @@ namespace HurlStudio.Model.HurlContainers
 {
     public class HurlFileContainer : HurlContainerBase
     {
-        private HurlFolderContainer _collectionFolder;
+        private HurlFolderContainer _folderContainer;
         private HurlCollectionContainer _collectionContainer;
         private HurlFile _file;
-        private string _location;
+        private string _absoluteLocation;
 
         public HurlFileContainer(HurlFolderContainer collectionFolder, HurlFile fileSettings, string location)
         {
-            _collectionFolder = collectionFolder;
+            _folderContainer = collectionFolder;
             _collectionContainer = collectionFolder.CollectionContainer;
-            _location = location;
+            _absoluteLocation = location;
             _file = fileSettings;
             _file.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
-        public HurlFolderContainer Folder
+        public HurlFolderContainer FolderContainer
         {
-            get => _collectionFolder;
+            get => _folderContainer;
             set
             {
-                _collectionFolder = value;
+                _folderContainer = value;
                 this.Notify();
             }
         }
@@ -48,7 +48,7 @@ namespace HurlStudio.Model.HurlContainers
             }
         }
 
-        public HurlCollectionContainer Collection
+        public HurlCollectionContainer CollectionContainer
         {
             get => _collectionContainer;
             set
@@ -58,12 +58,12 @@ namespace HurlStudio.Model.HurlContainers
             }
         }
 
-        public string Location
+        public string AbsoluteLocation
         {
-            get => _location;
+            get => _absoluteLocation;
             set
             {
-                _location = value;
+                _absoluteLocation = value;
                 this.Notify();
             }
         }
@@ -75,10 +75,10 @@ namespace HurlStudio.Model.HurlContainers
         /// <exception cref="ArgumentNullException">if the containing folder is null</exception>
         public override string GetId()
         {
-            if (_collectionFolder == null) throw new ArgumentNullException(nameof(this.Folder));
+            if (_folderContainer == null) throw new ArgumentNullException(nameof(this.FolderContainer));
 
-            string folderId = _collectionFolder.GetId();
-            string fileName = Path.GetFileName(_location);
+            string folderId = _folderContainer.GetId();
+            string fileName = Path.GetFileName(_absoluteLocation);
             return $"{folderId}#{fileName}".ToSha256Hash();
         }
 
@@ -88,7 +88,7 @@ namespace HurlStudio.Model.HurlContainers
         /// <returns></returns>
         public override string GetPath()
         {
-            return _location;
+            return _absoluteLocation;
         }
 
         public override string ToString()

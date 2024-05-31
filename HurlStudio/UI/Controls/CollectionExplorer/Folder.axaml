@@ -51,7 +51,8 @@
             <c:Icon Type="RevealExplorer" />
           </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Properties}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Properties}"
+                  Click="On_MenuItem_Properties_Click">
           <MenuItem.Icon>
             <c:Icon Type="Properties" />
           </MenuItem.Icon>
@@ -88,7 +89,7 @@
            PointerPressed="On_TitlePanel_PointerPressed">
       <TextBlock Margin="4,0,0,0" 
                  VerticalAlignment="Center" 
-                 Text="{Binding Path=Location, Converter={StaticResource PathToDirectoryNameConverter}}" />
+                 Text="{Binding Path=AbsoluteLocation, Converter={StaticResource PathToDirectoryNameConverter}}" />
 
       <!--Action Buttons-->
       <DockPanel HorizontalAlignment="Right" VerticalAlignment="Center">

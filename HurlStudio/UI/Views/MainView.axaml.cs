@@ -99,7 +99,7 @@ namespace HurlStudio.UI.Views
                 // Load enviroments
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
                 _viewModel.EditorView.Environments = await _environmentService.GetEnvironmentContainersAsync();
-                _viewModel.EditorView.ActiveEnvironment = _viewModel.EditorView.Environments.FirstOrDefault(x => x.FileLocation == uiState?.ActiveEnvironmentFile) ?? _viewModel.EditorView.Environments.FirstOrDefault();
+                _viewModel.EditorView.ActiveEnvironment = _viewModel.EditorView.Environments.FirstOrDefault(x => x.EnvironmentFileLocation == uiState?.ActiveEnvironmentFile) ?? _viewModel.EditorView.Environments.FirstOrDefault();
 
                 // Load collections and open files from previous session
                 _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;

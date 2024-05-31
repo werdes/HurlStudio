@@ -149,7 +149,9 @@ namespace HurlStudio.Model.Enums
         [Icon("duplicate.png")]
         Duplicate,
         [Icon("unavailable.png")]
-        Unavailable
+        Unavailable,
+        [Icon("add_environment.png")]
+        AddEnvironment
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

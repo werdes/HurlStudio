@@ -73,6 +73,9 @@
     <Compile Update="UI\Controls\Documents\CollectionDocument.axaml.cs">
       <DependentUpon>CollectionDocument.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\Documents\EnvironmentDocument.axaml.cs">
+      <DependentUpon>EnvironmentDocument.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Documents\FolderDocument.axaml.cs">
       <DependentUpon>FolderDocument.axaml</DependentUpon>
     </Compile>
@@ -81,6 +84,9 @@
     </Compile>
     <Compile Update="UI\Controls\Documents\FileDocument.axaml.cs">
       <DependentUpon>FileDocument.axaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\Controls\EnvironmentExplorer\Environment.axaml.cs">
+      <DependentUpon>Environment.axaml</DependentUpon>
     </Compile>
     <Compile Update="UI\Controls\HurlSettings\VariablesFileSetting.axaml.cs">
       <DependentUpon>VariablesFileSetting.axaml</DependentUpon>
@@ -164,11 +170,11 @@
     <Compile Update="UI\Controls\SettingTypeContainer.axaml.cs">
       <DependentUpon>SettingTypeContainer.axaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\Controls\Tools\EnvironmentExplorerTool.axaml.cs">
+      <DependentUpon>EnvironmentExplorerTool.axaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\Controls\Tools\CollectionExplorerTool.axaml.cs">
       <DependentUpon>CollectionExplorerTool.axaml</DependentUpon>
-    </Compile>
-    <Compile Update="UI\Controls\Tools\FileSettingsTool.axaml.cs">
-      <DependentUpon>FileSettingsTool.axaml</DependentUpon>
     </Compile>
     <Compile Update="UI\Localization\Localization.Designer.cs">
       <DesignTime>True</DesignTime>

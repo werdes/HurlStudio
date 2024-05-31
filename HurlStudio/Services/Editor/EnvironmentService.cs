@@ -3,6 +3,7 @@ using HurlStudio.Collections.Utility;
 using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Model.HurlContainers;
+using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -41,10 +42,33 @@ namespace HurlStudio.Services.Editor
             return await _environmentSerializer.DeserializeFileAsync(enviromentLocation, Encoding.UTF8);
         }
 
+        /// <summary>
+        /// Creates an environment container from an environment
+        /// </summary>
+        /// <param name="enviroment"></param>
+        /// <returns></returns>
         public async Task<HurlEnvironmentContainer> GetEnvironmentContainerAsync(HurlEnvironment enviroment)
         {
-            return new HurlEnvironmentContainer(enviroment, enviroment.FileLocation);
+            HurlEnvironmentContainer environmentContainer = new HurlEnvironmentContainer(enviroment, enviroment.EnvironmentFileLocation);
+            await this.SetEnvironmentContainerAsync(environmentContainer, enviroment);
+
+            return environmentContainer;
         }
+
+        /// <summary>
+        /// Fills an environment container
+        /// </summary>
+        /// <param name="environmentContainer"></param>
+        /// <param name="environment"></param>
+        /// <returns></returns>
+        public async Task<HurlEnvironmentContainer> SetEnvironmentContainerAsync(HurlEnvironmentContainer environmentContainer, HurlEnvironment environment)
+        {
+            environmentContainer.Environment = environment;
+            environmentContainer.EnvironmentFileLocation = environment.EnvironmentFileLocation;
+
+            return environmentContainer;    
+        }
+
 
         /// <summary>
         /// Returns a list of available environment containers
@@ -93,14 +117,27 @@ namespace HurlStudio.Services.Editor
         }
 
         /// <summary>
+        /// Serializes an environment at the given path
+        /// </summary>
+        /// <param name="environment"></param>
+        /// <param name="environmentLocation"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task StoreEnvironmentAsync(HurlEnvironment environment, string environmentLocation)
+        {
+            _log.LogDebug($"Storing environment [{environment.Name}] to [{environmentLocation}]");
+            await _environmentSerializer.SerializeFileAsync(environment, environmentLocation, Encoding.UTF8);
+        }
+
+        /// <summary>
         /// Creates a default environment file
         /// </summary>
         /// <returns></returns>
         private async Task<string> BuildDefaultEnvironment()
         {
             HurlEnvironment hurlEnvironment = this.GetDefaultEnvironment();
-            await _environmentSerializer.SerializeFileAsync(hurlEnvironment, hurlEnvironment.FileLocation, Encoding.UTF8);
-            return hurlEnvironment.FileLocation;
+            await _environmentSerializer.SerializeFileAsync(hurlEnvironment, hurlEnvironment.EnvironmentFileLocation, Encoding.UTF8);
+            return hurlEnvironment.EnvironmentFileLocation;
         }
 
         /// <summary>

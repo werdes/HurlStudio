@@ -40,17 +40,17 @@ namespace HurlStudio.Model.HurlSettings
         private bool _isEnabled;
         private BaseSetting _setting;
         private IEditorDocument _document;
-        private HurlSettingSection _section;
+        private HurlSettingSection _settingSection;
         private EnableType _enableType;
 
-        public HurlSettingContainer(IEditorDocument document, HurlSettingSection section, BaseSetting setting, bool isReadOnly, bool canMove, EnableType enableType)
+        public HurlSettingContainer(IEditorDocument document, HurlSettingSection settingSection, BaseSetting setting, bool isReadOnly, bool canMove, EnableType enableType)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
             _canMove = canMove;
             _setting = setting;
             _document = document;
-            _section = section;
+            _settingSection = settingSection;
             _isEnabled = true;
             _enableType = enableType;
 
@@ -94,7 +94,7 @@ namespace HurlStudio.Model.HurlSettings
             // Reevaluate, when IsEnabled setting is changed
             if (e.PropertyName == nameof(_setting.IsEnabled))
             {
-                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_setting.IsEnabled, _section.SectionType));
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_setting.IsEnabled, _settingSection.SectionType));
                 this.Notify(nameof(this.DisplayOpacity)); 
             }
         }
@@ -117,7 +117,7 @@ namespace HurlStudio.Model.HurlSettings
                 _isEnabled = value;
                 this.Notify();
                 this.Notify(nameof(this.DisplayOpacity));
-                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_isEnabled, _section.SectionType));
+                this.SettingEnabledChanged?.Invoke(this, new SettingEnabledChangedEventArgs(_isEnabled, _settingSection.SectionType));
             }
         }
 
@@ -161,7 +161,7 @@ namespace HurlStudio.Model.HurlSettings
 
         public bool IsFileSettingSection
         {
-            get => _section.SectionType == Enums.HurlSettingSectionType.File;
+            get => _settingSection.SectionType == Enums.HurlSettingSectionType.File;
         }
 
         public BaseSetting Setting
@@ -174,9 +174,9 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        public HurlSettingSection Section
+        public HurlSettingSection SettingSection
         {
-            get => _section;
+            get => _settingSection;
         }
 
         public IEditorDocument Document
@@ -222,13 +222,13 @@ namespace HurlStudio.Model.HurlSettings
 
         public string GetId()
         {
-            if (_section == null) throw new ArgumentNullException(nameof(this.Section));
-            if (_section.CollectionComponent == null) throw new ArgumentNullException(nameof(this.Section.CollectionComponent));
-            if (!_section.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
+            if (_settingSection == null) throw new ArgumentNullException(nameof(this.SettingSection));
+            if (_settingSection.CollectionComponent == null) throw new ArgumentNullException(nameof(this.SettingSection.CollectionComponent));
+            if (!_settingSection.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
             string id = _document.GetId() + "#" +
-                        _section.CollectionComponent.GetId() + "#" +
-                        _section.SettingContainers.IndexOf(this);
+                        _settingSection.CollectionComponent.GetId() + "#" +
+                        _settingSection.SettingContainers.IndexOf(this);
             return id.ToSha256Hash();
         }
     }

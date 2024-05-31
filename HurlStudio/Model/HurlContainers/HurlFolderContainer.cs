@@ -8,27 +8,27 @@ namespace HurlStudio.Model.HurlContainers
     public class HurlFolderContainer : HurlContainerHierarchyBase
     {
         private HurlCollectionContainer _collectionContainer;
-        private HurlFolderContainer? _parentFolder;
+        private HurlFolderContainer? _parentFolderContainer;
         private HurlFolder _folder;
-        private string _location;
+        private string _absoluteLocation;
         private bool _found;
 
         public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, HurlFolder folderSettings, string location) : base()
         {
             _collectionContainer = collectionContainer;
-            _parentFolder = parentFolder;
-            _location = location;
+            _parentFolderContainer = parentFolder;
+            _absoluteLocation = location;
             _found = true;
             _folder = folderSettings;
             _folder.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
-        public string Location
+        public string AbsoluteLocation
         {
-            get => _location;
+            get => _absoluteLocation;
             set
             {
-                _location = value;
+                _absoluteLocation = value;
                 this.Notify();
             }
         }
@@ -59,12 +59,12 @@ namespace HurlStudio.Model.HurlContainers
             }
         }
 
-        public HurlFolderContainer? ParentFolder
+        public HurlFolderContainer? ParentFolderContainer
         {
-            get => _parentFolder;
+            get => _parentFolderContainer;
             set
             {
-                _parentFolder = value;
+                _parentFolderContainer = value;
                 this.Notify();
             }
         }
@@ -88,10 +88,10 @@ namespace HurlStudio.Model.HurlContainers
         {
             if (_collectionContainer == null) throw new ArgumentNullException(nameof(this.CollectionContainer));
             if (_collectionContainer.Collection == null) throw new ArgumentNullException(nameof(this.CollectionContainer.Collection));
-            if (_collectionContainer.Collection.FileLocation == null) throw new ArgumentNullException(nameof(this.CollectionContainer.Collection.FileLocation));
+            if (_collectionContainer.Collection.CollectionFileLocation == null) throw new ArgumentNullException(nameof(this.CollectionContainer.Collection.CollectionFileLocation));
 
             string id = _collectionContainer.GetId();
-            string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.FileLocation) ?? string.Empty, _location);
+            string path = Path.GetRelativePath(Path.GetDirectoryName(_collectionContainer.Collection.CollectionFileLocation) ?? string.Empty, _absoluteLocation);
             return $"{id}#{path}".ToSha256Hash();
         }
 
@@ -101,7 +101,7 @@ namespace HurlStudio.Model.HurlContainers
         /// <returns></returns>
         public override string GetPath()
         {
-            return _location;
+            return _absoluteLocation;
         }
 
         public override string ToString()

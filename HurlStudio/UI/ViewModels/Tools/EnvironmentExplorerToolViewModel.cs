@@ -1,0 +1,33 @@
+﻿using Dock.Model.Mvvm.Controls;
+using HurlStudio.UI.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace HurlStudio.UI.ViewModels.Tools
+{
+    public class EnvironmentExplorerToolViewModel : Tool
+    {
+        private EditorViewViewModel _editorViewModel;
+        private bool _isEnabled = false;
+
+        public EnvironmentExplorerToolViewModel(EditorViewViewModel editorViewViewModel)
+        {
+            this.CanClose = false;
+            this.CanFloat = false;
+            this.CanPin = false;
+
+            _editorViewModel = editorViewViewModel;
+        }
+
+        public EditorViewViewModel EditorViewModel => _editorViewModel;
+
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => this.SetProperty(ref _isEnabled, value);
+        }
+    }
+}

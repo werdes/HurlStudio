@@ -44,8 +44,8 @@ namespace HurlStudio.Model.HurlContainers
         /// <exception cref="ArgumentNullException">if the collections location is null</exception>
         public override string GetId()
         {
-            if(_collection.FileLocation == null) throw new ArgumentNullException(nameof(_collection.FileLocation));
-            return _collection.FileLocation.ToSha256Hash();
+            if(_collection.CollectionFileLocation == null) throw new ArgumentNullException(nameof(_collection.CollectionFileLocation));
+            return _collection.CollectionFileLocation.ToSha256Hash();
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace HurlStudio.Model.HurlContainers
         /// <returns></returns>
         public override string GetPath()
         {
-            return _collection.FileLocation;
+            return _collection.CollectionFileLocation;
         }
 
         public override string ToString()

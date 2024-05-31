@@ -129,7 +129,7 @@ namespace HurlStudio.Collections.Utility
                 IHurlSetting? hurlSetting = _settingParser.Parse(line);
                 if (hurlSetting != null)
                 {
-                    environment.Settings.Add(hurlSetting);
+                    environment.EnvironmentSettings.Add(hurlSetting);
                 }
             }
         }
@@ -162,7 +162,7 @@ namespace HurlStudio.Collections.Utility
 
             // Environment settings section
             builder.AppendLine(SECTION_ENVIRONMENT_SETTINGS_HEADER);
-            foreach (IHurlSetting collectionSetting in environment.Settings)
+            foreach (IHurlSetting collectionSetting in environment.EnvironmentSettings)
             {
                 builder.AppendLine(collectionSetting.GetConfigurationString());
             }
