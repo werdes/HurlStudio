@@ -10,6 +10,7 @@ using HurlStudio.UI.ViewModels.Tools;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
+using HurlStudio.Utility;
 namespace HurlStudio.UI.Controls.Tools
 {
     public partial class CollectionExplorerTool : ViewModelBasedControl<CollectionExplorerToolViewModel>
@@ -175,6 +176,9 @@ namespace HurlStudio.UI.Controls.Tools
         {
             if (_viewModel == null) return; // should not happen, since moving an object requires an object to be present, which
                                             // originates from the view model
+            bool moveSuccessful = false;
+            string? sourcePath = null;
+
             try
             {
                 _viewModel.IsEnabled = false;
@@ -184,11 +188,13 @@ namespace HurlStudio.UI.Controls.Tools
                 {
                     if (e.Source is HurlFolderContainer collectionRootFolder)
                     {
-                        await _editorService.MoveFolderToCollectionRoot(collectionRootFolder, collectionContainer);
+                        sourcePath = collectionRootFolder.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFolderToCollectionRoot(collectionRootFolder, collectionContainer);
                     }
                     else if (e.Source is HurlFileContainer collectionRootFile)
                     {
-                        await _editorService.MoveFileToCollectionRoot(collectionRootFile, collectionContainer);
+                        sourcePath = collectionRootFile.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFileToCollectionRoot(collectionRootFile, collectionContainer);
                     }
                 }
                 // File to folder
@@ -198,13 +204,15 @@ namespace HurlStudio.UI.Controls.Tools
                          collectionFolder != null)
                 {
                     // Check if the target folder is in a different collection than the source file
-                    if (collectionFile.FolderContainer.CollectionContainer == collectionFolder.CollectionContainer)
+                    if (collectionFile.FolderContainer.CollectionContainer.Collection.CollectionFileLocation == collectionFolder.CollectionContainer.Collection.CollectionFileLocation)
                     {
-                        await _editorService.MoveFileToFolder(collectionFile, collectionFolder);
+                        sourcePath = collectionFile.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFileToFolder(collectionFile, collectionFolder);
                     }
                     else
                     {
-                        await _editorService.MoveFileToCollection(collectionFile, collectionFolder, collectionFolder.CollectionContainer);
+                        sourcePath = collectionFile.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFileToCollection(collectionFile, collectionFolder, collectionFolder.CollectionContainer);
                     }
                 }
                 // Folder to folder
@@ -214,14 +222,21 @@ namespace HurlStudio.UI.Controls.Tools
                          collectionFolderParent != null)
                 {
                     // Check if the target folder is in a different collection than the source folder
-                    if (collectionFolderChild.CollectionContainer == collectionFolderParent.CollectionContainer)
+                    if (collectionFolderChild.CollectionContainer.Collection.CollectionFileLocation == collectionFolderParent.CollectionContainer.Collection.CollectionFileLocation)
                     {
-                        await _editorService.MoveFolderToFolder(collectionFolderChild, collectionFolderParent);
+                        sourcePath = collectionFolderChild.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFolderToFolder(collectionFolderChild, collectionFolderParent);
                     }
                     else
                     {
-                        await _editorService.MoveFolderToCollection(collectionFolderChild, collectionFolderParent, collectionFolderParent.CollectionContainer);
+                        sourcePath = collectionFolderChild.AbsoluteLocation;
+                        moveSuccessful = await _editorService.MoveFolderToCollection(collectionFolderChild, collectionFolderParent, collectionFolderParent.CollectionContainer);
                     }
+                }
+
+                if (!moveSuccessful)
+                {
+                    _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.Service_EditorService_Errors_MoveFile_Failed, sourcePath ?? string.Empty);
                 }
             }
             catch (Exception ex)

@@ -11,12 +11,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HurlStudio.Utility;
 using Avalonia.Controls.Presenters;
 using HurlStudio.Common.UI;
 using Avalonia.VisualTree;
+using HurlStudio.UI.Controls;
 
-namespace HurlStudio.UI.Controls
+namespace HurlStudio.Utility
 {
     public class ControlLocator : IDataTemplate
     {
@@ -47,9 +47,7 @@ namespace HurlStudio.UI.Controls
                     if (control != null)
                     {
                         control.SetViewModel(data);
-
-                        _log.LogTrace($"Built {control.GetType().Name} control: {control.GetHashCode()}");
-                        return (Control)control;
+                        return control;
                     }
                 }
                 catch { }

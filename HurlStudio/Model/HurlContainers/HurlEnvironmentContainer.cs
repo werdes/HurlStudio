@@ -12,11 +12,13 @@ namespace HurlStudio.Model.HurlContainers
     {
         private HurlEnvironment _enviroment;
         private string _fileLocation;
+        private bool _isActiveEnvironment;
 
         public HurlEnvironmentContainer(HurlEnvironment environment, string fileLocation) : base()
         {
             _fileLocation = fileLocation;
             _enviroment = environment;
+            _isActiveEnvironment = false;
             _enviroment.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;
         }
 
@@ -36,6 +38,15 @@ namespace HurlStudio.Model.HurlContainers
             }
         }
 
+        public bool IsActiveEnvironment
+        {
+            get => _isActiveEnvironment;
+            set
+            {
+                _isActiveEnvironment = value;
+                this.Notify();
+            }
+        }
 
         public string EnvironmentFileLocation
         {

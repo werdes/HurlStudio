@@ -7,6 +7,7 @@ using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
+using HurlStudio.UI.ViewModels;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
@@ -18,18 +19,20 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
     {
         private HurlEnvironmentContainer? _environmentContainer;
 
+        private EditorViewViewModel _editorViewViewModel;
         private IEditorService _editorService;
         private ILogger _log;
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
 
 
-        public Environment(ILogger<Environment> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
+        public Environment(ILogger<Environment> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, EditorViewViewModel editorViewViewModel)
         {
             _editorService = editorService;
             _log = logger;
             _notificationService = notificationService;
             _uiStateService = uiStateService;
+            _editorViewViewModel = editorViewViewModel;
 
             this.InitializeComponent();
         }
@@ -90,6 +93,46 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
             }
 
             e.Handled = true;
+        }
+
+        /// <summary>
+        /// Opens the environment setting document
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItemOpenEnvironment_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_environmentContainer == null) return;
+
+            try
+            {
+                await _editorService.OpenEnvironment(_environmentContainer.EnvironmentFileLocation);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Sets the active environment to this controls' container
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void On_MenuItemSetAsActiveEnvironment_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_environmentContainer == null) return;
+
+            try
+            {
+                _editorViewViewModel.ActiveEnvironment = _environmentContainer;
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
         }
     }
 }

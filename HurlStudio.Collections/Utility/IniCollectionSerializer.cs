@@ -4,7 +4,7 @@ using HurlStudio.Collections.Model.Serializer;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
-using NLog;
+using Microsoft.Extensions.Logging;
 using System.Text;
 using System.Text.RegularExpressions;
 
@@ -26,10 +26,12 @@ namespace HurlStudio.Collections.Utility
 
 
         private IniSettingParser _settingParser;
+        private ILogger _log;
 
-        public IniCollectionSerializer(IniSettingParser settingParser)
+        public IniCollectionSerializer(IniSettingParser settingParser, ILogger<IniCollectionSerializer> logger)
         {
             _settingParser = settingParser;
+            _log = logger;
         }
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace HurlStudio.Collections.Utility
 
             string[] lines = collectionContent.Split(Environment.NewLine);
             List<HurlCollectionSectionContainer> collectionSections = this.SplitIntoSections(lines);
+            _log.LogInformation($"Deserializing [{path}] with [{collectionSections.Count}] sections");
             HurlCollection collection = new HurlCollection(path);
 
             foreach (HurlCollectionSectionContainer sectionContainer in collectionSections)
@@ -66,7 +69,6 @@ namespace HurlStudio.Collections.Utility
                         break;
                 }
             }
-
 
             return collection;
         }

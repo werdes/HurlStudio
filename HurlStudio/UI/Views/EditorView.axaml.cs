@@ -3,6 +3,7 @@ using Avalonia.Controls.Notifications;
 using Dock.Model.Core;
 using Dock.Model.Mvvm;
 using Dock.Model.Mvvm.Controls;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
@@ -268,7 +269,7 @@ namespace HurlStudio.UI.Views
             }
             catch (Exception ex)
             {
-                _log.LogError(ex, nameof(On_ButtonSave_Click));
+                _log.LogException(ex);
                 _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
             }
         }
@@ -278,5 +279,42 @@ namespace HurlStudio.UI.Views
             _viewModel = viewModel;
             this.DataContext = _viewModel;
         }
+
+        /// <summary>
+        /// Go back to last tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonHistoryBack_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            try
+            {
+                await _editorService.HistoryGoBack();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Go forward to next tab
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_ButtonHistoryForward_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            try
+            {
+                await _editorService.HistoryGoForward();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
     }
 }

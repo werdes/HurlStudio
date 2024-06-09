@@ -222,5 +222,10 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             return this.Id;
         }
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name} {_environmentContainer?.EnvironmentFileLocation}";
+        }
     }
 }

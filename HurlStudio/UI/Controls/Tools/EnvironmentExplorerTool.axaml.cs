@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using HurlStudio.Common.Extensions;
+using HurlStudio.Utility;
 namespace HurlStudio.UI.Controls.Tools
 {
     public partial class EnvironmentExplorerTool : ViewModelBasedControl<EnvironmentExplorerToolViewModel>
@@ -101,7 +102,7 @@ namespace HurlStudio.UI.Controls.Tools
             if (_viewModel == null) return;
             try
             {
-                //await this.RefreshCollections();
+                await _editorService.RefreshEnvironmentExplorerEnvironments(_editorViewViewModel.ActiveEnvironment?.EnvironmentFileLocation);
             }
             catch (Exception ex)
             {

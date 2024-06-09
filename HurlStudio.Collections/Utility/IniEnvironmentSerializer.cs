@@ -3,6 +3,7 @@ using HurlStudio.Collections.Model.Serializer;
 using HurlStudio.Collections.Settings;
 using HurlStudio.Common.Enums;
 using HurlStudio.Common.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,12 +21,13 @@ namespace HurlStudio.Collections.Utility
         private const string SECTION_ENVIRONMENT_SETTINGS_HEADER = "[EnvironmentSettings]";
         private readonly Regex NEWLINE_REGEX = new Regex(@"\r\n?|\n", RegexOptions.Compiled);
 
-
         private IniSettingParser _settingParser;
+        private ILogger _log;
 
-        public IniEnvironmentSerializer(IniSettingParser settingParser)
+        public IniEnvironmentSerializer(IniSettingParser settingParser, ILogger<IniEnvironmentSerializer> logger)
         {
             _settingParser = settingParser;
+            _log = logger;
         }
 
         /// <summary>
@@ -40,8 +42,8 @@ namespace HurlStudio.Collections.Utility
 
             string[] lines = environmentContent.Split(Environment.NewLine);
             List<HurlEnvironmentSectionContainer> environmentSections = this.SplitIntoSections(lines);
+            _log.LogInformation($"Deserializing [{filePath}] with [{environmentSections.Count}] sections");
             HurlEnvironment environment = new HurlEnvironment(filePath);
-
 
             foreach (HurlEnvironmentSectionContainer sectionContainer in environmentSections)
             {
@@ -162,9 +164,9 @@ namespace HurlStudio.Collections.Utility
 
             // Environment settings section
             builder.AppendLine(SECTION_ENVIRONMENT_SETTINGS_HEADER);
-            foreach (IHurlSetting collectionSetting in environment.EnvironmentSettings)
+            foreach (IHurlSetting environmentSetting in environment.EnvironmentSettings)
             {
-                builder.AppendLine(collectionSetting.GetConfigurationString());
+                builder.AppendLine(environmentSetting.GetConfigurationString());
             }
 
             return builder.ToString();

@@ -71,7 +71,7 @@ namespace HurlStudio.UI.Controls.Documents
         private async void On_FolderDocument_Initialized(object? sender, EventArgs e)
         {
             if (_viewModel == null) return;
-            if (_viewModel.Folder == null) return;
+            if (_viewModel.FolderContainer == null) return;
 
             try
             {

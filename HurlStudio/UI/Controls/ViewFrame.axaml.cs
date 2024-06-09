@@ -5,6 +5,7 @@ using HurlStudio.Common.Extensions;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Controls;
 using HurlStudio.UI.Views;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;

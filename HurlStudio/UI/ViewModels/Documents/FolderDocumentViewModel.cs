@@ -39,7 +39,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             _mainWindow = mainWindow;
         }
 
-        public HurlFolderContainer? Folder
+        public HurlFolderContainer? FolderContainer
         {
             get => _folder;
             set
@@ -140,7 +140,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="e"></param>
         private void On_Folder_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.Folder.AbsoluteLocation))
+            if (e.PropertyName == nameof(this.FolderContainer.AbsoluteLocation))
             {
                 this.RefreshTitle();
             }
@@ -156,7 +156,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
                 _mainWindow,
-                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.Folder?.AbsoluteLocation,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.FolderContainer?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
                 Icon.MessageBoxWarning
@@ -225,6 +225,11 @@ namespace HurlStudio.UI.ViewModels.Documents
         public string GetId()
         {
             return this.Id;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name} {_folder?.AbsoluteLocation}";
         }
     }
 }

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
-    public class WelcomeDocumentViewModel : Document
+    public class WelcomeDocumentViewModel : DocumentBase
     {
         private EditorViewViewModel _editorViewViewModel;
 

@@ -5,10 +5,10 @@ using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
-using HurlStudio.UI.Controls;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Controls;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -90,28 +90,7 @@ namespace HurlStudio.UI.Views
 
                 _viewFrameViewModel.SelectedViewModel = _viewModel.LoadingView;
 
-
-                UserSettings? userSettings = await _userSettingsService.GetUserSettingsAsync(false);
-                UiState? uiState = await _uiStateService.GetUiStateAsync(true);
-
-                if (userSettings == null) throw new ArgumentNullException($"No user settings provided");
-
-                // Load enviroments
-                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingEnvironments;
-                _viewModel.EditorView.Environments = await _environmentService.GetEnvironmentContainersAsync();
-                _viewModel.EditorView.ActiveEnvironment = _viewModel.EditorView.Environments.FirstOrDefault(x => x.EnvironmentFileLocation == uiState?.ActiveEnvironmentFile) ?? _viewModel.EditorView.Environments.FirstOrDefault();
-
-                // Load collections and open files from previous session
-                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.LoadingCollections;
-                _viewModel.EditorView.Collections = await _collectionService.GetCollectionContainersAsync();
-
-                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.OpeningPreviousSessionFiles;
-                _viewModel.EditorView.Layout = _layoutFactory.CreateLayout();
-                await _editorService.LoadInitialUserSettings();
-                await _editorService.OpenInitialDocuments();
-
-                _viewModel.InitializationCompleted = true;
-                _viewModel.LoadingView.CurrentActivity = Model.Enums.LoadingViewStep.Finished;
+                await _editorService.Start();
 
                 _viewFrameViewModel.SelectedViewModel = _viewModel.EditorView;
             }

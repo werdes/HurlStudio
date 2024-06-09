@@ -8,7 +8,7 @@ namespace HurlStudio.Services.Editor
     public interface IEditorService
     {
         Task<bool> MoveFileToFolder(HurlFileContainer fileContainer, HurlFolderContainer folderContainer);
-        Task<bool> MoveFileToCollection(HurlFileContainer fileContainer, HurlFolderContainer parentFolderContainer, HurlCollectionContainer collectionContainer);
+        Task<bool> MoveFileToCollection(HurlFileContainer fileContainer, HurlFolderContainer newParentFolderContainer, HurlCollectionContainer collectionContainer);
         Task<bool> MoveFileToCollectionRoot(HurlFileContainer fileContainer, HurlCollectionContainer collectionContainer);
         Task<bool> MoveFolderToCollection(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer, HurlCollectionContainer collectionContainer);
         Task<bool> MoveFolderToFolder(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer);
@@ -29,9 +29,12 @@ namespace HurlStudio.Services.Editor
         Task<bool> SaveEnvironment(EnvironmentDocumentViewModel environmentDocument);
         Task<bool> SaveCurrentDocument();
         Task<bool> Shutdown();
+        Task Start();
         Task RefreshCollectionExplorerCollections();
         Task RefreshCollectionExplorerCollection(string collectionLocation);
-        Task RefreshEnvironmentExplorerEnvironments();
+        Task RefreshEnvironmentExplorerEnvironments(string? activeEnvironmentLocation);
         Task RefreshEnvironmentExplorerEnvironment(string environmentLocation);
+        Task HistoryGoBack();
+        Task HistoryGoForward();
     }
 }

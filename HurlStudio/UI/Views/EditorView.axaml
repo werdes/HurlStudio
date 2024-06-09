@@ -24,14 +24,18 @@
       <DockPanel HorizontalAlignment="Left" Margin="10,3,5,3">
         <!--Back-->
         <Button Classes="toolbarButton"
-                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Back_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Back_Tooltip}"
+                Click="On_ButtonHistoryBack_Click"
+                IsEnabled="{Binding DocumentHistory.Count}">
           <controls:Icon Type="Back"
                          Height="16"
                          Width="16" />
         </Button>
         <!--Forward-->
         <Button Classes="toolbarButton"
-                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Forward_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.View_Editor_Toolbar_Forward_Tooltip}"
+                Click="On_ButtonHistoryForward_Click"
+                IsEnabled="{Binding DocumentFuture.Count}">
           <controls:Icon Type="Forward" />
         </Button>
         <controls:ToolbarSeparator />

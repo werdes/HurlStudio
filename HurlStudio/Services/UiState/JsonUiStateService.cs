@@ -359,6 +359,10 @@ namespace HurlStudio.Services.UiState
             {
                 _uiState.ActiveDocument = document.HurlContainer.GetPath();
             }
+            else
+            {
+                _uiState.ActiveDocument = null;
+            }
         }
     }
 }

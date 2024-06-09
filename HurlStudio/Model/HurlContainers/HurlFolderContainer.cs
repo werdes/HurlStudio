@@ -13,11 +13,11 @@ namespace HurlStudio.Model.HurlContainers
         private string _absoluteLocation;
         private bool _found;
 
-        public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, HurlFolder folderSettings, string location) : base()
+        public HurlFolderContainer(HurlCollectionContainer collectionContainer, HurlFolderContainer? parentFolder, HurlFolder folderSettings, string absolutePath) : base()
         {
             _collectionContainer = collectionContainer;
             _parentFolderContainer = parentFolder;
-            _absoluteLocation = location;
+            _absoluteLocation = absolutePath;
             _found = true;
             _folder = folderSettings;
             _folder.ComponentPropertyChanged += this.On_HurlComponent_ComponentPropertyChanged;

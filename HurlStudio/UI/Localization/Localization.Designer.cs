@@ -880,6 +880,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.Active.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_Active_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Active.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_Inactive_Tooltip {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.Open} ähnelt.
         /// </summary>
         public static string Dock_Tool_EnvironmentExplorer_Environment_Open {
@@ -894,6 +912,15 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_EnvironmentExplorer_Environment_RevealInExplorer {
             get {
                 return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.RevealInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.EnvironmentExplorer.Environment.SetAsActiveEnvironment} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_SetAsActiveEnvironment {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.SetAsActiveEnvironment", resourceCulture);
             }
         }
         
@@ -993,6 +1020,51 @@ namespace HurlStudio.UI.Localization {
         public static string Service_CollectionService_Errors_SettingParserError_Title {
             get {
                 return ResourceManager.GetString("Service.CollectionService.Errors.SettingParserError.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.MoveFile.AlreadyExists} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_MoveFile_AlreadyExists {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.MoveFile.AlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.MoveFile.Failed} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_MoveFile_Failed {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.MoveFile.Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.MoveFolder.AlreadyExists} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_MoveFolder_AlreadyExists {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.MoveFolder.AlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_MoveFolder_ExternalRootFolderCannotBeMoved {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.MoveFolder.Failed} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_MoveFolder_Failed {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.MoveFolder.Failed", resourceCulture);
             }
         }
         

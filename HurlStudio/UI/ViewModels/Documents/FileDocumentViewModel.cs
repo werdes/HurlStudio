@@ -52,10 +52,10 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public HurlContainerBase? HurlContainer
         {
-            get => this.File;
+            get => this.FileContainer;
         }
 
-        public HurlFileContainer? File
+        public HurlFileContainer? FileContainer
         {
             get => _file;
             set
@@ -157,7 +157,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// <param name="e"></param>
         private void On_File_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            if (e.PropertyName == nameof(this.File.AbsoluteLocation))
+            if (e.PropertyName == nameof(this.FileContainer.AbsoluteLocation))
             {
                 this.RefreshTitle();
             }
@@ -188,7 +188,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
             MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
                 _mainWindow,
-                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.File?.AbsoluteLocation,
+                Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.FileContainer?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
                 Icon.MessageBoxWarning
@@ -258,6 +258,11 @@ namespace HurlStudio.UI.ViewModels.Documents
         public string GetId()
         {
             return this.Id;
+        }
+
+        public override string ToString()
+        {
+            return $"{this.GetType().Name} {_file?.AbsoluteLocation}";
         }
     }
 }

@@ -12,16 +12,24 @@
              x:Class="HurlStudio.UI.Controls.EnvironmentExplorer.Environment"
              DragDrop.AllowDrop="False">
   <UserControl.Resources>
-    
+
   </UserControl.Resources>
   <Grid VerticalAlignment="Top" Margin="0,0,0,0"
         Background="{DynamicResource WindowBackgroundColor}"
         PointerPressed="On_TitlePanel_PointerPressed">
     <Grid.ContextMenu>
       <ContextMenu>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_Open}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_Open}"
+                  Click="On_MenuItemOpenEnvironment_Click">
           <MenuItem.Icon>
             <c:Icon Type="OpenNeutral" Height="16" Width="16" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_SetAsActiveEnvironment}"
+                  Click="On_MenuItemSetAsActiveEnvironment_Click"
+                  IsVisible="{Binding !IsActiveEnvironment}">
+          <MenuItem.Icon>
+            <c:Icon Type="Active" Height="16" Width="16" />
           </MenuItem.Icon>
         </MenuItem>
         <Separator />
@@ -44,5 +52,19 @@
             IsVisible="{Binding Selected}"/>
     <controls:Icon Type="Environment" Grid.Column="0" Opacity=".7" Width="16" Height="16" Margin="0,2,0,2"/>
     <TextBlock Margin="4,0,0,0" Grid.Column="1" VerticalAlignment="Center" Text="{Binding Environment.Name}" />
+
+    <DockPanel HorizontalAlignment="Right"
+               VerticalAlignment="Center"
+               Grid.Column="1">
+      <controls:Icon Type="Active"
+                     Opacity=".5"
+                     IsVisible="{Binding IsActiveEnvironment}"
+                     ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_Active_Tooltip}"/>
+      <controls:Icon Type="Inactive"
+                     Opacity=".5"
+                     IsVisible="{Binding !IsActiveEnvironment}"
+                     ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_Inactive_Tooltip}"/>
+
+    </DockPanel>
   </Grid>
 </UserControl>

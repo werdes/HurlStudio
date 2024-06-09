@@ -10,6 +10,7 @@ using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Localization;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
@@ -34,6 +35,7 @@ namespace HurlStudio.Services.Editor
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
         private string[] _collectionExplorerIgnoredDirectories = [];
+        private SemaphoreLock _lock = new SemaphoreLock();
 
         public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService, INotificationService notificationService)
         {
@@ -139,13 +141,11 @@ namespace HurlStudio.Services.Editor
             ObservableCollection<HurlCollectionContainer> collectionContainers = new ObservableCollection<HurlCollectionContainer>();
             IEnumerable<HurlCollection> collections = await this.GetCollectionsAsync();
 
-            // Trace Collections
-            _log.LogObject(collections);
-
             foreach (HurlCollection collection in collections)
             {
                 HurlCollectionContainer collectionContainer = await GetCollectionContainerAsync(collection);
                 collectionContainers.Add(collectionContainer);
+                _log.LogInformation($"Opened collection: [{collection.CollectionFileLocation}]");
             }
 
             return collectionContainers;
@@ -300,7 +300,11 @@ namespace HurlStudio.Services.Editor
         public async Task StoreCollectionAsync(HurlCollection collection, string collectionLocation)
         {
             _log.LogDebug($"Storing collection [{collection.Name}] to [{collectionLocation}]");
-            await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
+
+            await _lock.LockAsync(async () =>
+            {
+                await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
+            });
         }
     }
 }

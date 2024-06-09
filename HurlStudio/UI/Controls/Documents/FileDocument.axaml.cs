@@ -106,7 +106,7 @@ namespace HurlStudio.UI.Controls.Documents
         private async void On_FileDocument_Initialized(object? sender, EventArgs e)
         {
             if (_viewModel == null) return;
-            if (_viewModel.File == null) return;
+            if (_viewModel.FileContainer == null) return;
 
             try
             {

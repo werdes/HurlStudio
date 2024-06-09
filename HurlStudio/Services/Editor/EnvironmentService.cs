@@ -79,13 +79,12 @@ namespace HurlStudio.Services.Editor
             ObservableCollection<HurlEnvironmentContainer> environmentContainers = new ObservableCollection<HurlEnvironmentContainer>();
             IEnumerable<HurlEnvironment> environments = await this.GetEnvironmentsAsync();
 
-            // Trace Collections
-            _log.LogObject(environments);
 
             foreach (HurlEnvironment environment in environments)
             {
                 HurlEnvironmentContainer environmentContainer = await GetEnvironmentContainerAsync(environment);
                 environmentContainers.Add(environmentContainer);
+                _log.LogInformation($"Opened environment: [{environment.EnvironmentFileLocation}]");
             }
 
             return environmentContainers;

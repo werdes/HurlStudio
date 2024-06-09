@@ -13,6 +13,5 @@ namespace HurlStudio.UI.ViewModels.Documents
     {
         public new event PropertyChangedEventHandler? PropertyChanged;
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
     }
 }

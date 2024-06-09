@@ -1131,4 +1131,28 @@
   <data name="Dock.Document.Environment.Settings.Header" xml:space="preserve">
     <value>{Dock.Document.Environment.Settings.Header}</value>
   </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.Active.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.Active.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.SetAsActiveEnvironment" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.SetAsActiveEnvironment}</value>
+  </data>
+  <data name="Service.EditorService.Errors.MoveFile.AlreadyExists" xml:space="preserve">
+    <value>{Service.EditorService.Errors.MoveFile.AlreadyExists}</value>
+  </data>
+  <data name="Service.EditorService.Errors.MoveFile.Failed" xml:space="preserve">
+    <value>{Service.EditorService.Errors.MoveFile.Failed}</value>
+  </data>
+  <data name="Service.EditorService.Errors.MoveFolder.AlreadyExists" xml:space="preserve">
+    <value>{Service.EditorService.Errors.MoveFolder.AlreadyExists}</value>
+  </data>
+  <data name="Service.EditorService.Errors.MoveFolder.Failed" xml:space="preserve">
+    <value>{Service.EditorService.Errors.MoveFolder.Failed}</value>
+  </data>
+  <data name="Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved" xml:space="preserve">
+    <value>{Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved}</value>
+  </data>
 </root>
