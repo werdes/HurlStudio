@@ -15,11 +15,10 @@ namespace HurlStudio.Tests
         [TestInitialize]
         public void Init()
         {
-            ILogger<IniSettingParser> logger = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace))
-                                                            .CreateLogger<IniSettingParser>();
+            ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace));
 
-            _parser = new IniSettingParser(logger);
-            _serializer = new IniCollectionSerializer((IniSettingParser)_parser);
+            _parser = new IniSettingParser(factory.CreateLogger<IniSettingParser>());
+            _serializer = new IniCollectionSerializer((IniSettingParser)_parser, factory.CreateLogger<IniCollectionSerializer>());
         }
 
         [TestMethod]
@@ -33,21 +32,21 @@ namespace HurlStudio.Tests
             Assert.IsTrue(collection.Name.Equals("Valid collection"));
             Assert.IsTrue(collection.ExcludeRootDirectory);
             Assert.IsTrue(collection.AdditionalLocations.Count == 1);
-            Assert.IsTrue(collection.AdditionalLocations.First() == "../HurlFiles/");
+            Assert.AreEqual(collection.AdditionalLocations.First().Path, "..\\HurlFiles\\");
             Assert.IsTrue(collection.CollectionSettings.Count == 1);
             Assert.IsNotNull(collection.CollectionSettings.FirstOrDefault());
 
             // Proxy-Setting in collection settings
             // proxy=protocol:https,host:testproxy.local,port:8080
             Assert.IsInstanceOfType(collection.CollectionSettings.FirstOrDefault(), typeof(ProxySetting));
-            Assert.IsTrue((collection.CollectionSettings.FirstOrDefault() as ProxySetting)?.Host == "testproxy.local");
+            Assert.AreEqual((collection.CollectionSettings.FirstOrDefault() as ProxySetting)?.Host, "testproxy.local");
             Assert.IsTrue((collection.CollectionSettings.FirstOrDefault() as ProxySetting)?.Protocol == Common.Enums.ProxyProtocol.HTTPS);
             Assert.IsTrue((collection.CollectionSettings.FirstOrDefault() as ProxySetting)?.Port == 8080);
 
             // Folder HurlSettings
             Assert.IsTrue(collection.FolderSettings.Count == 1);
             Assert.IsNotNull(collection.FolderSettings.FirstOrDefault());
-            Assert.IsTrue(collection.FolderSettings.FirstOrDefault()?.FolderLocation == "../HurlFiles/");
+            Assert.AreEqual(collection.FolderSettings.FirstOrDefault()?.FolderLocation, "../HurlFiles/");
             Assert.IsInstanceOfType(collection.FolderSettings.FirstOrDefault()?.FolderSettings[0], typeof(VariableSetting));
             VariableSetting? variableSetting1 = (VariableSetting?)collection.FolderSettings.FirstOrDefault()?.FolderSettings[0];
             VariableSetting? variableSetting2 = (VariableSetting?)collection.FolderSettings.FirstOrDefault()?.FolderSettings[1];

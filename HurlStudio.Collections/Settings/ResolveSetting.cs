@@ -8,7 +8,6 @@ namespace HurlStudio.Collections.Settings
     public class ResolveSetting : BaseSetting, IHurlSetting
     {
         private const string CONFIGURATION_NAME = "resolve";
-        private const char VALUE_SEPARATOR = ':';
 
         private string? _host;
         private ushort? _port;
@@ -67,21 +66,19 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-            if (value.Split(VALUE_SEPARATOR).Length != 3) return null;
-
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if (!ushort.TryParse(parts.Get(1), out ushort port)) return null;
+            if (ushort.TryParse(arguments.Get(1), out ushort port))
+            {
+                this.Port = port;
+            }
             
-            this.Host = parts.Get(0);
-            this.Port = port;
-            this.Address = parts.Get(2);
+            this.Host = arguments.Get(0);
+            this.Address = arguments.Get(2);
 
             return this;
         }
@@ -123,12 +120,14 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{this.Host}{VALUE_SEPARATOR}{this.Port}{VALUE_SEPARATOR}{this.Address}";
+            return [_host ?? string.Empty,
+                    _port?.ToString() ?? string.Empty,
+                    _address ?? string.Empty];
         }
 
         /// <summary>

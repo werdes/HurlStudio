@@ -13,7 +13,7 @@ namespace HurlStudio.Collections.Settings
 
         public ToEntrySetting()
         {
-            
+
         }
 
         [HurlSettingDisplayString]
@@ -28,16 +28,16 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-            if (!uint.TryParse(value, out uint toEntry)) return null;
-
-            this.ToEntry = toEntry;
+            if (uint.TryParse(arguments.Get(0), out uint toEntry))
+            {
+                this.ToEntry = toEntry;
+            }
 
             return this;
         }
@@ -50,7 +50,7 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if(_toEntry.HasValue)
+            if (_toEntry.HasValue)
             {
                 arguments.Add(new ToEntryArgument(_toEntry.Value));
             }
@@ -77,12 +77,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return this.ToEntry.ToString() ?? 0.ToString();
+            return [_toEntry ?? 0];
         }
 
         /// <summary>

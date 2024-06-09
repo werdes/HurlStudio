@@ -1,5 +1,6 @@
 ﻿using HurlStudio.Collections.Settings;
 using HurlStudio.Collections.Utility;
+using HurlStudio.Common.Extensions;
 using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.Tests
@@ -73,24 +74,22 @@ namespace HurlStudio.Tests
 
             string[] testValues =
             {
-                "aws_sig_v4=aws:amz:eu-central-1:foos",
-                "aws_sig_v4=aws::eu-central-1:foos",
-                "aws_sig_v4=aws:amz::foos",
-                "aws_sig_v4=aws:amz::",
-                "aws_sig_v4=aws:9::",
-                "aws_sig_v4=aws:,::",
-                "aws_sig_v4=aws:::foos",
-                "aws_sig_v4=aws:::",
-                "aws_sig_v4=:::",
-                "#aws_sig_v4=aws:amz:eu-central-1:foos",
-                "#aws_sig_v4=aws::eu-central-1:foos",
-                "#aws_sig_v4=aws:amz::foos",
-                "#aws_sig_v4=aws:amz::",
-                "#aws_sig_v4=aws:9::",
-                "#aws_sig_v4=aws:,::",
-                "#aws_sig_v4=aws:::foos",
-                "#aws_sig_v4=aws:::",
-                "#aws_sig_v4=:::",
+                "aws_sig_v4=aws,amz,eu-central-1,foos",
+                "aws_sig_v4=aws,,eu-central-1,foos",
+                "aws_sig_v4=aws,amz,,foos",
+                "aws_sig_v4=aws,amz,,",
+                "aws_sig_v4=aws,9,,",
+                "aws_sig_v4=aws,,,foos",
+                "aws_sig_v4=aws,,,",
+                "aws_sig_v4=,,,",
+                "#aws_sig_v4=aws,amz,eu-central-1,foos",
+                "#aws_sig_v4=aws,,eu-central-1,foos",
+                "#aws_sig_v4=aws,amz,,foos",
+                "#aws_sig_v4=aws,amz,,",
+                "#aws_sig_v4=aws,9,,",
+                "#aws_sig_v4=aws,,,foos",
+                "#aws_sig_v4=aws,,,",
+                "#aws_sig_v4=,,,",
             };
 
             foreach (string testValue in testValues)
@@ -130,69 +129,59 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[4].Service, "");
             Assert.AreEqual(settings[5].IsEnabled, true);
             Assert.AreEqual(settings[5].Provider1, "aws");
-            Assert.AreEqual(settings[5].Provider2, ",");
+            Assert.AreEqual(settings[5].Provider2, "");
             Assert.AreEqual(settings[5].Region, "");
-            Assert.AreEqual(settings[5].Service, "");
+            Assert.AreEqual(settings[5].Service, "foos");
             Assert.AreEqual(settings[6].IsEnabled, true);
             Assert.AreEqual(settings[6].Provider1, "aws");
             Assert.AreEqual(settings[6].Provider2, "");
             Assert.AreEqual(settings[6].Region, "");
-            Assert.AreEqual(settings[6].Service, "foos");
+            Assert.AreEqual(settings[6].Service, "");
             Assert.AreEqual(settings[7].IsEnabled, true);
-            Assert.AreEqual(settings[7].Provider1, "aws");
+            Assert.AreEqual(settings[7].Provider1, "");
             Assert.AreEqual(settings[7].Provider2, "");
             Assert.AreEqual(settings[7].Region, "");
             Assert.AreEqual(settings[7].Service, "");
-            Assert.AreEqual(settings[8].IsEnabled, true);
-            Assert.AreEqual(settings[8].Provider1, "");
-            Assert.AreEqual(settings[8].Provider2, "");
-            Assert.AreEqual(settings[8].Region, "");
-            Assert.AreEqual(settings[8].Service, "");
+            Assert.AreEqual(settings[8].IsEnabled, false);
+            Assert.AreEqual(settings[8].Provider1, "aws");
+            Assert.AreEqual(settings[8].Provider2, "amz");
+            Assert.AreEqual(settings[8].Region, "eu-central-1");
+            Assert.AreEqual(settings[8].Service, "foos");
             Assert.AreEqual(settings[9].IsEnabled, false);
             Assert.AreEqual(settings[9].Provider1, "aws");
-            Assert.AreEqual(settings[9].Provider2, "amz");
+            Assert.AreEqual(settings[9].Provider2, "");
             Assert.AreEqual(settings[9].Region, "eu-central-1");
             Assert.AreEqual(settings[9].Service, "foos");
             Assert.AreEqual(settings[10].IsEnabled, false);
             Assert.AreEqual(settings[10].Provider1, "aws");
-            Assert.AreEqual(settings[10].Provider2, "");
-            Assert.AreEqual(settings[10].Region, "eu-central-1");
+            Assert.AreEqual(settings[10].Provider2, "amz");
+            Assert.AreEqual(settings[10].Region, "");
             Assert.AreEqual(settings[10].Service, "foos");
             Assert.AreEqual(settings[11].IsEnabled, false);
             Assert.AreEqual(settings[11].Provider1, "aws");
             Assert.AreEqual(settings[11].Provider2, "amz");
             Assert.AreEqual(settings[11].Region, "");
-            Assert.AreEqual(settings[11].Service, "foos");
+            Assert.AreEqual(settings[11].Service, "");
             Assert.AreEqual(settings[12].IsEnabled, false);
             Assert.AreEqual(settings[12].Provider1, "aws");
-            Assert.AreEqual(settings[12].Provider2, "amz");
+            Assert.AreEqual(settings[12].Provider2, "9");
             Assert.AreEqual(settings[12].Region, "");
             Assert.AreEqual(settings[12].Service, "");
             Assert.AreEqual(settings[13].IsEnabled, false);
             Assert.AreEqual(settings[13].Provider1, "aws");
-            Assert.AreEqual(settings[13].Provider2, "9");
+            Assert.AreEqual(settings[13].Provider2, "");
             Assert.AreEqual(settings[13].Region, "");
-            Assert.AreEqual(settings[13].Service, "");
+            Assert.AreEqual(settings[13].Service, "foos");
             Assert.AreEqual(settings[14].IsEnabled, false);
             Assert.AreEqual(settings[14].Provider1, "aws");
-            Assert.AreEqual(settings[14].Provider2, ",");
+            Assert.AreEqual(settings[14].Provider2, "");
             Assert.AreEqual(settings[14].Region, "");
             Assert.AreEqual(settings[14].Service, "");
             Assert.AreEqual(settings[15].IsEnabled, false);
-            Assert.AreEqual(settings[15].Provider1, "aws");
+            Assert.AreEqual(settings[15].Provider1, "");
             Assert.AreEqual(settings[15].Provider2, "");
             Assert.AreEqual(settings[15].Region, "");
-            Assert.AreEqual(settings[15].Service, "foos");
-            Assert.AreEqual(settings[16].IsEnabled, false);
-            Assert.AreEqual(settings[16].Provider1, "aws");
-            Assert.AreEqual(settings[16].Provider2, "");
-            Assert.AreEqual(settings[16].Region, "");
-            Assert.AreEqual(settings[16].Service, "");
-            Assert.AreEqual(settings[17].IsEnabled, false);
-            Assert.AreEqual(settings[17].Provider1, "");
-            Assert.AreEqual(settings[17].Provider2, "");
-            Assert.AreEqual(settings[17].Region, "");
-            Assert.AreEqual(settings[17].Service, "");
+            Assert.AreEqual(settings[15].Service, "");
         }
 
         [TestMethod]
@@ -201,12 +190,12 @@ namespace HurlStudio.Tests
             List<BasicUserSetting> settings = new List<BasicUserSetting>();
             string[] testValues =
             {
-                "user=user1:cGFzc3dvcmQx", // password1
-                "user=user2:",
-                "user=user3:",
-                "#user=user1:cGFzc3dvcmQx", // password1
-                "#user=user2:",
-                "#user=user3:",
+                "user=user1,cGFzc3dvcmQx", // password1
+                "user=user2,",
+                "user=user3,",
+                "#user=user1,cGFzc3dvcmQx", // password1
+                "#user=user2,",
+                "#user=user3,",
             };
 
             foreach (string testValue in testValues)
@@ -277,16 +266,16 @@ namespace HurlStudio.Tests
             List<ClientCertificateSetting> settings = new List<ClientCertificateSetting>();
             string[] testValues =
             {
-                @"client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk|D:\Files\Keys\TestKey.key",
-                @"client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk|",
-                @"client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk",
-                @"client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk",
-                @"client_certificate=D:\Files\Certs\Test.crt|",
-                @"#client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk|D:\Files\Keys\TestKey.key",
-                @"#client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk|",
-                @"#client_certificate=D:\Files\Certs\Test.crt|VGVzdFBhc3N3b3Jk",
-                @"#client_certificate=D:/Files/Certs/Test.crt|VGVzdFBhc3N3b3Jk",
-                @"#client_certificate=D:\Files\Certs\Test.crt|",
+                @"client_certificate=D:\Files\Certs\Test.crt,VGVzdFBhc3N3b3Jk,D:\Files\Keys\TestKey.key",
+                @"client_certificate=D:/Files/Certs/Test.crt,VGVzdFBhc3N3b3Jk,",
+                @"client_certificate=D:\Files\Certs\Test.crt,VGVzdFBhc3N3b3Jk",
+                @"client_certificate=D:/Files/Certs/Test.crt,VGVzdFBhc3N3b3Jk",
+                @"client_certificate=D:\Files\Certs\Test.crt,",
+                @"#client_certificate=D:\Files\Certs\Test.crt,VGVzdFBhc3N3b3Jk,D:\Files\Keys\TestKey.key",
+                @"#client_certificate=D:/Files/Certs/Test.crt,VGVzdFBhc3N3b3Jk,",
+                @"#client_certificate=D:\Files\Certs\Test.crt,VGVzdFBhc3N3b3Jk",
+                @"#client_certificate=D:/Files/Certs/Test.crt,VGVzdFBhc3N3b3Jk",
+                @"#client_certificate=D:\Files\Certs\Test.crt,",
             };
 
             foreach (string testValue in testValues)
@@ -346,8 +335,8 @@ namespace HurlStudio.Tests
             List<ConnectToSetting> settings = new List<ConnectToSetting>();
             string[] testValues =
             {
-                @"connect_to=google.com:80:bing.com:8080",
-                @"#connect_to=google.com:80:bing.com:8080"
+                @"connect_to=google.com,80,bing.com,8080",
+                @"#connect_to=google.com,80,bing.com,8080"
             };
 
             foreach (string testValue in testValues)
@@ -424,12 +413,12 @@ namespace HurlStudio.Tests
             {
                 @"cookies=",
                 @"cookies=D:/Files/cookies.txt",
-                @"cookies=D:/Files/cookies.txt;E:/Files/cookies.txt",
-                @"cookies=;D:/Files/cookies.txt",
+                @"cookies=D:/Files/cookies.txt,E:/Files/cookies.txt",
+                @"cookies=,D:/Files/cookies.txt",
                 @"#cookies=",
                 @"#cookies=D:/Files/cookies.txt",
-                @"#cookies=D:/Files/cookies.txt;E:/Files/cookies.txt",
-                @"#cookies=;D:/Files/cookies.txt",
+                @"#cookies=D:/Files/cookies.txt,E:/Files/cookies.txt",
+                @"#cookies=,D:/Files/cookies.txt",
             };
 
             foreach (string testValue in testValues)
@@ -693,12 +682,12 @@ namespace HurlStudio.Tests
             List<NetrcSetting> settings = new List<NetrcSetting>();
             string[] testValues =
             {
-                @"netrc=true|true|",
-                @"netrc=true|false|/home/test/.netrc",
-                @"netrc=false|false|/home/test/.netrc",
-                @"#netrc=true|true|",
-                @"#netrc=true|false|/home/test/.netrc",
-                @"#netrc=false|false|/home/test/.netrc",
+                @"netrc=true,true,",
+                @"netrc=true,false,/home/test/.netrc",
+                @"netrc=false,false,/home/test/.netrc",
+                @"#netrc=true,true,",
+                @"#netrc=true,false,/home/test/.netrc",
+                @"#netrc=false,false,/home/test/.netrc",
             };
 
             foreach (string testValue in testValues)
@@ -714,7 +703,7 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[0].IsEnabled, true);
             Assert.AreEqual(settings[0].IsOptional, true);
             Assert.AreEqual(settings[0].IsAutomatic, true);
-            Assert.AreEqual(settings[0].File, null);
+            Assert.AreEqual(settings[0].File, "");
             Assert.AreEqual(settings[1].IsEnabled, true);
             Assert.AreEqual(settings[1].IsOptional, true);
             Assert.AreEqual(settings[1].IsAutomatic, false);
@@ -726,7 +715,7 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[3].IsEnabled, false);
             Assert.AreEqual(settings[3].IsOptional, true);
             Assert.AreEqual(settings[3].IsAutomatic, true);
-            Assert.AreEqual(settings[3].File, null);
+            Assert.AreEqual(settings[3].File, "");
             Assert.AreEqual(settings[4].IsEnabled, false);
             Assert.AreEqual(settings[4].IsOptional, true);
             Assert.AreEqual(settings[4].IsAutomatic, false);
@@ -827,16 +816,16 @@ namespace HurlStudio.Tests
             List<ProxySetting> settings = new List<ProxySetting>();
             string[] testValues =
             {
-                "proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
-                "proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
-                "proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:",
-                "proxy=protocol:http,host:testproxy.local,port:8080,user:,password:",
-                "proxy=protocol:http,host:testproxy.local,port:8123,user:,password:",
-                "#proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
-                "#proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:dGVzdHBhc3N3b3Jk",
-                "#proxy=protocol:http,host:testproxy.local,port:8080,user:testuser,password:",
-                "#proxy=protocol:http,host:testproxy.local,port:8080,user:,password:",
-                "#proxy=protocol:http,host:testproxy.local,port:8123,user:,password:",
+                "proxy=https,testproxy.local,8080,testuser,dGVzdHBhc3N3b3Jk",
+                "proxy=http,testproxy.local,8080,testuser,dGVzdHBhc3N3b3Jk",
+                "proxy=http,testproxy.local,8080,testuser",
+                "proxy=http,testproxy.local,8080,,",
+                "proxy=http,testproxy.local,8123,,",
+                "#proxy=https,testproxy.local,8080,testuser,dGVzdHBhc3N3b3Jk",
+                "#proxy=http,testproxy.local,8080,testuser,dGVzdHBhc3N3b3Jk",
+                "#proxy=http,testproxy.local,8080,testuser",
+                "#proxy=http,testproxy.local,8080,,",
+                "#proxy=http,testproxy.local,8123,,",
             };
 
             foreach (string testValue in testValues)
@@ -921,16 +910,16 @@ namespace HurlStudio.Tests
                 @"redirections=True",
                 @"redirections=false",
                 @"redirections=False",
-                @"redirections=true:true",
-                @"redirections=true:false",
-                @"redirections=true:true:50",
+                @"redirections=true,true",
+                @"redirections=true,false",
+                @"redirections=true,true,50",
                 @"#redirections=true",
                 @"#redirections=True",
                 @"#redirections=false",
                 @"#redirections=False",
-                @"#redirections=true:true",
-                @"#redirections=true:false",
-                @"#redirections=true:true:50"
+                @"#redirections=true,true",
+                @"#redirections=true,false",
+                @"#redirections=true,true,50"
             };
 
             foreach (string testValue in testValues)
@@ -987,8 +976,8 @@ namespace HurlStudio.Tests
             List<ResolveSetting> settings = new List<ResolveSetting>();
             string[] testValues =
             {
-                @"resolve=www.example.com:80:127.0.0.1",
-                @"#resolve=www.example.com:80:127.0.0.1"
+                @"resolve=www.example.com,80,127.0.0.1",
+                @"#resolve=www.example.com,80,127.0.0.1"
             };
 
             foreach (string testValue in testValues)
@@ -1017,10 +1006,10 @@ namespace HurlStudio.Tests
             List<RetrySetting> settings = new List<RetrySetting>();
             string[] testValues =
             {
-                @"retry=10:1000",
-                @"retry=20:0",
-                @"#retry=10:1000",
-                @"#retry=20:0"
+                @"retry=10,1000",
+                @"retry=20,0",
+                @"#retry=10,1000",
+                @"#retry=20,0"
             };
 
             foreach (string testValue in testValues)
@@ -1098,14 +1087,14 @@ namespace HurlStudio.Tests
 
             string[] testValues =
             {
-                @"timeout=30:30",
-                @"timeout=60:30",
-                @"timeout=0:30",
-                @"timeout=30:0",
-                @"#timeout=30:30",
-                @"#timeout=60:30",
-                @"#timeout=0:30",
-                @"#timeout=30:0",
+                @"timeout=30,30",
+                @"timeout=60,30",
+                @"timeout=0,30",
+                @"timeout=30,0",
+                @"#timeout=30,30",
+                @"#timeout=60,30",
+                @"#timeout=0,30",
+                @"#timeout=30,0",
             };
 
             foreach (string testValue in testValues)
@@ -1207,10 +1196,13 @@ namespace HurlStudio.Tests
         public void TestValidUserAgentSettings()
         {
             List<UserAgentSetting> settings = new List<UserAgentSetting>();
+            const string USERAGENT = "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3";
+
             string[] testValues =
             {
-                "user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
-                "#user_agent=Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3",
+                "user_agent=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%205_0%20like%20Mac%20OS%20X%29%20AppleWebKit%2F534.46%20%28KHTML%2C%20like%20Gecko%29%20Version%2F5.1%20Mobile%2F9A334%20Safari%2F7534.48.3",
+                "#user_agent=Mozilla%2F5.0%20%28iPhone%3B%20CPU%20iPhone%20OS%205_0%20like%20Mac%20OS%20X%29%20AppleWebKit%2F534.46%20%28KHTML%2C%20like%20Gecko%29%20Version%2F5.1%20Mobile%2F9A334%20Safari%2F7534.48.3",
+                "user_agent=" + USERAGENT.EncodeUrl()
             };
 
             foreach (string testValue in testValues)
@@ -1224,11 +1216,11 @@ namespace HurlStudio.Tests
 
             Assert.AreEqual(settings.Count, testValues.Length);
             Assert.AreEqual(settings[0].IsEnabled, true);
-            Assert.AreEqual(settings[0].UserAgent,
-                "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3");
+            Assert.AreEqual(settings[0].UserAgent, USERAGENT);
             Assert.AreEqual(settings[1].IsEnabled, false);
-            Assert.AreEqual(settings[1].UserAgent,
-                "Mozilla/5.0 (iPhone; CPU iPhone OS 5_0 like Mac OS X) AppleWebKit/534.46 (KHTML, like Gecko) Version/5.1 Mobile/9A334 Safari/7534.48.3");
+            Assert.AreEqual(settings[1].UserAgent, USERAGENT);
+            Assert.AreEqual(settings[2].IsEnabled, true);
+            Assert.AreEqual(settings[2].UserAgent, USERAGENT);
         }
 
         [TestMethod]
@@ -1237,12 +1229,12 @@ namespace HurlStudio.Tests
             List<VariableSetting> settings = new List<VariableSetting>();
             string[] testValues =
             {
-                "variable=test1:test2",
-                "variable=test1:test2:3",
-                "variable=test2:",
-                "#variable=test1:test2",
-                "#variable=test1:test2:3",
-                "#variable=test2:"
+                "variable=test1,test2",
+                "variable=test1,test2%2C3",
+                "variable=test2,",
+                "#variable=test1,test2",
+                "#variable=test1,test2%2C3",
+                "#variable=test2,"
             };
 
             foreach (string testValue in testValues)
@@ -1260,7 +1252,7 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[0].Value, "test2");
             Assert.AreEqual(settings[1].IsEnabled, true);
             Assert.AreEqual(settings[1].Key, "test1");
-            Assert.AreEqual(settings[1].Value, "test2:3");
+            Assert.AreEqual(settings[1].Value, "test2,3");
             Assert.AreEqual(settings[2].IsEnabled, true);
             Assert.AreEqual(settings[2].Key, "test2");
             Assert.AreEqual(settings[2].Value, "");
@@ -1269,7 +1261,7 @@ namespace HurlStudio.Tests
             Assert.AreEqual(settings[3].Value, "test2");
             Assert.AreEqual(settings[4].IsEnabled, false);
             Assert.AreEqual(settings[4].Key, "test1");
-            Assert.AreEqual(settings[4].Value, "test2:3");
+            Assert.AreEqual(settings[4].Value, "test2,3");
             Assert.AreEqual(settings[5].IsEnabled, false);
             Assert.AreEqual(settings[5].Key, "test2");
             Assert.AreEqual(settings[5].Value, "");

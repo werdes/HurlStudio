@@ -9,8 +9,7 @@ namespace HurlStudio.Collections.Settings
     public class ConnectToSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "connect_to";
-        private readonly Regex CONNECT_TO_SETTING_REGEX = new Regex("([^:]*):([0-9]*):([^:]*):([0-9]*)", RegexOptions.Compiled);
-
+        
         private string? _host1;
         private ushort? _port1;
         private string? _host2;
@@ -66,20 +65,19 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            Match match = CONNECT_TO_SETTING_REGEX.Match(value);
-            if (match.Success && match.Groups.Count > 0)
+            if (arguments.Length > 0)
             {
-                this.Host1 = match.Groups.Values.Get(1)?.Value;
-                this.Host2 = match.Groups.Values.Get(3)?.Value;
+                this.Host1 = arguments.Get(0);
+                this.Host2 = arguments.Get(2);
 
-                string? port1Value = match.Groups.Values.Get(2)?.Value;
-                string? port2Value = match.Groups.Values.Get(4)?.Value;
+                string? port1Value = arguments.Get(1);
+                string? port2Value = arguments.Get(3);
                 ushort port1;
                 ushort port2;
 
@@ -92,8 +90,7 @@ namespace HurlStudio.Collections.Settings
                     this.Port2 = port2;
 
                     return this;
-                }                  
-
+                }
             }
             return null;
         }
@@ -137,12 +134,15 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the certificate and password, joined by a separator (|)
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{this.Host1}:{this.Port1}:{this.Host2}:{this.Port2}";
+            return [_host1 ?? string.Empty,
+                    _port1.ToString() ?? string.Empty,
+                    _host2 ?? string.Empty,
+                    _port2.ToString() ?? string.Empty];
         }
 
         /// <summary>

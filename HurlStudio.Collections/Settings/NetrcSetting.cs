@@ -12,7 +12,6 @@ namespace HurlStudio.Collections.Settings
     public class NetrcSetting : BaseSetting, IHurlSetting
     {
         private const string CONFIGURATION_NAME = "netrc";
-        private const char VALUE_SEPARATOR = '|';
 
         private bool? _isOptional;
         private bool? _isAutomatic;
@@ -54,36 +53,29 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if (parts.Length > 0)
+            if (arguments.Length > 0)
             {
-                if (bool.TryParse(parts.Get(0), out bool isOptional))
+                if (bool.TryParse(arguments.Get(0), out bool isOptional))
                 {
                     this.IsOptional = isOptional;
                 }
-                if (bool.TryParse(parts.Get(1), out bool isAutomatic))
+                if (bool.TryParse(arguments.Get(1), out bool isAutomatic))
                 {
                     this.IsAutomatic = isAutomatic;
                 }
 
-                string? path = parts.Get(2);
-                if (!string.IsNullOrEmpty(path))
-                {
-                    this.File = path;
-                }
-
+                this.File = arguments.Get(2);
                 return this;
             }
 
             return null;
         }
-
 
         /// <summary>
         /// Returns the Hurl arguments for this setting
@@ -97,15 +89,15 @@ namespace HurlStudio.Collections.Settings
             {
                 arguments.Add(new NetrcArgument());
             }
-            else if(!string.IsNullOrEmpty(this.File))
+            else if (!string.IsNullOrEmpty(this.File))
             {
-                if(this.IsOptional.HasValue && this.IsOptional.Value)
+                if (this.IsOptional.HasValue && this.IsOptional.Value)
                 {
                     arguments.Add(new NetrcOptionalArgument(this.File));
                 }
                 else
                 {
-                    arguments.Add(new NetrcFileArgument(this.File));    
+                    arguments.Add(new NetrcFileArgument(this.File));
                 }
             }
 
@@ -131,12 +123,14 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{_isOptional}{VALUE_SEPARATOR}{_isAutomatic}{VALUE_SEPARATOR}{_file}";
+            return [_isOptional ?? false,
+                    _isAutomatic ?? true,
+                    _file ?? string.Empty];
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using HurlStudio.Collections.Model.EventArgs;
 using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Common.UI;
 using HurlStudio.HurlLib.HurlArgument;
 using System.ComponentModel;
@@ -11,6 +12,7 @@ namespace HurlStudio.Collections.Settings
     public abstract class BaseSetting : INotifyPropertyChanged, IHurlSetting
     {
         private const string NAME_VALUE_SEPARATOR = "=";
+        private const char VALUE_SEPARATOR = ',';
 
         public event PropertyChangedEventHandler? PropertyChanged;
         public event EventHandler<SettingPropertyChangedEventArgs>? SettingPropertyChanged;
@@ -42,9 +44,31 @@ namespace HurlStudio.Collections.Settings
             }
         }
 
-        public abstract string GetConfigurationName();
-        public abstract string GetConfigurationValue();
+        /// <summary>
+        /// Returns the serialized configuration values
+        /// </summary>
+        /// <returns></returns>
+        public string GetConfigurationValue()
+        {
+            object[] objects = GetConfigurationValues();
+            return string.Join(VALUE_SEPARATOR, objects.Select(o => o?.ToString()?.EncodeUrl()));
+        }
 
+        /// <summary>
+        /// Fills the setting with values from a configuration string
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public IHurlSetting? FillFromString(string value)
+        {
+            string?[] arguments = value.Split(VALUE_SEPARATOR).Select(x => x.DecodeUrl()).ToArray();
+            return this.FillFromArguments(arguments);
+        }
+
+        /// <summary>
+        /// Returns the full configuration line
+        /// </summary>
+        /// <returns></returns>
         public string GetConfigurationString()
         {
             string active = this.IsEnabled ? string.Empty : "#";
@@ -53,8 +77,10 @@ namespace HurlStudio.Collections.Settings
             return $"{active}{settingName}{NAME_VALUE_SEPARATOR}{settingValue}";
         }
 
+        public abstract string GetConfigurationName();
+        public abstract object[] GetConfigurationValues();
         public abstract IHurlArgument[] GetArguments();
-        public abstract IHurlSetting? FillFromString(string value);
+        public abstract IHurlSetting? FillFromArguments(string?[] arguments);
         public abstract IHurlSetting? FillDefault();
         public abstract string? GetConfigurationKey();
         public abstract string GetDisplayString();

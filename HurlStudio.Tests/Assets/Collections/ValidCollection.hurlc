@@ -6,27 +6,27 @@ exclude_root_dir=true
 ../HurlFiles/
 
 [CollectionSettings]
-proxy=protocol:https,host:testproxy.local,port:8080
+proxy=https,testproxy.local,8080
 
 [FolderSettings]
 location=../HurlFiles/
-variable=fvar1:ftest2
-variable=fvar2:ftest3:abc
+variable=fvar1,ftest2
+variable=fvar2,ftest3%3Aabc
 
 [FileSettings]
 location=../HurlFiles/TestFile1.hurl
-variable=var1:test1
+variable=var1,test1
 
 [FileSettings]
 location=../HurlFiles/TestFile2.hurl
-proxy=protocol:https,host:testproxy.local,port:8080,user:testuser,password:testpassword
-variable=var1:test2
-variable=var2:test3
-aws_sig_v4=aws::eu-central-1:foos
+proxy=https,testproxy.local,8080,testuser,testpassword
+variable=var1,test2
+variable=var2,test3
+aws_sig_v4=aws,,eu-central-1,foos
 ca_cert=E:\Files\test.pem
 
 [FileSettings]
 location=../HurlFiles/NonExistantHurlFile.hurl
-variable=varNonExisting1:ValueNonExisting1
-variable=varNonExisting2:ValueNonExisting2
-client_certificate=D:\Files\Certs\Test.crt|TestPassword
+variable=varNonExisting1,ValueNonExisting1
+variable=varNonExisting2,ValueNonExisting2
+client_certificate=D,\Files\Certs\Test.crt|TestPassword

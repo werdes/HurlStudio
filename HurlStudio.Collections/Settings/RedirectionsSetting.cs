@@ -8,7 +8,6 @@ namespace HurlStudio.Collections.Settings
     public class RedirectionsSetting : BaseSetting, IHurlSetting
     {
         private const string CONFIGURATION_NAME = "redirections";
-        private const char VALUE_SEPARATOR = ':';
 
         private bool? _allowRedirections;
         private bool? _redirectionsTrusted;
@@ -16,7 +15,7 @@ namespace HurlStudio.Collections.Settings
 
         public RedirectionsSetting()
         {
-            
+
         }
 
         public bool? AllowRedirections
@@ -50,24 +49,23 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if(parts.Length > 0)
+            if (arguments.Length > 0)
             {
-                if(bool.TryParse(parts.Get(0), out bool allowRedirections))
+                if (bool.TryParse(arguments.Get(0), out bool allowRedirections))
                 {
                     this.AllowRedirections = allowRedirections;
                 }
-                if(bool.TryParse(parts.Get(1), out bool redirectionsTrusted))
+                if (bool.TryParse(arguments.Get(1), out bool redirectionsTrusted))
                 {
                     this.RedirectionsTrusted = redirectionsTrusted;
                 }
-                if(uint.TryParse(parts.Get(2), out uint maxRedirections))
+                if (uint.TryParse(arguments.Get(2), out uint maxRedirections))
                 {
                     this.MaxRedirections = maxRedirections;
                 }
@@ -77,7 +75,6 @@ namespace HurlStudio.Collections.Settings
 
             return null;
         }
-
 
         /// <summary>
         /// Returns the Hurl arguments for this setting
@@ -89,7 +86,7 @@ namespace HurlStudio.Collections.Settings
 
             if (_allowRedirections.HasValue && _allowRedirections.Value)
             {
-                if(_redirectionsTrusted.HasValue && _redirectionsTrusted.Value)
+                if (_redirectionsTrusted.HasValue && _redirectionsTrusted.Value)
                 {
                     arguments.Add(new LocationTrustedArgument());
                 }
@@ -99,7 +96,7 @@ namespace HurlStudio.Collections.Settings
                 }
             }
 
-            if(_maxRedirections.HasValue)
+            if (_maxRedirections.HasValue)
             {
                 arguments.Add(new MaxRedirectionsArgument(_maxRedirections.Value));
             }
@@ -126,12 +123,14 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{_allowRedirections}{VALUE_SEPARATOR}{_redirectionsTrusted}{VALUE_SEPARATOR}{_maxRedirections}";
+            return [_allowRedirections ?? false,
+                    _redirectionsTrusted ?? false,
+                    _maxRedirections ?? 0];
         }
 
         /// <summary>

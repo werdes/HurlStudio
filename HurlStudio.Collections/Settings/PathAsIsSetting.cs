@@ -1,4 +1,5 @@
 using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 
 namespace HurlStudio.Collections.Settings
@@ -25,16 +26,16 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            bool outVal = false;
-            if (bool.TryParse(value, out outVal))
+            bool pathAsIs = false;
+            if (bool.TryParse(arguments.Get(0), out pathAsIs))
             {
-                this.PathAsIs = outVal;
+                this.PathAsIs = pathAsIs;
                 return this;
             }
             return null;
@@ -75,12 +76,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return _pathAsIs?.ToString() ?? false.ToString();
+            return [_pathAsIs ?? false];
         }
 
         /// <summary>

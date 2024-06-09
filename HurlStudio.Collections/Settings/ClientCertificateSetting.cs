@@ -9,7 +9,7 @@ namespace HurlStudio.Collections.Settings
     public class ClientCertificateSetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "client_certificate";
-        private const string VALUE_SEPARATOR = "|";
+        private const string VALUE_SEPARATOR = ",";
 
         private string? _certificateFile;
         private string? _password;
@@ -53,19 +53,18 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if (parts.Length > 0)
+            if (arguments.Length > 0)
             {
-                this.CertificateFile = parts.Get(0);
-                this.KeyFile = parts.Get(2);
+                this.CertificateFile = arguments.Get(0);
+                this.KeyFile = arguments.Get(2);
 
-                string? passwordBase64 = parts.Get(1);
+                string? passwordBase64 = arguments.Get(1);
                 if (passwordBase64 != null)
                 {
                     this.Password = passwordBase64.DecodeBase64();
@@ -122,12 +121,14 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the certificate and password, joined by a separator (|)
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{this.CertificateFile}{VALUE_SEPARATOR}{this.Password?.EncodeBase64()}{VALUE_SEPARATOR}{this.KeyFile}";
+            return [_certificateFile ?? string.Empty,
+                    _password?.EncodeBase64() ?? string.Empty,
+                    _keyFile ?? string.Empty];
         }
 
         /// <summary>

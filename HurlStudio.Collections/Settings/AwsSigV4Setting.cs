@@ -10,8 +10,6 @@ namespace HurlStudio.Collections.Settings
     public class AwsSigV4Setting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "aws_sig_v4";
-        private const string VALUE_SEPARATOR = ":";
-        private readonly Regex AWS_SIG_V4_SETTING_REGEX = new Regex($"([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*){VALUE_SEPARATOR}([^{VALUE_SEPARATOR}]*)", RegexOptions.Compiled);
 
         private string? _provider1;
         private string? _provider2;
@@ -20,7 +18,7 @@ namespace HurlStudio.Collections.Settings
 
         public AwsSigV4Setting()
         {
-            
+
         }
 
         [HurlSettingDisplayString]
@@ -68,23 +66,18 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            Match match = AWS_SIG_V4_SETTING_REGEX.Match(value);
-            if (match.Success && match.Groups.Count > 0)
-            {
-                this.Provider1 = match.Groups.Values.Get(1)?.Value;
-                this.Provider2 = match.Groups.Values.Get(2)?.Value;
-                this.Region = match.Groups.Values.Get(3)?.Value;
-                this.Service = match.Groups.Values.Get(4)?.Value;
+            this.Provider1 = arguments.Get(0);
+            this.Provider2 = arguments.Get(1);
+            this.Region = arguments.Get(2);
+            this.Service = arguments.Get(3);
 
-                return this;
-            }
-            return null;
+            return this;
         }
 
         /// <summary>
@@ -96,8 +89,8 @@ namespace HurlStudio.Collections.Settings
             List<IHurlArgument> arguments = new List<IHurlArgument>
             {
                 new AwsSigV4Argument(
-                    _provider1 ?? string.Empty, 
-                    _provider2 ?? string.Empty, 
+                    _provider1 ?? string.Empty,
+                    _provider2 ?? string.Empty,
                     _region ?? string.Empty,
                     _service ?? string.Empty)
             };
@@ -123,12 +116,15 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the providers, region and service, joined by a separator (:)
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{_provider1}{VALUE_SEPARATOR}{_provider2}{VALUE_SEPARATOR}{_region}{VALUE_SEPARATOR}{_service}";
+            return [_provider1 ?? string.Empty,
+                    _provider2 ?? string.Empty,
+                    _region ?? string.Empty,
+                    _service ?? string.Empty];
         }
 
         /// <summary>
@@ -137,7 +133,7 @@ namespace HurlStudio.Collections.Settings
         /// <returns></returns>
         public override string GetDisplayString()
         {
-            return this.GetConfigurationValue();
+            return $"{_provider1}:{_provider2}:{_region}:{_service}";
         }
 
         /// <summary>

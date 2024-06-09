@@ -1,5 +1,6 @@
 using HurlStudio.Collections.Attributes;
 using HurlStudio.Common.Enums;
+using HurlStudio.Common.Extensions;
 using HurlStudio.HurlLib.HurlArgument;
 
 namespace HurlStudio.Collections.Settings
@@ -27,15 +28,13 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
-        {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-            
-            this.UserAgent = value;
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
+        {            
+            this.UserAgent = arguments.Get(0);
             return this;
         }
 
@@ -72,12 +71,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value of this setting 
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return this.UserAgent ?? string.Empty;
+            return [_userAgent ?? string.Empty];
         }
 
         /// <summary>

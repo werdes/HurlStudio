@@ -19,11 +19,10 @@ namespace HurlStudio.Tests
         [TestInitialize]
         public void Init()
         {
-            ILogger<IniSettingParser> logger = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace))
-                                                            .CreateLogger<IniSettingParser>();
+            ILoggerFactory factory = LoggerFactory.Create(builder => builder.AddConsole().AddFilter("*", LogLevel.Trace));
 
-            _parser = new IniSettingParser(logger);
-            _serializer = new IniEnvironmentSerializer((IniSettingParser)_parser);
+            _parser = new IniSettingParser(factory.CreateLogger<IniSettingParser>());
+            _serializer = new IniEnvironmentSerializer((IniSettingParser)_parser, factory.CreateLogger<IniEnvironmentSerializer>());
         }
 
         [TestMethod]

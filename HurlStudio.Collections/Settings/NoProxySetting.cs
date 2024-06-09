@@ -10,7 +10,7 @@ namespace HurlStudio.Collections.Settings
     {
         private const string CONFIGURATION_NAME = "no_proxy";
         private const string VALUE_SEPARATOR = ",";
-        
+
         private OrderedObservableCollection<NoProxyHost> _noProxyHosts;
 
         public NoProxySetting()
@@ -48,16 +48,14 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            if (string.IsNullOrEmpty(value)) return null;
-            
-            _noProxyHosts.AddRange(value.Split(VALUE_SEPARATOR).Select(x => new NoProxyHost(x)));
-            return _noProxyHosts.Count > 0 ? this : null;
+            _noProxyHosts.AddRange(arguments.Select(x => new NoProxyHost(x ?? string.Empty)));
+            return this;
         }
 
         /// <summary>
@@ -88,7 +86,7 @@ namespace HurlStudio.Collections.Settings
         {
             return HurlSettingInheritanceBehavior.Merge;
         }
-        
+
         /// <summary>
         /// Returns the configuration name (file_root)
         /// </summary>
@@ -99,12 +97,12 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value or "false", if null
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return string.Join(VALUE_SEPARATOR, _noProxyHosts.Select(x => x.Host));
+            return _noProxyHosts.Select(x => x.Host).ToArray();
         }
 
         /// <summary>

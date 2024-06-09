@@ -14,7 +14,7 @@ namespace HurlStudio.Collections.Settings
 
         public RetrySetting()
         {
-            
+
         }
 
         public int? RetryCount
@@ -38,23 +38,20 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            if (string.IsNullOrWhiteSpace(value)) return null;
-
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if (parts.Length != 2) return null;
-
-            if (!int.TryParse(parts.Get(0), out int retryCount)) return null;
-            if (!uint.TryParse(parts.Get(1), out uint retryInterval)) return null;
-
-            this.RetryCount = retryCount;
-            this.RetryInterval = retryInterval;
-
+            if (int.TryParse(arguments.Get(0), out int retryCount))
+            {
+                this.RetryCount = retryCount;
+            }
+            if (uint.TryParse(arguments.Get(1), out uint retryInterval))
+            {
+                this.RetryInterval = retryInterval;
+            }
             return this;
         }
 
@@ -66,7 +63,7 @@ namespace HurlStudio.Collections.Settings
         {
             List<IHurlArgument> arguments = new List<IHurlArgument>();
 
-            if(_retryCount.HasValue)
+            if (_retryCount.HasValue)
             {
                 arguments.Add(new RetryArgument(_retryCount.Value));
             }
@@ -74,7 +71,7 @@ namespace HurlStudio.Collections.Settings
             if (_retryInterval.HasValue)
             {
                 arguments.Add(new RetryIntervalArgument(_retryInterval.Value));
-            }   
+            }
 
             return arguments.ToArray();
         }
@@ -98,12 +95,13 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{this.RetryCount}{VALUE_SEPARATOR}{this.RetryInterval}";
+            return [_retryCount ?? 0,
+                    _retryInterval ?? 0];
         }
 
         /// <summary>

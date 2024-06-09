@@ -41,21 +41,22 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            if (uint.TryParse(value.Split(VALUE_SEPARATOR).Get(0), out uint connectTimeoutSeconds) &&
-                uint.TryParse(value.Split(VALUE_SEPARATOR).Get(1), out uint maxTimeSeconds))
+            if (uint.TryParse(arguments.Get(0), out uint connectTimeoutSeconds))
             {
                 _connectTimeoutSeconds = connectTimeoutSeconds;
+            }
+            if (uint.TryParse(arguments.Get(1), out uint maxTimeSeconds))
+            {
                 _maxTimeSeconds = maxTimeSeconds;
-                return this;
             }
 
-            return null;
+            return this;
         }
 
         /// <summary>
@@ -90,12 +91,13 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{_connectTimeoutSeconds}{VALUE_SEPARATOR}{_maxTimeSeconds}";
+            return [_connectTimeoutSeconds ?? DEFAULT_VALUE,
+                    _maxTimeSeconds ?? DEFAULT_VALUE];
         }
 
         /// <summary>

@@ -9,13 +9,6 @@ namespace HurlStudio.Collections.Settings
     public class ProxySetting : BaseSetting, IHurlSetting
     {
         public const string CONFIGURATION_NAME = "proxy";
-        private const string SUBCONFIGURATION_KEY_PROTOCOL = "protocol";
-        private const string SUBCONFIGURATION_KEY_HOST = "host";
-        private const string SUBCONFIGURATION_KEY_PORT = "port";
-        private const string SUBCONFIGURATION_KEY_USER = "user";
-        private const string SUBCONFIGURATION_KEY_PASSWORD = "password";
-        private const string SUBCONFIGURATION_SEPARATOR = ",";
-        private const string SUBCONFIGURATION_KEY_VALUE_SEPARATOR = ":";
 
         private string? _host;
         private ushort? _port;
@@ -82,30 +75,24 @@ namespace HurlStudio.Collections.Settings
 
 
         /// <summary>
-        /// Fills from Configuration line
-        /// Format: protocol={HTTP|HTTPS},host={host},port={port},user={user},password={password}
-        /// Example:
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value"></param>
-        public override IHurlSetting? FillFromString(string value)
+        /// <param name="arguments">Configuration arguments</param>
+        /// <returns></returns>
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            string[] parts = value.Split(SUBCONFIGURATION_SEPARATOR);
-            foreach (string part in parts)
+            if (Enum.TryParse<ProxyProtocol>(arguments.Get(0), true, out ProxyProtocol protocol))
             {
-                string[] keyValuePair = part.Split(SUBCONFIGURATION_KEY_VALUE_SEPARATOR);
-                string subConfigKey = keyValuePair[0];
-                string? subConfigValue = keyValuePair[1]?.DecodeUrl();
-
-                switch (subConfigKey)
-                {
-                    case SUBCONFIGURATION_KEY_USER: this.User = subConfigValue; break;
-                    case SUBCONFIGURATION_KEY_HOST: this.Host = subConfigValue; break;
-                    case SUBCONFIGURATION_KEY_PORT: this.Port = Convert.ToUInt16(subConfigValue); break;
-                    case SUBCONFIGURATION_KEY_PROTOCOL: this.Protocol = Enum.Parse<ProxyProtocol>(subConfigValue ?? ProxyProtocol.Undefined.ToString(), true); break;
-                    case SUBCONFIGURATION_KEY_PASSWORD: this.Password = subConfigValue?.DecodeBase64(); break;
-                    default: throw new ArgumentException("Unknown sub-config name: " + subConfigKey);
-                }
+                this.Protocol = protocol;
             }
+            if (ushort.TryParse(arguments.Get(2), out ushort port))
+            {
+                this.Port = port;
+            }
+
+            this.Host = arguments.Get(1);
+            this.User = arguments.Get(3);
+            this.Password = arguments.Get(4)?.DecodeBase64() ?? string.Empty;
 
             return this;
         }
@@ -152,23 +139,16 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the configuration value as string
+        /// Returns the list of configuration values
         /// </summary>
-        /// <returns>The configuration value as string</returns>
-        public override string GetConfigurationValue()
+        /// <returns></returns>
+        public override object[] GetConfigurationValues()
         {
-            string configValue = string.Empty;
-            configValue += $"{SUBCONFIGURATION_KEY_PROTOCOL}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Protocol}";
-            configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_HOST}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Host}";
-            configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PORT}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Port}";
-
-            if (!string.IsNullOrEmpty(this.User))
-            {
-                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_USER}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.User}";
-                configValue += $"{SUBCONFIGURATION_SEPARATOR}{SUBCONFIGURATION_KEY_PASSWORD}{SUBCONFIGURATION_KEY_VALUE_SEPARATOR}{this.Password?.EncodeBase64()}";
-            }
-
-            return configValue;
+            return [_protocol ?? ProxyProtocol.Undefined,
+                    _host ?? string.Empty,
+                    _port.ToString() ?? string.Empty,
+                    _user ?? string.Empty,
+                    _password?.EncodeBase64() ?? string.Empty];
         }
 
         /// <summary>

@@ -55,18 +55,15 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            string[] parts = value.Split(VALUE_SEPARATOR);
-            if (parts.Length == 0) return null;
+            this.User = arguments.Get(0);
 
-            this.User = parts.Get(0);
-
-            string? passwordBase64 = parts.Get(1);
+            string? passwordBase64 = arguments.Get(1);
             if (!string.IsNullOrEmpty(passwordBase64))
             {
                 this.Password = passwordBase64.DecodeBase64();
@@ -114,12 +111,13 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value 
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return $"{this.User}{VALUE_SEPARATOR}{this.Password?.EncodeBase64()}";
+            return [_user ?? string.Empty,
+                    _password?.EncodeBase64() ?? string.Empty];
         }
 
         /// <summary>

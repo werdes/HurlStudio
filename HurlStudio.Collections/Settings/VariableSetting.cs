@@ -9,16 +9,13 @@ namespace HurlStudio.Collections.Settings
     public class VariableSetting : BaseSetting, IHurlSetting
     {
         private const string CONFIGURATION_NAME = "variable";
-        private const string KEY_VALUE_SEPARATOR = ":";
-
-        private static readonly Regex VARIABLE_SETTING_REGEX = new Regex(@"([A-Za-z0-9_\-]+)(?:\:)(.*)", RegexOptions.Compiled);
 
         private string? _key;
         private string? _value;
 
         public VariableSetting()
         {
-            
+
         }
 
         [HurlSettingDisplayString]
@@ -45,21 +42,16 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Deserializes the supplied configuration string into this instance
+        /// Deserializes the supplied configuration arguments into this instance
         /// </summary>
-        /// <param name="value">configuration string</param>
+        /// <param name="arguments">Configuration arguments</param>
         /// <returns></returns>
-        public override IHurlSetting? FillFromString(string value)
+        public override IHurlSetting? FillFromArguments(string?[] arguments)
         {
-            Match match = VARIABLE_SETTING_REGEX.Match(value);
-            if (match.Success && match.Groups.Count > 0)
-            {
-                this.Key = match.Groups.Values.Get(1)?.Value;
-                this.Value = match.Groups.Values.Get(2)?.Value;
+            this.Key = arguments.Get(0);
+            this.Value = arguments.Get(1);
 
-                return this;
-            }
-            return null;
+            return this;
         }
 
         /// <summary>
@@ -95,12 +87,13 @@ namespace HurlStudio.Collections.Settings
         }
 
         /// <summary>
-        /// Returns the serialized value, consisting of the variable key and value
+        /// Returns the list of configuration values
         /// </summary>
         /// <returns></returns>
-        public override string GetConfigurationValue()
+        public override object[] GetConfigurationValues()
         {
-            return this.Key + KEY_VALUE_SEPARATOR + (this.Value ?? string.Empty);
+            return [_key ?? string.Empty,
+                    _value ?? string.Empty];
         }
 
         /// <summary>

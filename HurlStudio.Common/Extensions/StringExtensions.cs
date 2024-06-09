@@ -15,11 +15,21 @@ namespace HurlStudio.Common.Extensions
     {
         private static readonly Regex NORMALIZE_REGEX = new Regex("[^A-Za-z0-9 ]", RegexOptions.Compiled);
 
+        /// <summary>
+        /// Encodes a string as URL parameter
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string EncodeUrl(this string value)
         {
             return HttpUtility.UrlEncode(value);
         }
 
+        /// <summary>
+        /// Decodes an URL parameter
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static string DecodeUrl(this string value)
         {
             return HttpUtility.UrlDecode(value);
