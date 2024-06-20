@@ -273,6 +273,21 @@ namespace HurlStudio.Services.UiState
         }
 
         /// <summary>
+        /// Removes the collapsed state of settings
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveSettingCollapsedState(string id)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (_uiState.SettingCollapsedStates.ContainsKey(id))
+            {
+                _uiState.SettingCollapsedStates.Remove(id);
+            }
+        }
+
+        /// <summary>
         /// Sets the collapsed state of a setting section
         /// </summary>
         /// <param name="id"></param>
@@ -287,6 +302,21 @@ namespace HurlStudio.Services.UiState
                 _uiState.SettingSectionCollapsedStates.Add(id, false);
             }
             _uiState.SettingSectionCollapsedStates[id] = visible;
+        }
+
+        /// <summary>
+        /// Removes the collapsed state of a setting section
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveSettingSectionCollapsedState(string id)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (_uiState.SettingSectionCollapsedStates.ContainsKey(id))
+            {
+                _uiState.SettingSectionCollapsedStates.Remove(id);
+            }
         }
 
         /// <summary>
@@ -327,11 +357,11 @@ namespace HurlStudio.Services.UiState
         }
 
         /// <summary>
-        /// Sets the collapsed state of settings (non file specific ones, for enabling/disabling per file)
+        /// Sets the enabled state of settings (non file specific ones, for enabling/disabling per file)
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="visible"></param>
-        public void SetSettingEnabledState(string id, bool visible)
+        /// <param name="enabled"></param>
+        public void SetSettingEnabledState(string id, bool enabled)
         {
             if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
             if (id == null) throw new ArgumentNullException(nameof(id));
@@ -340,7 +370,22 @@ namespace HurlStudio.Services.UiState
             {
                 _uiState.SettingEnabledStates.Add(id, false);
             }
-            _uiState.SettingEnabledStates[id] = visible;
+            _uiState.SettingEnabledStates[id] = enabled;
+        }
+
+        /// <summary>
+        /// Removes an enabled state of a setting 
+        /// </summary>
+        /// <param name="id"></param>
+        public void RemoveSettingEnabledState(string id)
+        {
+            if (_uiState == null) throw new ArgumentNullException(nameof(_uiState));
+            if (id == null) throw new ArgumentNullException(nameof(id));
+
+            if (_uiState.SettingEnabledStates.ContainsKey(id))
+            {
+                _uiState.SettingEnabledStates.Remove(id);
+            }
         }
 
         /// <summary>
@@ -364,5 +409,6 @@ namespace HurlStudio.Services.UiState
                 _uiState.ActiveDocument = null;
             }
         }
+
     }
 }

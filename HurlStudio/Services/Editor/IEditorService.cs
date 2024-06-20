@@ -13,6 +13,9 @@ namespace HurlStudio.Services.Editor
         Task<bool> MoveFolderToCollection(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer, HurlCollectionContainer collectionContainer);
         Task<bool> MoveFolderToFolder(HurlFolderContainer folderContainer, HurlFolderContainer parentFolderContainer);
         Task<bool> MoveFolderToCollectionRoot(HurlFolderContainer folderContainer, HurlCollectionContainer collectionContainer);
+        Task<bool> RenameFile(HurlFileContainer fileContainer, string newFileName);
+        Task<bool> RenameFolder(HurlFolderContainer folderContainer, string newFolderName);
+        Task<bool> RenameCollection(HurlCollectionContainer collectionContainer, string newCollectionName, bool moveFile);   
         Task OpenInitialDocuments();
         Task LoadInitialUserSettings();
         Task OpenPath(string documentPath);
@@ -29,6 +32,10 @@ namespace HurlStudio.Services.Editor
         Task<bool> SaveEnvironment(EnvironmentDocumentViewModel environmentDocument);
         Task<bool> SaveCurrentDocument();
         Task<bool> Shutdown();
+        Task<bool> DeleteFile(HurlFileContainer fileContainer, bool deletePermanently);
+        Task<bool> DeleteFolder(HurlFolderContainer folderContainer, bool deletePermanently);
+        Task<bool> RemoveCollection(HurlCollectionContainer collectionContainer);
+        Task<bool> AddFile(HurlFolderContainer parentFolder, string content);
         Task Start();
         Task RefreshCollectionExplorerCollections();
         Task RefreshCollectionExplorerCollection(string collectionLocation);

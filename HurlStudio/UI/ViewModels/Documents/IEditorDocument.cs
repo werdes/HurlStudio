@@ -16,6 +16,8 @@ namespace HurlStudio.UI.ViewModels.Documents
         event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
         
         HurlContainerBase? HurlContainer { get; }
+        HurlCollectionContainer? UnderlyingCollection { get; }
+
         bool HasChanges { get; set; }
         OrderedObservableCollection<HurlSettingSection> SettingSections { get; set; }
         string GetId();

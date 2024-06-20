@@ -282,11 +282,12 @@ namespace HurlStudio.UI.Controls.Tools
             if (_viewModel == null) return;
 
             _viewModel.IsEnabled = false;
-            _editorViewViewModel.Collections.CollectionChanged -= this.On_Collections_CollectionChanged;
-            _editorViewViewModel.Collections = await _collectionService.GetCollectionContainersAsync();
+            //_editorViewViewModel.Collections.CollectionChanged -= this.On_Collections_CollectionChanged;
+            //_editorViewViewModel.Collections = await _collectionService.GetCollectionContainersAsync();
 
+            await _editorService.RefreshCollectionExplorerCollections();
             // Re-Bind events
-            _editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
+            //_editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
             foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
                 this.BindCollectionEvents(collectionContainer);

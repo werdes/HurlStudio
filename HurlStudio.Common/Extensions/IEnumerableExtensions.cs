@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HurlStudio.Common.UI;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,6 +42,11 @@ namespace HurlStudio.Common.Extensions
         public static ObservableCollection<T> ToObservableCollection<T>(this IEnumerable<T> collection)
         {
             return new ObservableCollection<T>(collection);
+        }
+
+        public static DeepNotifyingObservableCollection<T> ToDeepNotifyingObservableCollection<T>(this IEnumerable<T> collection)
+        {
+            return new DeepNotifyingObservableCollection<T>(collection);
         }
     }
 }

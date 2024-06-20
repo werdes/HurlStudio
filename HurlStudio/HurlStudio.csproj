@@ -43,8 +43,8 @@
     <PackageReference Include="Dock.Avalonia" Version="11.0.10" />
     <PackageReference Include="Dock.Model.Mvvm" Version="11.0.10" />
     <PackageReference Include="MessageBox.Avalonia" Version="3.1.5.1" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.5" />
-    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.5" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.DataProtection.Abstractions" Version="8.0.6" />
     <PackageReference Include="Microsoft.Extensions.Configuration" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.1" />

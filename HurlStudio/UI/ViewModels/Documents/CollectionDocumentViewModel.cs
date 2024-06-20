@@ -103,6 +103,11 @@ namespace HurlStudio.UI.ViewModels.Documents
             get => _collectionContainer;
         }
 
+        public HurlCollectionContainer? UnderlyingCollection
+        {
+            get => _collectionContainer;
+        }
+
         /// <summary>
         /// Build the Title for display in the dock control tab strip
         /// </summary>

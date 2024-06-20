@@ -7,6 +7,8 @@ using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
 using HurlStudio.UI.ViewModels;
+using HurlStudio.UI.Windows;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
@@ -24,14 +26,16 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
+        private MainWindow _mainWindow;
 
-        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
+        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow)
             : base(notificationService, logger)
         {
             _editorService = editorService;
             _uiStateService = uiStateService;
             _log = logger;
             _notificationService = notificationService;
+            _mainWindow = mainWindow;
 
             this.InitializeComponent();
         }
@@ -116,7 +120,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                OSUtility.RevealFileInExplorer(_collectionContainer.Collection.CollectionFileLocation);
+                OSUtility.RevealPathInExplorer(_collectionContainer.Collection.CollectionFileLocation);
             }
             catch (Exception ex)
             {
@@ -137,6 +141,67 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 await _editorService.OpenCollection(_collectionContainer.Collection.CollectionFileLocation);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+
+        /// <summary>
+        /// Opens a rename-dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_Rename_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_collectionContainer == null) return;
+
+            try
+            {
+                string? inputResult = await MessageBox.AskInputDialog(
+                    _mainWindow,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
+                    _collectionContainer.Collection.Name,
+                    Model.Enums.Icon.Rename50);
+
+                if (inputResult != null)
+                {
+                    bool moveFile =
+                        await MessageBox.ShowQuestionYesNoDialog( 
+                            _mainWindow,
+                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile,
+                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title) == MessageBox.ButtonType.Yes;
+
+                    await _editorService.RenameCollection(_collectionContainer, inputResult, moveFile);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Removes a collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_Remove_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_collectionContainer == null) return;
+
+            try
+            {
+                bool remove = await MessageBox.ShowQuestionYesNoDialog(
+                    _mainWindow, _collectionContainer.Collection.CollectionFileLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection) == MessageBox.ButtonType.Yes;
+                if (!remove) return;
+
+                bool deleted = await _editorService.RemoveCollection(_collectionContainer);
             }
             catch (Exception ex)
             {

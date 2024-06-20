@@ -126,14 +126,13 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         protected void On_CollectionExplorerControlBase_Drop(object? sender, DragEventArgs e)
         {
+            if (e.Data.Get(DataFormats.Files) is not HurlContainerBase source) return;
             try
             {
-                HurlContainerBase? source = (HurlContainerBase?)(e.Data.Get(DataFormats.Files));
+                HurlContainerBase? target = this.GetBoundCollectionComponent();
+                if (target == null) return;
 
-                if (source != null)
-                {
-                    source.Move(this.GetBoundCollectionComponent());
-                }
+                source.Move(target);
                 e.Handled = true;
             }
             catch (Exception ex)

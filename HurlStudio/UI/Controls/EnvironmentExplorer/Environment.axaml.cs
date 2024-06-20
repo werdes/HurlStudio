@@ -58,7 +58,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
             if (_environmentContainer.EnvironmentFileLocation == null) return;
             try
             {
-                OSUtility.RevealFileInExplorer(_environmentContainer.EnvironmentFileLocation);
+                OSUtility.RevealPathInExplorer(_environmentContainer.EnvironmentFileLocation);
             }
             catch (Exception ex)
             {

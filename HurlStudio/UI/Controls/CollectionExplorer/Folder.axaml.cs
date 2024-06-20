@@ -11,25 +11,30 @@ using System.ComponentModel;
 using System.Threading.Tasks;
 using HurlStudio.Services.UiState;
 using HurlStudio.Common.Extensions;
+using HurlStudio.Utility;
+using System.IO;
+using HurlStudio.UI.Windows;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
     public partial class Folder : CollectionExplorerControlBase<HurlFolderContainer>
     {
-        private HurlFolderContainer? _collectionFolder;
+        private HurlFolderContainer? _folderContainer;
         
         private ILogger _log;
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
+        private MainWindow _mainWindow;
 
-        public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
+        public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow)
             : base(notificationService, logger)
         {
             _log = logger;
             _editorService = editorService;
             _notificationService = notificationService;
             _uiStateService = uiStateService;
+            _mainWindow = mainWindow;
 
             this.InitializeComponent();
 
@@ -41,7 +46,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="viewModel"></param>
         protected override void SetViewModelInstance(HurlFolderContainer viewModel)
         {
-            _collectionFolder = viewModel;
+            _folderContainer = viewModel;
             this.DataContext = viewModel;
         }
 
@@ -60,12 +65,12 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_ButtonCollapse_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_collectionFolder == null) return;
+            if (_folderContainer == null) return;
 
             try
             {
-                _collectionFolder.Collapsed = !_collectionFolder.Collapsed;
-                _uiStateService.SetCollectionExplorerCollapseState(_collectionFolder.GetId(), _collectionFolder.Collapsed);
+                _folderContainer.Collapsed = !_folderContainer.Collapsed;
+                _uiStateService.SetCollectionExplorerCollapseState(_folderContainer.GetId(), _folderContainer.Collapsed);
             }
             catch (Exception ex)
             {
@@ -80,7 +85,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <returns></returns>
         protected override HurlContainerBase? GetBoundCollectionComponent()
         {
-            return _collectionFolder;
+            return _folderContainer;
         }
 
         /// <summary>
@@ -89,11 +94,11 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <returns></returns>
         protected override async Task OpenComponentDocument()
         {
-            if (_collectionFolder == null) return;
+            if (_folderContainer == null) return;
 
             try
             {
-                await _editorService.OpenFolder(_collectionFolder.AbsoluteLocation);
+                await _editorService.OpenFolder(_folderContainer.AbsoluteLocation);
             }
             catch (Exception ex)
             {
@@ -103,18 +108,18 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         }
 
         /// <summary>
-        /// Opens the folder containing the collection file
+        /// Opens the folder containing the folder location
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_collectionFolder == null) return;
-            if (_collectionFolder.AbsoluteLocation == null) return;
+            if (_folderContainer == null) return;
+            if (_folderContainer.AbsoluteLocation == null) return;
 
             try
             {
-                OSUtility.RevealFileInExplorer(_collectionFolder.AbsoluteLocation);
+                OSUtility.RevealPathInExplorer(_folderContainer.AbsoluteLocation);
             }
             catch (Exception ex)
             {
@@ -130,11 +135,74 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private async void On_MenuItem_Properties_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_collectionFolder == null) return;
+            if (_folderContainer == null) return;
 
             try
             {
-                await _editorService.OpenFolder(_collectionFolder.AbsoluteLocation);
+                await _editorService.OpenFolder(_folderContainer.AbsoluteLocation);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Opens a rename-dialog
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_Rename_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_folderContainer == null) return;
+            if (_folderContainer.AbsoluteLocation == null) return;
+            try
+            {
+                string? inputResult = await MessageBox.AskInputDialog(
+                    _mainWindow,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
+                    new DirectoryInfo(_folderContainer.AbsoluteLocation).Name,
+                    Model.Enums.Icon.Rename50);
+
+                if (inputResult != null)
+                {
+                    await _editorService.RenameFolder(_folderContainer, inputResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Deletes a folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_Delete_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_folderContainer == null) return;
+
+            try
+            {
+                bool delete = await MessageBox.ShowQuestionYesNoDialog(
+                    _mainWindow, _folderContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete) == MessageBox.ButtonType.Yes;
+                if (!delete) return;
+
+                bool deleted = await _editorService.DeleteFolder(_folderContainer, false);
+                if (!deleted)
+                {
+                    bool deletePermanently = await MessageBox.ShowQuestionYesNoDialog(
+                        _mainWindow, _folderContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently) == MessageBox.ButtonType.Yes;
+                    if (deletePermanently)
+                    {
+                        deleted = await _editorService.DeleteFolder(_folderContainer, true);
+                    }
+                }
             }
             catch (Exception ex)
             {

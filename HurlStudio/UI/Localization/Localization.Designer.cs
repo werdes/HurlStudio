@@ -700,11 +700,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.Properties} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Collection_Properties {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.Properties", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Collection.Remove} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Collection_Remove {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.Remove", resourceCulture);
             }
         }
         
@@ -723,6 +741,33 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_Collection_RevealInExplorer {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.RevealInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.Delete} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_Delete {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_Delete {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently", resourceCulture);
             }
         }
         
@@ -790,6 +835,33 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.Delete} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_Delete {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.Folder.Properties} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Folder_Properties {
@@ -813,6 +885,33 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_Folder_RevealInExplorer {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.RevealInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.Rename.Message} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_MessageBox_Rename_Message {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.Rename.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.Rename.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_MessageBox_Rename_Title {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.Rename.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile", resourceCulture);
             }
         }
         
@@ -979,6 +1078,15 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.No} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_No {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.OK} ähnelt.
         /// </summary>
         public static string MessageBox_Button_OK {
@@ -988,11 +1096,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Rename} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_Rename {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.Rename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Save} ähnelt.
         /// </summary>
         public static string MessageBox_Button_Save {
             get {
                 return ResourceManager.GetString("MessageBox.Button.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {MessageBox.Button.Yes} ähnelt.
+        /// </summary>
+        public static string MessageBox_Button_Yes {
+            get {
+                return ResourceManager.GetString("MessageBox.Button.Yes", resourceCulture);
             }
         }
         
@@ -1020,6 +1146,15 @@ namespace HurlStudio.UI.Localization {
         public static string Service_CollectionService_Errors_SettingParserError_Title {
             get {
                 return ResourceManager.GetString("Service.CollectionService.Errors.SettingParserError.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_DeleteFolder_ExternalRootFolderCannotBeDeleted {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted", resourceCulture);
             }
         }
         
@@ -1065,6 +1200,15 @@ namespace HurlStudio.UI.Localization {
         public static string Service_EditorService_Errors_MoveFolder_Failed {
             get {
                 return ResourceManager.GetString("Service.EditorService.Errors.MoveFolder.Failed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Service.EditorService.Errors.RenameCollection.AlreadyExists} ähnelt.
+        /// </summary>
+        public static string Service_EditorService_Errors_RenameCollection_AlreadyExists {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Errors.RenameCollection.AlreadyExists", resourceCulture);
             }
         }
         

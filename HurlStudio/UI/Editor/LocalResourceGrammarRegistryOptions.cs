@@ -1,6 +1,5 @@
 ﻿using Avalonia.Platform;
 using HurlStudio.Model.Enums;
-using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.Extensions.Logging;
 using SkiaSharp;
 using System;

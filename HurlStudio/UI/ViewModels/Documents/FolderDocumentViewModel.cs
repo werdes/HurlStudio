@@ -20,7 +20,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingAdded;
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
 
-        private HurlFolderContainer? _folder;
+        private HurlFolderContainer? _folderContainer;
         private EditorViewViewModel _editorViewViewModel;
         private IEditorService _editorService;
         private MainWindow _mainWindow;
@@ -41,17 +41,17 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public HurlFolderContainer? FolderContainer
         {
-            get => _folder;
+            get => _folderContainer;
             set
             {
-                this.SetProperty(ref _folder, value);
-                if (_folder != null)
+                this.SetProperty(ref _folderContainer, value);
+                if (_folderContainer != null)
                 {
-                    _folder.PropertyChanged -= this.On_Folder_PropertyChanged;
-                    _folder.PropertyChanged += this.On_Folder_PropertyChanged;
+                    _folderContainer.PropertyChanged -= this.On_Folder_PropertyChanged;
+                    _folderContainer.PropertyChanged += this.On_Folder_PropertyChanged;
 
-                    _folder.CollectionComponentPropertyChanged -= this.On_Folder_CollectionComponentPropertyChanged;
-                    _folder.CollectionComponentPropertyChanged += this.On_Folder_CollectionComponentPropertyChanged;
+                    _folderContainer.CollectionComponentPropertyChanged -= this.On_Folder_CollectionComponentPropertyChanged;
+                    _folderContainer.CollectionComponentPropertyChanged += this.On_Folder_CollectionComponentPropertyChanged;
                 }
 
                 this.RefreshTitle();
@@ -101,7 +101,12 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public HurlContainerBase? HurlContainer
         {
-            get => _folder;
+            get => _folderContainer;
+        }
+
+        public HurlCollectionContainer? UnderlyingCollection
+        {
+            get => _folderContainer.CollectionContainer;
         }
 
         /// <summary>
@@ -109,12 +114,12 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// </summary>
         private void RefreshTitle()
         {
-            if (_folder != null)
+            if (_folderContainer != null)
             {
-                string? collectionRootFolder = Path.GetDirectoryName(_folder.CollectionContainer.Collection.CollectionFileLocation);
+                string? collectionRootFolder = Path.GetDirectoryName(_folderContainer.CollectionContainer.Collection.CollectionFileLocation);
 
                 if (collectionRootFolder != null) {
-                    string folderPath = Path.TrimEndingDirectorySeparator(_folder.Folder.FolderLocation).ConvertDirectorySeparator();
+                    string folderPath = Path.TrimEndingDirectorySeparator(_folderContainer.Folder.FolderLocation).ConvertDirectorySeparator();
 
                     this.Title = folderPath +
                                  (this.HasChanges ? "*" : string.Empty);
@@ -229,7 +234,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public override string ToString()
         {
-            return $"{this.GetType().Name} {_folder?.AbsoluteLocation}";
+            return $"{this.GetType().Name} {_folderContainer?.AbsoluteLocation}";
         }
     }
 }

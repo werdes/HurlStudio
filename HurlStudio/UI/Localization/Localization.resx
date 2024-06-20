@@ -1155,4 +1155,52 @@
   <data name="Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved" xml:space="preserve">
     <value>{Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved}</value>
   </data>
+  <data name="Dock.Tool.CollectionExplorer.MessageBox.Rename.Message" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.MessageBox.Rename.Message}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.MessageBox.Rename.Title" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.MessageBox.Rename.Title}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile}</value>
+  </data>
+  <data name="MessageBox.Button.No" xml:space="preserve">
+    <value>{MessageBox.Button.No}</value>
+  </data>
+  <data name="MessageBox.Button.Rename" xml:space="preserve">
+    <value>{MessageBox.Button.Rename}</value>
+  </data>
+  <data name="MessageBox.Button.Yes" xml:space="preserve">
+    <value>{MessageBox.Button.Yes}</value>
+  </data>
+  <data name="Service.EditorService.Errors.RenameCollection.AlreadyExists" xml:space="preserve">
+    <value>{Service.EditorService.Errors.RenameCollection.AlreadyExists}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.Delete" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.Delete}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.Delete" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.Delete}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.Remove" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.Remove}</value>
+  </data>
+  <data name="Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted" xml:space="preserve">
+    <value>{Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection}</value>
+  </data>
 </root>

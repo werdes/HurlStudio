@@ -1,4 +1,5 @@
 ﻿using Dock.Model.Mvvm.Controls;
+using HurlStudio.Model.HurlContainers;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,9 +10,10 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
-    public class DocumentBase : Document, INotifyPropertyChanged
+    public abstract class DocumentBase : Document, INotifyPropertyChanged
     {
         public new event PropertyChangedEventHandler? PropertyChanged;
         protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
     }
 }

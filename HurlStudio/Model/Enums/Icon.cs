@@ -62,6 +62,8 @@ namespace HurlStudio.Model.Enums
         Properties,
         [Icon("rename.png")]
         Rename,
+        [Icon("rename50.png")]
+        Rename50,
         [Icon("plus.png")]
         Plus,
         [Icon("more.png")]
@@ -132,6 +134,8 @@ namespace HurlStudio.Model.Enums
         MessageBoxWarning,
         [Icon("messagebox_error_50.png")]
         MessageBoxError,
+        [Icon("messagebox_question_50.png")]
+        MessageBoxQuestion,
         [Icon("proxy.png")]
         Proxy,
         [Icon("link_external.png")]
@@ -156,6 +160,8 @@ namespace HurlStudio.Model.Enums
         Active,
         [Icon("inactive.png")]
         Inactive,
+        [Icon("remove_collection.png")]
+        RemoveCollection
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

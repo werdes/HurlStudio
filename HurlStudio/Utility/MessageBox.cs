@@ -27,7 +27,10 @@ namespace HurlStudio.Utility
             OK,
             Cancel,
             Save,
-            Discard
+            Discard,
+            Rename,
+            Yes, 
+            No
         }
 
         private static Dictionary<ButtonType, string> _typeLocalization = new Dictionary<ButtonType, string>()
@@ -35,7 +38,10 @@ namespace HurlStudio.Utility
             { ButtonType.OK , Localization.MessageBox_Button_OK },
             { ButtonType.Discard , Localization.MessageBox_Button_Discard },
             { ButtonType.Save , Localization.MessageBox_Button_Save },
-            { ButtonType.Cancel, Localization.MessageBox_Button_Cancel }
+            { ButtonType.Cancel, Localization.MessageBox_Button_Cancel },
+            { ButtonType.Rename, Localization.MessageBox_Button_Rename },
+            { ButtonType.Yes, Localization.MessageBox_Button_Yes },
+            { ButtonType.No, Localization.MessageBox_Button_No }
         };
 
         /// <summary>
@@ -50,6 +56,22 @@ namespace HurlStudio.Utility
         }
 
         /// <summary>
+        /// Shows a message box
+        /// </summary>
+        /// <param name="message"></param>
+        public static async Task<string?> AskInput(string message, string title, string value, Icon icon)
+        {
+            IMsBox<string> box = SetupInputMessageBoxInternal(message, title, value, icon);
+            string messageBoxResult = await box.ShowAsync();
+
+            if (EvaluateMessageBoxResult([ButtonType.Cancel, ButtonType.OK], messageBoxResult) == ButtonType.OK)
+            {
+                return box.InputValue;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// Shows a message box as a dialog
         /// </summary>
         /// <param name="message"></param>
@@ -58,6 +80,22 @@ namespace HurlStudio.Utility
             IMsBox<string> box = SetupMessageBoxInternal(message, title, buttons, icon);
             string messageBoxResult = await box.ShowWindowDialogAsync(owner);
             return EvaluateMessageBoxResult(buttons, messageBoxResult);
+        }
+
+        /// <summary>
+        /// Shows a message box
+        /// </summary>
+        /// <param name="message"></param>
+        public static async Task<string?> AskInputDialog(Window owner, string message, string title, string value, Icon icon)
+        {
+            IMsBox<string> box = SetupInputMessageBoxInternal(message, title, value, icon);
+            string messageBoxResult = await box.ShowWindowDialogAsync(owner);
+
+            if (EvaluateMessageBoxResult([ButtonType.Cancel, ButtonType.OK], messageBoxResult) == ButtonType.OK)
+            {
+                return box.InputValue;
+            }
+            return null;
         }
 
         /// <summary>
@@ -108,11 +146,54 @@ namespace HurlStudio.Utility
             return box;
         }
 
+        /// <summary>
+        /// Builds a message box
+        /// </summary>
+        /// <param name="message"></param>
+        /// <param name="title"></param>
+        /// <param name="buttons"></param>
+        /// <param name="icon"></param>
+        /// <returns></returns>
+        private static IMsBox<string> SetupInputMessageBoxInternal(string message, string title, string value, Icon icon)
+        {
+            List<ButtonDefinition> buttonDefinitions = new List<ButtonDefinition>() {
+                new ButtonDefinition()
+                {
+                    IsCancel = true,
+                    Name = _typeLocalization[ButtonType.Cancel]
+                },
+                new ButtonDefinition()
+                {
+                    IsCancel = false,
+                    Name = _typeLocalization[ButtonType.OK]
+                }
+            };
+
+            IMsBox<string> box = MessageBoxManager.GetMessageBoxCustom(new MsBox.Avalonia.Dto.MessageBoxCustomParams()
+            {
+                ButtonDefinitions = buttonDefinitions,
+                ContentTitle = title,
+                ContentMessage = message,
+                CanResize = false,
+                InputParams = new MsBox.Avalonia.Dto.InputParams()
+                {
+                    DefaultValue = value,
+                    Multiline = false
+                },
+                ImageIcon = icon.GetBitmap(ThemeVariant ?? ThemeVariant.Default),
+                WindowStartupLocation = WindowStartupLocation.CenterOwner
+            });
+
+            return box;
+        }
+
         public static async Task<ButtonType> ShowInfo(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxInfo);
         public static async Task<ButtonType> ShowWarning(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxWarning);
         public static async Task<ButtonType> ShowError(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxError);
+        public static async Task<ButtonType> ShowQuestionYesNo(string message, string title) => await Show(message, title, [ButtonType.Yes, ButtonType.No], Icon.MessageBoxQuestion);
         public static async Task<ButtonType> ShowInfoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxInfo);
         public static async Task<ButtonType> ShowWarningDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxWarning);
         public static async Task<ButtonType> ShowErrorDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxError);
+        public static async Task<ButtonType> ShowQuestionYesNoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.Yes, ButtonType.No], Icon.MessageBoxQuestion);
     }
 }

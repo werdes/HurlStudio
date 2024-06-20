@@ -6,49 +6,56 @@
       "name": "Dynamic Keywords",
       "scope": [ "keyword.method" ],
       "settings": {
-        "foreground": "#4EC9B0"
+        "foreground": "#4EC9B0",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Static Keywords",
       "scope": [ "keyword.http" ],
       "settings": {
-        "foreground": "#C586C0"
+        "foreground": "#C586C0",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Section Keywords",
       "scope": [ "keyword.section" ],
       "settings": {
-        "foreground": "#6991b2"
+        "foreground": "#6991b2",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Response HTTP Statuscode",
       "scope": [ "response.statuscode" ],
       "settings": {
-        "foreground": "#b5cea8"
+        "foreground": "#b5cea8",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Comments",
       "scope": [ "notation.comment" ],
       "settings": {
-        "foreground": "#6adb6d"
+        "foreground": "#6adb6d",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Variables",
       "scope": [ "notation.variable" ],
       "settings": {
-        "foreground": "#e682da"
+        "foreground": "#e682da",
+        "fontStyle": "Bold"
       }
     },
     {
       "name": "Key Value: Key",
       "scope": [ "notation.keyvalue.key" ],
       "settings": {
-        "foreground": "#96d0ff"
+        "foreground": "#96d0ff",
+        "fontStyle": "Bold"
       }
     },
     {
@@ -61,7 +68,8 @@
         "notation.quotes.single"
       ],
       "settings": {
-        "foreground": "#e8618b"
+        "foreground": "#e8618b",
+        "fontStyle": "Bold"
       }
     },
     {
@@ -71,7 +79,8 @@
         "notation.quotes.single"
       ],
       "settings": {
-        "foreground": "#d69d85"
+        "foreground": "#d69d85",
+        "fontStyle": "Bold"
       }
     },
     {
@@ -88,7 +97,8 @@
         "keyword.filter"
       ],
       "settings": {
-        "foreground": "#3665d5"
+        "foreground": "#3665d5",
+        "fontStyle": "Bold"
       }
     }
   ]

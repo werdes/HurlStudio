@@ -20,11 +20,14 @@ namespace HurlStudio.Services.UiState
         void SetMainWindowState(MainWindow mainWindow);
         void SetFileHistory(EditorViewViewModel editorView);
         void SetSettingCollapsedState(string id, bool visible);
+        void RemoveSettingCollapsedState(string id);
         void SetSettingSectionCollapsedState(string id, bool visible);
+        void RemoveSettingSectionCollapsedState(string id);
         void SetOpenedDocuments(List<string> openedDocuments);
         void SetActiveDocument(EditorViewViewModel editorViewViewModel);
         void SetCollectionExplorerProportion(double? proportion);
         void SetActiveEnvironment(string environmentFile);
-        void SetSettingEnabledState(string id, bool visible);
+        void SetSettingEnabledState(string id, bool isEnabled);
+        void RemoveSettingEnabledState(string id);
     }
 }

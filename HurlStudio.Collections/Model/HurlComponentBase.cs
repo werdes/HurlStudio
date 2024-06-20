@@ -30,5 +30,15 @@ namespace HurlStudio.Collections.Model
         {
             this.ComponentPropertyChanged?.Invoke(this, new HurlComponentPropertyChangedEventArgs(this));
         }
+
+        /// <summary>
+        /// Fire a ComponentPropertyChanged event when a collection items' property is changed
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        protected void On_GenericCollection_CollectionItemPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            this.ComponentPropertyChanged?.Invoke(this, new HurlComponentPropertyChangedEventArgs(this));
+        }
     }
 }

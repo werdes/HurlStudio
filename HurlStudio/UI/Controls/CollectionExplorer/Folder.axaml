@@ -39,9 +39,16 @@
           </MenuItem.Icon>
         </MenuItem>
         <Separator />
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Rename}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Rename}"
+                  Click="On_MenuItem_Rename_Click">
           <MenuItem.Icon>
             <c:Icon Type="Rename" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_Delete}"
+                  Click="On_MenuItem_Delete_Click">
+          <MenuItem.Icon>
+            <c:Icon Type="Trash" />
           </MenuItem.Icon>
         </MenuItem>
         <Separator />

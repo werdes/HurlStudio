@@ -29,7 +29,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingAdded;
         public event EventHandler<SettingEvaluationChangedEventArgs>? SettingRemoved;
 
-        private HurlFileContainer? _file;
+        private HurlFileContainer? _fileContainer;
         private EditorViewViewModel _editorViewViewModel;
         private TextDocument? _document;
         private IEditorService _editorService;
@@ -52,22 +52,27 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public HurlContainerBase? HurlContainer
         {
-            get => this.FileContainer;
+            get => _fileContainer;
+        }
+
+        public HurlCollectionContainer? UnderlyingCollection
+        {
+            get => _fileContainer?.CollectionContainer;
         }
 
         public HurlFileContainer? FileContainer
         {
-            get => _file;
+            get => _fileContainer;
             set
             {
-                this.SetProperty(ref _file, value);
-                if (_file != null)
+                this.SetProperty(ref _fileContainer, value);
+                if (_fileContainer != null)
                 {
-                    _file.PropertyChanged -= this.On_File_PropertyChanged;
-                    _file.PropertyChanged += this.On_File_PropertyChanged;
+                    _fileContainer.PropertyChanged -= this.On_File_PropertyChanged;
+                    _fileContainer.PropertyChanged += this.On_File_PropertyChanged;
 
-                    _file.CollectionComponentPropertyChanged -= this.On_File_CollectionComponentPropertyChanged;
-                    _file.CollectionComponentPropertyChanged += this.On_File_CollectionComponentPropertyChanged;
+                    _fileContainer.CollectionComponentPropertyChanged -= this.On_File_CollectionComponentPropertyChanged;
+                    _fileContainer.CollectionComponentPropertyChanged += this.On_File_CollectionComponentPropertyChanged;
                 }
 
                 this.RefreshTitle();
@@ -136,9 +141,9 @@ namespace HurlStudio.UI.ViewModels.Documents
         /// </summary>
         private void RefreshTitle()
         {
-            if (_file != null)
+            if (_fileContainer != null)
             {
-                this.Title = Path.GetFileName(_file.AbsoluteLocation) +
+                this.Title = Path.GetFileName(_fileContainer.AbsoluteLocation) +
                              (this.HasChanges ? "*" : string.Empty);
             }
             else
@@ -262,7 +267,7 @@ namespace HurlStudio.UI.ViewModels.Documents
 
         public override string ToString()
         {
-            return $"{this.GetType().Name} {_file?.AbsoluteLocation}";
+            return $"{this.GetType().Name} {_fileContainer?.AbsoluteLocation}";
         }
     }
 }

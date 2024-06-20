@@ -11,7 +11,6 @@ using HurlStudio.UI.Localization;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Views;
 using HurlStudio.UI.Windows;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

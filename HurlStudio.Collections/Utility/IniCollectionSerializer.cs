@@ -45,7 +45,7 @@ namespace HurlStudio.Collections.Utility
 
             string[] lines = collectionContent.Split(Environment.NewLine);
             List<HurlCollectionSectionContainer> collectionSections = this.SplitIntoSections(lines);
-            _log.LogInformation($"Deserializing [{path}] with [{collectionSections.Count}] sections");
+            _log.LogDebug($"Deserializing [{path}] with [{collectionSections.Count}] sections");
             HurlCollection collection = new HurlCollection(path);
 
             foreach (HurlCollectionSectionContainer sectionContainer in collectionSections)
@@ -170,7 +170,7 @@ namespace HurlStudio.Collections.Utility
         /// <param name="collection">Target collection</param>
         private void DeserializeAdditionalLocationsSection(List<string> lines, HurlCollection collection)
         {
-            collection.AdditionalLocations = lines.Where(x => !string.IsNullOrEmpty(x)).Select(x => new AdditionalLocation(x.ConvertDirectorySeparator(), collection)).ToObservableCollection();
+            collection.AdditionalLocations = lines.Where(x => !string.IsNullOrEmpty(x)).Select(x => new AdditionalLocation(x.ConvertDirectorySeparator(), collection)).ToDeepNotifyingObservableCollection();
         }
 
         /// <summary>

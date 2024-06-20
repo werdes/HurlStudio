@@ -1,6 +1,5 @@
 ﻿using Avalonia.Media;
 using HurlStudio.Model.Enums;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;

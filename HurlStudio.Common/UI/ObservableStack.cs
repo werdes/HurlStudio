@@ -63,19 +63,14 @@ namespace HurlStudio.Common.UI
             this.RaisePropertyChanged(e);
         }
 
-
-
-
         private void RaiseCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            if (this.CollectionChanged != null)
-                this.CollectionChanged(this, e);
+            this.CollectionChanged?.Invoke(this, e);
         }
 
         private void RaisePropertyChanged(PropertyChangedEventArgs e)
         {
-            if (this.PropertyChanged != null)
-                this.PropertyChanged(this, e);
+            this.PropertyChanged?.Invoke(this, e);
         }
 
 

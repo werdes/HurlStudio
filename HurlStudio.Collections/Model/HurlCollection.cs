@@ -1,10 +1,12 @@
 ﻿using HurlStudio.Collections.Model;
 using HurlStudio.Collections.Model.Containers;
 using HurlStudio.Collections.Settings;
+using HurlStudio.Common.UI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,7 +15,7 @@ namespace HurlStudio.Collections.Model
     public class HurlCollection : HurlComponentBase
     {
         private string _name;
-        private ObservableCollection<AdditionalLocation> _additionalLocations;
+        private DeepNotifyingObservableCollection<AdditionalLocation> _additionalLocations;
         private ObservableCollection<IHurlSetting> _collectionSettings;
         private ObservableCollection<HurlFile> _fileSettings;
         private ObservableCollection<HurlFolder> _folderSettings;
@@ -23,11 +25,13 @@ namespace HurlStudio.Collections.Model
         public HurlCollection(string fileLocation)
         {
             _name = string.Empty;
-            _additionalLocations = new ObservableCollection<AdditionalLocation>();
+            _additionalLocations = new DeepNotifyingObservableCollection<AdditionalLocation>();
             _collectionSettings = new ObservableCollection<IHurlSetting>();
             _fileSettings = new ObservableCollection<HurlFile>();
             _folderSettings = new ObservableCollection<HurlFolder>();
             _collectionFileLocation = fileLocation;
+
+            _additionalLocations.CollectionItemPropertyChanged += this.On_GenericCollection_CollectionItemPropertyChanged;
         }
 
         public string CollectionFileLocation
@@ -88,7 +92,7 @@ namespace HurlStudio.Collections.Model
             }
         }
 
-        public ObservableCollection<AdditionalLocation> AdditionalLocations
+        public DeepNotifyingObservableCollection<AdditionalLocation> AdditionalLocations
         {
             get => _additionalLocations;
             set
@@ -96,10 +100,14 @@ namespace HurlStudio.Collections.Model
                 _additionalLocations = value;
                 this.Notify();
 
-                if (_collectionSettings != null)
+                if (_additionalLocations != null)
                 {
                     _additionalLocations.CollectionChanged -= this.On_GenericCollection_CollectionChanged;
                     _additionalLocations.CollectionChanged += this.On_GenericCollection_CollectionChanged;
+
+
+                    _additionalLocations.CollectionItemPropertyChanged -= this.On_GenericCollection_CollectionItemPropertyChanged;
+                    _additionalLocations.CollectionItemPropertyChanged += this.On_GenericCollection_CollectionItemPropertyChanged;
                 }
             }
         }
