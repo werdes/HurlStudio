@@ -63,6 +63,7 @@ namespace HurlStudio.UI.Views
             _viewFrameViewModel = viewFrameViewModel;
             _layoutFactory = layoutFactory;
 
+            _controlLocator.Window = _window;
             this.DataContext = _viewModel;
             this.DataTemplates.Add(_controlLocator);
 
@@ -169,5 +170,10 @@ namespace HurlStudio.UI.Views
             }
         }
 
+        public override void SetWindow(Windows.WindowBase window)
+        {
+            base.SetWindow(window);
+            _controlLocator.Window = window;
+        }
     }
 }

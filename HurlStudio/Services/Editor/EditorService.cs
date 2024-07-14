@@ -1,4 +1,5 @@
 ﻿using Avalonia.Controls;
+using Avalonia.Markup.Xaml.Templates;
 using Dock.Model.Core;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Collections.Model;
@@ -9,6 +10,7 @@ using HurlStudio.Common.UI;
 using HurlStudio.Common.Utility;
 using HurlStudio.Model.Enums;
 using HurlStudio.Model.HurlContainers;
+using HurlStudio.Model.HurlFileTemplates;
 using HurlStudio.Model.HurlSettings;
 using HurlStudio.Model.UiState;
 using HurlStudio.Model.UserSettings;
@@ -2543,6 +2545,8 @@ namespace HurlStudio.Services.Editor
         {
             if (_editorViewViewModel.DocumentDock == null) return false;
             if (_editorViewViewModel.DocumentDock.ActiveDockable == null) return false;
+
+            // Non-IEditor Documents will not return an error
             if (_editorViewViewModel.DocumentDock.ActiveDockable is not IEditorDocument) return true;
 
 
@@ -2570,9 +2574,107 @@ namespace HurlStudio.Services.Editor
             return false;
         }
 
-        public async Task<bool> AddFile(HurlFolderContainer parentFolder, string content)
+
+        /// <summary>
+        /// Create a new file from template in a collection root
+        /// </summary>
+        /// <param name="collectionContainer"></param>
+        /// <param name="template"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateFileInCollectionRoot(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer template, string fileName)
         {
-            throw new NotImplementedException();
+            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                fileName += GlobalConstants.HURL_FILE_EXTENSION;
+            }
+            string? collectionDirectory = Path.GetDirectoryName(collectionContainer.Collection.CollectionFileLocation);
+            if (collectionDirectory == null) return false;
+
+            string filePath = Path.Combine(collectionDirectory, fileName);
+            if (File.Exists(filePath)) return false;
+
+            return await this.CreateFileInternal(collectionContainer, filePath, fileName, template);
+        }
+
+        /// <summary>
+        /// Create a new file from template in a folder
+        /// </summary>
+        /// <param name="folderContainer"></param>
+        /// <param name="template"></param>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateFileInFolder(HurlFolderContainer folderContainer, HurlFileTemplateContainer template, string fileName)
+        {
+            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                fileName += GlobalConstants.HURL_FILE_EXTENSION;
+            }
+
+            string absoluteFilePath
+                = Path.Combine(folderContainer.AbsoluteLocation, fileName);
+            string relativeLocation = Path.Combine(folderContainer.Folder.FolderLocation, fileName);
+
+            if (File.Exists(absoluteFilePath)) return false;
+
+            return await this.CreateFileInternal(folderContainer.CollectionContainer, absoluteFilePath, relativeLocation, template);
+        }
+
+        /// <summary>
+        /// Adds a file to a collection
+        /// </summary>
+        /// <param name="collectionContainer"></param>
+        /// <param name="absoluteFilePath"></param>
+        /// <param name="location"></param>
+        /// <param name="template"></param>
+        /// <returns></returns>
+        private async Task<bool> CreateFileInternal(HurlCollectionContainer collectionContainer, string absoluteFilePath, string location, HurlFileTemplateContainer template)
+        {
+            if (!absoluteFilePath.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                absoluteFilePath += GlobalConstants.HURL_FILE_EXTENSION;
+            }
+
+            if (File.Exists(absoluteFilePath)) return false;
+
+            // Write file
+            return await _saveLock.LockAsync<bool>(async () =>
+            {
+                await File.WriteAllTextAsync(absoluteFilePath, template.Template.Content, Encoding.UTF8);
+
+                HurlCollection tempCollection = await _collectionService.GetCollectionAsync(collectionContainer.Collection.CollectionFileLocation);
+                HurlFile tempFile = new HurlFile(location);
+                tempFile.FileSettings.AddRangeIfNotNull(template.SettingSection.SettingContainers.Select(x => x.Setting));
+                tempCollection.FileSettings.Add(tempFile);
+
+                await _collectionService.StoreCollectionAsync(tempCollection, tempCollection.CollectionFileLocation);
+                await this.RefreshCollectionExplorerCollection(collectionContainer.Collection.CollectionFileLocation);
+                await this.OpenFile(absoluteFilePath);
+                return true;
+            });
+        }
+
+        /// <summary>
+        /// Creates a folder and refreshes the collection
+        /// </summary>
+        /// <param name="collectionContainer"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string path)
+        {
+            if (Directory.Exists(path)) return false;
+            try
+            {
+                Directory.CreateDirectory(path);
+                await this.RefreshCollectionExplorerCollection(collectionContainer.Collection.CollectionFileLocation);
+                return true;
+            }
+            catch (IOException ex)
+            {
+                _log.LogException(ex);
+                return false;
+            }
+
         }
 
         /// <summary>
@@ -2871,5 +2973,6 @@ namespace HurlStudio.Services.Editor
             _editorViewViewModel.ActiveEnvironment = _editorViewViewModel.Environments.FirstOrDefault(x => x.EnvironmentFileLocation == environmentLocation) ?? _editorViewViewModel.Environments.FirstOrDefault();
 
         }
+
     }
 }

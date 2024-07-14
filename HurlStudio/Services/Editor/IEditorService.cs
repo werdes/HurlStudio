@@ -1,4 +1,5 @@
 ﻿using HurlStudio.Model.HurlContainers;
+using HurlStudio.Model.HurlFileTemplates;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
 using System.Threading.Tasks;
@@ -35,7 +36,9 @@ namespace HurlStudio.Services.Editor
         Task<bool> DeleteFile(HurlFileContainer fileContainer, bool deletePermanently);
         Task<bool> DeleteFolder(HurlFolderContainer folderContainer, bool deletePermanently);
         Task<bool> RemoveCollection(HurlCollectionContainer collectionContainer);
-        Task<bool> AddFile(HurlFolderContainer parentFolder, string content);
+        Task<bool> CreateFileInCollectionRoot(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer template, string fileName);
+        Task<bool> CreateFileInFolder(HurlFolderContainer folderContainer, HurlFileTemplateContainer template, string fileName);
+        Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string path);
         Task Start();
         Task RefreshCollectionExplorerCollections();
         Task RefreshCollectionExplorerCollection(string collectionLocation);

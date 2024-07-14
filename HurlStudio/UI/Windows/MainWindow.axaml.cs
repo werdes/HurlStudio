@@ -19,13 +19,12 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.UI.Windows
 {
-    public partial class MainWindow : WindowBase
+    public partial class MainWindow : WindowBase<MainWindowViewModel>
     {
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
-        private MainWindowViewModel? _viewModel;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
         private IEditorService _editorService;
         private bool _overrideClose = false;
@@ -78,6 +77,8 @@ namespace HurlStudio.UI.Windows
                 ViewBase<MainViewViewModel>? view = _controlBuilder.Get<MainView>();
                 if (view != null)
                 {
+                    view.SetWindow(this);
+
                     // Bind the window offScreenMargin to the view margin
                     // -> this makes sure the window is displayed properly on full screen
                     var offscreenMarginBinding = this.GetObservable(OffScreenMarginProperty);
@@ -191,7 +192,7 @@ namespace HurlStudio.UI.Windows
             if (await _editorService.Shutdown())
             {
                 _overrideClose = true;
-                Close();
+                this.Close();
             }
         }
     }

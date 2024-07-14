@@ -18,14 +18,14 @@ namespace HurlStudio.UI.ViewModels.Windows
         private bool _isMac = false;
         private bool _isLinux = false;
         private MainViewViewModel _mainViewViewModel;
-
+        
         public bool IsWindows
         {
             get => _isWindows;
             set
             {
                 _isWindows = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -35,7 +35,7 @@ namespace HurlStudio.UI.ViewModels.Windows
             set
             {
                 _isMac = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -45,7 +45,7 @@ namespace HurlStudio.UI.ViewModels.Windows
             set
             {
                 _isLinux = value;
-                Notify();
+                this.Notify();
             }
         }
 
@@ -55,7 +55,7 @@ namespace HurlStudio.UI.ViewModels.Windows
             set
             {
                 _mainViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 

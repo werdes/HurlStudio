@@ -27,5 +27,29 @@ namespace HurlStudio.Common.Extensions
                 }
             }
         }
+
+        /// <summary>
+        /// Syntactic sugar: RemoveAll without predicate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        public static void RemoveAll<T>(this List<T> collection)
+        {
+            collection.RemoveAll(x => true);
+        }
+
+        /// <summary>
+        /// Returns the index of the first item matching the predicate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        /// <param name="predicate"></param>
+        /// <returns>index of the first item found, -1 otherwise</returns>
+        public static int IndexOf<T>(this IList<T> collection, Func<T, bool> predicate)
+        {
+            T? item = collection.FirstOrDefault(predicate);
+            if(item != null) return collection.IndexOf(item);
+            return -1;
+        }
     }
 }

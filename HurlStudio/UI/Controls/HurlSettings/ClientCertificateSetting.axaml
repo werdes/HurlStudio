@@ -72,7 +72,7 @@
                 Grid.Row="3"
                 Grid.ColumnSpan="3"
                 HorizontalAlignment="Center">
-      <c:Icon Type="NotificationWarning" />
+      <c:Icon Type="WarningColor" />
       <Label VerticalAlignment="Center"
              Foreground="{DynamicResource NeutralControlForegroundColor}"
              Content="{x:Static localization:Localization.Setting_ClientCertificateSetting_NoEncryptionHint}" />

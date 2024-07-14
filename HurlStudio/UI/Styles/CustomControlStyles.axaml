@@ -3,12 +3,18 @@
         xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio">
   <Design.PreviewWith>
     <Border Padding="20">
-      <c:SettingTypeContainer />
+      <StackPanel>
+        <c:SettingTypeContainer />
+        <c:HurlFileTemplateListItem />
+      </StackPanel>
     </Border>
   </Design.PreviewWith>
 
   <!-- Add Styles Here -->
   <Style Selector="c|SettingTypeContainer>Grid:pointerover">
+    <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
+  </Style>
+  <Style Selector="c|HurlFileTemplateListItem>Grid:pointerover">
     <Setter Property="Background" Value="{DynamicResource NeutralControlHoverColor}" />
   </Style>
 </Styles>

@@ -160,7 +160,7 @@ namespace HurlStudio.UI.ViewModels.Documents
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + System.Environment.NewLine + this.EnvironmentContainer?.EnvironmentFileLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
-                Icon.MessageBoxWarning
+                Icon.WarningColor
             );
 
             switch (decisionResult)

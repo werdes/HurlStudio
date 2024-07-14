@@ -196,7 +196,7 @@ namespace HurlStudio.UI.ViewModels.Documents
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.FileContainer?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
-                Icon.MessageBoxWarning
+                Icon.WarningColor
             );
 
             switch (decisionResult)
@@ -232,6 +232,7 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
+            if (section.Document == null) throw new ArgumentNullException($"{section} has no document");
 
             section.SettingContainers.Insert(idx, settingContainer);
             section.Document.HasChanges = true;
@@ -249,6 +250,7 @@ namespace HurlStudio.UI.ViewModels.Documents
             HurlSettingSection section = settingContainer.SettingSection;
             if (!_settingSections.Contains(section)) throw new ArgumentException($"{section} not in {nameof(_settingSections)}");
             if (!section.SettingContainers.Contains(settingContainer)) throw new ArgumentException($"{settingContainer} not in {nameof(section.SettingContainers)}");
+            if (section.Document == null) throw new ArgumentNullException($"{section} has no document");
 
             section.SettingContainers.Remove(settingContainer);
             section.Document.HasChanges = true;

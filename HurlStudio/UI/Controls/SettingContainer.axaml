@@ -95,6 +95,7 @@
         <!--Enable/disable in setting-->
         <Button Classes="framelessButton" 
                 Click="On_ButtonEnable_Click" 
+                IsEnabled="{Binding !IsReadOnly}"
                 IsVisible="{Binding !ChangeEnabledStateInContainer}">
           <StackPanel>
             <controls:Icon Type="CheckedBox"

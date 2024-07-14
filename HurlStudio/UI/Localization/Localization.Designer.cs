@@ -889,6 +889,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title} ähnelt.
+        /// </summary>
+        public static string Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title {
+            get {
+                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Dock.Tool.CollectionExplorer.MessageBox.Rename.Message} ähnelt.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_MessageBox_Rename_Message {
@@ -1695,6 +1713,60 @@ namespace HurlStudio.UI.Localization {
         public static string Setting_CookieSetting_Title {
             get {
                 return ResourceManager.GetString("Setting.CookieSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.Add.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_Add_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.Add.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.Description} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_Description {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.EmptyList} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_EmptyList {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.EmptyList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.Remove.Tooltip} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_Remove_Tooltip {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.Remove.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.ShortDescription} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_ShortDescription {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.ShortDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Setting.CustomArgumentsSetting.Title} ähnelt.
+        /// </summary>
+        public static string Setting_CustomArgumentsSetting_Title {
+            get {
+                return ResourceManager.GetString("Setting.CustomArgumentsSetting.Title", resourceCulture);
             }
         }
         
@@ -2905,6 +2977,87 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Template.Empty.Name} ähnelt.
+        /// </summary>
+        public static string Template_Empty_Name {
+            get {
+                return ResourceManager.GetString("Template.Empty.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Template.OAuth2ClientCredentials.Name} ähnelt.
+        /// </summary>
+        public static string Template_OAuth2ClientCredentials_Name {
+            get {
+                return ResourceManager.GetString("Template.OAuth2ClientCredentials.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Add} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Add {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {CreateTemplate} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_CreateTemplate {
+            get {
+                return ResourceManager.GetString("View.AddFileView.CreateTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Template.DeleteTemplate} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Template_DeleteTemplate {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Template.DeleteTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Template.EditTemplate} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Template_EditTemplate {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Template.EditTemplate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Template.NoSelectionHint} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Template_NoSelectionHint {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Template.NoSelectionHint", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Templates.DeleteTemplate.MessageBox.Title} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Templates_DeleteTemplate_MessageBox_Title {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Templates.DeleteTemplate.MessageBox.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddFileView.Templates.Title} ähnelt.
+        /// </summary>
+        public static string View_AddFileView_Templates_Title {
+            get {
+                return ResourceManager.GetString("View.AddFileView.Templates.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {View.AddSettingView.SettingInstance.Add} ähnelt.
         /// </summary>
         public static string View_AddSettingView_SettingInstance_Add {
@@ -3072,6 +3225,33 @@ namespace HurlStudio.UI.Localization {
         public static string View_Editor_Toolbar_WordWrap_Tooltip {
             get {
                 return ResourceManager.GetString("View.Editor.Toolbar.WordWrap.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {View.EditTemplateView.AddSetting} ähnelt.
+        /// </summary>
+        public static string View_EditTemplateView_AddSetting {
+            get {
+                return ResourceManager.GetString("View.EditTemplateView.AddSetting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Cancel} ähnelt.
+        /// </summary>
+        public static string View_EditTemplateView_Cancel {
+            get {
+                return ResourceManager.GetString("View.EditTemplateView.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Save} ähnelt.
+        /// </summary>
+        public static string View_EditTemplateView_Save {
+            get {
+                return ResourceManager.GetString("View.EditTemplateView.Save", resourceCulture);
             }
         }
         
@@ -3301,11 +3481,29 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Window.AddFile.Title} ähnelt.
+        /// </summary>
+        public static string Window_AddFile_Title {
+            get {
+                return ResourceManager.GetString("Window.AddFile.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Sucht eine lokalisierte Zeichenfolge, die {Window.AddSetting.Title} ähnelt.
         /// </summary>
         public static string Window_AddSetting_Title {
             get {
                 return ResourceManager.GetString("Window.AddSetting.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Sucht eine lokalisierte Zeichenfolge, die {Window.EditTemplate.Title} ähnelt.
+        /// </summary>
+        public static string Window_EditTemplate_Title {
+            get {
+                return ResourceManager.GetString("Window.EditTemplate.Title", resourceCulture);
             }
         }
         

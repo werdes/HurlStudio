@@ -1,0 +1,52 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:setting="clr-namespace:HurlStudio.Collections.Settings;assembly=HurlStudio.Collections"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:commonenums="clr-namespace:HurlStudio.Common.Enums;assembly=HurlStudio.Common"
+             
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="135"
+             x:DataType="setting:CustomArgumentsSetting"
+             x:Class="HurlStudio.UI.Controls.HurlSettings.CustomArgumentsSetting">
+  <StackPanel Margin="3"
+              Orientation="Vertical">
+    <ItemsControl ItemsSource="{Binding Arguments}">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*" />
+              <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            
+            <TextBox Classes="framelessTextBox"
+                     Text="{Binding Argument}" />
+
+            <Button Classes="framelessButton"
+                    Click="On_ButtonRemoveRow_Click"
+                    ToolTip.Tip="{x:Static localization:Localization.Setting_CustomArgumentsSetting_Remove_Tooltip}"
+                    Grid.Column="1">
+              <c:Icon Type="Trash" />
+            </Button>
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ItemsControl>
+    <TextBlock IsVisible="{Binding !Arguments.Count}"
+               Text="{x:Static localization:Localization.Setting_CustomArgumentsSetting_EmptyList}"
+               Margin="0,0,0,5"
+               Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+               HorizontalAlignment="Center" />
+    
+    <DockPanel HorizontalAlignment="Right">
+      <Button Classes="framelessButton"
+              Click="On_ButtonAddRow_Click"
+              ToolTip.Tip="{x:Static localization:Localization.Setting_CustomArgumentsSetting_Add_Tooltip}"
+              Grid.Column="1">
+        <c:Icon Type="Plus" />
+      </Button>
+    </DockPanel>
+  </StackPanel>
+</UserControl>

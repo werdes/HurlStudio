@@ -39,11 +39,11 @@ namespace HurlStudio.Model.HurlSettings
         private bool _canMove;
         private bool _isEnabled;
         private BaseSetting _setting;
-        private IEditorDocument _document;
+        private IEditorDocument? _document;
         private HurlSettingSection _settingSection;
         private EnableType _enableType;
 
-        public HurlSettingContainer(IEditorDocument document, HurlSettingSection settingSection, BaseSetting setting, bool isReadOnly, bool canMove, EnableType enableType)
+        public HurlSettingContainer(IEditorDocument? document, HurlSettingSection settingSection, BaseSetting setting, bool isReadOnly, bool canMove, EnableType enableType)
         {
             _isReadOnly = isReadOnly;
             _collapsed = false;
@@ -208,11 +208,11 @@ namespace HurlStudio.Model.HurlSettings
 
         public bool IsRedefineInFileSettingsVisible
         {
-            get => IsInFileDocument && !IsFileSettingSection;
+            get => this.IsInFileDocument && !this.IsFileSettingSection;
         }
         public bool IsDuplicateVisible
         {
-            get => IsInFileDocument && IsFileSettingSection;
+            get => this.IsInFileDocument && this.IsFileSettingSection;
         }
 
         public void MoveUp() => this.SettingOrderChanged?.Invoke(this, new SettingOrderChangedEventArgs(this, Enums.MoveDirection.Up));
@@ -226,7 +226,7 @@ namespace HurlStudio.Model.HurlSettings
             if (_settingSection.CollectionComponent == null) throw new ArgumentNullException(nameof(this.SettingSection.CollectionComponent));
             if (!_settingSection.SettingContainers.Contains(this)) throw new InvalidOperationException($"{this} not in setting containers");
 
-            string id = _document.GetId() + "#" +
+            string id = _document?.GetId() + "#" +
                         _settingSection.CollectionComponent.GetId() + "#" +
                         _settingSection.SettingContainers.IndexOf(this);
             return id.ToSha256Hash();

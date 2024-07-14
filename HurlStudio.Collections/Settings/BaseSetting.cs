@@ -51,7 +51,7 @@ namespace HurlStudio.Collections.Settings
         public string GetConfigurationValue()
         {
             object[] objects = GetConfigurationValues();
-            return string.Join(VALUE_SEPARATOR, objects.Select(o => o?.ToString()?.EncodeUrl()));
+            return string.Join(VALUE_SEPARATOR, objects.Select(x => x?.ToString()?.EncodeUrl()));
         }
 
         /// <summary>

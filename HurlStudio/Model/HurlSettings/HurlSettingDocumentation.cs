@@ -58,8 +58,8 @@ namespace HurlStudio.Model.HurlSettings
             }
         }
 
-        [JsonPropertyName("short_description")]
-        [ConfigurationKeyName("short_description")]
+        [JsonPropertyName("shortDescription")]
+        [ConfigurationKeyName("shortDescription")]
         public string? ShortDescription
         {
             get => _shortDescription;

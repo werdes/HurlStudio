@@ -24,12 +24,12 @@ namespace HurlStudio.Model.HurlSettings
 
         private OrderedObservableCollection<HurlSettingContainer> _settingContainers;
         private HurlContainerBase? _collectionComponent;
-        private IEditorDocument _document;
+        private IEditorDocument? _document;
         private HurlSettingSectionType _sectionType;
         private string _sectionSubText;
         private bool _collapsed;
 
-        public HurlSettingSection(IEditorDocument document, HurlSettingSectionType sectionType, HurlContainerBase? collectionComponent)
+        public HurlSettingSection(IEditorDocument? document, HurlSettingSectionType sectionType, HurlContainerBase? collectionComponent)
         {
             _settingContainers = new OrderedObservableCollection<HurlSettingContainer>();
 
@@ -119,8 +119,8 @@ namespace HurlStudio.Model.HurlSettings
                 this.SettingSectionCollapsedChanged?.Invoke(this, new SettingSectionCollapsedChangedEventArgs(_collapsed));
             }
         }
-
-        public IEditorDocument Document
+        
+        public IEditorDocument? Document
         {
             get => _document;
         }
@@ -139,10 +139,9 @@ namespace HurlStudio.Model.HurlSettings
         /// Returns a unique ID for this section
         /// </summary>
         /// <returns></returns>
-        /// <exception cref="ArgumentNullException"></exception>
         public string GetId()
         {
-            string id = _document.GetId() + "#" + _collectionComponent?.GetId();
+            string id = _document?.GetId() + "#" + _collectionComponent?.GetId();
             return id.ToSha256Hash();
         }
     }

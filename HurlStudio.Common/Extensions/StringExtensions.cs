@@ -139,5 +139,17 @@ namespace HurlStudio.Common.Extensions
             bool isContained = normalizedParams.Any(x => x.Contains(queryNormalized));
             return isContained;  
         }
+
+        /// <summary>
+        /// Squashes sequences of the given char <paramref name="squashChar"/> down to a single one
+        /// </summary>
+        /// <param name="text">Text the given char has to be squashed from</param>
+        /// <param name="squashChar">Char to be squashed</param>
+        /// <returns>squashed text</returns>
+        public static string Squash(this string text, char squashChar)
+        {
+            Regex regex = new Regex("[" + squashChar + "]{2,}");
+            return regex.Replace(text, squashChar.ToString());
+        }
     }
 }

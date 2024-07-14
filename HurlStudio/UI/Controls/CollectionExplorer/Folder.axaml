@@ -28,12 +28,14 @@
         Background="{DynamicResource WindowBackgroundColor}">
     <Grid.ContextMenu>
       <ContextMenu>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFile}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFile}"
+                  Click="On_MenuItem_AddFile_Click">
           <MenuItem.Icon>
             <c:Icon Type="AddFile" />
           </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFolder}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFolder}"
+                  Click="On_MenuItem_AddFolder_Click">
           <MenuItem.Icon>
             <c:Icon Type="AddFolder" />
           </MenuItem.Icon>
@@ -101,11 +103,13 @@
       <!--Action Buttons-->
       <DockPanel HorizontalAlignment="Right" VerticalAlignment="Center">
         <Button Classes="collectionComponentButton"
-                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFolder_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFolder_Tooltip}"
+                Click="On_MenuItem_AddFolder_Click">
           <controls:Icon Type="AddFolder" />
         </Button>
         <Button Classes="collectionComponentButton"
-                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFile_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Folder_AddFile_Tooltip}"
+                Click="On_MenuItem_AddFile_Click">
           <controls:Icon Type="AddFile" />
         </Button>
       </DockPanel>

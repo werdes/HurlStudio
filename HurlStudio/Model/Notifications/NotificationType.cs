@@ -48,12 +48,12 @@ namespace HurlStudio.Model.Notifications
         {
             switch (type)
             {
-                case NotificationType.Info: return Icon.NotificationInfo;
-                case NotificationType.Warning: return Icon.NotificationWarning;
-                case NotificationType.Error: return Icon.NotificationError;
+                case NotificationType.Info: return Icon.InfoColor;
+                case NotificationType.Warning: return Icon.WarningColor;
+                case NotificationType.Error: return Icon.ErrorColor;
 
                 case NotificationType.None:
-                default: return Icon.NotificationNone;
+                default: return Icon.Blank;
             }
         }
     }

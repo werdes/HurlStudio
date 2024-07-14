@@ -18,7 +18,7 @@ namespace HurlStudio.UI.ViewModels.Windows
             set
             {
                 _addSettingViewViewModel = value;
-                Notify();
+                this.Notify();
             }
         }
 

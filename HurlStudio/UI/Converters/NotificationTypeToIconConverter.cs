@@ -19,7 +19,7 @@ namespace HurlStudio.UI.Converters
             {
                 return notificationType.GetIcon();
             }
-            return Icon.NotificationNone;
+            return Icon.Blank;
         }
 
         public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)

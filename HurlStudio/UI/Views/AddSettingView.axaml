@@ -121,6 +121,7 @@
         <TextBlock Margin="4,5,0,0"
                    VerticalAlignment="Center"
                    Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
+                   IsVisible="{Binding SelectedSetting.SettingDocumentation.Urls.Count}"
                    Text="{x:Static localization:Localization.View_AddSettingView_Urls_Header}"/>
         <ItemsControl ItemsSource="{Binding SelectedSetting.SettingDocumentation.Urls}">
           <ItemsControl.ItemTemplate>

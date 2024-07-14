@@ -20,12 +20,10 @@ namespace HurlStudio.UI.Controls
     {
         private ILogger<ViewFrame> _log;
         private ViewFrameViewModel? _viewModel;
-        private ControlLocator _locator;
 
-        public ViewFrame(ILogger<ViewFrame> logger, ControlLocator controlLocator)
+        public ViewFrame(ILogger<ViewFrame> logger)
         {
             _log = logger;
-            _locator = controlLocator;
 
             this.InitializeComponent();
         }

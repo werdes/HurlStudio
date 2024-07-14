@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Model.Containers
 {
-    public class AdditionalLocation : INotifyPropertyChanged
+    public class AdditionalLocation : BaseContainer, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         private string _path;
         private HurlCollection _collection;
 

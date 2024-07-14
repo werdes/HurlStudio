@@ -13,21 +13,25 @@ using HurlStudio.Services.UiState;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Utility;
 using System.IO;
+using Avalonia.Interactivity;
 using HurlStudio.UI.Windows;
+using HurlStudio.Model.HurlFileTemplates;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
     public partial class Folder : CollectionExplorerControlBase<HurlFolderContainer>
     {
         private HurlFolderContainer? _folderContainer;
-        
+
         private ILogger _log;
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
         private MainWindow _mainWindow;
+        private ServiceManager<Windows.WindowBase> _windowBuilder;
 
-        public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow)
+        public Folder(ILogger<Folder> logger, INotificationService notificationService, IEditorService editorService,
+            IUiStateService uiStateService, MainWindow mainWindow, ServiceManager<Windows.WindowBase> windowBuilder)
             : base(notificationService, logger)
         {
             _log = logger;
@@ -35,9 +39,9 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             _notificationService = notificationService;
             _uiStateService = uiStateService;
             _mainWindow = mainWindow;
+            _windowBuilder = windowBuilder;
 
             this.InitializeComponent();
-
         }
 
         /// <summary>
@@ -70,7 +74,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 _folderContainer.Collapsed = !_folderContainer.Collapsed;
-                _uiStateService.SetCollectionExplorerCollapseState(_folderContainer.GetId(), _folderContainer.Collapsed);
+                _uiStateService.SetCollectionExplorerCollapseState(_folderContainer.GetId(),
+                    _folderContainer.Collapsed);
             }
             catch (Exception ex)
             {
@@ -164,7 +169,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
                     new DirectoryInfo(_folderContainer.AbsoluteLocation).Name,
-                    Model.Enums.Icon.Rename50);
+                    Model.Enums.Icon.Rename);
 
                 if (inputResult != null)
                 {
@@ -190,19 +195,82 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 bool delete = await MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _folderContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete) == MessageBox.ButtonType.Yes;
+                                  _mainWindow, _folderContainer.AbsoluteLocation,
+                                  Localization.Localization
+                                      .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete) ==
+                              MessageBox.ButtonType.Yes;
                 if (!delete) return;
 
                 bool deleted = await _editorService.DeleteFolder(_folderContainer, false);
                 if (!deleted)
                 {
                     bool deletePermanently = await MessageBox.ShowQuestionYesNoDialog(
-                        _mainWindow, _folderContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently) == MessageBox.ButtonType.Yes;
+                                                 _mainWindow, _folderContainer.AbsoluteLocation,
+                                                 Localization.Localization
+                                                     .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently) ==
+                                             MessageBox.ButtonType.Yes;
                     if (deletePermanently)
                     {
                         deleted = await _editorService.DeleteFolder(_folderContainer, true);
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds a folder to a folder
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_AddFolder_Click(object? sender, RoutedEventArgs e)
+        {
+            if (_folderContainer == null) return;
+
+            try
+            {
+                string? folderName = await MessageBox.AskInputDialog(_mainWindow,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
+                    Model.Enums.Icon.AddFolder);
+
+                if (!string.IsNullOrWhiteSpace(folderName))
+                {
+                    string newPath = Path.Combine(_folderContainer.AbsoluteLocation,
+                        folderName.GetValidDirectoryName());
+                    if (!Directory.Exists(newPath))
+                    {
+                        await _editorService.CreateFolder(_folderContainer.CollectionContainer, newPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds a file to a collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_AddFile_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_folderContainer == null) return;
+
+            try
+            {
+                AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
+                (string fileName, HurlFileTemplateContainer template) = await addFileWindow.ShowDialog<(string, HurlFileTemplateContainer)>(_mainWindow);
+                if (fileName == null || template == null) return;
+
+                await _editorService.CreateFileInFolder(_folderContainer, template, fileName);
             }
             catch (Exception ex)
             {

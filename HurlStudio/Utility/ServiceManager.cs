@@ -156,7 +156,7 @@ namespace HurlStudio.Utility
         {
             if (_associations.ContainsKey(associatedType))
             {
-                T instance = Get(_associations[associatedType]);
+                T instance = this.Get(_associations[associatedType]);
 
                 return instance;
             }
@@ -169,14 +169,14 @@ namespace HurlStudio.Utility
         /// </summary>
         /// <typeparam name="TService">Service type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public TService Get<TService>() where TService : T => (TService)Get(typeof(TService));
+        public TService Get<TService>() where TService : T => (TService)this.Get(typeof(TService));
 
         /// <summary>
         /// Syntactic sugar for the GetAssociated method
         /// </summary>
         /// <typeparam name="TAssociated">Associated type</typeparam>
         /// <returns>Instance of the base type of this service manager instance</returns>
-        public T GetAssociated<TAssociated>() => GetAssociated(typeof(TAssociated));
+        public T GetAssociated<TAssociated>() => this.GetAssociated(typeof(TAssociated));
 
         /// <summary>
         /// Checks, if an associated type is registered

@@ -121,7 +121,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
                     Path.GetFileName(_fileContainer.AbsoluteLocation),
-                    Model.Enums.Icon.Rename50);
+                    Model.Enums.Icon.Rename);
 
                 if(inputResult != null)
                 {

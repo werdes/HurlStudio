@@ -16,13 +16,12 @@ using System;
 
 namespace HurlStudio.UI.Windows
 {
-    public partial class AddSettingWindow : WindowBase
+    public partial class AddSettingWindow : WindowBase<AddSettingWindowViewModel>
     {
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IUiStateService _uiStateService;
-        private AddSettingWindowViewModel? _viewModel;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
         private ControlLocator _controlLocator;
         
@@ -35,7 +34,7 @@ namespace HurlStudio.UI.Windows
             _uiStateService = uiStateService;
             _viewModel = addSettingWindowViewModel;
             _controlBuilder = controlBuilder;
-            _controlLocator = controlLocator;
+            _controlLocator = controlLocator; 
 
             this.DataContext = _viewModel;
             this.DataTemplates.Add(controlLocator);
@@ -64,7 +63,7 @@ namespace HurlStudio.UI.Windows
                     view.Bind(MarginProperty, offscreenMarginBinding);
 
                     this.Content = view;
-                    view.Window = this;
+                    view.SetWindow(this);
 
                     if (view.DataContext is AddSettingViewViewModel viewModel)
                     {

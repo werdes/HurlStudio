@@ -11,6 +11,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Styling;
+using MsBox.Avalonia.Controls;
+using MsBox.Avalonia.ViewModels;
+using Avalonia.Media.Imaging;
+using Avalonia.Platform;
+using System.Reflection;
 
 namespace HurlStudio.Utility
 {
@@ -19,6 +24,31 @@ namespace HurlStudio.Utility
     /// </summary>
     public static class MessageBox
     {
+        private static Bitmap _windowIcon;
+
+        static MessageBox()
+        {
+#pragma warning disable CS8601 // Mögliche Nullverweiszuweisung.
+            _windowIcon = GetWindowIcon() ?? Icon.Blank.GetBitmap(IconSize.S, ThemeVariant.Default);
+#pragma warning restore CS8601 // Mögliche Nullverweiszuweisung.
+        }
+
+        /// <summary>
+        /// Returns a bitmap with the icon
+        /// </summary>
+        /// <returns></returns>
+        private static Bitmap? GetWindowIcon()
+        {
+            string? assemblyName = Assembly.GetExecutingAssembly()?.GetName()?.Name;
+            if (assemblyName == null) return null;
+
+            Uri path = new Uri($"avares://{assemblyName}/Assets/Icons/icon.ico");
+            if (!AssetLoader.Exists(path)) return null;
+
+            Bitmap bitmap = new Bitmap(AssetLoader.Open(path));
+            return bitmap;
+        }
+
         public static ThemeVariant? ThemeVariant { get; set; }
 
         public enum ButtonType
@@ -29,7 +59,7 @@ namespace HurlStudio.Utility
             Save,
             Discard,
             Rename,
-            Yes, 
+            Yes,
             No
         }
 
@@ -129,6 +159,7 @@ namespace HurlStudio.Utility
         {
             List<ButtonDefinition> buttonDefinitions = buttons.Select(x => new ButtonDefinition()
             {
+                IsDefault = (x == ButtonType.OK),
                 IsCancel = (x == ButtonType.Cancel),
                 Name = _typeLocalization[x]
             }).ToList();
@@ -140,9 +171,11 @@ namespace HurlStudio.Utility
                 ContentMessage = message,
                 CanResize = false,
                 Icon = MsBox.Avalonia.Enums.Icon.Warning,
-                ImageIcon = icon.GetBitmap(ThemeVariant ?? ThemeVariant.Default),
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                ImageIcon = icon.GetBitmap(IconSize.M, ThemeVariant ?? ThemeVariant.Default),
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                WindowIcon = new WindowIcon(_windowIcon)
             });
+
             return box;
         }
 
@@ -159,13 +192,14 @@ namespace HurlStudio.Utility
             List<ButtonDefinition> buttonDefinitions = new List<ButtonDefinition>() {
                 new ButtonDefinition()
                 {
-                    IsCancel = true,
-                    Name = _typeLocalization[ButtonType.Cancel]
+                    IsCancel = false,
+                    IsDefault = true,
+                    Name = _typeLocalization[ButtonType.OK]
                 },
                 new ButtonDefinition()
                 {
-                    IsCancel = false,
-                    Name = _typeLocalization[ButtonType.OK]
+                    IsCancel = true,
+                    Name = _typeLocalization[ButtonType.Cancel]
                 }
             };
 
@@ -180,20 +214,21 @@ namespace HurlStudio.Utility
                     DefaultValue = value,
                     Multiline = false
                 },
-                ImageIcon = icon.GetBitmap(ThemeVariant ?? ThemeVariant.Default),
-                WindowStartupLocation = WindowStartupLocation.CenterOwner
+                ImageIcon = icon.GetBitmap(IconSize.M, ThemeVariant ?? ThemeVariant.Default),
+                WindowStartupLocation = WindowStartupLocation.CenterOwner,
+                WindowIcon = new WindowIcon(_windowIcon)
             });
 
             return box;
         }
 
-        public static async Task<ButtonType> ShowInfo(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxInfo);
-        public static async Task<ButtonType> ShowWarning(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxWarning);
-        public static async Task<ButtonType> ShowError(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.MessageBoxError);
-        public static async Task<ButtonType> ShowQuestionYesNo(string message, string title) => await Show(message, title, [ButtonType.Yes, ButtonType.No], Icon.MessageBoxQuestion);
-        public static async Task<ButtonType> ShowInfoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxInfo);
-        public static async Task<ButtonType> ShowWarningDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxWarning);
-        public static async Task<ButtonType> ShowErrorDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.MessageBoxError);
-        public static async Task<ButtonType> ShowQuestionYesNoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.Yes, ButtonType.No], Icon.MessageBoxQuestion);
+        public static async Task<ButtonType> ShowInfo(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.InfoColor);
+        public static async Task<ButtonType> ShowWarning(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.WarningColor);
+        public static async Task<ButtonType> ShowError(string message, string title) => await Show(message, title, [ButtonType.OK], Icon.ErrorColor);
+        public static async Task<ButtonType> ShowQuestionYesNo(string message, string title) => await Show(message, title, [ButtonType.Yes, ButtonType.No], Icon.Question);
+        public static async Task<ButtonType> ShowInfoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.InfoColor);
+        public static async Task<ButtonType> ShowWarningDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.WarningColor);
+        public static async Task<ButtonType> ShowErrorDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.OK], Icon.ErrorColor);
+        public static async Task<ButtonType> ShowQuestionYesNoDialog(Window owner, string message, string title) => await ShowDialog(owner, message, title, [ButtonType.Yes, ButtonType.No], Icon.Question);
     }
 }

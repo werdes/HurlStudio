@@ -23,7 +23,7 @@ namespace HurlStudio.UI.Controls.Tools
         private INotificationService _notificationService;
         private ICollectionService _collectionService;
 
-        public EnvironmentExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, ICollectionService collectionService)
+        public EnvironmentExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, INotificationService notificationService, ICollectionService collectionService)
         {
             this.InitializeComponent();
             _log = logger;

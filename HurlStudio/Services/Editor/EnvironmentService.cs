@@ -82,7 +82,7 @@ namespace HurlStudio.Services.Editor
 
             foreach (HurlEnvironment environment in environments)
             {
-                HurlEnvironmentContainer environmentContainer = await GetEnvironmentContainerAsync(environment);
+                HurlEnvironmentContainer environmentContainer = await this.GetEnvironmentContainerAsync(environment);
                 environmentContainers.Add(environmentContainer);
                 _log.LogInformation($"Opened environment: [{environment.EnvironmentFileLocation}]");
             }

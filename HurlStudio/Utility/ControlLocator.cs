@@ -23,12 +23,19 @@ namespace HurlStudio.Utility
         private ILogger _log;
         private IConfiguration _configuration;
         private ServiceManager<ViewModelBasedControl> _controlBuilder;
+        private UI.Windows.WindowBase? _window;
 
         public ControlLocator(ILogger<ControlLocator> logger, IConfiguration configuration, ServiceManager<ViewModelBasedControl> controlBuilder)
         {
             _log = logger;
             _configuration = configuration;
             _controlBuilder = controlBuilder;
+        }
+
+        public UI.Windows.WindowBase? Window
+        {
+            get => _window;
+            set => _window = value;
         }
 
         /// <summary>
@@ -38,23 +45,23 @@ namespace HurlStudio.Utility
         /// <returns></returns>
         public Control Build(object? data)
         {
-            if (data != null)
+            if (_window == null) return new TextBlock() { Text = $"No window was supplied to the locator" };
+            if (data == null)  return new TextBlock() { Text = $"No object was supplied to the locator" };
+
+            try
             {
-                try
+                ViewModelBasedControl? control = _controlBuilder.GetAssociated(data.GetType());
+
+                if (control != null)
                 {
-                    ViewModelBasedControl? control = _controlBuilder.GetAssociated(data.GetType());
-
-                    if (control != null)
-                    {
-                        control.SetViewModel(data);
-                        return control;
-                    }
+                    control.SetViewModel(data);
+                    control.SetWindow(_window);
+                    return control;
                 }
-                catch { }
-
-                return new TextBlock() { Text = $"{data?.GetType().Name} has not been registered in the control builder" };
             }
-            return new TextBlock() { Text = $"No object was supplied to the locator" };
+            catch { }
+
+            return new TextBlock() { Text = $"{data?.GetType().Name} has not been registered in the control builder" };
         }
 
         /// <summary>

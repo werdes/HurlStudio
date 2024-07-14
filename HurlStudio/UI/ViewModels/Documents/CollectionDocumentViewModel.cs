@@ -155,7 +155,7 @@ namespace HurlStudio.UI.ViewModels.Documents
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.CollectionContainer?.Collection.CollectionFileLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
                 [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
-                Icon.MessageBoxWarning
+                Icon.WarningColor
             );
 
             switch (decisionResult)

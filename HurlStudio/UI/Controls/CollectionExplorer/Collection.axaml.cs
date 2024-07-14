@@ -1,20 +1,18 @@
-using Avalonia;
-using Avalonia.Controls;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Common.Utility;
 using HurlStudio.Model.HurlContainers;
 using HurlStudio.Services.Editor;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
-using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Windows;
 using HurlStudio.Utility;
 using Microsoft.Extensions.Logging;
 using System;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using Avalonia.Interactivity;
+using HurlStudio.Model.Notifications;
+using HurlStudio.Model.HurlFileTemplates;
 
 namespace HurlStudio.UI.Controls.CollectionExplorer
 {
@@ -27,8 +25,9 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
         private MainWindow _mainWindow;
+        private ServiceManager<Windows.WindowBase> _windowBuilder;
 
-        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow)
+        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow, ServiceManager<Windows.WindowBase> windowBuilder)
             : base(notificationService, logger)
         {
             _editorService = editorService;
@@ -36,6 +35,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             _log = logger;
             _notificationService = notificationService;
             _mainWindow = mainWindow;
+            _windowBuilder = windowBuilder;
 
             this.InitializeComponent();
         }
@@ -166,7 +166,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
                     _collectionContainer.Collection.Name,
-                    Model.Enums.Icon.Rename50);
+                    Model.Enums.Icon.Rename);
 
                 if (inputResult != null)
                 {
@@ -202,6 +202,64 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                 if (!remove) return;
 
                 bool deleted = await _editorService.RemoveCollection(_collectionContainer);
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+        
+        /// <summary>
+        /// Adds a folder to a collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_AddFolder_Click(object? sender, RoutedEventArgs e)
+        {
+            if (_collectionContainer == null) return;
+
+            try
+            {
+                string? folderName = await MessageBox.AskInputDialog(_mainWindow,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
+                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
+                    Model.Enums.Icon.AddFolder);
+                string? collectionDirectory = Path.GetDirectoryName(_collectionContainer.Collection.CollectionFileLocation);
+
+                if (!string.IsNullOrWhiteSpace(folderName) && collectionDirectory != null)
+                {
+                    string newPath = Path.Combine(collectionDirectory, folderName.GetValidDirectoryName());
+                    if (!Directory.Exists(newPath))
+                    {
+                        await _editorService.CreateFolder(_collectionContainer, newPath);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        /// <summary>
+        /// Adds a file to a collection
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_AddFile_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_collectionContainer == null) return;
+            if (_window == null) return;
+
+            try
+            {
+                AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
+                (string fileName, HurlFileTemplateContainer template) = await addFileWindow.ShowDialog<(string, HurlFileTemplateContainer)>(_window);
+
+                if (fileName == null || template == null) return;
+                await _editorService.CreateFileInCollectionRoot(_collectionContainer, template, fileName);
             }
             catch (Exception ex)
             {

@@ -1,0 +1,66 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="clr-namespace:HurlStudio.UI.Controls;assembly=HurlStudio"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters;assembly=HurlStudio"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:vm="clr-namespace:HurlStudio.Model.HurlFileTemplates;assembly=HurlStudio"
+             
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             
+             Cursor="Hand"
+             IsVisible="{Binding IsVisible}"
+             Background="Transparent"
+             
+             PointerPressed="On_TemplateContainer_PointerPressed"
+             
+             x:DataType="vm:HurlFileTemplateContainer"
+             x:Class="HurlStudio.UI.Controls.HurlFileTemplateListItem">
+  <UserControl.Resources>
+  </UserControl.Resources>
+
+  <Grid Margin="1,0,1,0">
+    <Grid.ContextMenu>
+      <ContextMenu>
+        <MenuItem Header="{x:Static localization:Localization.View_AddFileView_Template_EditTemplate}"
+                  Click="On_MenuItem_Edit_Click">
+          <MenuItem.Icon>
+            <controls:Icon Type="Edit" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <MenuItem Header="{x:Static localization:Localization.View_AddFileView_Template_DeleteTemplate}"
+                  IsVisible="{Binding Template.CanDelete}"
+                  Click="On_MenuItem_Delete_Click">
+          <MenuItem.Icon>
+            <controls:Icon Type="Trash" />
+          </MenuItem.Icon>
+        </MenuItem>
+      </ContextMenu>
+    </Grid.ContextMenu>
+
+    <Border BorderBrush="{DynamicResource NeutralControlBorderColor}"
+            BorderThickness="0,0,0,1"
+            Margin="0"/>
+
+    <Grid Margin="3">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="20" />
+        <ColumnDefinition />
+      </Grid.ColumnDefinitions>
+      <Grid.RowDefinitions>
+        <RowDefinition Height="20" />
+        <RowDefinition />
+      </Grid.RowDefinitions>
+
+      <controls:Icon Type="Template" />
+
+      <TextBlock Margin="4,0,0,0"
+                 Grid.Column="1"
+                 FontWeight="Bold"
+                 VerticalAlignment="Center"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Text="{Binding Path=Template.Name}"/>
+    </Grid>
+  </Grid>
+</UserControl>

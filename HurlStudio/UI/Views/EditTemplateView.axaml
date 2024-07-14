@@ -1,0 +1,137 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
+             xmlns:sy="clr-namespace:System"
+             xmlns:ae="using:AvaloniaEdit"
+	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             
+             x:Class="HurlStudio.UI.Views.EditTemplateView"
+             x:DataType="vm:EditTemplateViewViewModel"
+             
+             Initialized="On_EditTemplateView_Initialized"
+             Loaded="On_EditTemplateView_Loaded">
+
+  <DockPanel>
+    <actipro:ChromedTitleBar DockPanel.Dock="Top"
+                             IsVisible="{Binding MainWindow.IsWindows}"
+                             IsCloseButtonAllowed="True"
+                             IsMaximizeButtonAllowed="False"
+                             IsMinimizeButtonAllowed="False">
+      <actipro:ChromedTitleBar.LeftContent>
+        <StackPanel Orientation="Horizontal">
+          <c:Icon Margin="10,2,0,0"
+                  Type="Template" />
+          <TextBlock Text="{x:Static localization:Localization.Window_EditTemplate_Title}"
+                     VerticalAlignment="Center"
+                     IsHitTestVisible="False"
+                     Margin="10,8,0,7"
+                     TextTrimming="CharacterEllipsis"
+                     Foreground="{DynamicResource WindowChromeTitleColor}"
+                     IsVisible="{Binding MainWindow.IsWindows}"/>
+        </StackPanel>
+
+      </actipro:ChromedTitleBar.LeftContent>
+      <actipro:ChromedTitleBar.RightContent>
+      </actipro:ChromedTitleBar.RightContent>
+    </actipro:ChromedTitleBar>
+    <Grid Margin="4">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="30" />
+        <RowDefinition Height="*" />
+        <RowDefinition Height="30" />
+      </Grid.RowDefinitions>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="2*" />
+        <ColumnDefinition Width="4" />
+        <ColumnDefinition Width="*" />
+      </Grid.ColumnDefinitions>
+
+      <Border BorderBrush="{DynamicResource NeutralControlBorderColor}"
+              BorderThickness="1"
+              Grid.RowSpan="2"
+              Background="{DynamicResource NeutralControlBackgroundColor}"/>
+      <Border Grid.Column="2"
+              Grid.RowSpan="2"
+              BorderBrush="{DynamicResource NeutralControlBorderColor}"
+              BorderThickness="1"
+              Background="{DynamicResource NeutralControlBackgroundColor}" />
+
+      <GridSplitter Grid.Column="1"
+                    Foreground="{DynamicResource WindowBackgroundColor}"
+                    Background="{DynamicResource WindowBackgroundColor}"/>
+
+      <ae:TextEditor Name="Editor"
+                     FontFamily="Cascaida Code,Consolas,DejaVu Sans Mono,Menlo,Monospace"
+                     HorizontalScrollBarVisibility="Auto"
+                     Background="{DynamicResource TextEditorBackgroundColor}"
+                     Foreground="{DynamicResource TextEditorForegroundColor}"
+                     Document="{Binding TemplateContainer.Document}"
+                     ShowLineNumbers="True"
+                     Margin="1"
+                     Grid.RowSpan="2"
+                     VerticalScrollBarVisibility="Visible"
+                     VerticalAlignment="Stretch"/>
+
+      <TextBox x:Name="TextBoxName"
+               Grid.Column="2"
+               VerticalContentAlignment="Center"
+               Text="{Binding Path=TemplateContainer.Template.Name}"/>
+
+      <Grid Grid.Column="2"
+            Grid.Row="1"
+            Margin="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*" />
+          <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+
+        <ScrollViewer>
+          <StackPanel Orientation="Vertical">
+            <ContentControl Content="{Binding TemplateContainer.SettingSection}" />
+          </StackPanel>
+        </ScrollViewer>
+        <Button Grid.Row="1"
+                Click="On_ButtonAddSetting_Click"
+                Cursor="Hand">
+          <StackPanel Orientation="Horizontal">
+            <c:Icon Type="AddSetting" />
+            <TextBlock Text="{x:Static localization:Localization.View_EditTemplateView_AddSetting}" />
+          </StackPanel>
+        </Button>
+      </Grid>
+
+
+      <StackPanel Orientation="Horizontal"
+                  Grid.Row="2"
+                  Grid.ColumnSpan="3"
+                  HorizontalAlignment="Right">
+        <Button Grid.Row="2"
+                Margin="0,2,2,0"
+                Click="On_Button_Cancel_Click"
+                Cursor="Hand">
+          <StackPanel Orientation="Horizontal" >
+            <c:Icon Type="Cancel" />
+            <TextBlock Text="{x:Static localization:Localization.View_EditTemplateView_Cancel}" />
+          </StackPanel>
+        </Button>
+        <Button Grid.Row="2"
+                Grid.Column="1"
+                Margin="0,2,0,0"
+                Click="On_Button_Save_Click"
+                Cursor="Hand">
+          <StackPanel Orientation="Horizontal" >
+            <c:Icon Type="SaveNeutral" />
+            <TextBlock Text="{x:Static localization:Localization.View_EditTemplateView_Save}" />
+          </StackPanel>
+        </Button>
+      </StackPanel>
+    </Grid>
+  </DockPanel>
+</UserControl>

@@ -14,15 +14,5 @@ namespace HurlStudio.UI.Views
 {
     public abstract class ViewBase<T> : ViewModelBasedControl<T>
     {
-        private Windows.WindowBase? _window;
-
-        public Windows.WindowBase? Window
-        {
-            get => _window;
-            set
-            {
-                _window = value;
-            }
-        }
     }
 }

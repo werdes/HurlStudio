@@ -9,7 +9,6 @@ namespace HurlStudio.Collections.Settings
     public class NoProxySetting : BaseSetting, IHurlSetting
     {
         private const string CONFIGURATION_NAME = "no_proxy";
-        private const string VALUE_SEPARATOR = ",";
 
         private OrderedObservableCollection<NoProxyHost> _noProxyHosts;
 

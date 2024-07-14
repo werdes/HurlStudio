@@ -21,12 +21,14 @@
     <Grid.ContextMenu>
       <ContextMenu>
         <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFile}"
-                  IsVisible="{Binding !Collection.ExcludeRootDirectory}">
+                  IsVisible="{Binding !Collection.ExcludeRootDirectory}"
+                  Click="On_MenuItem_AddFile_Click">
           <MenuItem.Icon>
             <c:Icon Type="AddFile" />
           </MenuItem.Icon>
         </MenuItem>
-        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFolder}">
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFolder}"
+                  Click="On_MenuItem_AddFolder_Click">
           <MenuItem.Icon>
             <c:Icon Type="AddFolder" />
           </MenuItem.Icon>
@@ -99,11 +101,13 @@
       <DockPanel HorizontalAlignment="Right" 
                  VerticalAlignment="Center">
         <Button Classes="collectionComponentButton"
-                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFolder_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFolder_Tooltip}"
+                Click="On_MenuItem_AddFolder_Click">
           <controls:Icon Type="AddFolder" />
         </Button>
         <Button Classes="collectionComponentButton"
-                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFile_Tooltip}">
+                ToolTip.Tip="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Collection_AddFile_Tooltip}"
+                Click="On_MenuItem_AddFile_Click">
           <controls:Icon Type="AddFile" />
         </Button>
       </DockPanel>

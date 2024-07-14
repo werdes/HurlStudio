@@ -34,6 +34,7 @@ namespace HurlStudio.UI.Views
             _controlLocator = controlLocator;
             _notificationService = notificationService;
 
+            _controlLocator.Window = _window;
             this.DataContext = _viewModel;
             this.DataTemplates.Add(_controlLocator);
 
@@ -74,12 +75,12 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private void On_ButtonAddSetting_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
+            if (this.Window == null) return;
+            if (_viewModel == null) return;
+            if (_viewModel.SelectedSetting == null) return;
+
             try
             {
-                if (this.Window == null) return;
-                if (_viewModel == null) return;
-                if (_viewModel.SelectedSetting == null) return;
-
                 this.Window.Close(_viewModel.SelectedSetting.SettingInstance);
             }
             catch (Exception ex)
@@ -137,6 +138,12 @@ namespace HurlStudio.UI.Views
                 _notificationService.Notify(ex);
                 _log.LogException(ex);
             }
+        }
+
+        public override void SetWindow(Windows.WindowBase window)
+        {
+            base.SetWindow(window);
+            _controlLocator.Window = window;
         }
     }
 }

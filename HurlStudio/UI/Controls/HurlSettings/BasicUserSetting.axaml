@@ -54,7 +54,7 @@
                     Grid.ColumnSpan="2"
                     Grid.Column="0"
                     HorizontalAlignment="Center">
-            <c:Icon Type="NotificationWarning" />
+            <c:Icon Type="WarningColor" />
             <Label VerticalAlignment="Center"
                    Foreground="{DynamicResource NeutralControlForegroundColor}"
                    Content="{x:Static localization:Localization.Setting_BasicUserSetting_NoEncryptionHint}" />

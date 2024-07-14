@@ -143,7 +143,7 @@ namespace HurlStudio.Services.Editor
 
             foreach (HurlCollection collection in collections)
             {
-                HurlCollectionContainer collectionContainer = await GetCollectionContainerAsync(collection);
+                HurlCollectionContainer collectionContainer = await this.GetCollectionContainerAsync(collection);
                 collectionContainers.Add(collectionContainer);
                 _log.LogInformation($"Opened collection: [{collection.CollectionFileLocation}]");
             }
@@ -265,7 +265,7 @@ namespace HurlStudio.Services.Editor
                 {
                     try
                     {
-                        collections.AddIfNotNull(await GetCollectionAsync(file));
+                        collections.AddIfNotNull(await this.GetCollectionAsync(file));
                     }
                     catch (SettingParserException ex)
                     {

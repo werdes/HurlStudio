@@ -78,7 +78,6 @@ namespace HurlStudio.UI.Controls.Documents
             {
                 _textEditor.Options.ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
                 _userSettingsService.GetUserSettings(false).ShowEndOfLine = _viewModel.EditorViewViewModel.ShowEndOfLine;
-                //await _userSettingsService.StoreUserSettingsAsync();
             }
             else if (e.PropertyName == nameof(_viewModel.EditorViewViewModel.ShowWhitespace))
             {
@@ -86,14 +85,12 @@ namespace HurlStudio.UI.Controls.Documents
                 _textEditor.Options.ShowTabs = _viewModel.EditorViewViewModel.ShowWhitespace;
 
                 _userSettingsService.GetUserSettings(false).ShowWhitespace = _viewModel.EditorViewViewModel.ShowWhitespace;
-                //await _userSettingsService.StoreUserSettingsAsync();
             }
             else if (e.PropertyName == nameof(_viewModel.EditorViewViewModel.WordWrap))
             {
                 _textEditor.WordWrap = _viewModel.EditorViewViewModel.WordWrap;
 
                 _userSettingsService.GetUserSettings(false).WordWrap = _viewModel.EditorViewViewModel.WordWrap;
-                //await _userSettingsService.StoreUserSettingsAsync();
             }
         }
 

@@ -59,5 +59,15 @@ namespace HurlStudio.Common.Extensions
                 source.Remove(element);
             }
         }
+
+        /// <summary>
+        /// Syntactic sugar: RemoveAll without predicate
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="collection"></param>
+        public static void RemoveAll<T>(this ObservableCollection<T> collection)
+        {
+            collection.RemoveAll(x => true);
+        }
     }
 }

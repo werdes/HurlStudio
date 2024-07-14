@@ -54,6 +54,8 @@ using HurlStudio.Utility;
 using HurlStudio.UI.ViewModels.Windows;
 using ActiproSoftware.Properties.Shared;
 using HurlStudio.UI;
+using HurlStudio.Services.HurlFileTemplates;
+using HurlStudio.Model.HurlFileTemplates;
 
 namespace HurlStudio
 {
@@ -193,12 +195,16 @@ namespace HurlStudio
             // Windows
             windowBuilder.RegisterProvider<MainWindow>(() => Services.GetRequiredService<MainWindow>());
             windowBuilder.RegisterProvider<AddSettingWindow>(() => Services.GetRequiredService<AddSettingWindow>());
+            windowBuilder.RegisterProvider<AddFileWindow>(() => Services.GetRequiredService<AddFileWindow>());
+            windowBuilder.RegisterProvider<EditTemplateWindow>(() => Services.GetRequiredService<EditTemplateWindow>());
 
             // Views
             controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
             controlBuilder.RegisterProviderAssociated<LoadingView, LoadingViewViewModel>(() => Services.GetRequiredService<LoadingView>());
             controlBuilder.RegisterProviderAssociated<EditorView, EditorViewViewModel>(() => Services.GetRequiredService<EditorView>());
             controlBuilder.RegisterProviderAssociated<AddSettingView, AddSettingViewViewModel>(() => Services.GetRequiredService<AddSettingView>());
+            controlBuilder.RegisterProviderAssociated<AddFileView, AddFileViewViewModel>(() => Services.GetRequiredService<AddFileView>());
+            controlBuilder.RegisterProviderAssociated<EditTemplateView, EditTemplateViewViewModel>(() => Services.GetRequiredService<EditTemplateView>());
 
             // Dock controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
@@ -220,11 +226,12 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<Folder, HurlFolderContainer>(() => Services.GetRequiredService<Folder>());
             controlBuilder.RegisterProviderAssociated<UI.Controls.EnvironmentExplorer.Environment, HurlEnvironmentContainer>(() => Services.GetRequiredService<UI.Controls.EnvironmentExplorer.Environment>());
             controlBuilder.RegisterProviderAssociated<ViewFrame, ViewFrameViewModel>(() => Services.GetRequiredService<ViewFrame>());
-            controlBuilder.RegisterProviderAssociated<AdditionalLocation, Collections.Model.Containers.AdditionalLocation>(() => Services.GetRequiredService<AdditionalLocation>());    
-
-            // HurlSettings
+            controlBuilder.RegisterProviderAssociated<AdditionalLocation, Collections.Model.Containers.AdditionalLocation>(() => Services.GetRequiredService<AdditionalLocation>());
             controlBuilder.RegisterProviderAssociated<SettingContainer, HurlSettingContainer>(() => Services.GetRequiredService<SettingContainer>());
             controlBuilder.RegisterProviderAssociated<SettingTypeContainer, HurlSettingTypeContainer>(() => Services.GetRequiredService<SettingTypeContainer>());
+            controlBuilder.RegisterProviderAssociated<HurlFileTemplateListItem, HurlFileTemplateContainer>(() => Services.GetRequiredService<HurlFileTemplateListItem>());
+
+            // HurlSettings
 
             controlBuilder.RegisterProviderAssociated<AllowInsecureSetting, Collections.Settings.AllowInsecureSetting>(() => Services.GetRequiredService<AllowInsecureSetting>());
             controlBuilder.RegisterProviderAssociated<AwsSigV4Setting, Collections.Settings.AwsSigV4Setting>(() => Services.GetRequiredService<AwsSigV4Setting>());
@@ -234,6 +241,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<ConnectToSetting, Collections.Settings.ConnectToSetting>(() => Services.GetRequiredService<ConnectToSetting>());
             controlBuilder.RegisterProviderAssociated<ContinueOnErrorSetting, Collections.Settings.ContinueOnErrorSetting>(() => Services.GetRequiredService<ContinueOnErrorSetting>());
             controlBuilder.RegisterProviderAssociated<CookieSetting, Collections.Settings.CookieSetting>(() => Services.GetRequiredService<CookieSetting>());
+            controlBuilder.RegisterProviderAssociated<CustomArgumentsSetting, Collections.Settings.CustomArgumentsSetting>(() => Services.GetRequiredService<CustomArgumentsSetting>());
             controlBuilder.RegisterProviderAssociated<DelaySetting, Collections.Settings.DelaySetting>(() => Services.GetRequiredService<DelaySetting>());
             controlBuilder.RegisterProviderAssociated<FileRootSetting, Collections.Settings.FileRootSetting>(() => Services.GetRequiredService<FileRootSetting>());
             controlBuilder.RegisterProviderAssociated<HttpVersionSetting, Collections.Settings.HttpVersionSetting>(() => Services.GetRequiredService<HttpVersionSetting>());
@@ -313,8 +321,9 @@ namespace HurlStudio
             services.AddSingleton<ICollectionSerializer, IniCollectionSerializer>();
             services.AddSingleton<IEnvironmentSerializer, IniEnvironmentSerializer>();
             services.AddSingleton<IEditorService, EditorService>();
+            services.AddSingleton<IHurlFileTemplateService, JsonListHurlFileTemplateService>();
             services.AddSingleton<INotificationService, NotificationService>();
-            services.AddSingleton<ControlLocator>();
+            services.AddTransient<ControlLocator>();
 
             services.AddSingleton<ICollectionService, CollectionService>();
             services.AddSingleton<IEnvironmentService, EnvironmentService>();
@@ -336,6 +345,8 @@ namespace HurlStudio
             // Window view models
             services.AddSingleton<MainWindowViewModel>();
             services.AddTransient<AddSettingWindowViewModel>();
+            services.AddTransient<AddFileWindowViewModel>();
+            services.AddTransient<EditTemplateWindowViewModel>();
 
             // View view models
             services.AddSingleton<LoadingViewViewModel>();
@@ -343,6 +354,8 @@ namespace HurlStudio
             services.AddSingleton<MainViewViewModel>();
             services.AddSingleton<ViewFrameViewModel>();
             services.AddTransient<AddSettingViewViewModel>();
+            services.AddTransient<AddFileViewViewModel>();
+            services.AddTransient<EditTemplateViewViewModel>();
 
             // Dock view models
             services.AddSingleton<CollectionExplorerToolViewModel>();
@@ -374,12 +387,16 @@ namespace HurlStudio
             // Windows
             services.AddSingleton<MainWindow>();
             services.AddTransient<AddSettingWindow>();
+            services.AddTransient<AddFileWindow>();
+            services.AddTransient<EditTemplateWindow>();
 
             // Views
             services.AddSingleton<MainView>();
             services.AddSingleton<LoadingView>();
             services.AddSingleton<EditorView>();
             services.AddTransient<AddSettingView>();
+            services.AddTransient<AddFileView>();
+            services.AddTransient<EditTemplateView>();
 
             // Dock controls
             services.AddTransient<CollectionExplorerTool>();
@@ -397,6 +414,9 @@ namespace HurlStudio
             services.AddTransient<SettingSection>();
             services.AddTransient<ViewFrame>();
             services.AddTransient<AdditionalLocation>();
+            services.AddTransient<SettingContainer>();
+            services.AddTransient<SettingTypeContainer>();
+            services.AddTransient<HurlFileTemplateListItem>();
 
             // Collection Explorer components
             services.AddTransient<Collection>();
@@ -405,9 +425,6 @@ namespace HurlStudio
             services.AddTransient<UI.Controls.EnvironmentExplorer.Environment>();
 
             // Hurl Settings
-            services.AddTransient<SettingContainer>();
-            services.AddTransient<SettingTypeContainer>();
-
             services.AddTransient<AllowInsecureSetting>();
             services.AddTransient<AwsSigV4Setting>();
             services.AddTransient<BasicUserSetting>();
@@ -416,6 +433,7 @@ namespace HurlStudio
             services.AddTransient<ConnectToSetting>();
             services.AddTransient<ContinueOnErrorSetting>();
             services.AddTransient<CookieSetting>();
+            services.AddTransient<CustomArgumentsSetting>();
             services.AddTransient<DelaySetting>();
             services.AddTransient<FileRootSetting>();
             services.AddTransient<HttpVersionSetting>();

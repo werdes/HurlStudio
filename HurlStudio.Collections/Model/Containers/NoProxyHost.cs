@@ -8,11 +8,8 @@ using System.Threading.Tasks;
 
 namespace HurlStudio.Collections.Model.Containers
 {
-    public class NoProxyHost : INotifyPropertyChanged
+    public class NoProxyHost : BaseContainer, INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler? PropertyChanged;
-        protected void Notify([CallerMemberName] string propertyName = "") => this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
         private string _host;
 
         public NoProxyHost(string host)

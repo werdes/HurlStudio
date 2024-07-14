@@ -822,6 +822,9 @@
   <data name="Common.Window.Restore" xml:space="preserve">
     <value>{Common.Window.Restore}</value>
   </data>
+  <data name="Window.AddFile.Title" xml:space="preserve">
+    <value>{Window.AddFile.Title}</value>
+  </data>
   <data name="Window.AddSetting.Title" xml:space="preserve">
     <value>{Window.AddSetting.Title}</value>
   </data>
@@ -1001,6 +1004,15 @@
   </data>
   <data name="View.AddSettingView.SettingInstance.NoSelectionHint" xml:space="preserve">
     <value>{View.AddSettingView.SettingInstance.NoSelectionHint}</value>
+  </data>
+  <data name="View.AddFileView.Template.NoSelectionHint" xml:space="preserve">
+    <value>{View.AddFileView.Template.NoSelectionHint}</value>
+  </data>
+  <data name="View.AddFileView.Add" xml:space="preserve">
+    <value>{View.AddFileView.Add}</value>
+  </data>
+  <data name="View.AddFileView.Templates.Title" xml:space="preserve">
+    <value>{View.AddFileView.Templates.Title}</value>
   </data>
   <data name="Service.CollectionService.Errors.SettingParserError.Text" xml:space="preserve">
     <value>{Service.CollectionService.Errors.SettingParserError.Text}</value>
@@ -1202,5 +1214,59 @@
   </data>
   <data name="Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message}</value>
+  </data>
+  <data name="Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title" xml:space="preserve">
+    <value>{Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.Add.Tooltip" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.Add.Tooltip}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.Description" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.Description}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.EmptyList" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.EmptyList}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.Remove.Tooltip" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.Remove.Tooltip}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.ShortDescription" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.ShortDescription}</value>
+  </data>
+  <data name="Setting.CustomArgumentsSetting.Title" xml:space="preserve">
+    <value>{Setting.CustomArgumentsSetting.Title}</value>
+  </data>
+  <data name="Template.Empty.Name" xml:space="preserve">
+    <value>{Template.Empty.Name}</value>
+  </data>
+  <data name="Template.OAuth2ClientCredentials.Name" xml:space="preserve">
+    <value>{Template.OAuth2ClientCredentials.Name}</value>
+  </data>
+  <data name="View.AddFileView.CreateTemplate" xml:space="preserve">
+    <value>{CreateTemplate}</value>
+  </data>
+  <data name="View.AddFileView.Template.DeleteTemplate" xml:space="preserve">
+    <value>{View.AddFileView.Template.DeleteTemplate}</value>
+  </data>
+  <data name="View.AddFileView.Template.EditTemplate" xml:space="preserve">
+    <value>{View.AddFileView.Template.EditTemplate}</value>
+  </data>
+  <data name="View.AddFileView.Templates.DeleteTemplate.MessageBox.Title" xml:space="preserve">
+    <value>{View.AddFileView.Templates.DeleteTemplate.MessageBox.Title}</value>
+  </data>
+  <data name="Window.EditTemplate.Title" xml:space="preserve">
+    <value>{Window.EditTemplate.Title}</value>
+  </data>
+  <data name="View.EditTemplateView.Cancel" xml:space="preserve">
+    <value>{Cancel}</value>
+  </data>
+  <data name="View.EditTemplateView.Save" xml:space="preserve">
+    <value>{Save}</value>
+  </data>
+  <data name="View.EditTemplateView.AddSetting" xml:space="preserve">
+    <value>{View.EditTemplateView.AddSetting}</value>
   </data>
 </root>
