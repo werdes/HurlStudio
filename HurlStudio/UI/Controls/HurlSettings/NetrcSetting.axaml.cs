@@ -28,7 +28,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? netrcFile = await this.OpenFileSingle(
+                string? netrcFile = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_NetrcSetting_File_FilePicker_Title,
                     new[] { FilePickerFileTypes.All });
                 if (!string.IsNullOrEmpty(netrcFile))

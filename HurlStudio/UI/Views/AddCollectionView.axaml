@@ -1,0 +1,162 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:v="clr-namespace:HurlStudio.UI.Views"
+             xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
+             xmlns:sy="clr-namespace:System"
+             xmlns:ae="using:AvaloniaEdit"
+             xmlns:util="clr-namespace:HurlStudio.Utility"
+	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:HurlStudio.UI.Controls"
+             xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
+             xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             
+             x:Class="HurlStudio.UI.Views.AddCollectionView"
+             x:DataType="vm:AddCollectionViewViewModel"
+             
+             Initialized="On_AddCollectionView_Initialized"
+             Loaded="On_AddCollectionView_Loaded">
+  <UserControl.Resources>
+    <converters:IHurlSettingToLocalizedTitleConverter x:Key="IHurlSettingToLocalizedTitleConverter" />
+  </UserControl.Resources>
+
+  <DockPanel>
+    <actipro:ChromedTitleBar DockPanel.Dock="Top"
+                             IsVisible="{x:Static util:PlatformUtils.IsWindows}"
+                             IsCloseButtonAllowed="True"
+                             IsMaximizeButtonAllowed="False"
+                             IsMinimizeButtonAllowed="False">
+      <actipro:ChromedTitleBar.LeftContent>
+        <StackPanel Orientation="Horizontal">
+          <c:Icon Margin="10,2,0,0"
+                  Type="AddCollection" />
+          <TextBlock Text="{x:Static localization:Localization.Window_AddCollection_Title}"
+                     VerticalAlignment="Center"
+                     IsHitTestVisible="False"
+                     Margin="10,8,0,7"
+                     TextTrimming="CharacterEllipsis"
+                     Foreground="{DynamicResource WindowChromeTitleColor}"
+                     IsVisible="{x:Static util:PlatformUtils.IsWindows}"/>
+        </StackPanel>
+
+      </actipro:ChromedTitleBar.LeftContent>
+      <actipro:ChromedTitleBar.RightContent>
+      </actipro:ChromedTitleBar.RightContent>
+    </actipro:ChromedTitleBar>
+
+    <!--Properties-->
+    <StackPanel Margin="4">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition />
+          <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Border BorderBrush="{DynamicResource NeutralControlBorderColor}"
+                BorderThickness="1"
+                Background="{DynamicResource NeutralControlBackgroundColor}" />
+        <Grid Margin="4">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" MinWidth="200"/>
+            <ColumnDefinition />
+            <ColumnDefinition Width="20" />
+          </Grid.ColumnDefinitions>
+          <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+          </Grid.RowDefinitions>
+
+          <!--Name-->
+          <Label VerticalAlignment="Top"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.View_AddCollectionView_Properties_Name_Label}" />
+
+          <TextBox Classes="framelessTextBox"
+                   Margin="0,0,5,0"
+                   Grid.ColumnSpan="2"
+                   Grid.Column="1"
+                   Text="{Binding Collection.Name}"
+                   VerticalAlignment="Center" />
+
+          <!--Path-->
+          <Label VerticalAlignment="Top"
+                 Grid.Row="1"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.View_AddCollectionView_Properties_Path_Label}" />
+
+          <TextBox Classes="framelessTextBox"
+                   Margin="0,0,5,0"
+                   Grid.Row="1"
+                   Grid.Column="1"
+                   IsEnabled="False"
+                   Text="{Binding Collection.CollectionFileLocation}"
+                   VerticalAlignment="Center" />
+
+          <Button Classes="framelessButton"
+                  Grid.Row="1"
+                  Grid.Column="2"
+                  Click="On_ButtonSetFileLocation_Click"
+                  ToolTip.Tip="{x:Static localization:Localization.View_AddCollectionView_Properties_Path_Tooltip}">
+            <c:Icon Type="Open" />
+          </Button>
+
+          <!--Exclude root-->
+          <Label VerticalAlignment="Top"
+                 Grid.Row="2"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.View_AddCollectionView_Properties_ExcludeRootDirectory_Label}" />
+
+          <CheckBox Classes="framelessCheckbox"
+                    Grid.Column="1"
+                    Grid.ColumnSpan="2"
+                    Grid.Row="2"
+                    IsChecked="{Binding Collection.ExcludeRootDirectory}" />
+
+          <!--Additional Locations-->
+          <Label VerticalAlignment="Top"
+                 Grid.Row="3"
+                 Foreground="{DynamicResource NeutralControlForegroundColor}"
+                 Content="{x:Static localization:Localization.View_AddCollectionView_Properties_AdditionalLocations_Label}" />
+          <StackPanel Grid.Row="3"
+                      Grid.ColumnSpan="2"
+                      Grid.Column="1">
+
+            <ItemsControl ItemsSource="{Binding Collection.AdditionalLocations}" />
+            <DockPanel HorizontalAlignment="Right">
+              <Button Classes="framelessButton"
+                      Click="On_ButtonAddAdditionalLocation_Click"
+                      ToolTip.Tip="{x:Static localization:Localization.View_AddCollectionView_Properties_AdditionalLocations_Add_Tooltip}">
+                <c:Icon Type="Plus" />
+              </Button>
+            </DockPanel>
+          </StackPanel>
+        </Grid>
+
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="1"
+                    HorizontalAlignment="Right">
+          <Button Margin="0,2,2,0"
+                  Click="On_Button_Cancel_Click"
+                  Cursor="Hand">
+            <StackPanel Orientation="Horizontal" >
+              <c:Icon Type="Cancel" />
+              <TextBlock Text="{x:Static localization:Localization.View_AddCollectionView_Cancel}" />
+            </StackPanel>
+          </Button>
+          <Button Margin="0,2,0,0"
+                  Click="On_Button_Save_Click"
+                  Cursor="Hand">
+            <StackPanel Orientation="Horizontal" >
+              <c:Icon Type="AddCollection" />
+              <TextBlock Text="{x:Static localization:Localization.View_AddCollectionView_AddCollection}" />
+            </StackPanel>
+          </Button>
+        </StackPanel>
+      </Grid>
+    </StackPanel>
+  </DockPanel>
+</UserControl>

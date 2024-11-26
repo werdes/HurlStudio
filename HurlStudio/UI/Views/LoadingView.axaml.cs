@@ -1,21 +1,14 @@
 using Avalonia.Controls;
 using HurlStudio.UI.ViewModels;
+using HurlStudio.Utility;
 
 namespace HurlStudio.UI.Views
 {
     public partial class LoadingView : ViewBase<LoadingViewViewModel>
     {
-        private LoadingViewViewModel? _viewModel;
-
-        public LoadingView() 
+        public LoadingView(ControlLocator controlLocator) : base(null, controlLocator)
         {
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(LoadingViewViewModel viewModel)
-        {
-            _viewModel = viewModel;
-            this.DataContext = _viewModel;
         }
     }
 }

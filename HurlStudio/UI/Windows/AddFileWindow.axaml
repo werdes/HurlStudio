@@ -16,7 +16,7 @@
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource WindowBackgroundColor}"
         Icon="/Assets/Icons/icon.ico"
-        Title="{x:Static localization:Localization.Window_AddSetting_Title}"
+        Title="{x:Static localization:Localization.Window_AddFile_Title}"
         x:Class="HurlStudio.UI.Windows.AddFileWindow"
         x:Name="addFileWindow"
         x:DataType="vm:AddFileWindowViewModel"

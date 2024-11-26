@@ -15,18 +15,14 @@ namespace HurlStudio.UI.Views
 {
     public partial class AddSettingView : ViewBase<AddSettingViewViewModel>
     {
-        private AddSettingViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IEditorService _editorService;
         private INotificationService _notificationService;
-        private ControlLocator _controlLocator;
 
-        public AddSettingView(AddSettingViewViewModel viewModel, ILogger<AddSettingView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService)
+        public AddSettingView(AddSettingViewViewModel viewModel, ILogger<AddSettingView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService) : base(viewModel, controlLocator)
         {
-            _viewModel = viewModel;
-
             _log = logger;
             _configuration = configuration;
             _userSettingsService = userSettingsService;
@@ -35,16 +31,8 @@ namespace HurlStudio.UI.Views
             _notificationService = notificationService;
 
             _controlLocator.Window = _window;
-            this.DataContext = _viewModel;
-            this.DataTemplates.Add(_controlLocator);
 
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(AddSettingViewViewModel viewModel)
-        {
-            _viewModel = viewModel;
-            this.DataContext = _viewModel;
         }
 
         /// <summary>

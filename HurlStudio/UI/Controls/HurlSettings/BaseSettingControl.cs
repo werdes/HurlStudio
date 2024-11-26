@@ -30,11 +30,13 @@ namespace HurlStudio.UI.Controls.HurlSettings
             this.DataContext = _viewModel;
         }
 
-        protected async Task<string?> OpenFileSingle(string title, FilePickerFileType[] allowedTypes) => 
-            await this.OpenFileSingle(_mainWindow.StorageProvider, title, allowedTypes);
-        protected async Task<IReadOnlyList<IStorageFile>?> OpenFileMulti(string title, FilePickerFileType[] allowedTypes) => 
-            await this.OpenFileMulti(_mainWindow.StorageProvider, title, allowedTypes);
-        protected async Task<string?> OpenDirectorySingle(string title) => 
-            await this.OpenDirectorySingle(_mainWindow.StorageProvider, title);
+        protected async Task<string?> DisplayOpenFilePickerSingle(string title, FilePickerFileType[] allowedTypes) => 
+            await this.DisplayOpenFilePickerSingle(_mainWindow.StorageProvider, title, allowedTypes);
+        protected async Task<IReadOnlyList<IStorageFile>?> DisplayOpenFilePickerMulti(string title, FilePickerFileType[] allowedTypes) => 
+            await this.DisplayOpenFilePickerMulti(_mainWindow.StorageProvider, title, allowedTypes);
+        protected async Task<string?> DisplayOpenDirectoryPickerSingle(string title) => 
+            await this.DisplayOpenDirectoryPickerSingle(_mainWindow.StorageProvider, title);
+        protected async Task<string?> DisplaySaveFilePicker(string title, string defaultExtension, FilePickerFileType[] allowedTypes) =>
+            await this.DisplaySaveFilePickerSingle(_mainWindow.StorageProvider, title, defaultExtension, allowedTypes);
     }
 }

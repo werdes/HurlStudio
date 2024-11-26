@@ -1,44 +1,88 @@
 ﻿<Styles xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-  <Design.PreviewWith>
-    <Border Padding="20"
-            Width="250">
+    <Design.PreviewWith>
+        <Border Padding="20"
+                Width="250">
+            <StackPanel>
+                <TextBox Classes="textBox"
+                         Text="ABC"
+                         Margin="0,0,5,0"
+                         VerticalAlignment="Center" />
+                <TextBox Classes="framelessTextBox"
+                         Text="ABC"
+                         Margin="0,0,5,0"
+                         VerticalAlignment="Center" />
+                <TextBox Classes="transparentTextBox"
+                         Text="ABC"
+                         Margin="0,0,5,0"
+                         VerticalAlignment="Center" />
+            </StackPanel>
+        </Border>
+    </Design.PreviewWith>
 
-      <TextBox Classes="framelessTextBox"
-               Text="ABC"
-               Margin="0,0,5,0"
-               VerticalAlignment="Center"
-               Grid.Column="2"/>
-    </Border>
-  </Design.PreviewWith>
+    <Style Selector="TextBox.textBox">
+        <Setter Property="Opacity"
+                Value="0.5" />
+        <Setter Property="Padding"
+                Value="2" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Cursor"
+                Value="Hand" />
 
-  <Style Selector="TextBox.transparentTextBox">
-    <Setter Property="Opacity" Value="0.5" />
-    <Setter Property="Padding" Value="2" />
-    <Setter Property="BorderThickness" Value="0,0,0,0" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Cursor" Value="Hand" />
-
-    <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="Transparent" />
+        <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background"
+                    Value="Transparent" />
+        </Style>
+        <Style Selector="^:focus">
+            <Setter Property="Opacity"
+                    Value="1" />
+        </Style>
     </Style>
-    <Style Selector="^:focus">
-      <Setter Property="Opacity" Value="1" />
-    </Style>
-  </Style>
 
-  <Style Selector="TextBox.framelessTextBox">
-    <Setter Property="Opacity" Value="0.5" />
-    <Setter Property="Padding" Value="2" />
-    <Setter Property="BorderThickness" Value="0,0,0,1" />
-    <Setter Property="Background" Value="Transparent" />
-    <Setter Property="Cursor" Value="Hand" />
+    <Style Selector="TextBox.transparentTextBox">
+        <Setter Property="Opacity"
+                Value="0.5" />
+        <Setter Property="Padding"
+                Value="2" />
+        <Setter Property="BorderThickness"
+                Value="0,0,0,0" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Cursor"
+                Value="Hand" />
 
-    <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
-      <Setter Property="Background" Value="Transparent" />
+        <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background"
+                    Value="Transparent" />
+        </Style>
+        <Style Selector="^:focus">
+            <Setter Property="Opacity"
+                    Value="1" />
+        </Style>
     </Style>
-    <Style Selector="^:focus">
-      <Setter Property="Opacity" Value="1" />
+
+    <Style Selector="TextBox.framelessTextBox">
+        <Setter Property="Opacity"
+                Value="0.5" />
+        <Setter Property="Padding"
+                Value="2" />
+        <Setter Property="BorderThickness"
+                Value="0,0,0,1" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+
+        <Style Selector="^:focus /template/ ContentPresenter#PART_ContentPresenter">
+            <Setter Property="Background"
+                    Value="Transparent" />
+        </Style>
+        <Style Selector="^:focus">
+            <Setter Property="Opacity"
+                    Value="1" />
+        </Style>
     </Style>
-  </Style>
 </Styles>

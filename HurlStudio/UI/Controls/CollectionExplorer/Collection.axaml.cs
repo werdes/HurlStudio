@@ -161,7 +161,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? inputResult = await MessageBox.AskInputDialog(
+                string? inputResult = await MessageBox.MessageBox.AskInputDialog(
                     _mainWindow,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
@@ -171,10 +171,10 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                 if (inputResult != null)
                 {
                     bool moveFile =
-                        await MessageBox.ShowQuestionYesNoDialog( 
+                        await MessageBox.MessageBox.ShowQuestionYesNoDialog( 
                             _mainWindow,
                             Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile,
-                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title) == MessageBox.ButtonType.Yes;
+                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title) == MessageBox.MessageBoxResult.Yes;
 
                     await _editorService.RenameCollection(_collectionContainer, inputResult, moveFile);
                 }
@@ -197,8 +197,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                bool remove = await MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _collectionContainer.Collection.CollectionFileLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection) == MessageBox.ButtonType.Yes;
+                bool remove = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
+                    _mainWindow, _collectionContainer.Collection.CollectionFileLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection) == MessageBox.MessageBoxResult.Yes;
                 if (!remove) return;
 
                 bool deleted = await _editorService.RemoveCollection(_collectionContainer);
@@ -221,7 +221,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? folderName = await MessageBox.AskInputDialog(_mainWindow,
+                string? folderName = await MessageBox.MessageBox.AskInputDialog(_mainWindow,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
                     Model.Enums.Icon.AddFolder);

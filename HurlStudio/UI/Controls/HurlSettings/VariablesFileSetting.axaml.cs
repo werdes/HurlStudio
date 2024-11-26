@@ -35,7 +35,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
                     {
                         FilePickerFileTypes.All
                     });
-                string? file = await this.OpenFileSingle(
+                string? file = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_VariablesFileSetting_FilePicker_Title,
                     fileTypeFilters.ToArray());
 

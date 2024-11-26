@@ -22,7 +22,7 @@ namespace HurlStudio.UI.Controls
         /// <param name="title">localized title of the selection dialog</param>
         /// <param name="allowedTypes"></param>
         /// <returns>A file path or null</returns>
-        protected async Task<string?> OpenFileSingle(IStorageProvider storageProvider, string title, FilePickerFileType[] allowedTypes)
+        protected async Task<string?> DisplayOpenFilePickerSingle(IStorageProvider storageProvider, string title, FilePickerFileType[] allowedTypes)
         {
             if (!storageProvider.CanOpen) return null;
 
@@ -37,7 +37,7 @@ namespace HurlStudio.UI.Controls
 
             if (files.Count == 1)
             {
-                return files.First().Path.AbsolutePath;
+                return files.First().Path.LocalPath;
             }
 
             return null;
@@ -50,7 +50,7 @@ namespace HurlStudio.UI.Controls
         /// <param name="title">localized title of the selection dialog</param>
         /// <param name="allowedTypes"></param>
         /// <returns></returns>
-        protected async Task<IReadOnlyList<IStorageFile>?> OpenFileMulti(IStorageProvider storageProvider, string title, FilePickerFileType[] allowedTypes)
+        protected async Task<IReadOnlyList<IStorageFile>?> DisplayOpenFilePickerMulti(IStorageProvider storageProvider, string title, FilePickerFileType[] allowedTypes)
         {
             if (!storageProvider.CanOpen) return null;
 
@@ -72,7 +72,7 @@ namespace HurlStudio.UI.Controls
         /// <param name="storageProvider">window storage provider</param>
         /// <param name="title">localized title of the selection dialog</param>
         /// <returns>full path of the selected folder, or null</returns>
-        protected async Task<string?> OpenDirectorySingle(IStorageProvider storageProvider, string title)
+        protected async Task<string?> DisplayOpenDirectoryPickerSingle(IStorageProvider storageProvider, string title)
         {
             if (!storageProvider.CanOpen) return null;
 
@@ -82,10 +82,36 @@ namespace HurlStudio.UI.Controls
                 Title = title
             };
 
-            IReadOnlyList<IStorageFolder> folders = 
+            IReadOnlyList<IStorageFolder> folders =
                 await storageProvider.OpenFolderPickerAsync(folderPickerOpenOptions);
+
+            return folders.Any() ? folders.First().Path.LocalPath : null;
+        }
+
+        /// <summary>
+        /// Opens a file selection dialog for a single file
+        /// </summary>
+        /// <param name="storageProvider">window storage provider</param>
+        /// <param name="title">localized title of the selection dialog</param>
+        /// <param name="allowedTypes"></param>
+        /// <returns>A file path or null</returns>
+        protected async Task<string?> DisplaySaveFilePickerSingle(IStorageProvider storageProvider, string title, string defaultExtension, FilePickerFileType[] allowedTypes)
+        {
+            if (!storageProvider.CanOpen) return null;
+
+            FilePickerSaveOptions filePickerSaveOptions = new FilePickerSaveOptions
+            {
+                DefaultExtension = defaultExtension,
+                FileTypeChoices = allowedTypes,
+                Title = title,
+                ShowOverwritePrompt = true
+            };
+
+            IStorageFile? file =  await storageProvider.SaveFilePickerAsync(filePickerSaveOptions);
+            if(file == null) return null;
+
+            return file.Path.LocalPath;
             
-            return folders.Any() ? folders.First().Path.AbsolutePath : null;
         }
     }
 }

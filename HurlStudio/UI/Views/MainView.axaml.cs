@@ -1,4 +1,6 @@
 ﻿using Avalonia.Controls;
+using HurlStudio.Collections.Model;
+using HurlStudio.Common.Extensions;
 using HurlStudio.Model.UiState;
 using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.Editor;
@@ -8,6 +10,7 @@ using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Controls;
+using HurlStudio.UI.Windows;
 using HurlStudio.Utility;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,7 +22,6 @@ namespace HurlStudio.UI.Views
 {
     public partial class MainView : ViewBase<MainViewViewModel>
     {
-        private MainViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
@@ -28,14 +30,14 @@ namespace HurlStudio.UI.Views
         private IEditorService _editorService;
         private IUiStateService _uiStateService;
         private INotificationService _notificationService;
-        private ControlLocator _controlLocator;
         private ViewFrameViewModel _viewFrameViewModel;
         private LayoutFactory _layoutFactory;
+        private ServiceManager<Windows.WindowBase> _windowBuilder;
 
         /// <summary>
         /// Design time constructor
         /// </summary>
-        public MainView()
+        public MainView() : base(null, null)
         {
             if (!Design.IsDesignMode) throw new AccessViolationException($"{nameof(MainView)} initialized from design time constructor");
             if (App.Services == null) return;
@@ -46,10 +48,8 @@ namespace HurlStudio.UI.Views
             this.InitializeComponent();
         }
 
-        public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel, LayoutFactory layoutFactory)
+        public MainView(MainViewViewModel viewModel, ILogger<MainView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, ICollectionService collectionService, IEnvironmentService environmentService, IEditorService editorService, ControlLocator controlLocator, IUiStateService uiStateService, INotificationService notificationService, ViewFrameViewModel viewFrameViewModel, LayoutFactory layoutFactory, ServiceManager<Windows.WindowBase> windowBuilder) : base(viewModel, controlLocator)
         {
-            _viewModel = viewModel;
-
             _log = logger;
             _configuration = configuration;
             _userSettingsService = userSettingsService;
@@ -62,11 +62,9 @@ namespace HurlStudio.UI.Views
             _notificationService = notificationService;
             _viewFrameViewModel = viewFrameViewModel;
             _layoutFactory = layoutFactory;
+            _windowBuilder = windowBuilder;
 
             _controlLocator.Window = _window;
-            this.DataContext = _viewModel;
-            this.DataTemplates.Add(_controlLocator);
-
             _notificationService.NotificationAdded += this.On_NotificationService_NotificationAdded;
 
             this.InitializeComponent();
@@ -169,6 +167,27 @@ namespace HurlStudio.UI.Views
                 _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
             }
         }
+
+        /// <summary>
+        /// On MenuItem "New Collection" Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItemNewCollection_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_window == null) return;
+
+            try
+            {
+                await _editorService.CreateCollection();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_NewCollection_Error, string.Empty);
+            }
+        }
+
 
         public override void SetWindow(Windows.WindowBase window)
         {

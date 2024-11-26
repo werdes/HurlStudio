@@ -1269,4 +1269,43 @@
   <data name="View.EditTemplateView.AddSetting" xml:space="preserve">
     <value>{View.EditTemplateView.AddSetting}</value>
   </data>
+  <data name="Window.AddCollection.Title" xml:space="preserve">
+    <value>{Window.AddCollection.Title}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.AdditionalLocations.Add.Tooltip" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.AdditionalLocations.Add.Tooltip}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.AdditionalLocations.Label" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.AdditionalLocations.Label}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.ExcludeRootDirectory.Label" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.ExcludeRootDirectory.Label}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.Name.Label" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.Name.Label}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.Path.Label" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.Path.Label}</value>
+  </data>
+  <data name="View.AddCollectionView.AddCollection" xml:space="preserve">
+    <value>{View.AddCollectionView.AddCollection}</value>
+  </data>
+  <data name="View.AddCollectionView.Cancel" xml:space="preserve">
+    <value>{View.AddCollectionView.Cancel}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.Path.Tooltip" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.Path.Tooltip}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.Path.FilePicker.FileType.Name" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.Path.FilePicker.FileType.Name}</value>
+  </data>
+  <data name="View.AddCollectionView.Properties.Path.FilePicker.Title" xml:space="preserve">
+    <value>{View.AddCollectionView.Properties.Path.FilePicker.Title}</value>
+  </data>
+  <data name="View.Editor.Message.NewCollection.Error" xml:space="preserve">
+    <value>{View.Editor.Message.NewCollection.Error}</value>
+  </data>
+  <data name="View.Main.Menu.File.New.Environment" xml:space="preserve">
+    <value>{View.Main.Menu.File.New.Environment}</value>
+  </data>
 </root>

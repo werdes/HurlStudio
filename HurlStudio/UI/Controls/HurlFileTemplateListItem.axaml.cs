@@ -101,7 +101,7 @@ namespace HurlStudio.UI.Controls
 
             try
             {
-                bool delete = await MessageBox.ShowQuestionYesNoDialog(_window, _viewModel.Template.Name ?? string.Empty, Localization.Localization.View_AddFileView_Templates_DeleteTemplate_MessageBox_Title) == MessageBox.ButtonType.Yes;
+                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(_window, _viewModel.Template.Name ?? string.Empty, Localization.Localization.View_AddFileView_Templates_DeleteTemplate_MessageBox_Title) == MessageBox.MessageBoxResult.Yes;
 
                 if (delete && await _templateService.DeleteTemplateAsync(_viewModel.Template.Id))
                 {

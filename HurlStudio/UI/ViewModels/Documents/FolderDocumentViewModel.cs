@@ -12,6 +12,7 @@ using HurlStudio.Utility;
 using System;
 using System.IO;
 using System.Threading.Tasks;
+using HurlStudio.UI.MessageBox;
 
 namespace HurlStudio.UI.ViewModels.Documents
 {
@@ -159,19 +160,19 @@ namespace HurlStudio.UI.ViewModels.Documents
         {
             if (!this.HasChanges) return DockableCloseMode.Close;
 
-            MessageBox.ButtonType decisionResult = await MessageBox.ShowDialog(
+            MessageBoxResult decisionResult = await MessageBox.MessageBox.ShowDialog(
                 _mainWindow,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Text + Environment.NewLine + this.FolderContainer?.AbsoluteLocation,
                 Localization.Localization.View_Editor_MessageBox_UnsavedChanges_Title,
-                [MessageBox.ButtonType.Save, MessageBox.ButtonType.Discard, MessageBox.ButtonType.Cancel],
+                [MessageBoxResult.Save, MessageBoxResult.Discard, MessageBoxResult.Cancel],
                 Icon.WarningColor
             );
 
             switch (decisionResult)
             {
-                case MessageBox.ButtonType.Cancel: return DockableCloseMode.Cancel;
-                case MessageBox.ButtonType.Save: return DockableCloseMode.Save;
-                case MessageBox.ButtonType.Discard: return DockableCloseMode.Discard;
+                case MessageBoxResult.Cancel: return DockableCloseMode.Cancel;
+                case MessageBoxResult.Save: return DockableCloseMode.Save;
+                case MessageBoxResult.Discard: return DockableCloseMode.Discard;
             }
 
             return DockableCloseMode.Undefined;

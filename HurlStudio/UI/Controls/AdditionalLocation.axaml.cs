@@ -44,7 +44,7 @@ namespace HurlStudio.UI.Controls
 
             try
             {
-                string? folder = await this.OpenDirectorySingle(
+                string? folder = await this.DisplayOpenDirectoryPickerSingle(
                     _mainWindow.StorageProvider,
                     Localization.Localization.Setting_FileRootSetting_FolderPicker_Title);
 

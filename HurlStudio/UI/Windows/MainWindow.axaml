@@ -1,7 +1,8 @@
+<!-- ReSharper disable once InconsistentNaming -->
 <Window xmlns="https://github.com/avaloniaui"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-	      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Windows"
         xmlns:views="clr-namespace:HurlStudio.UI.Views"
         xmlns:controls="clr-namespace:HurlStudio.UI.Controls"

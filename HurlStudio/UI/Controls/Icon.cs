@@ -21,7 +21,12 @@ namespace HurlStudio.UI.Controls
         public Model.Enums.IconSize Size
         {
             get => (Model.Enums.IconSize)this.GetValue(SizeProperty);
-            set => this.SetValue(SizeProperty, value);
+            set
+            {
+                this.SetValue(SizeProperty, value);
+                this.Height = (int)value;
+                this.Width = (int)value;
+            }
         }
 
         public Model.Enums.Icon Type
@@ -32,14 +37,13 @@ namespace HurlStudio.UI.Controls
 
         public static readonly StyledProperty<Model.Enums.Icon> TypeProperty =
             AvaloniaProperty.Register<Icon, Model.Enums.Icon>(nameof(Type));
+
         public static readonly StyledProperty<Model.Enums.IconSize> SizeProperty =
             AvaloniaProperty.Register<Icon, Model.Enums.IconSize>(nameof(Type));
 
         public Icon()
         {
             this.Initialized += this.On_Icon_Initialized;
-            this.Height = 16;
-            this.Width = 16;
             this.Size = IconSize.S;
         }
 

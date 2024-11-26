@@ -13,9 +13,9 @@ namespace HurlStudio.Model.Enums
 {
     public enum IconSize
     {
-        S = 1,
-        M = 2,
-        L = 3,
+        S = 16,
+        M = 32,
+        L = 48,
     }
 
     /// <summary>
@@ -96,6 +96,7 @@ namespace HurlStudio.Model.Enums
         [Icon("remove_collection.png")] RemoveCollection,
         [Icon("template.png")] Template,
         [Icon("edit.png")] Edit,
+        [Icon("add_collection.png")] AddCollection,
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false)]

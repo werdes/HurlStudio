@@ -32,7 +32,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? certificateFile = await this.OpenFileSingle(
+                string? certificateFile = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_CaCertSetting_FilePicker_Title,
                     new[] { FilePickerFileTypes.All });
                 if (!string.IsNullOrEmpty(certificateFile))
@@ -58,7 +58,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? keyFile = await this.OpenFileSingle(
+                string? keyFile = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_CaCertSetting_FilePicker_Title,
                     new[] { FilePickerFileTypes.All });
                 if (!string.IsNullOrEmpty(keyFile))

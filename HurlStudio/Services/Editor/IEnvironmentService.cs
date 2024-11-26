@@ -17,6 +17,7 @@ namespace HurlStudio.Services.Editor
         Task<ObservableCollection<HurlEnvironmentContainer>> GetEnvironmentContainersAsync();
         Task<HurlEnvironmentContainer> SetEnvironmentContainerAsync(HurlEnvironmentContainer container, HurlEnvironment environment);
         Task StoreEnvironmentAsync(HurlEnvironment environment, string environmentLocation);
+        Task<bool> CreateEnvironment(HurlEnvironment environment);
 
     }
 }

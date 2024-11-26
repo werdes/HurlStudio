@@ -6,6 +6,7 @@ using HurlStudio.Common;
 using HurlStudio.Common.Extensions;
 using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.UiState;
+using HurlStudio.Model.UserSettings;
 using HurlStudio.Services.Notifications;
 using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
@@ -305,6 +306,28 @@ namespace HurlStudio.Services.Editor
             {
                 await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
             });
+        }
+
+        /// <summary>
+        /// Creates a collection 
+        /// </summary>
+        /// <param name="collection"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateCollection(HurlCollection collection)
+        {
+            string targetFileLocation = collection.CollectionFileLocation;
+            if (File.Exists(targetFileLocation)) return false;
+
+            Model.UserSettings.UserSettings settings = await _userSettingsService.GetUserSettingsAsync(false);
+            if (settings == null) return false;
+            if (settings.CollectionFiles == null) return false;
+
+            await this.StoreCollectionAsync(collection, targetFileLocation);
+
+            settings.CollectionFiles.Add(targetFileLocation);
+            await _userSettingsService.StoreUserSettingsAsync();
+
+            return File.Exists(targetFileLocation);
         }
     }
 }

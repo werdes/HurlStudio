@@ -4,6 +4,7 @@
              xmlns:v="clr-namespace:HurlStudio.UI.Views"
              xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels"
              xmlns:sy="clr-namespace:System"
+             xmlns:util="clr-namespace:HurlStudio.Utility"
 	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:c="clr-namespace:HurlStudio.UI.Controls"
              xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
@@ -21,7 +22,7 @@
 
   <DockPanel>
     <actipro:ChromedTitleBar DockPanel.Dock="Top"
-                             IsVisible="{Binding MainWindow.IsWindows}"
+                             IsVisible="{x:Static util:PlatformUtils.IsWindows}"
                              IsCloseButtonAllowed="True"
                              IsMaximizeButtonAllowed="False"
                              IsMinimizeButtonAllowed="False">
@@ -35,7 +36,7 @@
                      Margin="10,8,0,7"
                      TextTrimming="CharacterEllipsis"
                      Foreground="{DynamicResource WindowChromeTitleColor}"
-                     IsVisible="{Binding MainWindow.IsWindows}"/>
+                     IsVisible="{x:Static util:PlatformUtils.IsWindows}"/>
         </StackPanel>
 
       </actipro:ChromedTitleBar.LeftContent>

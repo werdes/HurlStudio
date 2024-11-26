@@ -8,51 +8,51 @@
              xmlns:vm="clr-namespace:HurlStudio.UI.ViewModels.Documents"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             mc:Ignorable="d"
+             d:DesignWidth="800"
+             d:DesignHeight="450"
              x:Class="HurlStudio.UI.Controls.Documents.FileDocument"
              x:DataType="vm:FileDocumentViewModel"
-             
              Initialized="On_FileDocument_Initialized"
              Loaded="On_FileDocument_Loaded">
-  <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="3*" />
-      <ColumnDefinition Width="3" />
-      <ColumnDefinition Width="1*" />
-    </Grid.ColumnDefinitions>
-    <ae:TextEditor
-      Name="Editor"
-      FontFamily="Cascaida Code,Consolas,DejaVu Sans Mono,Menlo,Monospace"
-      HorizontalScrollBarVisibility="Auto"
-      Background="{DynamicResource TextEditorBackgroundColor}"
-      Foreground="{DynamicResource TextEditorForegroundColor}"
-      Document="{Binding Document}"
-      ShowLineNumbers="True"
-      TextChanged="On_TextEditor_TextChanged"
-      VerticalScrollBarVisibility="Visible"
-      VerticalAlignment="Stretch" />
-    <GridSplitter Grid.Column="1"/>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="3*" />
+            <ColumnDefinition Width="3" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        <ae:TextEditor Name="Editor"
+                       FontFamily="Cascaida Code,Consolas,DejaVu Sans Mono,Menlo,Monospace"
+                       HorizontalScrollBarVisibility="Auto"
+                       Background="{DynamicResource TextEditorBackgroundColor}"
+                       Foreground="{DynamicResource TextEditorForegroundColor}"
+                       Document="{Binding Document}"
+                       ShowLineNumbers="True"
+                       TextChanged="On_TextEditor_TextChanged"
+                       VerticalScrollBarVisibility="Visible"
+                       VerticalAlignment="Stretch" />
+        <GridSplitter Grid.Column="1" />
 
-    <!--Settings column-->
-    <Grid Grid.Column="2">
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*" />
-        <RowDefinition Height="30" />
-      </Grid.RowDefinitions>
-      
-      <ScrollViewer Grid.Row="0">
-        <StackPanel Orientation="Vertical">
-          <ItemsControl ItemsSource="{Binding SettingSections}" />
-        </StackPanel>
-      </ScrollViewer>
-      <Button Grid.Row="1"
-              Click="On_ButtonAddSetting_Click"
-              Cursor="Hand">
-        <StackPanel Orientation="Horizontal" >
-          <c:Icon Type="AddSetting" />
-          <TextBlock Text="{x:Static localization:Localization.Dock_Document_File_Settings_Add}" />
-        </StackPanel>
-      </Button>
+        <!--Settings column-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="30" />
+            </Grid.RowDefinitions>
+
+            <ScrollViewer Grid.Row="0">
+                <StackPanel Orientation="Vertical">
+                    <ItemsControl ItemsSource="{Binding SettingSections}" />
+                </StackPanel>
+            </ScrollViewer>
+            <Button Grid.Row="1"
+                    Click="On_ButtonAddSetting_Click"
+                    Cursor="Hand">
+                <StackPanel Orientation="Horizontal">
+                    <c:Icon Type="AddSetting" />
+                    <TextBlock Text="{x:Static localization:Localization.Dock_Document_File_Settings_Add}" />
+                </StackPanel>
+            </Button>
+        </Grid>
     </Grid>
-  </Grid>
 </UserControl>

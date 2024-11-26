@@ -30,7 +30,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? file = await this.OpenFileSingle(
+                string? file = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_CookieSetting_OpenReadFile_FilePicker_Title,
                     new[] { FilePickerFileTypes.All });
 
@@ -57,7 +57,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? file = await this.OpenFileSingle(
+                string? file = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_CookieSetting_OpenReadFile_FilePicker_Title,
                     new[] { FilePickerFileTypes.All });
 

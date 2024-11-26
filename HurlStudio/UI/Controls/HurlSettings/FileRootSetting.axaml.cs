@@ -30,7 +30,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
 
             try
             {
-                string? folder = await this.OpenDirectorySingle(
+                string? folder = await this.DisplayOpenDirectoryPickerSingle(
                     Localization.Localization.Setting_FileRootSetting_FolderPicker_Title);
 
                 if (!string.IsNullOrEmpty(folder))

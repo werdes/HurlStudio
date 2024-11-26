@@ -17,6 +17,7 @@ namespace HurlStudio.UI.ViewModels
 
         private Type _attachedViewType;
         private ViewModelBase? _rootViewModel;
+        private IView? _view;
         private bool _active;
         private bool _initializationCompleted;
 
@@ -26,6 +27,16 @@ namespace HurlStudio.UI.ViewModels
         public ViewModelBase? RootViewModel
         {
             get => _rootViewModel;
+        }
+
+        public IView? View
+        {
+            get => _view;
+            set
+            {
+                _view = value;
+                this.Notify();
+            }
         }
 
         public ViewModelBase SetRoot(ViewModelBase? rootViewModel)

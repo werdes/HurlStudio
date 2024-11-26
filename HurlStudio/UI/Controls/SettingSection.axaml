@@ -79,11 +79,19 @@
       <ItemsControl ItemsSource="{Binding SettingContainers}"
                     IsVisible="{Binding !Collapsed}"/>
 
-      <TextBlock IsVisible="{Binding !SettingContainers.Count}"
-                 Text="{x:Static localization:Localization.SettingSection_EmptyList}"
+      <TextBlock Text="{x:Static localization:Localization.SettingSection_EmptyList}"
                  Margin="0,0,0,5"
                  Foreground="{DynamicResource NeutralControlForegroundMutedColor}"
-                 HorizontalAlignment="Center" />
+                 HorizontalAlignment="Center">
+        <TextBlock.IsVisible>
+          <MultiBinding Converter="{x:Static BoolConverters.And}">
+            <MultiBinding.Bindings>
+              <Binding Path="!SettingContainers.Count" />
+              <Binding Path="!Collapsed" />
+            </MultiBinding.Bindings>
+          </MultiBinding>
+        </TextBlock.IsVisible>
+      </TextBlock>
     </StackPanel>
   </Grid>
 </UserControl>

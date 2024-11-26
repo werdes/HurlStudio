@@ -164,7 +164,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             if (_folderContainer.AbsoluteLocation == null) return;
             try
             {
-                string? inputResult = await MessageBox.AskInputDialog(
+                string? inputResult = await MessageBox.MessageBox.AskInputDialog(
                     _mainWindow,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
@@ -194,21 +194,21 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                bool delete = await MessageBox.ShowQuestionYesNoDialog(
+                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
                                   _mainWindow, _folderContainer.AbsoluteLocation,
                                   Localization.Localization
                                       .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete) ==
-                              MessageBox.ButtonType.Yes;
+                              MessageBox.MessageBoxResult.Yes;
                 if (!delete) return;
 
                 bool deleted = await _editorService.DeleteFolder(_folderContainer, false);
                 if (!deleted)
                 {
-                    bool deletePermanently = await MessageBox.ShowQuestionYesNoDialog(
+                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
                                                  _mainWindow, _folderContainer.AbsoluteLocation,
                                                  Localization.Localization
                                                      .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently) ==
-                                             MessageBox.ButtonType.Yes;
+                                             MessageBox.MessageBoxResult.Yes;
                     if (deletePermanently)
                     {
                         deleted = await _editorService.DeleteFolder(_folderContainer, true);
@@ -233,7 +233,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? folderName = await MessageBox.AskInputDialog(_mainWindow,
+                string? folderName = await MessageBox.MessageBox.AskInputDialog(_mainWindow,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
                     Model.Enums.Icon.AddFolder);

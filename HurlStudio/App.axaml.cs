@@ -56,6 +56,7 @@ using ActiproSoftware.Properties.Shared;
 using HurlStudio.UI;
 using HurlStudio.Services.HurlFileTemplates;
 using HurlStudio.Model.HurlFileTemplates;
+using HurlStudio.UI.MessageBox;
 
 namespace HurlStudio
 {
@@ -129,6 +130,7 @@ namespace HurlStudio
             }
             catch (Exception ex)
             {
+                
 #pragma warning disable CS4014
                 MessageBox.ShowError(ex.Message, "Fatal error occured");
 #pragma warning restore CS4014
@@ -197,6 +199,7 @@ namespace HurlStudio
             windowBuilder.RegisterProvider<AddSettingWindow>(() => Services.GetRequiredService<AddSettingWindow>());
             windowBuilder.RegisterProvider<AddFileWindow>(() => Services.GetRequiredService<AddFileWindow>());
             windowBuilder.RegisterProvider<EditTemplateWindow>(() => Services.GetRequiredService<EditTemplateWindow>());
+            windowBuilder.RegisterProvider<AddCollectionWindow>(() => Services.GetRequiredService<AddCollectionWindow>());
 
             // Views
             controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
@@ -205,6 +208,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<AddSettingView, AddSettingViewViewModel>(() => Services.GetRequiredService<AddSettingView>());
             controlBuilder.RegisterProviderAssociated<AddFileView, AddFileViewViewModel>(() => Services.GetRequiredService<AddFileView>());
             controlBuilder.RegisterProviderAssociated<EditTemplateView, EditTemplateViewViewModel>(() => Services.GetRequiredService<EditTemplateView>());
+            controlBuilder.RegisterProviderAssociated<AddCollectionView, AddCollectionViewViewModel>(() => Services.GetRequiredService<AddCollectionView>());
 
             // Dock controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
@@ -347,6 +351,7 @@ namespace HurlStudio
             services.AddTransient<AddSettingWindowViewModel>();
             services.AddTransient<AddFileWindowViewModel>();
             services.AddTransient<EditTemplateWindowViewModel>();
+            services.AddTransient<AddCollectionWindowViewModel>();
 
             // View view models
             services.AddSingleton<LoadingViewViewModel>();
@@ -356,6 +361,7 @@ namespace HurlStudio
             services.AddTransient<AddSettingViewViewModel>();
             services.AddTransient<AddFileViewViewModel>();
             services.AddTransient<EditTemplateViewViewModel>();
+            services.AddTransient<AddCollectionViewViewModel>();
 
             // Dock view models
             services.AddSingleton<CollectionExplorerToolViewModel>();
@@ -389,6 +395,7 @@ namespace HurlStudio
             services.AddTransient<AddSettingWindow>();
             services.AddTransient<AddFileWindow>();
             services.AddTransient<EditTemplateWindow>();
+            services.AddTransient<AddCollectionWindow>();
 
             // Views
             services.AddSingleton<MainView>();
@@ -397,6 +404,7 @@ namespace HurlStudio
             services.AddTransient<AddSettingView>();
             services.AddTransient<AddFileView>();
             services.AddTransient<EditTemplateView>();
+            services.AddTransient<AddCollectionView>();
 
             // Dock controls
             services.AddTransient<CollectionExplorerTool>();
@@ -514,8 +522,9 @@ namespace HurlStudio
             LoggingRule loggingRule = new LoggingRule("*", loggingTarget);
             loggingRule.EnableLoggingForLevels(NLog.LogLevel.Trace, NLog.LogLevel.Fatal);
 #else
-        LoggingRule loggingRule = new LoggingRule("*", NLog.LogLevel.Info, loggingTarget);
-        loggingRule.EnableLoggingForLevels(NLog.LogLevel.Info, NLog.LogLevel.Fatal);
+            NLog.LogLevel releaseLogLevel = Config?.GetValue<NLog.LogLevel>("logLevel") ?? NLog.LogLevel.Trace;
+            LoggingRule loggingRule = new LoggingRule("*", releaseLogLevel, loggingTarget);
+            loggingRule.EnableLoggingForLevels(releaseLogLevel, NLog.LogLevel.Fatal);
 #endif
 
             config.AddRule(loggingRule);

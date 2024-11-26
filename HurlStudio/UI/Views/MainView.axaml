@@ -6,6 +6,7 @@
 	           xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:c="clr-namespace:HurlStudio.UI.Controls"
              xmlns:converters="clr-namespace:HurlStudio.UI.Converters"
+             xmlns:util="clr-namespace:HurlStudio.Utility"
              xmlns:localization="clr-namespace:HurlStudio.UI.Localization;assembly=HurlStudio"
              xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
@@ -31,7 +32,7 @@
                  Height="24"
                  VerticalAlignment="Center"
                  IsHitTestVisible="False"
-                 IsVisible="{Binding MainWindow.IsWindows}">
+                 IsVisible="{x:Static util:PlatformUtils.IsWindows}">
             <Image.Effect>
               <DropShadowEffect OffsetX="0" OffsetY="1" BlurRadius="3" Opacity="{DynamicResource {actipro:ThemeResourceKey ShadowOpacity}}" />
             </Image.Effect>
@@ -41,14 +42,20 @@
             <MenuItem VerticalAlignment="Center"
                       Header="{x:Static localization:Localization.View_Main_Menu_File}">
               <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New}">
-                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_File}">
+                <!--<MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_File}">
                   <MenuItem.Icon>
                     <c:Icon Type="File" />
                   </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Collection}">
+                </MenuItem>-->
+                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Collection}"
+                          Click="On_MenuItemNewCollection_Click">
                   <MenuItem.Icon>
-                    <c:Icon Type="Collection" />
+                    <c:Icon Type="AddCollection" />
+                  </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Environment}">
+                  <MenuItem.Icon>
+                    <c:Icon Type="AddEnvironment" />
                   </MenuItem.Icon>
                 </MenuItem>
               </MenuItem>
@@ -80,9 +87,8 @@
                      Margin="10,8,0,7"
                      TextTrimming="CharacterEllipsis"
                      Foreground="{DynamicResource WindowChromeTitleColor}"
-                     IsVisible="{Binding MainWindow.IsWindows}"/>
+                     IsVisible="{x:Static util:PlatformUtils.IsWindows}"/>
         </StackPanel>
-
       </actipro:ChromedTitleBar.LeftContent>
       <actipro:ChromedTitleBar.RightContent>
       </actipro:ChromedTitleBar.RightContent>

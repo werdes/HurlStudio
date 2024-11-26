@@ -47,7 +47,8 @@
           <c:Icon Type="More" />
           <Button.Flyout>
             <MenuFlyout>
-              <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_More_AddCollection}" >
+              <MenuItem Header="{x:Static localization:Localization.Dock_Tool_CollectionExplorer_Toolbar_More_AddCollection}" 
+                        Click="On_MenuItem_AddCollection_Click">
                 <MenuItem.Icon>
                   <c:Icon Type="Plus" />
                 </MenuItem.Icon>

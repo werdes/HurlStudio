@@ -35,6 +35,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using WindowBase = HurlStudio.UI.Windows.WindowBase;
 
 namespace HurlStudio.Services.Editor
 {
@@ -51,6 +52,7 @@ namespace HurlStudio.Services.Editor
         private IConfiguration _configuration;
         private ICollectionService _collectionService;
         private IEnvironmentService _environmentService;
+        private ServiceManager<UI.Windows.WindowBase> _windowBuilder;
 
         private SemaphoreLock _saveLock = new SemaphoreLock();
         private SemaphoreLock _moveLock = new SemaphoreLock();
@@ -58,7 +60,7 @@ namespace HurlStudio.Services.Editor
         private bool _fileHistoryBlocked = false;
 
 
-        public EditorService(ILogger<EditorService> logger, ServiceManager<Document> documentControlBuilder, EditorViewViewModel editorViewViewModel, MainViewViewModel mainViewViewModel, LayoutFactory layoutFactory, IUserSettingsService userSettingsService, INotificationService notificationService, IConfiguration configuration, IUiStateService uiStateService, ICollectionService collectionService, IEnvironmentService environmentService)
+        public EditorService(ILogger<EditorService> logger, ServiceManager<Document> documentControlBuilder, EditorViewViewModel editorViewViewModel, MainViewViewModel mainViewViewModel, LayoutFactory layoutFactory, IUserSettingsService userSettingsService, INotificationService notificationService, IConfiguration configuration, IUiStateService uiStateService, ICollectionService collectionService, IEnvironmentService environmentService, ServiceManager<WindowBase> windowBuilder)
         {
             _editorViewViewModel = editorViewViewModel;
             _mainViewViewModel = mainViewViewModel;
@@ -72,6 +74,7 @@ namespace HurlStudio.Services.Editor
             _configuration = configuration;
             _collectionService = collectionService;
             _environmentService = environmentService;
+            _windowBuilder = windowBuilder;
 
             _fileHistoryLength = Math.Max(_configuration.GetValue<int>("fileHistoryLength"), GlobalConstants.DEFAULT_FILE_HISTORY_LENGTH);
 
@@ -2675,6 +2678,53 @@ namespace HurlStudio.Services.Editor
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// Creates a collection with dialog and refreshes the collection explorer
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> CreateCollection()
+        {
+            Window? window = _editorViewViewModel.View?.Window;
+            if (window == null) return false;
+
+            AddCollectionWindow addCollectionWindow = _windowBuilder.Get<AddCollectionWindow>();
+            if (addCollectionWindow.ViewModel == null) return false;
+
+            HurlCollection collection = new HurlCollection(string.Empty)
+            {
+                Name = string.Empty
+            };
+            addCollectionWindow.ViewModel.Collection = collection;
+            HurlCollection? resultCollection = await addCollectionWindow.ShowDialog<HurlCollection?>(window);
+            if (resultCollection == null) return false;
+            bool collectionCreated = await _collectionService.CreateCollection(collection);
+            if (!collectionCreated) return false;  
+            await this.RefreshCollectionExplorerCollections();
+            await this.OpenCollection(collection.CollectionFileLocation);
+            return true;
+        }
+        
+        /// <summary>
+        /// Creates an environment and refreshes the collection explorer
+        /// </summary>
+        /// <param name="environment"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public async Task<bool> CreateEnvironment()
+        {
+            HurlEnvironment environment = new HurlEnvironment(string.Empty);
+            
+            // bool environmentCreated = await _environmentService.CreateEnvironment(environment);
+            // if (!environmentCreated) return false;
+            //
+            // await this.RefreshCollectionExplorerCollections();
+            // await this.OpenEnvironment(environment.EnvironmentFileLocation);
+            //
+            // return true;
+
+            throw new NotImplementedException();
         }
 
         /// <summary>

@@ -25,40 +25,26 @@ namespace HurlStudio.UI.Views
 {
     public partial class AddFileView : ViewBase<AddFileViewViewModel>
     {
-        private AddFileViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private IHurlFileTemplateService _templateService;
-        private ControlLocator _controlLocator;
         private TextEditor? _textEditor;
         private ServiceManager<Windows.WindowBase> _windowBuilder;
 
-        public AddFileView(AddFileViewViewModel viewModel, ILogger<AddFileView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, IHurlFileTemplateService templateService, ServiceManager<Windows.WindowBase> windowBuilder)
+        public AddFileView(AddFileViewViewModel viewModel, ILogger<AddFileView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, IHurlFileTemplateService templateService, ServiceManager<Windows.WindowBase> windowBuilder) : base(viewModel, controlLocator)
         {
-            _viewModel = viewModel;
-
             _log = logger;
             _configuration = configuration;
             _userSettingsService = userSettingsService;
             _editorService = editorService;
-            _controlLocator = controlLocator;
             _notificationService = notificationService;
             _templateService = templateService;
             _windowBuilder = windowBuilder;
 
-            this.DataContext = viewModel;
-            this.DataTemplates.Add(_controlLocator);
-
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(AddFileViewViewModel viewModel)
-        {
-            _viewModel = viewModel;
-            this.DataContext = _viewModel;
         }
 
         /// <summary>
@@ -267,12 +253,6 @@ namespace HurlStudio.UI.Views
                 _notificationService.Notify(ex);
                 _log.LogException(ex);
             }
-        }
-
-        public override void SetWindow(Windows.WindowBase window)
-        {
-            base.SetWindow(window);
-            _controlLocator.Window = window;
         }
 
     }

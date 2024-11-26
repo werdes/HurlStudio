@@ -38,7 +38,7 @@ namespace HurlStudio.UI.Controls.HurlSettings
                             Patterns = new[] { "*.pem" }
                         }
                     });
-                string? file = await this.OpenFileSingle(
+                string? file = await this.DisplayOpenFilePickerSingle(
                     Localization.Localization.Setting_CaCertSetting_FilePicker_Title,
                     fileTypeFilters.ToArray());
 

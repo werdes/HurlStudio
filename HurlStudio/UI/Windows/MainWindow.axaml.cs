@@ -108,7 +108,7 @@ namespace HurlStudio.UI.Windows
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
+                await MessageBox.MessageBox.ShowErrorDialog(this, ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -140,7 +140,7 @@ namespace HurlStudio.UI.Windows
             catch (Exception ex)
             {
                 _log?.LogCritical(ex, nameof(this.On_MainWindow_Initialized));
-                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
+                await MessageBox.MessageBox.ShowErrorDialog(this, ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -183,8 +183,7 @@ namespace HurlStudio.UI.Windows
         /// </summary>
         private async void CloseWindow()
         {
-            if (_viewModel != null &&
-                _viewModel.MainViewViewModel.EditorView != null)
+            if (_viewModel?.MainViewViewModel.EditorView != null)
             {
                 _uiStateService.SetActiveDocument(_viewModel.MainViewViewModel.EditorView);
             }

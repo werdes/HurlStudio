@@ -121,11 +121,24 @@ namespace HurlStudio.Services.Editor
         /// <param name="environment"></param>
         /// <param name="environmentLocation"></param>
         /// <returns></returns>
-        /// <exception cref="NotImplementedException"></exception>
         public async Task StoreEnvironmentAsync(HurlEnvironment environment, string environmentLocation)
         {
             _log.LogDebug($"Storing environment [{environment.Name}] to [{environmentLocation}]");
             await _environmentSerializer.SerializeFileAsync(environment, environmentLocation, Encoding.UTF8);
+        }
+        
+        /// <summary>
+        /// Creates an environment
+        /// </summary>
+        /// <param name="environment"></param>
+        /// <returns></returns>
+        public async Task<bool> CreateEnvironment(HurlEnvironment environment)
+        {
+            string targetFileLocation = environment.EnvironmentFileLocation;
+            if (File.Exists(targetFileLocation)) return false;
+
+            await this.StoreEnvironmentAsync(environment, targetFileLocation);
+            return File.Exists(targetFileLocation);
         }
 
         /// <summary>

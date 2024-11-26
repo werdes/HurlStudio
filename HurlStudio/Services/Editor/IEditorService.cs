@@ -1,4 +1,5 @@
-﻿using HurlStudio.Model.HurlContainers;
+﻿using HurlStudio.Collections.Model;
+using HurlStudio.Model.HurlContainers;
 using HurlStudio.Model.HurlFileTemplates;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
@@ -39,6 +40,8 @@ namespace HurlStudio.Services.Editor
         Task<bool> CreateFileInCollectionRoot(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer template, string fileName);
         Task<bool> CreateFileInFolder(HurlFolderContainer folderContainer, HurlFileTemplateContainer template, string fileName);
         Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string path);
+        Task<bool> CreateCollection();
+        Task<bool> CreateEnvironment();
         Task Start();
         Task RefreshCollectionExplorerCollections();
         Task RefreshCollectionExplorerCollection(string collectionLocation);

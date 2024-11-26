@@ -14,6 +14,6 @@ namespace HurlStudio.Services.Editor
         Task<HurlCollectionContainer> SetCollectionContainerAsync(HurlCollectionContainer container, HurlCollection collection);
         Task<ObservableCollection<HurlCollectionContainer>> GetCollectionContainersAsync();
         Task StoreCollectionAsync(HurlCollection collection, string collectionLocation);
-
+        Task<bool> CreateCollection(HurlCollection collection);
     }
 }

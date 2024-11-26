@@ -3,7 +3,6 @@
 	           xmlns:actipro="http://schemas.actiprosoftware.com/avaloniaui"
 	           x:Class="HurlStudio.App"
              xmlns:idc="using:Dock.Avalonia.Controls"
-             xmlns:idcr="using:Dock.Avalonia.Controls.Recycling"
              xmlns:ids="using:Dock.Settings"
              xmlns:local="using:HurlStudio">
 
@@ -14,8 +13,7 @@
         <ResourceInclude Source="/UI/Resources/ColorDictionary.axaml" />
         <ResourceInclude Source="/UI/Resources/TextEditorDictionary.axaml" />
       </ResourceDictionary.MergedDictionaries>
-      <idcr:ControlRecycling x:Key="ControlRecyclingKey" />
-
+      
       <!--Resource overrides-->
       <!--  Window chrome-->
       <SolidColorBrush x:Key="{actipro:ThemeResourceKey TitleBarBackgroundBrush}" Color="{DynamicResource WindowChromeBackgroundColor}" />
@@ -51,7 +49,7 @@
     <StyleInclude Source="avares://AvaloniaEdit/Themes/Simple/AvaloniaEdit.xaml" />
 
     <Style Selector="idc|DockControl">
-      <Setter Property="(ids:DockProperties.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />
+      <!--<Setter Property="(ids:DockProperties.ControlRecycling)" Value="{StaticResource ControlRecyclingKey}" />-->
     </Style>
   </Application.Styles>
 </Application>

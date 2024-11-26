@@ -11,6 +11,9 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Threading.Tasks;
 using HurlStudio.Utility;
+using HurlStudio.Collections.Model;
+using HurlStudio.Common.Extensions;
+using HurlStudio.UI.Windows;
 namespace HurlStudio.UI.Controls.Tools
 {
     public partial class CollectionExplorerTool : ViewModelBasedControl<CollectionExplorerToolViewModel>
@@ -21,8 +24,9 @@ namespace HurlStudio.UI.Controls.Tools
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private ICollectionService _collectionService;
-
-        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, INotificationService notificationService, ICollectionService collectionService)
+        private ServiceManager<Windows.WindowBase> _windowBuilder;
+        
+        public CollectionExplorerTool(ILogger<CollectionExplorerTool> logger, EditorViewViewModel editorViewViewModel, IEditorService editorService, INotificationService notificationService, ICollectionService collectionService, ServiceManager<Windows.WindowBase> windowBuilder)
         {
             this.InitializeComponent();
             _log = logger;
@@ -30,6 +34,7 @@ namespace HurlStudio.UI.Controls.Tools
             _editorService = editorService;
             _notificationService = notificationService;
             _collectionService = collectionService;
+            _windowBuilder = windowBuilder;
 
             _editorViewViewModel.Collections.CollectionChanged += this.On_Collections_CollectionChanged;
         }
@@ -291,6 +296,26 @@ namespace HurlStudio.UI.Controls.Tools
             foreach (HurlCollectionContainer collectionContainer in _editorViewViewModel.Collections)
             {
                 this.BindCollectionEvents(collectionContainer);
+            }
+        }
+
+        /// <summary>
+        /// Create a 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItem_AddCollection_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
+        {
+            if (_window == null) return;
+
+            try
+            {
+                await _editorService.CreateCollection();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_NewCollection_Error, string.Empty);
             }
         }
     }

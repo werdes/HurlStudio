@@ -1,4 +1,5 @@
-﻿using HurlStudio.Model.HurlFileTemplates;
+﻿using HurlStudio.Collections.Model;
+using HurlStudio.Model.HurlFileTemplates;
 using HurlStudio.UI.Windows;
 using System;
 using System.Collections.Generic;
@@ -11,18 +12,18 @@ namespace HurlStudio.UI.ViewModels.Windows
 {
     public class AddFileWindowViewModel : ViewModelBase
     {
-        private AddSettingViewViewModel? _addSettingViewViewModel;
+        private AddFileViewViewModel? _addFileViewViewModel;
 
         public AddFileWindowViewModel() : base(typeof(AddFileWindow))
         {
         }
 
-        public AddSettingViewViewModel? AddSettingViewViewModel
+        public AddFileViewViewModel? AddFileViewViewModel
         {
-            get => _addSettingViewViewModel;
+            get => _addFileViewViewModel;
             set
             {
-                _addSettingViewViewModel = value;
+                _addFileViewViewModel = value;
                 this.Notify();
             }
         }

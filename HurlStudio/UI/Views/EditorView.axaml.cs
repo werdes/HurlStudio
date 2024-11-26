@@ -20,7 +20,6 @@ namespace HurlStudio.UI.Views
 {
     public partial class EditorView : ViewBase<EditorViewViewModel>
     {
-        private EditorViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private LayoutFactory _layoutFactory;
@@ -28,7 +27,7 @@ namespace HurlStudio.UI.Views
         private IEditorService _editorService;
         private IUiStateService _uiStateService;
 
-        public EditorView(ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService)
+        public EditorView(ILogger<EditorView> logger, IConfiguration configuration, LayoutFactory layoutFactory, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, ControlLocator controlLocator) : base(null, controlLocator)
         {
             _log = logger;
             _configuration = configuration;
@@ -38,14 +37,13 @@ namespace HurlStudio.UI.Views
             _uiStateService = uiStateService;
 
             this.DebugFactoryEvents(layoutFactory);
-
             this.InitializeComponent();
         }
 
         /// <summary>
         /// Parameterless constructor for avalonia design
         /// </summary>
-        public EditorView() { }
+        public EditorView() : base(null, null) { }
 
         /// <summary>
         /// Create the Dock layout on view load
@@ -55,7 +53,8 @@ namespace HurlStudio.UI.Views
         private async void On_EditorView_Loaded(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_viewModel == null) return;
-
+            if (_window == null) return;
+            
             try
             {
                 if (_viewModel.Layout != null)
@@ -71,7 +70,7 @@ namespace HurlStudio.UI.Views
             catch (Exception ex)
             {
                 _log.LogCritical(ex, nameof(this.On_EditorView_Loaded));
-                await MessageBox.ShowError(ex.Message, Localization.Localization.MessageBox_ErrorTitle);
+                await MessageBox.MessageBox.ShowErrorDialog(_window, ex.Message, Localization.Localization.MessageBox_ErrorTitle);
             }
         }
 
@@ -272,12 +271,6 @@ namespace HurlStudio.UI.Views
                 _log.LogException(ex);
                 _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_Save_Error, string.Empty);
             }
-        }
-
-        protected override void SetViewModelInstance(EditorViewViewModel viewModel)
-        {
-            _viewModel = viewModel;
-            this.DataContext = _viewModel;
         }
 
         /// <summary>

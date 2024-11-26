@@ -116,7 +116,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? inputResult = await MessageBox.AskInputDialog(
+                string? inputResult = await MessageBox.MessageBox.AskInputDialog(
                     _mainWindow,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
                     Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
@@ -166,15 +166,15 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                bool delete = await MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_Delete) == MessageBox.ButtonType.Yes;
+                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
+                    _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_Delete) == MessageBox.MessageBoxResult.Yes;
                 if (!delete) return;
 
                 bool deleted = await _editorService.DeleteFile(_fileContainer, false);
                 if(!deleted)
                 {
-                    bool deletePermanently = await MessageBox.ShowQuestionYesNoDialog(
-                        _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_DeletePermanently) == MessageBox.ButtonType.Yes;
+                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
+                        _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_DeletePermanently) == MessageBox.MessageBoxResult.Yes;
                     if(deletePermanently)
                     {
                         deleted = await _editorService.DeleteFile(_fileContainer, true);

@@ -29,40 +29,26 @@ namespace HurlStudio.UI.Views
 {
     public partial class EditTemplateView : ViewBase<EditTemplateViewViewModel>
     {
-        private EditTemplateViewViewModel? _viewModel;
         private ILogger _log;
         private IConfiguration _configuration;
         private IUserSettingsService _userSettingsService;
         private IEditorService _editorService;
         private INotificationService _notificationService;
         private IHurlFileTemplateService _templateService;
-        private ControlLocator _controlLocator;
         private TextEditor? _textEditor;
         private ServiceManager<Windows.WindowBase> _windowBuilder;
 
-        public EditTemplateView(EditTemplateViewViewModel viewModel, ILogger<EditTemplateView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, IHurlFileTemplateService templateService, ServiceManager<Windows.WindowBase> windowBuilder)
+        public EditTemplateView(EditTemplateViewViewModel viewModel, ILogger<EditTemplateView> logger, IConfiguration configuration, IUserSettingsService userSettingsService, IEditorService editorService, ControlLocator controlLocator, INotificationService notificationService, IHurlFileTemplateService templateService, ServiceManager<Windows.WindowBase> windowBuilder) : base(viewModel, controlLocator)
         {
-            _viewModel = viewModel;
-
             _log = logger;
             _configuration = configuration;
             _userSettingsService = userSettingsService;
             _editorService = editorService;
-            _controlLocator = controlLocator;
             _notificationService = notificationService;
             _templateService = templateService;
             _windowBuilder = windowBuilder;
 
-            this.DataContext = viewModel;
-            this.DataTemplates.Add(_controlLocator);
-
             this.InitializeComponent();
-        }
-
-        protected override void SetViewModelInstance(EditTemplateViewViewModel viewModel)
-        {
-            _viewModel = viewModel;
-            this.DataContext = _viewModel;
         }
 
         /// <summary>
@@ -124,7 +110,6 @@ namespace HurlStudio.UI.Views
                 _log.LogException(ex);
             }
         }
-
 
         public override void SetWindow(Windows.WindowBase window)
         {
@@ -199,7 +184,6 @@ namespace HurlStudio.UI.Views
                 BaseSetting? setting = await addSettingDialog.ShowDialog<BaseSetting?>(_window);
                 if (setting == null) return;
 
-                //_viewModel.AddSetting(new HurlSettingContainer(_viewModel, fileSection, setting, false, true, EnableType.Setting));
                 _viewModel.TemplateContainer.SettingSection.SettingContainers.Add(new HurlSettingContainer(null, _viewModel.TemplateContainer.SettingSection, setting, false, true, EnableType.Setting));
             }
             catch (Exception ex)
