@@ -37,6 +37,7 @@ namespace HurlStudio.Services.Editor
         Task<bool> DeleteFile(HurlFileContainer fileContainer, bool deletePermanently);
         Task<bool> DeleteFolder(HurlFolderContainer folderContainer, bool deletePermanently);
         Task<bool> RemoveCollection(HurlCollectionContainer collectionContainer);
+        Task<bool> DeleteEnvironment(HurlEnvironmentContainer environmentContainer, bool deletePermanently);
         Task<bool> CreateFileInCollectionRoot(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer template, string fileName);
         Task<bool> CreateFileInFolder(HurlFolderContainer folderContainer, HurlFileTemplateContainer template, string fileName);
         Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string path);

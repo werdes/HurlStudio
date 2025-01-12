@@ -9,6 +9,7 @@ using Avalonia.Platform;
 using Avalonia.Styling;
 using AvaloniaEdit.Utils;
 using HurlStudio.Model.Enums;
+using HurlStudio.UI.MessageBox.Controls;
 using HurlStudio.UI.MessageBox.Model;
 using MsBox.Avalonia;
 using MsBox.Avalonia.Base;
@@ -64,7 +65,7 @@ namespace HurlStudio.UI.MessageBox
         private static Dictionary<MessageBoxResult, Icon> _typeIcons = new Dictionary<MessageBoxResult, Icon>()
         {
             { MessageBoxResult.OK, Icon.Ok },
-            { MessageBoxResult.Discard, Icon.Cancel },
+            { MessageBoxResult.Discard, Icon.Trash },
             { MessageBoxResult.Save, Icon.Save },
             { MessageBoxResult.Cancel, Icon.Cancel },
             { MessageBoxResult.Rename, Icon.Rename },

@@ -200,6 +200,7 @@ namespace HurlStudio
             windowBuilder.RegisterProvider<AddFileWindow>(() => Services.GetRequiredService<AddFileWindow>());
             windowBuilder.RegisterProvider<EditTemplateWindow>(() => Services.GetRequiredService<EditTemplateWindow>());
             windowBuilder.RegisterProvider<AddCollectionWindow>(() => Services.GetRequiredService<AddCollectionWindow>());
+            windowBuilder.RegisterProvider<AddEnvironmentWindow>(() => Services.GetRequiredService<AddEnvironmentWindow>());
 
             // Views
             controlBuilder.RegisterProviderAssociated<MainView, MainViewViewModel>(() => Services.GetRequiredService<MainView>());
@@ -209,6 +210,7 @@ namespace HurlStudio
             controlBuilder.RegisterProviderAssociated<AddFileView, AddFileViewViewModel>(() => Services.GetRequiredService<AddFileView>());
             controlBuilder.RegisterProviderAssociated<EditTemplateView, EditTemplateViewViewModel>(() => Services.GetRequiredService<EditTemplateView>());
             controlBuilder.RegisterProviderAssociated<AddCollectionView, AddCollectionViewViewModel>(() => Services.GetRequiredService<AddCollectionView>());
+            controlBuilder.RegisterProviderAssociated<AddEnvironmentView, AddEnvironmentViewViewModel>(() => Services.GetRequiredService<AddEnvironmentView>());
 
             // Dock controls
             controlBuilder.RegisterProviderAssociated<CollectionExplorerTool, CollectionExplorerToolViewModel>(() => Services.GetRequiredService<CollectionExplorerTool>());
@@ -352,6 +354,7 @@ namespace HurlStudio
             services.AddTransient<AddFileWindowViewModel>();
             services.AddTransient<EditTemplateWindowViewModel>();
             services.AddTransient<AddCollectionWindowViewModel>();
+            services.AddTransient<AddEnvironmentWindowViewModel>();
 
             // View view models
             services.AddSingleton<LoadingViewViewModel>();
@@ -362,6 +365,7 @@ namespace HurlStudio
             services.AddTransient<AddFileViewViewModel>();
             services.AddTransient<EditTemplateViewViewModel>();
             services.AddTransient<AddCollectionViewViewModel>();
+            services.AddTransient<AddEnvironmentViewViewModel>();
 
             // Dock view models
             services.AddSingleton<CollectionExplorerToolViewModel>();
@@ -396,6 +400,7 @@ namespace HurlStudio
             services.AddTransient<AddFileWindow>();
             services.AddTransient<EditTemplateWindow>();
             services.AddTransient<AddCollectionWindow>();
+            services.AddTransient<AddEnvironmentWindow>();
 
             // Views
             services.AddSingleton<MainView>();
@@ -405,6 +410,7 @@ namespace HurlStudio
             services.AddTransient<AddFileView>();
             services.AddTransient<EditTemplateView>();
             services.AddTransient<AddCollectionView>();
+            services.AddTransient<AddEnvironmentView>();
 
             // Dock controls
             services.AddTransient<CollectionExplorerTool>();
@@ -425,8 +431,6 @@ namespace HurlStudio
             services.AddTransient<SettingContainer>();
             services.AddTransient<SettingTypeContainer>();
             services.AddTransient<HurlFileTemplateListItem>();
-
-            // Collection Explorer components
             services.AddTransient<Collection>();
             services.AddTransient<UI.Controls.CollectionExplorer.File>();
             services.AddTransient<Folder>();

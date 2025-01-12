@@ -8,16 +8,23 @@ namespace HurlStudio.Collections.Model.EventArgs
 {
     public class HurlComponentPropertyChangedEventArgs : System.EventArgs
     {
-        public HurlComponentBase _component;
+        private HurlComponentBase _component;
+        private string? _propertyName;
 
-        public HurlComponentPropertyChangedEventArgs(HurlComponentBase component)
+        public HurlComponentPropertyChangedEventArgs(HurlComponentBase component, string? propertyName = null)
         {
             _component = component;
+            _propertyName = propertyName;
         }
 
         public HurlComponentBase Component
         {
             get => _component;
+        }
+
+        public string? PropertyName
+        {
+            get => _propertyName;
         }
     }
 }

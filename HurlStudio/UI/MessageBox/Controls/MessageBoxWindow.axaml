@@ -16,7 +16,7 @@
         CanResize="False"
         WindowStartupLocation="CenterOwner"
         Icon="{Binding WindowIcon}"
-        x:Class="HurlStudio.UI.MessageBox.MessageBoxWindow"
+        x:Class="HurlStudio.UI.MessageBox.Controls.MessageBoxWindow"
         x:Name="messageBoxWindow"
         x:DataType="m:MessageBoxViewModel"
         Background="{DynamicResource WindowBackgroundColor}"
@@ -114,7 +114,9 @@
                                 Margin="2,0,0,0">
                             <StackPanel Orientation="Horizontal">
                                 <c:Icon Type="{Binding Icon}" />
-                                <TextBlock Text="{Binding Text}" />
+                                <TextBlock Margin="2,0,0,0"
+                                           VerticalAlignment="Center"
+                                           Text="{Binding Text}" />
                             </StackPanel>
                         </Button>
                     </DataTemplate>

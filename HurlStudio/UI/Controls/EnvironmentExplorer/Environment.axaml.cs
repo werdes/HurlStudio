@@ -12,6 +12,8 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.ComponentModel;
 using System.Threading.Tasks;
+using Avalonia.Interactivity;
+using HurlStudio.UI.Windows;
 
 namespace HurlStudio.UI.Controls.EnvironmentExplorer
 {
@@ -24,15 +26,17 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
         private ILogger _log;
         private INotificationService _notificationService;
         private IUiStateService _uiStateService;
+        private MainWindow _mainWindow;
 
 
-        public Environment(ILogger<Environment> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, EditorViewViewModel editorViewViewModel)
+        public Environment(ILogger<Environment> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, EditorViewViewModel editorViewViewModel, MainWindow mainWindow)
         {
             _editorService = editorService;
             _log = logger;
             _notificationService = notificationService;
             _uiStateService = uiStateService;
             _editorViewViewModel = editorViewViewModel;
+            _mainWindow = mainWindow;
 
             this.InitializeComponent();
         }
@@ -56,6 +60,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
         {
             if (_environmentContainer == null) return;
             if (_environmentContainer.EnvironmentFileLocation == null) return;
+            
             try
             {
                 OSUtility.RevealPathInExplorer(_environmentContainer.EnvironmentFileLocation);
@@ -127,6 +132,35 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
             try
             {
                 _editorViewViewModel.ActiveEnvironment = _environmentContainer;
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(ex);
+            }
+        }
+
+        private async void On_MenuItem_Delete_Click(object? sender, RoutedEventArgs e)
+        {
+            if (_environmentContainer == null) return;
+
+            try
+            {
+                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
+                    _mainWindow, _environmentContainer.EnvironmentFileLocation, Localization.Localization.Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment) == MessageBox.MessageBoxResult.Yes;
+                if (!delete) return;
+                
+                bool deleted = await _editorService.DeleteEnvironment(_environmentContainer, false);
+                if (!deleted)
+                {
+                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
+                        _mainWindow, _environmentContainer.EnvironmentFileLocation, Localization.Localization.Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment_DeletePermanently) == MessageBox.MessageBoxResult.Yes;
+                    if(deletePermanently)
+                    {
+                        deleted = await _editorService.DeleteEnvironment(_environmentContainer, true);
+                    }
+                }
+                
             }
             catch (Exception ex)
             {

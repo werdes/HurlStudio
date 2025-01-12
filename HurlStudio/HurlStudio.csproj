@@ -222,6 +222,18 @@
       <DependentUpon>AddFileView.axaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="UI\Windows\AddEnvironmentWindow.axaml.cs">
+      <DependentUpon>AddEnvironmentWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\Views\AddEnvironmentView.axaml.cs">
+      <DependentUpon>AddEnvironmentView.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="UI\MessageBox\Controls\MessageBoxWindow.axaml.cs">
+      <DependentUpon>MessageBoxWindow.axaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
@@ -257,7 +269,6 @@
 
   <ItemGroup>
     <Folder Include="DesignTimeData\" />
-    <Folder Include="UI\MessageBox\Controls\" />
   </ItemGroup>
 
   <ItemGroup>

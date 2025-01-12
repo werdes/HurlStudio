@@ -17,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using Avalonia.Interactivity;
 
 namespace HurlStudio.UI.Views
 {
@@ -175,8 +176,6 @@ namespace HurlStudio.UI.Views
         /// <param name="e"></param>
         private async void On_MenuItemNewCollection_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
-            if (_window == null) return;
-
             try
             {
                 await _editorService.CreateCollection();
@@ -187,12 +186,32 @@ namespace HurlStudio.UI.Views
                 _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_NewCollection_Error, string.Empty);
             }
         }
-
+        
+        /// <summary>
+        /// On MenuItem "New Environment" Click
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void On_MenuItemNewEnvironment_Click(object? sender, RoutedEventArgs e)
+        {
+            try
+            {
+                await _editorService.CreateEnvironment();
+            }
+            catch (Exception ex)
+            {
+                _log.LogException(ex);
+                _notificationService.Notify(Model.Notifications.NotificationType.Error, Localization.Localization.View_Editor_Message_NewEnvironment_Error, string.Empty);
+            }
+        }
 
         public override void SetWindow(Windows.WindowBase window)
         {
             base.SetWindow(window);
+            
+            if(_controlLocator == null) return;
             _controlLocator.Window = window;
         }
+
     }
 }

@@ -33,6 +33,13 @@
           </MenuItem.Icon>
         </MenuItem>
         <Separator />
+        <MenuItem Header="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_Delete}"
+                  Click="On_MenuItem_Delete_Click">
+          <MenuItem.Icon>
+            <c:Icon Type="Trash" />
+          </MenuItem.Icon>
+        </MenuItem>
+        <Separator />
         <MenuItem Header="{x:Static localization:Localization.Dock_Tool_EnvironmentExplorer_Environment_RevealInExplorer}"
                   Click="On_MenuItem_RevealInExplorer_Click">
           <MenuItem.Icon>

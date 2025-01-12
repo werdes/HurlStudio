@@ -1308,4 +1308,40 @@
   <data name="View.Main.Menu.File.New.Environment" xml:space="preserve">
     <value>{View.Main.Menu.File.New.Environment}</value>
   </data>
+  <data name="View.AddEnvironmentView.Properties.Name.Label" xml:space="preserve">
+    <value>{View.AddEnvironmentView.Properties.Name.Label}</value>
+  </data>
+  <data name="View.AddEnvironmentView.Properties.Path.Label" xml:space="preserve">
+    <value>{View.AddEnvironmentView.Properties.Path.Label}</value>
+  </data>
+  <data name="View.AddEnvironmentView.Properties.Path.Tooltip" xml:space="preserve">
+    <value>{View.AddEnvironmentView.Properties.Path.Tooltip}</value>
+  </data>
+  <data name="View.AddEnvironmentView.Cancel" xml:space="preserve">
+    <value>{View.AddEnvironmentView.Cancel}</value>
+  </data>
+  <data name="View.AddEnvironmentView.AddEnvironment" xml:space="preserve">
+    <value>{View.AddEnvironmentView.AddEnvironment}</value>
+  </data>
+  <data name="Window.AddEnvironment.Title" xml:space="preserve">
+    <value>{Window.AddEnvironment.Title}</value>
+  </data>
+  <data name="View.AddEnvironmentView.Properties.Path.FilePicker.Title" xml:space="preserve">
+    <value>{View.AddEnvironmentView.FilePicker.Title}</value>
+  </data>
+  <data name="View.AddEnvironmentView.Properties.Path.FilePicker.FileType.Name" xml:space="preserve">
+    <value>{View.AddEnvironmentView.Properties.Path.FilePicker.FileType.Name}</value>
+  </data>
+  <data name="View.Editor.Message.NewEnvironment.Error" xml:space="preserve">
+    <value>{View.Editor.Message.NewEnvironment.Error}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.Delete" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.Delete}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment}</value>
+  </data>
+  <data name="Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently" xml:space="preserve">
+    <value>{Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently}</value>
+  </data>
 </root>

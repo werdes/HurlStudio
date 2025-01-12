@@ -17,11 +17,11 @@
         WindowStartupLocation="CenterOwner"
         Background="{DynamicResource WindowBackgroundColor}"
         Icon="/Assets/Icons/icon.ico"
-        Title="{x:Static localization:Localization.Window_AddCollection_Title}"
-        x:Class="HurlStudio.UI.Windows.AddCollectionWindow"
-        x:Name="addCollectionWindow"
-        x:DataType="vm:AddCollectionWindowViewModel"
+        Title="{x:Static localization:Localization.Window_AddEnvironment_Title}"
+        x:Class="HurlStudio.UI.Windows.AddEnvironmentWindow"
+        x:Name="addEnvironmentWindow"
+        x:DataType="vm:AddEnvironmentWindowViewModel"
 
-        Initialized="On_AddCollectionWindow_Initialized"
-        KeyDown="On_AddCollectionWindow_KeyDown">
+        Initialized="On_AddEnvironmentWindow_Initialized"
+        KeyDown="On_AddEnvironmentWindow_KeyDown">
 </Window>

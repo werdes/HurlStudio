@@ -18,7 +18,7 @@ namespace HurlStudio.Collections.Model
         protected void Notify([CallerMemberName] string propertyName = "")
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-            this.ComponentPropertyChanged?.Invoke(this, new HurlComponentPropertyChangedEventArgs(this));
+            this.ComponentPropertyChanged?.Invoke(this, new HurlComponentPropertyChangedEventArgs(this, propertyName));
         }
 
         /// <summary>

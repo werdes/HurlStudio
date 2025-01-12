@@ -53,7 +53,8 @@
                     <c:Icon Type="AddCollection" />
                   </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Environment}">
+                <MenuItem Header="{x:Static localization:Localization.View_Main_Menu_File_New_Environment}"
+                          Click="On_MenuItemNewEnvironment_Click">
                   <MenuItem.Icon>
                     <c:Icon Type="AddEnvironment" />
                   </MenuItem.Icon>

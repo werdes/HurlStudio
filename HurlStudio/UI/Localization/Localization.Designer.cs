@@ -1005,11 +1005,39 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.Delete}.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_Delete {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip}.
         /// </summary>
         public static string Dock_Tool_EnvironmentExplorer_Environment_Inactive_Tooltip {
             get {
                 return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment}.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently}.
+        /// </summary>
+        public static string Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePerm" +
+                        "anently", resourceCulture);
             }
         }
         
@@ -3084,6 +3112,69 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.AddEnvironment}.
+        /// </summary>
+        public static string View_AddEnvironmentView_AddEnvironment {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.AddEnvironment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.Cancel}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Cancel {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.Properties.Name.Label}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Properties_Name_Label {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Properties.Name.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.Properties.Path.FilePicker.FileType.Name}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Properties_Path_FilePicker_FileType_Name {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Properties.Path.FilePicker.FileType.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.FilePicker.Title}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Properties_Path_FilePicker_Title {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Properties.Path.FilePicker.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.Properties.Path.Label}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Properties_Path_Label {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Properties.Path.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.AddEnvironmentView.Properties.Path.Tooltip}.
+        /// </summary>
+        public static string View_AddEnvironmentView_Properties_Path_Tooltip {
+            get {
+                return ResourceManager.GetString("View.AddEnvironmentView.Properties.Path.Tooltip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {View.AddFileView.Add}.
         /// </summary>
         public static string View_AddFileView_Add {
@@ -3197,6 +3288,15 @@ namespace HurlStudio.UI.Localization {
         public static string View_Editor_Message_NewCollection_Error {
             get {
                 return ResourceManager.GetString("View.Editor.Message.NewCollection.Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {View.Editor.Message.NewEnvironment.Error}.
+        /// </summary>
+        public static string View_Editor_Message_NewEnvironment_Error {
+            get {
+                return ResourceManager.GetString("View.Editor.Message.NewEnvironment.Error", resourceCulture);
             }
         }
         
@@ -3593,6 +3693,15 @@ namespace HurlStudio.UI.Localization {
         public static string Window_AddCollection_Title {
             get {
                 return ResourceManager.GetString("Window.AddCollection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Window.AddEnvironment.Title}.
+        /// </summary>
+        public static string Window_AddEnvironment_Title {
+            get {
+                return ResourceManager.GetString("Window.AddEnvironment.Title", resourceCulture);
             }
         }
         

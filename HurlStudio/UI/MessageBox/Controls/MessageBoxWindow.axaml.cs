@@ -5,7 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using HurlStudio.UI.MessageBox.Model;
 
-namespace HurlStudio.UI.MessageBox
+namespace HurlStudio.UI.MessageBox.Controls
 {
     public partial class MessageBoxWindow : Window
     {
