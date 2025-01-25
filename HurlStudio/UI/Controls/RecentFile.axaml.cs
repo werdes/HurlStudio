@@ -38,7 +38,7 @@ namespace HurlStudio.UI.Controls
             
             try
             {
-                await _editorService.OpenFile(_viewModel.Location);
+                await _editorService.OpenFileDocument(_viewModel.Location);
             }
             catch(Exception ex)
             {

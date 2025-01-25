@@ -888,24 +888,6 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.MessageBox.Rename.Message}.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_MessageBox_Rename_Message {
@@ -1195,6 +1177,24 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.CreateFolder.MessageBox.Message}.
+        /// </summary>
+        public static string Service_EditorService_CreateFolder_MessageBox_Message {
+            get {
+                return ResourceManager.GetString("Service.EditorService.CreateFolder.MessageBox.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.CreateFolder.MessageBox.Title}.
+        /// </summary>
+        public static string Service_EditorService_CreateFolder_MessageBox_Title {
+            get {
+                return ResourceManager.GetString("Service.EditorService.CreateFolder.MessageBox.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted}.
         /// </summary>
         public static string Service_EditorService_Errors_DeleteFolder_ExternalRootFolderCannotBeDeleted {
@@ -1254,6 +1254,24 @@ namespace HurlStudio.UI.Localization {
         public static string Service_EditorService_Errors_RenameCollection_AlreadyExists {
             get {
                 return ResourceManager.GetString("Service.EditorService.Errors.RenameCollection.AlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Dock.Document.Welcome.Actions.OpenCollection.FilePicker.CollectionFilterTitle}.
+        /// </summary>
+        public static string Service_EditorService_FilePicker_CollectionFile_Filter {
+            get {
+                return ResourceManager.GetString("Service.EditorService.FilePicker.CollectionFile.Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Dock.Document.Welcome.Actions.OpenCollection.FilePicker.Title}.
+        /// </summary>
+        public static string Service_EditorService_FilePicker_CollectionFile_Title {
+            get {
+                return ResourceManager.GetString("Service.EditorService.FilePicker.CollectionFile.Title", resourceCulture);
             }
         }
         

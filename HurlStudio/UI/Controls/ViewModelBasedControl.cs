@@ -15,15 +15,9 @@ namespace HurlStudio.UI.Controls
     public abstract class ViewModelBasedControl<T> : ViewModelBasedControl
     {
         public Type? AttachedViewModelType => typeof(T);
-        protected Windows.WindowBase? _window;
 
         public ViewModelBasedControl()
         {
-        }
-
-        public Windows.WindowBase? Window
-        {
-            get => _window;
         }
 
         public override Type? GetAttachedViewModelType() => this.AttachedViewModelType;

@@ -76,7 +76,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                await _editorService.OpenFile(_fileContainer.AbsoluteLocation, _fileContainer.CollectionContainer.Collection.CollectionFileLocation);
+                await _editorService.OpenFileDocument(_fileContainer.AbsoluteLocation, _fileContainer.CollectionContainer.Collection.CollectionFileLocation);
             }
             catch (Exception ex)
             {

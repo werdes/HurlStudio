@@ -34,6 +34,11 @@ namespace HurlStudio.Collections.Model
             _additionalLocations.CollectionItemPropertyChanged += this.On_GenericCollection_CollectionItemPropertyChanged;
         }
 
+        public HurlCollection(string fileLocation, string name) : this(fileLocation)
+        {
+            _name = name;
+        }
+
         public string CollectionFileLocation
         {
             get => _collectionFileLocation;

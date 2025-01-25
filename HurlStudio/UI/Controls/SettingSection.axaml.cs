@@ -116,7 +116,7 @@ namespace HurlStudio.UI.Controls
 
             try
             {
-                _editorService.OpenPath(_settingSection.CollectionComponent.GetPath());
+                _editorService.OpenPathDocument(_settingSection.CollectionComponent.GetPath());
             }
             catch (Exception ex)
             {

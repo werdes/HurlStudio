@@ -5,7 +5,7 @@ using Avalonia.Interactivity;
 using Avalonia.Markup.Xaml;
 using HurlStudio.UI.MessageBox.Model;
 
-namespace HurlStudio.UI.MessageBox.Controls
+namespace HurlStudio.UI.MessageBox
 {
     public partial class MessageBoxWindow : Window
     {
@@ -25,10 +25,10 @@ namespace HurlStudio.UI.MessageBox.Controls
             switch (e.Key)
             {
                 case Key.Escape:
-                    this.CloseMessageBox(MessageBoxResult.Cancel, true);
+                    this.CloseMessageBox(MessageBoxResult.Cancel);
                     break;
                 case Key.Enter:
-                    this.CloseMessageBox(MessageBoxResult.OK, false);
+                    this.CloseMessageBox(MessageBoxResult.OK);
                     break;
             }
         }
@@ -39,13 +39,12 @@ namespace HurlStudio.UI.MessageBox.Controls
         /// Default: Result is the given MessageBoxResult
         /// </summary>
         /// <param name="result"></param>
-        /// <param name="cancel">MessageBox was closed by a cancel user action</param>
-        private void CloseMessageBox(MessageBoxResult result, bool cancel)
+        private void CloseMessageBox(MessageBoxResult result)
         {
             _closedByDefinedAction = true;
             if (_viewModel.Layout == MessageBoxLayout.Input)
             {
-                this.Close(cancel ? null : _viewModel.Value);
+                this.Close(_viewModel.Value);
             }
             else
             {
@@ -78,7 +77,7 @@ namespace HurlStudio.UI.MessageBox.Controls
             if (sender is not Button button) return;
             if (button.Tag is not MessageBoxResult result) return;
 
-            this.CloseMessageBox(result, result == MessageBoxResult.Cancel);
+            this.CloseMessageBox(result);
         }
         
         /// <summary>

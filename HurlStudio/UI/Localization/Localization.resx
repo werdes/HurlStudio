@@ -1167,6 +1167,12 @@
   <data name="Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved" xml:space="preserve">
     <value>{Service.EditorService.Errors.MoveFolder.ExternalRootFolderCannotBeMoved}</value>
   </data>
+  <data name="Service.EditorService.FilePicker.CollectionFile.Filter" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.OpenCollection.FilePicker.CollectionFilterTitle}</value>
+  </data>
+  <data name="Service.EditorService.FilePicker.CollectionFile.Title" xml:space="preserve">
+    <value>{Dock.Document.Welcome.Actions.OpenCollection.FilePicker.Title}</value>
+  </data>
   <data name="Dock.Tool.CollectionExplorer.MessageBox.Rename.Message" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.MessageBox.Rename.Message}</value>
   </data>
@@ -1214,12 +1220,6 @@
   </data>
   <data name="Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection" xml:space="preserve">
     <value>{Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection}</value>
-  </data>
-  <data name="Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message" xml:space="preserve">
-    <value>{Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Message}</value>
-  </data>
-  <data name="Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title" xml:space="preserve">
-    <value>{Dock.Tool.CollectionExplorer.MessageBox.AddFolder.Title}</value>
   </data>
   <data name="Setting.CustomArgumentsSetting.Add.Tooltip" xml:space="preserve">
     <value>{Setting.CustomArgumentsSetting.Add.Tooltip}</value>
@@ -1343,5 +1343,12 @@
   </data>
   <data name="Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently" xml:space="preserve">
     <value>{Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently}</value>
+  </data>
+
+  <data name="Service.EditorService.CreateFolder.MessageBox.Message" xml:space="preserve">
+    <value>{Service.EditorService.CreateFolder.MessageBox.Message}</value>
+  </data>
+  <data name="Service.EditorService.CreateFolder.MessageBox.Title" xml:space="preserve">
+    <value>{Service.EditorService.CreateFolder.MessageBox.Title}</value>
   </data>
 </root>

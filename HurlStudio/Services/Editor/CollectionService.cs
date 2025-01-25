@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HurlStudio.Model.HurlFileTemplates;
 
 namespace HurlStudio.Services.Editor
 {
@@ -36,7 +37,8 @@ namespace HurlStudio.Services.Editor
 
         private int _collectionLoaderMaxDirectoryDepth = 0;
         private string[] _collectionExplorerIgnoredDirectories = [];
-        private SemaphoreLock _lock = new SemaphoreLock();
+        private SemaphoreLock _serializerLock = new SemaphoreLock();
+        private SemaphoreLock _saveLock = new SemaphoreLock();
 
         public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService, INotificationService notificationService)
         {
@@ -70,6 +72,7 @@ namespace HurlStudio.Services.Editor
         /// Fills a collection container
         /// </summary>
         /// <param name="container"></param>
+        /// <param name="collectionContainer"></param>
         /// <param name="collection"></param>
         /// <returns></returns>
         public async Task<HurlCollectionContainer> SetCollectionContainerAsync(HurlCollectionContainer collectionContainer, HurlCollection collection)
@@ -89,6 +92,8 @@ namespace HurlStudio.Services.Editor
             string collectionRootPath = Path.GetDirectoryName(collection.CollectionFileLocation) ?? throw new ArgumentNullException(nameof(collection.CollectionFileLocation));
 
             // Root location
+            //   Get the root folder recursively, add its files
+            //   and folders to the collection container
             if (!collection.ExcludeRootDirectory)
             {
                 HurlFolderContainer? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState, false);
@@ -302,7 +307,7 @@ namespace HurlStudio.Services.Editor
         {
             _log.LogDebug($"Storing collection [{collection.Name}] to [{collectionLocation}]");
 
-            await _lock.LockAsync(async () =>
+            await _serializerLock.LockAsync(async () =>
             {
                 await _collectionSerializer.SerializeFileAsync(collection, collectionLocation, Encoding.UTF8);
             });
@@ -319,7 +324,6 @@ namespace HurlStudio.Services.Editor
             if (File.Exists(targetFileLocation)) return false;
 
             Model.UserSettings.UserSettings settings = await _userSettingsService.GetUserSettingsAsync(false);
-            if (settings == null) return false;
             if (settings.CollectionFiles == null) return false;
 
             await this.StoreCollectionAsync(collection, targetFileLocation);
@@ -329,5 +333,94 @@ namespace HurlStudio.Services.Editor
 
             return File.Exists(targetFileLocation);
         }
+
+        /// <inheritdoc />
+        public async Task<(bool, string?)> CreateFile(HurlFolderContainer parentFolderContainer, HurlFileTemplateContainer fileTemplate, string fileName)
+        {
+            string absoluteFilePath
+                = Path.Combine(parentFolderContainer.AbsoluteLocation, fileName);
+            string relativeLocation = Path.Combine(parentFolderContainer.Folder.FolderLocation, fileName);
+
+            if (File.Exists(absoluteFilePath)) 
+                return (false, null);
+
+            bool fileCreated = await this.CreateFileInternal(parentFolderContainer.CollectionContainer, absoluteFilePath,
+                relativeLocation, fileTemplate);
+
+            return (fileCreated, absoluteFilePath);
+        }
+
+        /// <inheritdoc />
+        public async Task<(bool, string?)> CreateFile(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer fileTemplate, string fileName)
+        {
+            
+            string? collectionDirectory = Path.GetDirectoryName(collectionContainer.Collection.CollectionFileLocation);
+            if (collectionDirectory == null) 
+                return (false, null);
+
+            string filePath = Path.Combine(collectionDirectory, fileName);
+            if (File.Exists(filePath)) 
+                return (false, null);
+
+            bool fileCreated = await this.CreateFileInternal(collectionContainer, filePath, fileName, fileTemplate);
+            
+            return (fileCreated, filePath);
+        }
+
+        
+        /// <summary>
+        /// Adds a file to a collection
+        /// </summary>
+        /// <param name="collectionContainer"></param>
+        /// <param name="absoluteFilePath"></param>
+        /// <param name="location"></param>
+        /// <param name="template"></param>
+        /// <returns></returns>
+        private async Task<bool> CreateFileInternal(HurlCollectionContainer collectionContainer,
+            string absoluteFilePath, string location, HurlFileTemplateContainer template)
+        {
+            if (!absoluteFilePath.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                absoluteFilePath += GlobalConstants.HURL_FILE_EXTENSION;
+            }
+
+            if (File.Exists(absoluteFilePath)) return false;
+
+            // Write file
+            return await _saveLock.LockAsync<bool>(async () =>
+            {
+                await File.WriteAllTextAsync(absoluteFilePath, template.Template.Content, Encoding.UTF8);
+
+                HurlCollection tempCollection =
+                    await this.GetCollectionAsync(collectionContainer.Collection.CollectionFileLocation);
+                HurlFile tempFile = new HurlFile(location);
+                tempFile.FileSettings.AddRangeIfNotNull(
+                    template.SettingSection.SettingContainers.Select(x => x.Setting));
+                tempCollection.FileSettings.Add(tempFile);
+
+                await this.StoreCollectionAsync(tempCollection, tempCollection.CollectionFileLocation);
+                return true;
+            });
+        }
+
+        
+        /// <inheritdoc />
+        public async Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string absolutePath)
+        {
+            if (Directory.Exists(absolutePath)) return false;
+            try
+            {
+                _log.LogDebug($"Creating folder [{absolutePath}]");
+                
+                Directory.CreateDirectory(absolutePath);
+                return Directory.Exists(absolutePath);
+            }
+            catch (IOException ex)
+            {
+                _log.LogException(ex);
+                return false;
+            }
+        }
+
     }
 }

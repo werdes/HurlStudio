@@ -27,7 +27,9 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private MainWindow _mainWindow;
         private ServiceManager<Windows.WindowBase> _windowBuilder;
 
-        public Collection(ILogger<Collection> logger, INotificationService notificationService, IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow, ServiceManager<Windows.WindowBase> windowBuilder)
+        public Collection(ILogger<Collection> logger, INotificationService notificationService,
+            IEditorService editorService, IUiStateService uiStateService, MainWindow mainWindow,
+            ServiceManager<Windows.WindowBase> windowBuilder)
             : base(notificationService, logger)
         {
             _editorService = editorService;
@@ -56,7 +58,6 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         /// <param name="e"></param>
         private void On_Collection_Initialized(object? sender, EventArgs e)
         {
-
         }
 
         /// <summary>
@@ -71,7 +72,8 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 _collectionContainer.Collapsed = !_collectionContainer.Collapsed;
-                _uiStateService.SetCollectionExplorerCollapseState(_collectionContainer.GetId(), _collectionContainer.Collapsed);
+                _uiStateService.SetCollectionExplorerCollapseState(_collectionContainer.GetId(),
+                    _collectionContainer.Collapsed);
             }
             catch (Exception ex)
             {
@@ -98,7 +100,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             if (_collectionContainer == null) return;
             try
             {
-                await _editorService.OpenCollection(_collectionContainer.Collection.CollectionFileLocation);
+                await _editorService.OpenCollectionDocument(_collectionContainer.Collection.CollectionFileLocation);
             }
             catch (Exception ex)
             {
@@ -140,7 +142,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                await _editorService.OpenCollection(_collectionContainer.Collection.CollectionFileLocation);
+                await _editorService.OpenCollectionDocument(_collectionContainer.Collection.CollectionFileLocation);
             }
             catch (Exception ex)
             {
@@ -171,10 +173,12 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                 if (inputResult != null)
                 {
                     bool moveFile =
-                        await MessageBox.MessageBox.ShowQuestionYesNoDialog( 
+                        await MessageBox.MessageBox.ShowQuestionYesNoDialog(
                             _mainWindow,
-                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile,
-                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title) == MessageBox.MessageBoxResult.Yes;
+                            Localization.Localization
+                                .Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile,
+                            Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title) ==
+                        MessageBox.MessageBoxResult.Yes;
 
                     await _editorService.RenameCollection(_collectionContainer, inputResult, moveFile);
                 }
@@ -198,7 +202,10 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
             try
             {
                 bool remove = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _collectionContainer.Collection.CollectionFileLocation, Localization.Localization.Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection) == MessageBox.MessageBoxResult.Yes;
+                                  _mainWindow, _collectionContainer.Collection.CollectionFileLocation,
+                                  Localization.Localization
+                                      .Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection) ==
+                              MessageBox.MessageBoxResult.Yes;
                 if (!remove) return;
 
                 bool deleted = await _editorService.RemoveCollection(_collectionContainer);
@@ -209,7 +216,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
                 _notificationService.Notify(ex);
             }
         }
-        
+
         /// <summary>
         /// Adds a folder to a collection
         /// </summary>
@@ -221,20 +228,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? folderName = await MessageBox.MessageBox.AskInputDialog(_mainWindow,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
-                    Model.Enums.Icon.AddFolder);
-                string? collectionDirectory = Path.GetDirectoryName(_collectionContainer.Collection.CollectionFileLocation);
-
-                if (!string.IsNullOrWhiteSpace(folderName) && collectionDirectory != null)
-                {
-                    string newPath = Path.Combine(collectionDirectory, folderName.GetValidDirectoryName());
-                    if (!Directory.Exists(newPath))
-                    {
-                        await _editorService.CreateFolder(_collectionContainer, newPath);
-                    }
-                }
+                await _editorService.CreateFolder(_collectionContainer);
             }
             catch (Exception ex)
             {
@@ -255,11 +249,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
-                (string fileName, HurlFileTemplateContainer template) = await addFileWindow.ShowDialog<(string, HurlFileTemplateContainer)>(_window);
-
-                if (fileName == null || template == null) return;
-                await _editorService.CreateFileInCollectionRoot(_collectionContainer, template, fileName);
+                await _editorService.CreateFile(_collectionContainer);
             }
             catch (Exception ex)
             {

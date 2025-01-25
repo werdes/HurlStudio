@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Avalonia.Controls;
+using Avalonia.Platform.Storage;
 using Dock.Model.Core;
 using Dock.Model.Mvvm.Controls;
 using HurlStudio.Collections.Model;
@@ -24,6 +25,7 @@ using HurlStudio.Services.UiState;
 using HurlStudio.Services.UserSettings;
 using HurlStudio.UI.Dock;
 using HurlStudio.UI.Localization;
+using HurlStudio.UI.MessageBox;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.ViewModels.Documents;
 using HurlStudio.UI.Windows;
@@ -160,13 +162,13 @@ namespace HurlStudio.Services.Editor
             {
                 foreach (string documentPath in uiState.OpenedDocuments)
                 {
-                    await this.OpenPath(documentPath);
+                    await this.OpenPathDocument(documentPath);
                 }
 
                 // Open the active document tab
                 if (uiState.ActiveDocument != null)
                 {
-                    await this.OpenPath(uiState.ActiveDocument);
+                    await this.OpenPathDocument(uiState.ActiveDocument);
                     _editorViewViewModel.ActiveDocument =
                         (DocumentBase?)_editorViewViewModel.DocumentDock?.ActiveDockable;
                 }
@@ -178,26 +180,61 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="documentPath"></param>
         /// <returns></returns>
-        public async Task OpenPath(string documentPath)
+        public async Task OpenPathDocument(string documentPath)
         {
             if (Directory.Exists(documentPath))
             {
-                await this.OpenFolder(documentPath);
+                await this.OpenFolderDocument(documentPath);
             }
             else if (Path.GetExtension(documentPath).ToLower() == GlobalConstants.HURL_FILE_EXTENSION)
             {
-                await this.OpenFile(documentPath);
+                await this.OpenFileDocument(documentPath);
             }
             else if (Path.GetExtension(documentPath).ToLower() == GlobalConstants.COLLECTION_FILE_EXTENSION)
             {
-                await this.OpenCollection(documentPath);
+                await this.OpenCollectionDocument(documentPath);
             }
             else if (Path.GetExtension(documentPath).ToLower() == GlobalConstants.ENVIRONMENT_FILE_EXTENSION)
             {
-                await this.OpenEnvironment(documentPath);
+                await this.OpenEnvironmentDocument(documentPath);
             }
         }
 
+        /// <summary>
+        /// Adds a collection file to user settings 
+        /// </summary>
+        public async Task AddCollection()
+        {
+            if (_editorViewViewModel.View?.Window == null) return;
+
+            // Ask User for file path
+            ReadOnlyCollection<FilePickerFileType> fileTypeFilters = new ReadOnlyCollection<FilePickerFileType>(
+                new List<FilePickerFileType>()
+                {
+                    new FilePickerFileType(Localization
+                        .Service_EditorService_FilePicker_CollectionFile_Filter)
+                    {
+                        Patterns = [$"*{GlobalConstants.COLLECTION_FILE_EXTENSION}"]
+                    }
+                });
+            string? collectionFilePath = await StorageUtility.DisplayOpenFilePickerSingle(
+                _editorViewViewModel.View?.Window.StorageProvider,
+                Localization.Service_EditorService_FilePicker_CollectionFile_Title,
+                fileTypeFilters.ToArray());
+            if (string.IsNullOrEmpty(collectionFilePath) ||
+                !File.Exists(collectionFilePath))
+                return;
+
+            Model.UserSettings.UserSettings userSettings = await _userSettingsService.GetUserSettingsAsync(false);
+
+            if (userSettings.CollectionFiles == null ||
+                userSettings.CollectionFiles.Any(x => x.ToNormalized() == collectionFilePath.ToNormalized()))
+                return;
+
+            userSettings.CollectionFiles.Add(collectionFilePath);
+            await _userSettingsService.StoreUserSettingsAsync();
+            await this.RefreshCollectionExplorerCollections();
+        }
 
         /// <summary>
         /// Loads the initial Usersettings for the editor view model
@@ -255,7 +292,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     if (reopenFile)
                     {
-                        await this.OpenFile(newPath);
+                        await this.OpenFileDocument(newPath);
                     }
 
                     return true;
@@ -308,7 +345,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     if (reopenFile)
                     {
-                        await this.OpenFile(newPath);
+                        await this.OpenFileDocument(newPath);
                     }
 
                     return true;
@@ -351,7 +388,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     if (reopenFile)
                     {
-                        await this.OpenFile(newPath);
+                        await this.OpenFileDocument(newPath);
                     }
 
                     return true;
@@ -403,7 +440,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     foreach (string reopenPath in reopenPaths)
                     {
-                        await this.OpenPath(reopenPath);
+                        await this.OpenPathDocument(reopenPath);
                     }
 
                     return true;
@@ -454,7 +491,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     foreach (string reopenPath in reopenPaths)
                     {
-                        await this.OpenPath(reopenPath);
+                        await this.OpenPathDocument(reopenPath);
                     }
 
                     return true;
@@ -500,7 +537,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     foreach (string reopenPath in reopenPaths)
                     {
-                        await this.OpenPath(reopenPath);
+                        await this.OpenPathDocument(reopenPath);
                     }
 
                     return true;
@@ -544,7 +581,7 @@ namespace HurlStudio.Services.Editor
                     // Re-Open the file at the new location
                     if (reopenFile)
                     {
-                        await this.OpenFile(newPath);
+                        await this.OpenFileDocument(newPath);
                     }
 
                     return true;
@@ -588,7 +625,7 @@ namespace HurlStudio.Services.Editor
                 // Re-Open the file at the new location
                 foreach (string reopenPath in reopenPaths)
                 {
-                    await this.OpenPath(reopenPath);
+                    await this.OpenPathDocument(reopenPath);
                 }
 
                 return true;
@@ -682,7 +719,7 @@ namespace HurlStudio.Services.Editor
                     // Reopen all documents and set the previous one active
                     foreach (string reopenDocument in reopenDocuments)
                     {
-                        await this.OpenPath(reopenDocument);
+                        await this.OpenPathDocument(reopenDocument);
                     }
 
                     IDockable? newActiveDocument = _editorViewViewModel.DocumentDock.VisibleDockables.FirstOrDefault(
@@ -697,7 +734,7 @@ namespace HurlStudio.Services.Editor
             // Re-Open the collection at the new location
             if (reopenFile)
             {
-                await this.OpenFile(newFilePath);
+                await this.OpenFileDocument(newFilePath);
             }
 
             await this.RefreshCollectionExplorerCollections();
@@ -1108,7 +1145,7 @@ namespace HurlStudio.Services.Editor
         /// <param name="fileLocation"></param>
         /// <param name="collectionLocation"></param>
         /// <returns></returns>
-        public async Task OpenFile(string fileLocation, string collectionLocation)
+        public async Task OpenFileDocument(string fileLocation, string collectionLocation)
         {
             if (_editorViewViewModel.Layout == null)
                 throw new ArgumentNullException(nameof(_editorViewViewModel.Layout));
@@ -1326,7 +1363,7 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="fileLocation"></param>
         /// <returns></returns>
-        public async Task OpenFile(string fileLocation)
+        public async Task OpenFileDocument(string fileLocation)
         {
             HurlFileContainer? collectionFile = _editorViewViewModel.Collections
                 .SelectMany(x => this.GetAllFilesFromCollection(x)).Where(x => x.AbsoluteLocation == fileLocation)
@@ -1337,7 +1374,8 @@ namespace HurlStudio.Services.Editor
                 collectionFile.CollectionContainer.Collection != null &&
                 collectionFile.CollectionContainer.Collection.CollectionFileLocation != null)
             {
-                await this.OpenFile(fileLocation, collectionFile.CollectionContainer.Collection.CollectionFileLocation);
+                await this.OpenFileDocument(fileLocation,
+                    collectionFile.CollectionContainer.Collection.CollectionFileLocation);
             }
         }
 
@@ -1838,7 +1876,7 @@ namespace HurlStudio.Services.Editor
         /// <param name="folderLocation"></param>
         /// <param name="collectionLocation"></param>
         /// <returns></returns>
-        public async Task OpenFolder(string folderLocation, string collectionLocation)
+        public async Task OpenFolderDocument(string folderLocation, string collectionLocation)
         {
             if (_editorViewViewModel.Layout == null)
                 throw new ArgumentNullException(nameof(_editorViewViewModel.Layout));
@@ -1924,7 +1962,7 @@ namespace HurlStudio.Services.Editor
         /// </summary>
         /// <param name="folderLocation"></param>
         /// <returns></returns>
-        public async Task OpenFolder(string folderLocation)
+        public async Task OpenFolderDocument(string folderLocation)
         {
             HurlFolderContainer? folderContainer = _editorViewViewModel.Collections
                 .SelectMany(x => this.GetAllFoldersFromCollection(x)).Where(x => x.AbsoluteLocation == folderLocation)
@@ -1935,7 +1973,7 @@ namespace HurlStudio.Services.Editor
                 folderContainer.CollectionContainer.Collection != null &&
                 folderContainer.CollectionContainer.Collection.CollectionFileLocation != null)
             {
-                await this.OpenFolder(folderLocation,
+                await this.OpenFolderDocument(folderLocation,
                     folderContainer.CollectionContainer.Collection.CollectionFileLocation);
             }
         }
@@ -1947,7 +1985,7 @@ namespace HurlStudio.Services.Editor
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        public async Task OpenEnvironment(string environmentLocation)
+        public async Task OpenEnvironmentDocument(string environmentLocation)
         {
             if (_editorViewViewModel.Layout == null)
                 throw new ArgumentNullException(nameof(_editorViewViewModel.Layout));
@@ -2092,7 +2130,7 @@ namespace HurlStudio.Services.Editor
         /// <returns></returns>
         /// <exception cref="ArgumentNullException"></exception>
         /// <exception cref="Exception"></exception>
-        public async Task OpenCollection(string collectionLocation)
+        public async Task OpenCollectionDocument(string collectionLocation)
         {
             if (_editorViewViewModel.Layout == null)
                 throw new ArgumentNullException(nameof(_editorViewViewModel.Layout));
@@ -2785,113 +2823,116 @@ namespace HurlStudio.Services.Editor
             return false;
         }
 
-
-        /// <summary>
-        /// Create a new file from template in a collection root
-        /// </summary>
-        /// <param name="collectionContainer"></param>
-        /// <param name="template"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public async Task<bool> CreateFileInCollectionRoot(HurlCollectionContainer collectionContainer,
-            HurlFileTemplateContainer template, string fileName)
+        /// <inheritdoc />
+        public async Task<bool> CreateFile(HurlCollectionContainer collectionContainer)
         {
-            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
-            {
-                fileName += GlobalConstants.HURL_FILE_EXTENSION;
-            }
-
-            string? collectionDirectory = Path.GetDirectoryName(collectionContainer.Collection.CollectionFileLocation);
-            if (collectionDirectory == null) return false;
-
-            string filePath = Path.Combine(collectionDirectory, fileName);
-            if (File.Exists(filePath)) return false;
-
-            return await this.CreateFileInternal(collectionContainer, filePath, fileName, template);
-        }
-
-        /// <summary>
-        /// Create a new file from template in a folder
-        /// </summary>
-        /// <param name="folderContainer"></param>
-        /// <param name="template"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        public async Task<bool> CreateFileInFolder(HurlFolderContainer folderContainer,
-            HurlFileTemplateContainer template, string fileName)
-        {
-            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
-            {
-                fileName += GlobalConstants.HURL_FILE_EXTENSION;
-            }
-
-            string absoluteFilePath
-                = Path.Combine(folderContainer.AbsoluteLocation, fileName);
-            string relativeLocation = Path.Combine(folderContainer.Folder.FolderLocation, fileName);
-
-            if (File.Exists(absoluteFilePath)) return false;
-
-            return await this.CreateFileInternal(folderContainer.CollectionContainer, absoluteFilePath,
-                relativeLocation, template);
-        }
-
-        /// <summary>
-        /// Adds a file to a collection
-        /// </summary>
-        /// <param name="collectionContainer"></param>
-        /// <param name="absoluteFilePath"></param>
-        /// <param name="location"></param>
-        /// <param name="template"></param>
-        /// <returns></returns>
-        private async Task<bool> CreateFileInternal(HurlCollectionContainer collectionContainer,
-            string absoluteFilePath, string location, HurlFileTemplateContainer template)
-        {
-            if (!absoluteFilePath.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
-            {
-                absoluteFilePath += GlobalConstants.HURL_FILE_EXTENSION;
-            }
-
-            if (File.Exists(absoluteFilePath)) return false;
-
-            // Write file
-            return await _saveLock.LockAsync<bool>(async () =>
-            {
-                await File.WriteAllTextAsync(absoluteFilePath, template.Template.Content, Encoding.UTF8);
-
-                HurlCollection tempCollection =
-                    await _collectionService.GetCollectionAsync(collectionContainer.Collection.CollectionFileLocation);
-                HurlFile tempFile = new HurlFile(location);
-                tempFile.FileSettings.AddRangeIfNotNull(
-                    template.SettingSection.SettingContainers.Select(x => x.Setting));
-                tempCollection.FileSettings.Add(tempFile);
-
-                await _collectionService.StoreCollectionAsync(tempCollection, tempCollection.CollectionFileLocation);
-                await this.RefreshCollectionExplorerCollection(collectionContainer.Collection.CollectionFileLocation);
-                await this.OpenFile(absoluteFilePath);
-                return true;
-            });
-        }
-
-        /// <summary>
-        /// Creates a folder and refreshes the collection
-        /// </summary>
-        /// <param name="collectionContainer"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public async Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string path)
-        {
-            if (Directory.Exists(path)) return false;
-            try
-            {
-                Directory.CreateDirectory(path);
-                await this.RefreshCollectionExplorerCollection(collectionContainer.Collection.CollectionFileLocation);
-                return true;
-            }
-            catch (IOException ex)
-            {
-                _log.LogException(ex);
+            if (_editorViewViewModel.View?.Window == null) 
                 return false;
+
+            AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
+            (string? fileName, HurlFileTemplateContainer? template) =
+                await addFileWindow.ShowDialog<(string?, HurlFileTemplateContainer?)>(_editorViewViewModel.View.Window);
+                
+            if (fileName == null || template == null) return false;
+
+            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                fileName += GlobalConstants.HURL_FILE_EXTENSION;
             }
+
+            (bool fileCreated, string? absolutePath) =
+                await _collectionService.CreateFile(collectionContainer, template, fileName);
+            
+            if (!fileCreated || absolutePath == null)
+                return false;
+            
+            await this.RefreshCollectionExplorerCollection(
+                collectionContainer.Collection.CollectionFileLocation);
+            await this.OpenFileDocument(absolutePath);
+
+            return true;
+
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> CreateFile(HurlFolderContainer folderContainer)
+        {
+            if (_editorViewViewModel.View?.Window == null) 
+                return false;
+
+            AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
+            (string? fileName, HurlFileTemplateContainer? template) =
+                await addFileWindow.ShowDialog<(string?, HurlFileTemplateContainer?)>(_editorViewViewModel.View.Window);
+                
+            if (fileName == null || template == null) return false;
+
+            if (!fileName.ToNormalized().EndsWith(GlobalConstants.HURL_FILE_EXTENSION.ToNormalized()))
+            {
+                fileName += GlobalConstants.HURL_FILE_EXTENSION;
+            }
+
+            (bool fileCreated, string? absolutePath) =
+                await _collectionService.CreateFile(folderContainer, template, fileName);
+            
+            if (!fileCreated || absolutePath == null) 
+                return false;
+            
+            await this.RefreshCollectionExplorerCollection(
+                folderContainer.CollectionContainer.Collection.CollectionFileLocation);
+            await this.OpenFileDocument(absolutePath);
+
+            return true;
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> CreateFolder(HurlCollectionContainer rootCollectionContainer)
+        {
+            if (_editorViewViewModel.View?.Window == null) return false;
+
+            string? folderName = await MessageBox.AskInputDialog(
+                _editorViewViewModel.View.Window,
+                Localization.Service_EditorService_CreateFolder_MessageBox_Message,
+                Localization.Service_EditorService_CreateFolder_MessageBox_Title,
+                string.Empty,
+                Icon.AddFolder);
+            folderName = folderName?.GetValidDirectoryName();
+            string? basePath = Path.GetDirectoryName(rootCollectionContainer.Collection.CollectionFileLocation);
+
+            if (string.IsNullOrWhiteSpace(folderName) ||
+                basePath == null)
+                return false;
+
+            string targetPath = Path.Combine(basePath, folderName);
+            if (!await _collectionService.CreateFolder(rootCollectionContainer, targetPath))
+                return false;
+            
+            await this.RefreshCollectionExplorerCollection(rootCollectionContainer.Collection.CollectionFileLocation);
+            return Directory.Exists(targetPath);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> CreateFolder(HurlFolderContainer parentFolderContainer)
+        {
+            if (_editorViewViewModel.View?.Window == null) 
+                return false;
+
+            string? folderName = await MessageBox.AskInputDialog(
+                _editorViewViewModel.View.Window,
+                Localization.Service_EditorService_CreateFolder_MessageBox_Message,
+                Localization.Service_EditorService_CreateFolder_MessageBox_Title,
+                string.Empty,
+                Icon.AddFolder);
+            folderName = folderName?.GetValidDirectoryName();
+
+            if (string.IsNullOrWhiteSpace(folderName))
+                return false;
+
+            string targetPath = Path.Combine(parentFolderContainer.AbsoluteLocation, folderName);
+            if(!await _collectionService.CreateFolder(parentFolderContainer.CollectionContainer, targetPath))
+                return false;
+            
+            await this.RefreshCollectionExplorerCollection(parentFolderContainer.CollectionContainer.Collection.CollectionFileLocation);
+            return Directory.Exists(targetPath);
         }
 
         /// <summary>
@@ -2906,17 +2947,18 @@ namespace HurlStudio.Services.Editor
             AddCollectionWindow addCollectionWindow = _windowBuilder.Get<AddCollectionWindow>();
             if (addCollectionWindow.ViewModel == null) return false;
 
-            HurlCollection collection = new HurlCollection(string.Empty)
-            {
-                Name = string.Empty
-            };
+            HurlCollection collection = new HurlCollection(string.Empty, string.Empty);
             addCollectionWindow.ViewModel.Collection = collection;
+
             HurlCollection? resultCollection = await addCollectionWindow.ShowDialog<HurlCollection?>(window);
             if (resultCollection == null) return false;
+
             bool collectionCreated = await _collectionService.CreateCollection(resultCollection);
             if (!collectionCreated) return false;
+
             await this.RefreshCollectionExplorerCollections();
-            await this.OpenCollection(resultCollection.CollectionFileLocation);
+            await this.OpenCollectionDocument(resultCollection.CollectionFileLocation);
+
             return true;
         }
 
@@ -2945,7 +2987,7 @@ namespace HurlStudio.Services.Editor
 
             await this.RefreshEnvironmentExplorerEnvironments(_editorViewViewModel.ActiveEnvironment
                 .EnvironmentFileLocation);
-            await this.OpenEnvironment(resultEnvironment.EnvironmentFileLocation);
+            await this.OpenEnvironmentDocument(resultEnvironment.EnvironmentFileLocation);
 
             return true;
         }

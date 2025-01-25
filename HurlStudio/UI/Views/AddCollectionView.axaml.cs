@@ -25,6 +25,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using HurlStudio.Common.Utility;
 
 namespace HurlStudio.UI.Views
 {
@@ -126,7 +127,7 @@ namespace HurlStudio.UI.Views
 
             try
             {
-                string? targetPath = await this.DisplaySaveFilePickerSingle(_window.StorageProvider, Localization.Localization.View_AddCollectionView_Properties_Path_FilePicker_Title, GlobalConstants.COLLECTION_FILE_EXTENSION, [new FilePickerFileType(Localization.Localization.View_AddCollectionView_Properties_Path_FilePicker_FileType_Name) {
+                string? targetPath = await StorageUtility.DisplaySaveFilePickerSingle(_window.StorageProvider, Localization.Localization.View_AddCollectionView_Properties_Path_FilePicker_Title, GlobalConstants.COLLECTION_FILE_EXTENSION, [new FilePickerFileType(Localization.Localization.View_AddCollectionView_Properties_Path_FilePicker_FileType_Name) {
                     Patterns = new[] { $"*{GlobalConstants.COLLECTION_FILE_EXTENSION}" }
                 }]);
                 if (targetPath == null) return;

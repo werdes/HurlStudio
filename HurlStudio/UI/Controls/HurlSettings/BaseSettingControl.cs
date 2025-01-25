@@ -6,6 +6,7 @@ using Avalonia.Platform.Storage;
 using HurlStudio.Services.Notifications;
 using HurlStudio.UI.ViewModels;
 using HurlStudio.UI.Windows;
+using HurlStudio.Utility;
 using Microsoft.Extensions.Logging;
 
 namespace HurlStudio.UI.Controls.HurlSettings
@@ -29,14 +30,5 @@ namespace HurlStudio.UI.Controls.HurlSettings
             _viewModel = viewModel;
             this.DataContext = _viewModel;
         }
-
-        protected async Task<string?> DisplayOpenFilePickerSingle(string title, FilePickerFileType[] allowedTypes) => 
-            await this.DisplayOpenFilePickerSingle(_mainWindow.StorageProvider, title, allowedTypes);
-        protected async Task<IReadOnlyList<IStorageFile>?> DisplayOpenFilePickerMulti(string title, FilePickerFileType[] allowedTypes) => 
-            await this.DisplayOpenFilePickerMulti(_mainWindow.StorageProvider, title, allowedTypes);
-        protected async Task<string?> DisplayOpenDirectoryPickerSingle(string title) => 
-            await this.DisplayOpenDirectoryPickerSingle(_mainWindow.StorageProvider, title);
-        protected async Task<string?> DisplaySaveFilePicker(string title, string defaultExtension, FilePickerFileType[] allowedTypes) =>
-            await this.DisplaySaveFilePickerSingle(_mainWindow.StorageProvider, title, defaultExtension, allowedTypes);
     }
 }

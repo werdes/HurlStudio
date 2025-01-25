@@ -103,7 +103,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                await _editorService.OpenFolder(_folderContainer.AbsoluteLocation);
+                await _editorService.OpenFolderDocument(_folderContainer.AbsoluteLocation);
             }
             catch (Exception ex)
             {
@@ -144,7 +144,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                await _editorService.OpenFolder(_folderContainer.AbsoluteLocation);
+                await _editorService.OpenFolderDocument(_folderContainer.AbsoluteLocation);
             }
             catch (Exception ex)
             {
@@ -233,20 +233,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? folderName = await MessageBox.MessageBox.AskInputDialog(_mainWindow,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Message,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_AddFolder_Title, string.Empty,
-                    Model.Enums.Icon.AddFolder);
-
-                if (!string.IsNullOrWhiteSpace(folderName))
-                {
-                    string newPath = Path.Combine(_folderContainer.AbsoluteLocation,
-                        folderName.GetValidDirectoryName());
-                    if (!Directory.Exists(newPath))
-                    {
-                        await _editorService.CreateFolder(_folderContainer.CollectionContainer, newPath);
-                    }
-                }
+                await _editorService.CreateFolder(_folderContainer);
             }
             catch (Exception ex)
             {
@@ -266,11 +253,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                AddFileWindow addFileWindow = _windowBuilder.Get<AddFileWindow>();
-                (string fileName, HurlFileTemplateContainer template) = await addFileWindow.ShowDialog<(string, HurlFileTemplateContainer)>(_mainWindow);
-                if (fileName == null || template == null) return;
-
-                await _editorService.CreateFileInFolder(_folderContainer, template, fileName);
+                await _editorService.CreateFile(_folderContainer);
             }
             catch (Exception ex)
             {

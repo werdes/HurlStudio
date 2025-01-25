@@ -6,6 +6,7 @@ using HurlStudio.Services.Notifications;
 using HurlStudio.UI.Windows;
 using Microsoft.Extensions.Logging;
 using System;
+using HurlStudio.Utility;
 
 namespace HurlStudio.UI.Controls
 {
@@ -44,7 +45,7 @@ namespace HurlStudio.UI.Controls
 
             try
             {
-                string? folder = await this.DisplayOpenDirectoryPickerSingle(
+                string? folder = await StorageUtility.DisplayOpenDirectoryPickerSingle(
                     _mainWindow.StorageProvider,
                     Localization.Localization.Setting_FileRootSetting_FolderPicker_Title);
 

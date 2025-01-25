@@ -85,7 +85,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
 
                 if (e.ClickCount == 2 && _environmentContainer.Selected)
                 {
-                    await _editorService.OpenEnvironment(_environmentContainer.EnvironmentFileLocation);
+                    await _editorService.OpenEnvironmentDocument(_environmentContainer.EnvironmentFileLocation);
                 }
 
                 _environmentContainer.Selected = true;
@@ -111,7 +111,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
 
             try
             {
-                await _editorService.OpenEnvironment(_environmentContainer.EnvironmentFileLocation);
+                await _editorService.OpenEnvironmentDocument(_environmentContainer.EnvironmentFileLocation);
             }
             catch (Exception ex)
             {
