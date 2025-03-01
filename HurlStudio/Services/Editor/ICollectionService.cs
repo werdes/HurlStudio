@@ -15,7 +15,34 @@ namespace HurlStudio.Services.Editor
         Task<HurlCollectionContainer> SetCollectionContainerAsync(HurlCollectionContainer container, HurlCollection collection);
         Task<ObservableCollection<HurlCollectionContainer>> GetCollectionContainersAsync();
         Task StoreCollectionAsync(HurlCollection collection, string collectionLocation);
+        
         Task<bool> CreateCollection(HurlCollection collection);
+
+        /// <summary>
+        /// Renames a collection and move the .hurlc file if requested
+        /// </summary>
+        /// <param name="collectionContainer">The collection to be renamed</param>
+        /// <param name="newCollectionName">The collections' new name</param>
+        /// <param name="moveFile">Move the collection file</param>
+        /// <param name="newCollectionLocation">The collections' new absolute location (only required if <paramref name="moveFile"/> is set to true)</param>
+        /// <returns>true, if the collection was renamed successfully</returns>
+        Task<bool> RenameCollection(HurlCollectionContainer collectionContainer, string newCollectionName, bool moveFile, string? newCollectionLocation = null);  
+        
+        /// <summary>
+        /// Deletes a file by moving it to system trash and removing its settings from the collection
+        /// </summary>
+        /// <param name="fileContainer">The file to be deleted</param>
+        /// <param name="deletePermanently">Allow deleting the file instead of moving it to trash</param>
+        /// <returns>true, if the file was either deleted or moved to trash (according to <paramref name="deletePermanently"/>)</returns>
+        Task<bool> DeleteFile(HurlFileContainer fileContainer, bool deletePermanently);
+        
+        /// <summary>
+        /// Deletes a folder by moving it to system trash and removing its settings from the collection
+        /// </summary>
+        /// <param name="folderContainer">The folder to be deleted</param>
+        /// <param name="deletePermanently">Allow deleting the file instead of moving it to trash</param>
+        /// <returns>true, if the folder was either deleted or moved to trash (according to <paramref name="deletePermanently"/>)</returns>
+        Task<bool> DeleteFolder(HurlFolderContainer folderContainer, bool deletePermanently);
         
         /// <summary>
         /// Creates a file from a template inside the given folder

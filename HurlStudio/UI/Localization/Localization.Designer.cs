@@ -699,15 +699,6 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_Collection_MessageBox_RemoveCollection {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Collection.MessageBox.RemoveCollection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.Collection.Properties}.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Collection_Properties {
@@ -749,24 +740,6 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_File_Delete {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_Delete {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_DeletePermanently {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.File.MessageBox.DeleteFile.DeletePermanently", resourceCulture);
             }
         }
         
@@ -843,24 +816,6 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.Delete", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.Folder.MessageBox.DeleteFolder.DeletePermanently", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.Folder.Properties}.
         /// </summary>
         public static string Dock_Tool_CollectionExplorer_Folder_Properties {
@@ -902,15 +857,6 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_CollectionExplorer_MessageBox_Rename_Title {
             get {
                 return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.Rename.Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile}.
-        /// </summary>
-        public static string Dock_Tool_CollectionExplorer_MessageBox_RenameCollection_MoveCollectionFile {
-            get {
-                return ResourceManager.GetString("Dock.Tool.CollectionExplorer.MessageBox.RenameCollection.MoveCollectionFile", resourceCulture);
             }
         }
         
@@ -1001,25 +947,6 @@ namespace HurlStudio.UI.Localization {
         public static string Dock_Tool_EnvironmentExplorer_Environment_Inactive_Tooltip {
             get {
                 return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.Inactive.Tooltip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment}.
-        /// </summary>
-        public static string Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment {
-            get {
-                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePermanently}.
-        /// </summary>
-        public static string Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment_DeletePermanently {
-            get {
-                return ResourceManager.GetString("Dock.Tool.EnvironmentExplorer.Environment.MessageBox.DeleteEnvironment.DeletePerm" +
-                        "anently", resourceCulture);
             }
         }
         
@@ -1195,6 +1122,60 @@ namespace HurlStudio.UI.Localization {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteEnvironment.Delete}.
+        /// </summary>
+        public static string Service_EditorService_DeleteEnvironment_Delete {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteEnvironment.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteEnvironment.DeletePermanently}.
+        /// </summary>
+        public static string Service_EditorService_DeleteEnvironment_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteEnvironment.DeletePermanently", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteFile.Delete}.
+        /// </summary>
+        public static string Service_EditorService_DeleteFile_Delete {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteFile.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteFile.DeletePermanently}.
+        /// </summary>
+        public static string Service_EditorService_DeleteFile_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteFile.DeletePermanently", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteFolder.Delete}.
+        /// </summary>
+        public static string Service_EditorService_DeleteFolder_Delete {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteFolder.Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.DeleteFolder.DeletePermanently}.
+        /// </summary>
+        public static string Service_EditorService_DeleteFolder_DeletePermanently {
+            get {
+                return ResourceManager.GetString("Service.EditorService.DeleteFolder.DeletePermanently", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {Service.EditorService.Errors.DeleteFolder.ExternalRootFolderCannotBeDeleted}.
         /// </summary>
         public static string Service_EditorService_Errors_DeleteFolder_ExternalRootFolderCannotBeDeleted {
@@ -1272,6 +1253,78 @@ namespace HurlStudio.UI.Localization {
         public static string Service_EditorService_FilePicker_CollectionFile_Title {
             get {
                 return ResourceManager.GetString("Service.EditorService.FilePicker.CollectionFile.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.RemoveCollection}.
+        /// </summary>
+        public static string Service_EditorService_RemoveCollection {
+            get {
+                return ResourceManager.GetString("Service.EditorService.RemoveCollection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.Collection.Message}.
+        /// </summary>
+        public static string Service_EditorService_Rename_Collection_Message {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.Collection.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.Collection.MoveCollectionFile}.
+        /// </summary>
+        public static string Service_EditorService_Rename_Collection_MoveCollectionFile {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.Collection.MoveCollectionFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.Collection.Title}.
+        /// </summary>
+        public static string Service_EditorService_Rename_Collection_Title {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.Collection.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.File.Message}.
+        /// </summary>
+        public static string Service_EditorService_Rename_File_Message {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.File.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.File.Title}.
+        /// </summary>
+        public static string Service_EditorService_Rename_File_Title {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.File.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.Folder.Message}.
+        /// </summary>
+        public static string Service_EditorService_Rename_Folder_Message {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.Folder.Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {Service.EditorService.Rename.Folder.Title}.
+        /// </summary>
+        public static string Service_EditorService_Rename_Folder_Title {
+            get {
+                return ResourceManager.GetString("Service.EditorService.Rename.Folder.Title", resourceCulture);
             }
         }
         

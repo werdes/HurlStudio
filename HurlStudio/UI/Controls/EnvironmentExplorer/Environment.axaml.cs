@@ -60,7 +60,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
         {
             if (_environmentContainer == null) return;
             if (_environmentContainer.EnvironmentFileLocation == null) return;
-            
+
             try
             {
                 OSUtility.RevealPathInExplorer(_environmentContainer.EnvironmentFileLocation);
@@ -82,14 +82,12 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
             if (_environmentContainer == null) return;
             try
             {
-
                 if (e.ClickCount == 2 && _environmentContainer.Selected)
                 {
                     await _editorService.OpenEnvironmentDocument(_environmentContainer.EnvironmentFileLocation);
                 }
 
                 _environmentContainer.Selected = true;
-
             }
             catch (Exception ex)
             {
@@ -146,21 +144,7 @@ namespace HurlStudio.UI.Controls.EnvironmentExplorer
 
             try
             {
-                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _environmentContainer.EnvironmentFileLocation, Localization.Localization.Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment) == MessageBox.MessageBoxResult.Yes;
-                if (!delete) return;
-                
-                bool deleted = await _editorService.DeleteEnvironment(_environmentContainer, false);
-                if (!deleted)
-                {
-                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                        _mainWindow, _environmentContainer.EnvironmentFileLocation, Localization.Localization.Dock_Tool_EnvironmentExplorer_Environment_MessageBox_DeleteEnvironment_DeletePermanently) == MessageBox.MessageBoxResult.Yes;
-                    if(deletePermanently)
-                    {
-                        deleted = await _editorService.DeleteEnvironment(_environmentContainer, true);
-                    }
-                }
-                
+                await _editorService.DeleteEnvironment(_environmentContainer);
             }
             catch (Exception ex)
             {

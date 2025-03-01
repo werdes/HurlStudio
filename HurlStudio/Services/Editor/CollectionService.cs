@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HurlStudio.Common.Utility;
 using HurlStudio.Model.HurlFileTemplates;
 
 namespace HurlStudio.Services.Editor
@@ -39,8 +40,12 @@ namespace HurlStudio.Services.Editor
         private string[] _collectionExplorerIgnoredDirectories = [];
         private SemaphoreLock _serializerLock = new SemaphoreLock();
         private SemaphoreLock _saveLock = new SemaphoreLock();
+        private SemaphoreLock _moveLock = new SemaphoreLock();
 
-        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration, ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer, IUserSettingsService userSettingsService, IUiStateService uiStateService, INotificationService notificationService)
+        public CollectionService(ILogger<CollectionService> logger, IConfiguration configuration,
+            ICollectionSerializer collectionSerializer, IEnvironmentSerializer environmentSerializer,
+            IUserSettingsService userSettingsService, IUiStateService uiStateService,
+            INotificationService notificationService)
         {
             _log = logger;
             _configuration = configuration;
@@ -50,8 +55,10 @@ namespace HurlStudio.Services.Editor
             _uiStateService = uiStateService;
             _notificationService = notificationService;
 
-            _collectionLoaderMaxDirectoryDepth = Math.Max(1, _configuration.GetValue<int>("collectionLoaderMaxDirectoryDepth"));
-            _collectionExplorerIgnoredDirectories = _configuration.GetSection("collectionExplorerIgnoredDirectories").Get<string[]>() ?? [];
+            _collectionLoaderMaxDirectoryDepth =
+                Math.Max(1, _configuration.GetValue<int>("collectionLoaderMaxDirectoryDepth"));
+            _collectionExplorerIgnoredDirectories =
+                _configuration.GetSection("collectionExplorerIgnoredDirectories").Get<string[]>() ?? [];
         }
 
         /// <summary>
@@ -75,7 +82,8 @@ namespace HurlStudio.Services.Editor
         /// <param name="collectionContainer"></param>
         /// <param name="collection"></param>
         /// <returns></returns>
-        public async Task<HurlCollectionContainer> SetCollectionContainerAsync(HurlCollectionContainer collectionContainer, HurlCollection collection)
+        public async Task<HurlCollectionContainer> SetCollectionContainerAsync(
+            HurlCollectionContainer collectionContainer, HurlCollection collection)
         {
             // Reset container first
             collectionContainer.Folders.RemoveAll(x => true);
@@ -85,18 +93,22 @@ namespace HurlStudio.Services.Editor
 
             bool collapsed = true;
             Model.UiState.UiState? uiState = await _uiStateService.GetUiStateAsync(false);
-            if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionContainer.GetId(), out collapsed) ?? false)
+            if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionContainer.GetId(),
+                    out collapsed) ?? false)
             {
                 collectionContainer.Collapsed = collapsed;
             }
-            string collectionRootPath = Path.GetDirectoryName(collection.CollectionFileLocation) ?? throw new ArgumentNullException(nameof(collection.CollectionFileLocation));
+
+            string collectionRootPath = Path.GetDirectoryName(collection.CollectionFileLocation) ??
+                                        throw new ArgumentNullException(nameof(collection.CollectionFileLocation));
 
             // Root location
             //   Get the root folder recursively, add its files
             //   and folders to the collection container
             if (!collection.ExcludeRootDirectory)
             {
-                HurlFolderContainer? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null, collectionRootPath, collectionRootPath, uiState, false);
+                HurlFolderContainer? collectionRootFolder = await this.GetFolderRecursive(0, collectionContainer, null,
+                    collectionRootPath, collectionRootPath, uiState, false);
                 if (collectionRootFolder != null)
                 {
                     collectionContainer.Files.AddRange(collectionRootFolder.Files);
@@ -118,14 +130,17 @@ namespace HurlStudio.Services.Editor
                 {
                     // If either the collection root directory is excluded or the directory is not located under that root directory,
                     // go ahead and traverse the location
-                    if (collection.ExcludeRootDirectory || !PathExtensions.IsChildOfDirectory(absoluteLocationPath, collectionRootPath))
+                    if (collection.ExcludeRootDirectory ||
+                        !PathExtensions.IsChildOfDirectory(absoluteLocationPath, collectionRootPath))
                     {
-                        collectionContainer.Folders.AddIfNotNull(await this.GetFolderRecursive(0, collectionContainer, null, absoluteLocationPath, collectionRootPath, uiState, true));
+                        collectionContainer.Folders.AddIfNotNull(await this.GetFolderRecursive(0, collectionContainer,
+                            null, absoluteLocationPath, collectionRootPath, uiState, true));
                     }
                 }
                 else
                 {
-                    HurlFolderContainer hurlFolderContainer = new HurlFolderContainer(collectionContainer, null, new HurlFolder(location.Path), absoluteLocationPath)
+                    HurlFolderContainer hurlFolderContainer = new HurlFolderContainer(collectionContainer, null,
+                        new HurlFolder(location.Path), absoluteLocationPath)
                     {
                         Found = false,
                         Collapsed = true
@@ -144,14 +159,15 @@ namespace HurlStudio.Services.Editor
         /// <returns>List of collection containers</returns>
         public async Task<ObservableCollection<HurlCollectionContainer>> GetCollectionContainersAsync()
         {
-            ObservableCollection<HurlCollectionContainer> collectionContainers = new ObservableCollection<HurlCollectionContainer>();
+            ObservableCollection<HurlCollectionContainer> collectionContainers =
+                new ObservableCollection<HurlCollectionContainer>();
             IEnumerable<HurlCollection> collections = await this.GetCollectionsAsync();
 
             foreach (HurlCollection collection in collections)
             {
                 HurlCollectionContainer collectionContainer = await this.GetCollectionContainerAsync(collection);
                 collectionContainers.Add(collectionContainer);
-                _log.LogInformation($"Opened collection: [{collection.CollectionFileLocation}]");
+                _log.LogDebug($"Opened collection: [{collection.CollectionFileLocation}]");
             }
 
             return collectionContainers;
@@ -164,44 +180,56 @@ namespace HurlStudio.Services.Editor
         /// <param name="location">The absolute location of the directory to be traversed</param>
         /// <param name="collectionRoot">The absolute path of the collection file</param>
         /// <returns>A Folder file</returns>
-        private async Task<HurlFolderContainer?> GetFolderRecursive(int depth, HurlCollectionContainer collectionContainer, HurlFolderContainer? parent, string location, string collectionRoot, Model.UiState.UiState? uiState, bool isAdditionalLocation)
+        private async Task<HurlFolderContainer?> GetFolderRecursive(int depth,
+            HurlCollectionContainer collectionContainer, HurlFolderContainer? parent, string location,
+            string collectionRoot, Model.UiState.UiState? uiState, bool isAdditionalLocation)
         {
             if (depth > _collectionLoaderMaxDirectoryDepth) return null;
             if (_collectionExplorerIgnoredDirectories.Contains(new DirectoryInfo(location).Name)) return null;
-                        
+
             // Direct subdirectories
-            List<string> folderSubdirectories = Directory.GetDirectories(location, "*", SearchOption.TopDirectoryOnly).ToList();
+            List<string> folderSubdirectories =
+                Directory.GetDirectories(location, "*", SearchOption.TopDirectoryOnly).ToList();
             HurlFolder? folderSettings;
             string folderBasePath;
 
             if (!isAdditionalLocation)
             {
                 // Get path of the directory relative to the location of the collection file
-                string relativeDirectoryPathToCollectionRoot = Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, location));
-                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) == relativeDirectoryPathToCollectionRoot).FirstOrDefault();
+                string relativeDirectoryPathToCollectionRoot =
+                    Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, location));
+                folderSettings = collectionContainer.Collection.FolderSettings.Where(x =>
+                    Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) ==
+                    relativeDirectoryPathToCollectionRoot).FirstOrDefault();
                 if (folderSettings == null)
                 {
                     folderSettings = new HurlFolder(relativeDirectoryPathToCollectionRoot);
                 }
+
                 folderBasePath = relativeDirectoryPathToCollectionRoot;
             }
             else
             {
                 // For additional locations, take the absolute path
                 string absoluteDirectoryPath = location;
-                folderSettings = collectionContainer.Collection.FolderSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) == absoluteDirectoryPath).FirstOrDefault();
+                folderSettings = collectionContainer.Collection.FolderSettings.Where(x =>
+                    Path.TrimEndingDirectorySeparator(x.FolderLocation.ConvertDirectorySeparator()) ==
+                    absoluteDirectoryPath).FirstOrDefault();
                 if (folderSettings == null)
                 {
                     folderSettings = new HurlFolder(absoluteDirectoryPath);
                 }
+
                 folderBasePath = absoluteDirectoryPath;
             }
 
-            HurlFolderContainer collectionFolder = new HurlFolderContainer(collectionContainer, parent, folderSettings, location);
+            HurlFolderContainer collectionFolder =
+                new HurlFolderContainer(collectionContainer, parent, folderSettings, location);
 
             // Set ui state
             bool folderCollapsed = false;
-            if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(), out folderCollapsed) ?? false)
+            if (uiState?.ExpandedCollectionExplorerComponents?.TryGetValue(collectionFolder.GetId(),
+                    out folderCollapsed) ?? false)
             {
                 collectionFolder.Collapsed = folderCollapsed;
             }
@@ -210,23 +238,28 @@ namespace HurlStudio.Services.Editor
             // Recursively traverse through the directory tree
             foreach (string folderSubdirectory in folderSubdirectories)
             {
-                collectionFolder.Folders.AddIfNotNull(await this.GetFolderRecursive(depth + 1, collectionContainer, collectionFolder, folderSubdirectory, collectionRoot, uiState, isAdditionalLocation));
+                collectionFolder.Folders.AddIfNotNull(await this.GetFolderRecursive(depth + 1, collectionContainer,
+                    collectionFolder, folderSubdirectory, collectionRoot, uiState, isAdditionalLocation));
             }
 
             // Files
-            List<string> hurlFiles = Directory.GetFiles(location, $"*{GlobalConstants.HURL_FILE_EXTENSION}", SearchOption.TopDirectoryOnly).ToList();
+            List<string> hurlFiles = Directory.GetFiles(location, $"*{GlobalConstants.HURL_FILE_EXTENSION}",
+                SearchOption.TopDirectoryOnly).ToList();
             foreach (string hurlFile in hurlFiles)
             {
                 HurlFile? fileSettings;
                 if (!isAdditionalLocation)
                 {
                     // Get path of the file relative to the location of the collection file
-                    string relativeFilePathToCollectionRoot = Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, hurlFile));
+                    string relativeFilePathToCollectionRoot =
+                        Path.TrimEndingDirectorySeparator(Path.GetRelativePath(collectionRoot, hurlFile));
 
                     // As HurlSettings are saved in the collection file under a file location,
                     // try to find a setting with a matching file location
                     // -> If no setting block is found, create an empty one
-                    fileSettings = collectionContainer.Collection.FileSettings.Where(x => Path.TrimEndingDirectorySeparator(x.FileLocation.ConvertDirectorySeparator()) == relativeFilePathToCollectionRoot).FirstOrDefault();
+                    fileSettings = collectionContainer.Collection.FileSettings.Where(x =>
+                        Path.TrimEndingDirectorySeparator(x.FileLocation.ConvertDirectorySeparator()) ==
+                        relativeFilePathToCollectionRoot).FirstOrDefault();
                     if (fileSettings == null)
                     {
                         fileSettings = new HurlFile(relativeFilePathToCollectionRoot);
@@ -240,7 +273,9 @@ namespace HurlStudio.Services.Editor
                     // As HurlSettings are saved in the collection file under a file location,
                     // try to find a setting with a matching file location
                     // -> If no setting block is found, create an empty one
-                    fileSettings = collectionContainer.Collection.FileSettings.Where(x => x.FileLocation.ConvertDirectorySeparator() == absoluteFilePath.ConvertDirectorySeparator()).FirstOrDefault();
+                    fileSettings = collectionContainer.Collection.FileSettings.Where(x =>
+                            x.FileLocation.ConvertDirectorySeparator() == absoluteFilePath.ConvertDirectorySeparator())
+                        .FirstOrDefault();
                     if (fileSettings == null)
                     {
                         fileSettings = new HurlFile(absoluteFilePath);
@@ -335,39 +370,164 @@ namespace HurlStudio.Services.Editor
         }
 
         /// <inheritdoc />
-        public async Task<(bool, string?)> CreateFile(HurlFolderContainer parentFolderContainer, HurlFileTemplateContainer fileTemplate, string fileName)
+        public async Task<bool> RenameCollection(HurlCollectionContainer collectionContainer, string newCollectionName,
+            bool moveFile, string? newCollectionLocation = null)
+        {
+            string originalFilePath = collectionContainer.Collection.CollectionFileLocation;
+            string newFilePath = originalFilePath;
+
+            HurlCollection tempCollection = await this.GetCollectionAsync(originalFilePath);
+            tempCollection.Name = Path.GetFileNameWithoutExtension(newCollectionName);
+            await this.StoreCollectionAsync(tempCollection, newFilePath);
+
+            if (moveFile && newCollectionLocation != null)
+            {
+                _log.LogDebug(
+                    $"Moving collection [{collectionContainer}] from [{originalFilePath}] to [{newFilePath}]");
+
+                string? collectionDirectory = Path.GetDirectoryName(originalFilePath);
+                if (collectionDirectory != null)
+                {
+                    newFilePath = newCollectionLocation;
+
+                    if (File.Exists(newFilePath)) return false;
+
+                    // Store collection under new filename and delete the old one
+                    await this.StoreCollectionAsync(tempCollection, newFilePath);
+                    File.Delete(originalFilePath);
+                }
+            }
+            else
+            {
+                _log.LogError(
+                    $"Collection [{collectionContainer}] was to be moved, but there was no new location provided");
+            }
+
+            return File.Exists(newFilePath);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteFile(HurlFileContainer fileContainer, bool deletePermanently)
+        {
+            // Try to delete via recycle bin
+            bool deleted = false;
+
+            if (!deletePermanently)
+            {
+                _log.LogInformation($"Moving [{fileContainer.AbsoluteLocation}] to trash");
+                deleted = await OSUtility.MoveFileToTrash(fileContainer.AbsoluteLocation);
+            }
+            else
+            {
+                try
+                {
+                    _log.LogInformation($"Permanently deleting [{fileContainer.AbsoluteLocation}]");
+                    File.Delete(fileContainer.AbsoluteLocation);
+                    deleted = true;
+                }
+                catch (Exception ex)
+                {
+                    _log.LogException(ex);
+                    deleted = false;
+                }
+            }
+
+            // Only go ahead if file was deleted
+            if (!deleted) return false;
+
+            // Remove file settings from collection
+            _log.LogInformation(
+                $"Removing [{fileContainer.AbsoluteLocation}] from [{fileContainer.CollectionContainer.Collection.CollectionFileLocation}]");
+            HurlCollection hurlCollection =
+                await this.GetCollectionAsync(fileContainer.CollectionContainer.Collection
+                    .CollectionFileLocation);
+            hurlCollection.FileSettings.RemoveAll(x =>
+                x.FileLocation.ConvertDirectorySeparator() ==
+                fileContainer.File.FileLocation.ConvertDirectorySeparator());
+            await this.StoreCollectionAsync(hurlCollection, hurlCollection.CollectionFileLocation);
+
+            return !File.Exists(fileContainer.AbsoluteLocation);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteFolder(HurlFolderContainer folderContainer, bool deletePermanently)
+        {
+            bool deleted = false;
+
+            if (!deletePermanently)
+            {
+                _log.LogInformation($"Moving [{folderContainer.AbsoluteLocation}] to trash");
+                deleted = await OSUtility.MoveFolderToTrash(folderContainer.AbsoluteLocation);
+            }
+            else
+            {
+                try
+                {
+                    _log.LogInformation($"Permanently deleting [{folderContainer.AbsoluteLocation}]");
+                    Directory.Delete(folderContainer.AbsoluteLocation, true);
+                    deleted = true;
+                }
+                catch (Exception ex)
+                {
+                    _log.LogException(ex);
+                    deleted = false;
+                }
+            }
+
+            // Only go ahead if folder was deleted
+            if (!deleted) return false;
+
+            // Remove folder settings from collection
+            _log.LogInformation(
+                $"Removing [{folderContainer.AbsoluteLocation}] from [{folderContainer.CollectionContainer.Collection.CollectionFileLocation}]");
+            HurlCollection hurlCollection =
+                await this.GetCollectionAsync(
+                    folderContainer.CollectionContainer.Collection.CollectionFileLocation);
+            hurlCollection.FolderSettings.RemoveAll(x =>
+                x.FolderLocation.ConvertDirectorySeparator()
+                    .StartsWith(folderContainer.Folder.FolderLocation.ConvertDirectorySeparator()));
+            await this.StoreCollectionAsync(hurlCollection, hurlCollection.CollectionFileLocation);
+
+            return !Directory.Exists(folderContainer.Folder.FolderLocation);
+        }
+
+
+        /// <inheritdoc />
+        public async Task<(bool, string?)> CreateFile(HurlFolderContainer parentFolderContainer,
+            HurlFileTemplateContainer fileTemplate, string fileName)
         {
             string absoluteFilePath
                 = Path.Combine(parentFolderContainer.AbsoluteLocation, fileName);
             string relativeLocation = Path.Combine(parentFolderContainer.Folder.FolderLocation, fileName);
 
-            if (File.Exists(absoluteFilePath)) 
+            if (File.Exists(absoluteFilePath))
                 return (false, null);
 
-            bool fileCreated = await this.CreateFileInternal(parentFolderContainer.CollectionContainer, absoluteFilePath,
+            bool fileCreated = await this.CreateFileInternal(parentFolderContainer.CollectionContainer,
+                absoluteFilePath,
                 relativeLocation, fileTemplate);
 
             return (fileCreated, absoluteFilePath);
         }
 
         /// <inheritdoc />
-        public async Task<(bool, string?)> CreateFile(HurlCollectionContainer collectionContainer, HurlFileTemplateContainer fileTemplate, string fileName)
+        public async Task<(bool, string?)> CreateFile(HurlCollectionContainer collectionContainer,
+            HurlFileTemplateContainer fileTemplate, string fileName)
         {
-            
             string? collectionDirectory = Path.GetDirectoryName(collectionContainer.Collection.CollectionFileLocation);
-            if (collectionDirectory == null) 
+            if (collectionDirectory == null)
                 return (false, null);
 
             string filePath = Path.Combine(collectionDirectory, fileName);
-            if (File.Exists(filePath)) 
+            if (File.Exists(filePath))
                 return (false, null);
 
             bool fileCreated = await this.CreateFileInternal(collectionContainer, filePath, fileName, fileTemplate);
-            
+
             return (fileCreated, filePath);
         }
 
-        
+
         /// <summary>
         /// Adds a file to a collection
         /// </summary>
@@ -403,7 +563,7 @@ namespace HurlStudio.Services.Editor
             });
         }
 
-        
+
         /// <inheritdoc />
         public async Task<bool> CreateFolder(HurlCollectionContainer collectionContainer, string absolutePath)
         {
@@ -411,7 +571,7 @@ namespace HurlStudio.Services.Editor
             try
             {
                 _log.LogDebug($"Creating folder [{absolutePath}]");
-                
+
                 Directory.CreateDirectory(absolutePath);
                 return Directory.Exists(absolutePath);
             }
@@ -421,6 +581,5 @@ namespace HurlStudio.Services.Editor
                 return false;
             }
         }
-
     }
 }

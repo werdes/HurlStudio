@@ -23,6 +23,20 @@ namespace HurlStudio.UI.MessageBox.Model
             _isDefault = isDefault;
             _isCancel = isCancel;
         }
+
+        public MessageBoxButtonDefinition(MessageBoxResult messageBoxResult, object returnValue, bool isDefault,
+            bool isCancel) : this(messageBoxResult.GetIcon(), messageBoxResult.GetLocalizedString(), returnValue,
+            isDefault, isCancel)
+        {
+            
+        }
+        
+        public MessageBoxButtonDefinition(MessageBoxResult messageBoxResult, bool isDefault,
+            bool isCancel) : this(messageBoxResult.GetIcon(), messageBoxResult.GetLocalizedString(), messageBoxResult,
+            isDefault, isCancel)
+        {
+            
+        }
         
         public Icon Icon
         {

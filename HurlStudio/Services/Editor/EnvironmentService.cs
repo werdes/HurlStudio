@@ -14,6 +14,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HurlStudio.Common.Utility;
 
 namespace HurlStudio.Services.Editor
 {
@@ -139,6 +140,35 @@ namespace HurlStudio.Services.Editor
 
             await this.StoreEnvironmentAsync(environment, targetFileLocation);
             return File.Exists(targetFileLocation);
+        }
+
+        /// <inheritdoc />
+        public async Task<bool> DeleteEnvironment(HurlEnvironmentContainer environmentContainer, bool deletePermanently)
+        {
+            bool deleted = false;
+
+            if (!deletePermanently)
+            {
+                _log.LogInformation($"Moving [{environmentContainer.EnvironmentFileLocation}] to trash");
+                deleted = await OSUtility.MoveFileToTrash(environmentContainer.EnvironmentFileLocation);
+            }
+            else
+            {
+                try
+                {
+                    _log.LogInformation($"Permanently deleting [{environmentContainer.EnvironmentFileLocation}]");
+                    File.Delete(environmentContainer.EnvironmentFileLocation);
+                    deleted = !File.Exists(environmentContainer.EnvironmentFileLocation);
+                }
+                catch (Exception ex)
+                {
+                    _log.LogException(ex);
+                    deleted = false;
+                }
+            }
+
+            // Only go ahead if file was deleted
+            return deleted;
         }
 
         /// <summary>

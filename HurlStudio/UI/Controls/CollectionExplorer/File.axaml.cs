@@ -72,7 +72,6 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         protected override async Task OpenComponentDocument()
         {
             if (_fileContainer == null) return;
-            if (_fileContainer.CollectionContainer.Collection.CollectionFileLocation == null) return;
 
             try
             {
@@ -116,17 +115,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                string? inputResult = await MessageBox.MessageBox.AskInputDialog(
-                    _mainWindow,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
-                    Path.GetFileName(_fileContainer.AbsoluteLocation),
-                    Model.Enums.Icon.Rename);
-
-                if(inputResult != null)
-                {
-                    await _editorService.RenameFile(_fileContainer, inputResult);
-                }
+                await _editorService.RenameFile(_fileContainer);
             }
             catch (Exception ex)
             {
@@ -166,20 +155,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                    _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_Delete) == MessageBox.MessageBoxResult.Yes;
-                if (!delete) return;
-
-                bool deleted = await _editorService.DeleteFile(_fileContainer, false);
-                if(!deleted)
-                {
-                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                        _mainWindow, _fileContainer.AbsoluteLocation, Localization.Localization.Dock_Tool_CollectionExplorer_File_MessageBox_DeleteFile_DeletePermanently) == MessageBox.MessageBoxResult.Yes;
-                    if(deletePermanently)
-                    {
-                        deleted = await _editorService.DeleteFile(_fileContainer, true);
-                    }
-                }
+                await _editorService.DeleteFile(_fileContainer);
             }
             catch (Exception ex)
             {

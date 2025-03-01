@@ -50,43 +50,27 @@ namespace HurlStudio.UI.MessageBox
         public static ThemeVariant? ThemeVariant { get; set; }
 
 
-        private static Dictionary<MessageBoxResult, string> _typeLocalization = new Dictionary<MessageBoxResult, string>()
-        {
-            { MessageBoxResult.OK, Localization.Localization.MessageBox_Button_OK },
-            { MessageBoxResult.Discard, Localization.Localization.MessageBox_Button_Discard },
-            { MessageBoxResult.Save, Localization.Localization.MessageBox_Button_Save },
-            { MessageBoxResult.Cancel, Localization.Localization.MessageBox_Button_Cancel },
-            { MessageBoxResult.Rename, Localization.Localization.MessageBox_Button_Rename },
-            { MessageBoxResult.Yes, Localization.Localization.MessageBox_Button_Yes },
-            { MessageBoxResult.No, Localization.Localization.MessageBox_Button_No }
-        };
-
-
-        private static Dictionary<MessageBoxResult, Icon> _typeIcons = new Dictionary<MessageBoxResult, Icon>()
-        {
-            { MessageBoxResult.OK, Icon.Ok },
-            { MessageBoxResult.Discard, Icon.Trash },
-            { MessageBoxResult.Save, Icon.Save },
-            { MessageBoxResult.Cancel, Icon.Cancel },
-            { MessageBoxResult.Rename, Icon.Rename },
-            { MessageBoxResult.Yes, Icon.Ok },
-            { MessageBoxResult.No, Icon.Cancel }
-        };
-
         /// <summary>
         /// Shows a message box
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="message">The message text displayed inside the message box</param>
+        /// <param name="title">The message box's window title</param>
+        /// <param name="buttons">The buttons to be displayed</param>
+        /// <param name="icon">The icon displayed inside the message box</param>
         public static void Show(string message, string title, MessageBoxResult[] buttons, Icon icon)
         {
             MessageBoxWindow messageBox = SetupMessageBoxWindow(message, title, buttons, icon);
             messageBox.Show();
         }
-        
+
         /// <summary>
         /// Shows a message box as a dialog
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="owner">The owner window of the message box</param>
+        /// <param name="message">The message text displayed inside the message box</param>
+        /// <param name="title">The message box's window title</param>
+        /// <param name="buttons">The buttons to be displayed</param>
+        /// <param name="icon">The icon displayed inside the message box</param>
         public static async Task<MessageBoxResult> ShowDialog(Window owner, string message, string title,
             MessageBoxResult[] buttons, Icon icon)
         {
@@ -97,33 +81,37 @@ namespace HurlStudio.UI.MessageBox
         }
 
         /// <summary>
-        /// Shows a message box
+        /// Shows a message box as a dialog asking for a user input
         /// </summary>
-        /// <param name="message"></param>
+        /// <param name="owner">The owner window of the message box</param>
+        /// <param name="message">The message text displayed inside the message box</param>
+        /// <param name="title">The message box's window title</param>
+        /// <param name="value">The initial value of the box's input field</param>
+        /// <param name="icon">The icon displayed inside the message box</param>
         public static async Task<string?> AskInputDialog(Window owner, string message, string title, string value,
             Icon icon)
         {
             MessageBoxWindow messageBox = SetupInputMessageBoxWindow(message, title, value, icon);
             string? messageBoxResult = await messageBox.ShowDialog<string?>(owner);
-            
+
             return messageBoxResult;
         }
 
         /// <summary>
         /// Builds a message box
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="title"></param>
-        /// <param name="buttons"></param>
-        /// <param name="icon"></param>
+        /// <param name="message">The message text displayed inside the message box</param>
+        /// <param name="title">The message box's window title</param>
+        /// <param name="buttons">The buttons to be displayed</param>
+        /// <param name="icon">The icon displayed inside the message box</param>
         /// <returns></returns>
         private static MessageBoxWindow SetupMessageBoxWindow(string message, string title, MessageBoxResult[] buttons,
             Icon icon)
         {
             List<MessageBoxButtonDefinition> buttonDefinitions = buttons.Select(x =>
                 new MessageBoxButtonDefinition(
-                    _typeIcons[x],
-                    _typeLocalization[x],
+                    x.GetIcon(),
+                    x.GetLocalizedString(),
                     x,
                     (x == MessageBoxResult.OK),
                     (x == MessageBoxResult.Cancel))).ToList();
@@ -145,19 +133,18 @@ namespace HurlStudio.UI.MessageBox
         /// <summary>
         /// Builds a message box for value input
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="title"></param>
-        /// <param name="value"></param>
-        /// <param name="icon"></param>
-        /// <returns></returns>
-        private static MessageBoxWindow SetupInputMessageBoxWindow(string message, string title, string? value, Icon icon)
+        /// <param name="message">The message text displayed inside the message box</param>
+        /// <param name="title">The message box's window title</param>
+        /// <param name="value">The initial value of the box's input field</param>
+        /// <param name="icon">The icon displayed inside the message box</param>
+        /// <returns>The message box window</returns>
+        private static MessageBoxWindow SetupInputMessageBoxWindow(string message, string title, string? value,
+            Icon icon)
         {
             List<MessageBoxButtonDefinition> buttonDefinitions = new List<MessageBoxButtonDefinition>()
             {
-                new MessageBoxButtonDefinition(_typeIcons[MessageBoxResult.OK], _typeLocalization[MessageBoxResult.OK],
-                    MessageBoxResult.OK, true, false),
-                new MessageBoxButtonDefinition(_typeIcons[MessageBoxResult.Cancel], _typeLocalization[MessageBoxResult.Cancel],
-                    MessageBoxResult.Cancel, false, true)
+                new MessageBoxButtonDefinition(MessageBoxResult.OK, true, false),
+                new MessageBoxButtonDefinition(MessageBoxResult.Cancel, false, true)
             };
 
             MessageBoxViewModel viewModel = new MessageBoxViewModel(
@@ -172,10 +159,10 @@ namespace HurlStudio.UI.MessageBox
             MessageBoxWindow messageBoxWindow = new MessageBoxWindow(viewModel);
             return messageBoxWindow;
         }
-        
+
         public static void ShowError(string message, string title) =>
             Show(message, title, [MessageBoxResult.OK], Icon.ErrorColor);
-        
+
         public static async Task<MessageBoxResult> ShowInfoDialog(Window owner, string message, string title) =>
             await ShowDialog(owner, message, title, [MessageBoxResult.OK], Icon.InfoColor);
 
@@ -185,7 +172,8 @@ namespace HurlStudio.UI.MessageBox
         public static async Task<MessageBoxResult> ShowErrorDialog(Window owner, string message, string title) =>
             await ShowDialog(owner, message, title, [MessageBoxResult.OK], Icon.ErrorColor);
 
-        public static async Task<MessageBoxResult> ShowQuestionYesNoDialog(Window owner, string message, string title) =>
+        public static async Task<MessageBoxResult>
+            ShowQuestionYesNoDialog(Window owner, string message, string title) =>
             await ShowDialog(owner, message, title, [MessageBoxResult.Yes, MessageBoxResult.No], Icon.Question);
     }
 }

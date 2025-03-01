@@ -120,8 +120,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private void On_MenuItem_RevealInExplorer_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_folderContainer == null) return;
-            if (_folderContainer.AbsoluteLocation == null) return;
-
+            
             try
             {
                 OSUtility.RevealPathInExplorer(_folderContainer.AbsoluteLocation);
@@ -161,20 +160,10 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
         private async void On_MenuItem_Rename_Click(object? sender, Avalonia.Interactivity.RoutedEventArgs e)
         {
             if (_folderContainer == null) return;
-            if (_folderContainer.AbsoluteLocation == null) return;
+            
             try
             {
-                string? inputResult = await MessageBox.MessageBox.AskInputDialog(
-                    _mainWindow,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Message,
-                    Localization.Localization.Dock_Tool_CollectionExplorer_MessageBox_Rename_Title,
-                    new DirectoryInfo(_folderContainer.AbsoluteLocation).Name,
-                    Model.Enums.Icon.Rename);
-
-                if (inputResult != null)
-                {
-                    await _editorService.RenameFolder(_folderContainer, inputResult);
-                }
+                await _editorService.RenameFolder(_folderContainer);
             }
             catch (Exception ex)
             {
@@ -194,26 +183,7 @@ namespace HurlStudio.UI.Controls.CollectionExplorer
 
             try
             {
-                bool delete = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                                  _mainWindow, _folderContainer.AbsoluteLocation,
-                                  Localization.Localization
-                                      .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_Delete) ==
-                              MessageBox.MessageBoxResult.Yes;
-                if (!delete) return;
-
-                bool deleted = await _editorService.DeleteFolder(_folderContainer, false);
-                if (!deleted)
-                {
-                    bool deletePermanently = await MessageBox.MessageBox.ShowQuestionYesNoDialog(
-                                                 _mainWindow, _folderContainer.AbsoluteLocation,
-                                                 Localization.Localization
-                                                     .Dock_Tool_CollectionExplorer_Folder_MessageBox_DeleteFolder_DeletePermanently) ==
-                                             MessageBox.MessageBoxResult.Yes;
-                    if (deletePermanently)
-                    {
-                        deleted = await _editorService.DeleteFolder(_folderContainer, true);
-                    }
-                }
+                await _editorService.DeleteFolder(_folderContainer);
             }
             catch (Exception ex)
             {

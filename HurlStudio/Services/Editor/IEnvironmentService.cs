@@ -19,5 +19,12 @@ namespace HurlStudio.Services.Editor
         Task StoreEnvironmentAsync(HurlEnvironment environment, string environmentLocation);
         Task<bool> CreateEnvironment(HurlEnvironment environment);
 
+        /// <summary>
+        /// Removes an environment from environment directory
+        /// </summary>
+        /// <param name="environmentContainer">The environment to be removed</param>
+        /// <param name="deletePermanently">Remove the environment permanently instead of moving it to system trash</param>
+        /// <returns></returns>
+        Task<bool> DeleteEnvironment(HurlEnvironmentContainer environmentContainer, bool deletePermanently);
     }
 }
